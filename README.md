@@ -1,4 +1,4 @@
-**[simon.me](https://hejian.club)**
+**[simon.me](http://www.hejian.club/)**
 
 my personal website powered by [Vite](https://vitejs.dev/)
 
