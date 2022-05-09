@@ -18,6 +18,7 @@ Hopefully more people can join me and love the code I write as much as I do.
 
 ***
 
-Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [知乎](https://www.zhihu.com/people/antfu).<br>
-Mail me at [hi@Simon](mailto:13917107469@163.com).<br>
+Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [知乎](https://www.zhihu.com/people/antfu).
+
+Mail me at [hi@Simon](mailto:13917107469@163.com).
 Chat with the community at [my Discord Server](https://discord.gg/r4hjJ6WT).

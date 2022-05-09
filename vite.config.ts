@@ -89,7 +89,6 @@ const config: UserConfig = {
     }),
 
     Markdown({
-      wrapperComponent: 'post',
       wrapperClasses: 'prose m-auto',
       headEnabled: true,
       markdownItOptions: {

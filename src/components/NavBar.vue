@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import { isDark } from "~/logics";
-const windowWidth = ref(window.innerWidth);
-window.onresize = () => {
-  windowWidth.value = window.innerWidth;
-};
 </script>
 
 <template>
@@ -19,11 +15,7 @@ window.onresize = () => {
       to="/"
       focusable="false"
     >
-      <img
-        :class="windowWidth < 720 ? 'border-rd-full' : ''"
-        src="/black.png"
-        alt="logo"
-      />
+      <img border-rd-full src="/black.png" alt="logo" />
     </router-link>
     <nav class="nav">
       <div class="spacer" />

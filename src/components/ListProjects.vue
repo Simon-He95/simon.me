@@ -20,29 +20,7 @@ defineProps<{ projects: Record<string, any[]> }>();
         :title="item.name"
       >
         <div v-if="item.icon" class="pt-2 pr-5">
-          <Slidev v-if="item.icon === 'slidev'" class="text-4xl opacity-50" />
-          <VueUse
-            v-else-if="item.icon === 'vueuse'"
-            class="text-4xl opacity-50"
-          />
-          <VueReactivity
-            v-else-if="item.icon === 'vue-reactivity'"
-            class="text-4xl opacity-50"
-          />
-          <VueDemi
-            v-else-if="item.icon === 'vue-demi'"
-            class="text-4xl opacity-50"
-          />
-          <Unocss
-            v-else-if="item.icon === 'unocss'"
-            class="text-4xl opacity-50"
-          />
-          <Vitest
-            v-else-if="item.icon === 'vitest'"
-            class="text-4xl opacity-50"
-          />
           <div
-            v-else
             class="text-3xl opacity-50"
             :class="item.icon || 'i-carbon-unknown'"
           />
@@ -54,6 +32,11 @@ defineProps<{ projects: Record<string, any[]> }>();
       </a>
     </div>
   </template>
+  <div class="prose m-auto mt-8 mb-8">
+    <a href="/" class="font-mono no-underline opacity-50 hover:opacity-75">
+      cd ..
+    </a>
+  </div>
 </template>
 
 <style scoped>

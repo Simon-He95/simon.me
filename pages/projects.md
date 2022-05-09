@@ -11,7 +11,7 @@ projects:
       icon: 'i-carbon-plane-sea'
     - name: 'RealizeSimpleVue'
       link: 'https://github.com/Simon-He95/realizeVue'
-      desc: 'learn from hcy to realize vue3 compiler render reactivity.'
+      desc: 'Learn from HcySunYang/code-for-vue-3-book to realize vue3 compiler render reactivity.'
       icon: 'i-teenyicons:vue-outline'
     - name: 'MineSweeper'
       link: 'http://www.hejian.club:8080/mineswepper/'
@@ -36,14 +36,24 @@ projects:
       icon: 'i-emojione-monotone:wilted-flower'
     - name: 'Douyin'
       link: 'http://www.hejian.club:8080/canvas/vue3.0%E6%8A%96%E9%9F%B3/index.html'
-      desc: 'simple demo like douyin.'
+      desc: 'A simple demo mock douyin.'
       icon: 'i-clarity:music-note-solid'
     - name: 'Eleme'
       link: 'http://www.hejian.club:8080/eleme/'
-      desc: 'simple demo like eleme.'
+      desc: 'A simple demo mock eleme.'
       icon: 'i-ep:eleme'
+    - name: 'Draw Text'
+      link: 'http://www.hejian.club:8080/canvas/%E5%86%99%E5%AD%97/index.html'
+      desc: 'A drawing text with canvas.'
+      icon: 'i-fluent:draw-text-20-filled'
+    - name: 'Clock'
+      link: 'http://www.hejian.club:8080/canvas/%E6%97%B6%E9%92%9F/index.html'
+      desc: 'A clock  with canvas.'
+      icon: 'i-emojione-monotone:alarm-clock'
+    - name: 'Countdown'
+      link: 'http://www.hejian.club:8080/canvas/%E7%BB%9A%E4%B8%BD%E7%9A%84%E5%80%92%E8%AE%A1%E6%97%B6/index.html'
+      desc: 'A countdown  with canvas.'
+      icon: 'i-pepicons:countdown'
 ---
 
-<ListProjects :projects="frontmatter.projects"/>
-
-<div class="prose m-auto mt-8 mb-8"><a href="/" class="font-mono no-underline opacity-50 hover:opacity-75"> cd .. </a></div>
+<ListProjects :projects="frontmatter.projects"></ListProjects>
