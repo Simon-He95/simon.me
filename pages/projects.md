@@ -6,7 +6,7 @@ description: List of projects that I am proud of
 projects:
   Latest:
     - name: 'Vue Starport'
-      link: 'http://www.hejian.club/'
+      link: 'http://www.hejian.club:8080/'
       desc: 'Shared component across routes with animations.'
       icon: 'i-carbon-plane-sea'
     - name: 'RealizeSimpleVue'
@@ -14,10 +14,10 @@ projects:
       desc: 'Learn from HcySunYang/code-for-vue-3-book to realize vue3 compiler render reactivity.'
       icon: 'i-teenyicons:vue-outline'
     - name: 'MineSweeper'
-      link: 'http://www.hejian.club:8080/mineswepper/'
+      link: 'http://www.hejian.club:8080/minesweeper/'
       desc: 'MineSweeper game with vitesse.'
       icon: 'i-mdi:mine'
-    - name: 'RetypeWriting'
+    - name: 'TypeWriting'
       link: 'http://www.hejian.club:8080/type-writing/'
       desc: 'Type writing with javascript generator Function and google diff'
       icon: 'i-tabler:writing'
