@@ -1,57 +1,60 @@
 <script setup lang="ts">
-import { isDark } from '~/logics'
+import { isDark } from "~/logics";
+const windowWidth = ref(window.innerWidth);
+window.onresize = () => {
+  windowWidth.value = window.innerWidth;
+};
 </script>
 
 <template>
   <header class="header z-40">
     <router-link
-      class="w-10 h-10 absolute lg:fixed m-6 select-none outline-none"
+      w-15
+      h-15
+      absolute
+      lg:fixed
+      m-6
+      select-none
+      outline-none
       to="/"
       focusable="false"
     >
-      <img v-show="isDark" src="/logo-dark.svg?url" alt="logo">
-      <img v-show="!isDark" src="/logo.svg?url" alt="logo">
+      <img
+        :class="windowWidth < 720 ? 'border-rd-full' : ''"
+        src="/black.png"
+        alt="logo"
+      />
     </router-link>
     <nav class="nav">
       <div class="spacer" />
       <div class="right">
-        <router-link to="/posts" title="Blog">
-          <span class="lt-md:hidden">Blog</span>
-          <div i-ri-article-line md:hidden />
-        </router-link>
         <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden">Projects</span>
           <div i-ri-lightbulb-line class="md:hidden" />
         </router-link>
-        <router-link to="/talks" class="lt-md:hidden" title="talks">
-          <div i-ri-slideshow-2-line />
-        </router-link>
-        <router-link to="/podcasts" class="lt-md:hidden" title="podcasts">
-          <div i-ri-mic-line />
-        </router-link>
-        <router-link to="/streams" class="lt-md:hidden" title="streams">
-          <div i-ri-vidicon-line />
-        </router-link>
-        <router-link to="/demos" title="Demos">
-          <div i-ri-screenshot-line />
-        </router-link>
-        <!-- <router-link to="/bookmarks" title="Bookmarks">
-          <div i-ri-bookmark-line />
-        </router-link> -->
-        <router-link to="/notes" title="Notes">
+        <a
+          href="https://github.com/Simon-He95/directory-configuration"
+          target="_blank"
+          title="Config"
+          class="lt-md:hidden"
+        >
           <div i-ri-sticky-note-line />
-        </router-link>
-        <router-link to="/sponsors-list" title="Sponsors">
-          <div i-ri-heart-line />
-        </router-link>
-        <a href="https://twitter.com/antfu7" target="_blank" title="Twitter" class="lt-md:hidden">
+        </a>
+        <a
+          href="https://twitter.com/simon_he1995"
+          target="_blank"
+          title="Twitter"
+          class="lt-md:hidden"
+        >
           <feather-twitter />
         </a>
-        <a href="https://github.com/antfu" target="_blank" title="GitHub" class="lt-md:hidden">
+        <a
+          href="https://github.com/Simon-He95"
+          target="_blank"
+          title="GitHub"
+          class="lt-md:hidden"
+        >
           <div i-uil-github-alt />
-        </a>
-        <a href="/feed.xml" target="_blank" title="RSS" class="lt-md:hidden">
-          <div i-la-rss-square style="font-size:1.25rem; margin: 0 -0.125rem;" />
         </a>
         <toggle-theme />
       </div>

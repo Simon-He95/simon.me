@@ -1,25 +1,23 @@
 ---
-title: Anthony Fu
+title: Simon He
 ---
 
 <ClientOnly>
   <Plum/>
 </ClientOnly>
 
-Hey, I am Anthony Fu, a fanatical open sourceror. Working at [NuxtLabs](https://nuxtlabs.com/).
+Hey, I am Simon He, a fanatical programmers.
 
-Creator of [Vitest](https://github.com/vitest-dev/vitest), [Slidev](https://github.com/slidevjs/slidev), [VueUse](https://github.com/vueuse/vueuse), [UnoCSS](https://github.com/antfu/unocss), [Type Challenges](https://github.com/type-challenges/type-challenges) and [others](/projects).<br>
-Core team member of [Vue](https://vuejs.org/), [Nuxt](http://nuxtjs.org/) and [Vite](http://vitejs.dev/).<br>
-Team member of [Windi CSS](https://windicss.org/), [wenyan-lang 文言](https://wy-lang.org/) and [Intlify](https://github.com/intlify).
+This page is meant to share some of the projects I've done and some of the things I've been doing lately.
 
-Dreaming up ideas and making them come true is where my passion lies. You can find my [full projects list here](/projects). I have also started a 100-day challenge about design, compform, interactivity, and experimenting with new things on [100.antfu.me](https://100.antfu.me/).
+Recently，i always follow [antfu](https://github.com/antfu), he makes me gain a lot, and I even post some new news on Twitter every day and follow the latest github technical information
 
-Outside of programming, I enjoy doing photography and traveling. Some of my photos can be found on [Instagram](https://www.instagram.com/antfu7). If you happen to be in the same city I live (currently in Shanghai), maybe we can hang out and take some photos or code together.
+I'm not typing code for work, but because I love it, I'll be happy to pull requests for some open source projects in GitHubs.
+
+Hopefully more people can join me and love the code I write as much as I do.
 
 ***
 
-Find me on [GitHub](https://github.com/antfu), [Twitter](https://www.twitter.com/antfu7), [Twitch](https://www.twitch.tv/antfu7), [知乎](https://www.zhihu.com/people/antfu), [微博](https://weibo.com/u/7485197193) or [哔哩哔哩](https://space.bilibili.com/668380).<br>
-Mail me at [hi@antfu.me](mailto:hi@antfu.me).<br>
-Chat with the community at [my Discord Server](https://chat.antfu.me).
-
-If you like my works, consider sponsoring me on [GitHub Sponsor](https://github.com/sponsors/antfu) to keep them sustainable.
+Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [知乎](https://www.zhihu.com/people/antfu).<br>
+Mail me at [hi@Simon](mailto:13917107469@163.com).<br>
+Chat with the community at [my Discord Server](https://discord.gg/r4hjJ6WT).
