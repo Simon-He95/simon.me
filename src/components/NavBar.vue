@@ -22,7 +22,7 @@ import { isDark } from "~/logics";
       <div class="right">
         <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden">Projects</span>
-          <div i-ri-lightbulb-line class="md:hidden" />
+          <div i-bi:display class="md:hidden" />
         </router-link>
         <a
           href="https://github.com/Simon-He95/directory-configuration"
