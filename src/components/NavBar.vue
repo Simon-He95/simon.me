@@ -4,7 +4,9 @@ function preload() {
   const Image = document.createElement("img");
   Image.src = "/black.png";
 }
-preload();
+onMounted(() => {
+  preload();
+});
 </script>
 
 <template>
