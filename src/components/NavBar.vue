@@ -28,8 +28,14 @@ onMounted(() => {
       <div class="spacer" />
       <div class="right">
         <router-link to="/projects" title="Projects">
-          <span class="lt-md:hidden">Projects</span>
-          <div i-bi:display class="md:hidden" />
+          <span class="lt-md:hidden projectMove"
+            ><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span
+            ><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span
+            ><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span
+            ><span style="--delay: 0.6s">t</span
+            ><span style="--delay: 0.7s">s</span></span
+          >
+          <div i-bi:display class="md:hidden iconMove" />
         </router-link>
         <a
           href="https://github.com/Simon-He95/directory-configuration"
@@ -110,5 +116,28 @@ onMounted(() => {
 
 .nav .right > * {
   margin: auto;
+}
+
+.projectMove > span {
+  position: relative;
+  animation: bounce 0.5s ease infinite alternate;
+}
+.projectMove > span:nth-child(1n + 0) {
+  color: var(--color);
+  animation-delay: var(--delay);
+}
+@keyframes bounce {
+  100% {
+    top: -2px;
+    font-weight: bold;
+  }
+}
+.iconMove {
+  animation: iconMove 1s ease-in-out infinite alternate;
+}
+@keyframes iconMove {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
