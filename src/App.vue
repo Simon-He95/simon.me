@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <main class="px-7 py-10">
+  <main class="px-7 py-10" overflow-x-hidden>
     <router-view />
     <Footer />
   </main>
