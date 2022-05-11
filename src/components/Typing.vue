@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const props = defineProps();
 const slots = useSlots();
 let content = slots.default()[0].children;
 const types = ref("");
-
+const { interval = 20 } = useAttrs();
 function updateContext(t) {
   return dfs();
   function dfs() {
@@ -19,7 +18,7 @@ function updateContext(t) {
     }
   }
 }
-updateContext(20);
+updateContext(interval);
 </script>
 
 <template>

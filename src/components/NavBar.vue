@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { isDark } from "~/logics";
+function preload() {
+  const Image = document.createElement("img");
+  Image.src = "/black.png";
+}
+preload();
 </script>
 
 <template>
