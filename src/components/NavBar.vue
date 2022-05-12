@@ -7,6 +7,20 @@ function preload() {
 onMounted(() => {
   preload();
 });
+watch(isDark, () => {
+  console.log(isDark.value);
+  if (isDark.value) {
+    color.value = "#fff";
+  } else {
+    color.value = "#eee";
+  }
+});
+const color = ref();
+if (isDark.value) {
+  color.value = "rgba(255, 255, 255, 0.9)";
+} else {
+  color.value = "#eee";
+}
 </script>
 
 <template>
@@ -27,6 +41,13 @@ onMounted(() => {
     <nav class="nav">
       <div class="spacer" />
       <div class="right">
+        <router-link to="/posts" title="Blog">
+          <span class="lt-md:hidden BlogMove">
+            Blog
+            <div class="white"></div>
+          </span>
+          <div i-ri-article-line md:hidden />
+        </router-link>
         <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden projectMove"
             ><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span
@@ -123,7 +144,6 @@ onMounted(() => {
   animation: bounce 0.5s ease infinite alternate;
 }
 .projectMove > span:nth-child(1n + 0) {
-  color: var(--color);
   animation-delay: var(--delay);
 }
 @keyframes bounce {
@@ -138,6 +158,62 @@ onMounted(() => {
 @keyframes iconMove {
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.BlogMove {
+  position: relative;
+}
+.white {
+  position: absolute;
+  left: 0;
+  width: 80%;
+  height: 3px;
+  z-index: 4;
+  animation: whiteMove 3s ease-out infinite;
+}
+
+.BlogMove::before {
+  content: "Blog";
+  position: absolute;
+  top: 0;
+  left: 0.5px;
+  height: 0px;
+  color: v-bind(color);
+  overflow: hidden;
+  z-index: 2;
+  animation: redShadow 2s ease-in infinite;
+  filter: contrast(200%);
+  text-shadow: 1px 0 0 #eee;
+}
+
+@keyframes redShadow {
+  20% {
+    height: 32px;
+  }
+  60% {
+    height: 6px;
+  }
+  100% {
+    height: 42px;
+  }
+}
+
+@keyframes whiteMove {
+  8% {
+    top: 38px;
+  }
+  14% {
+    top: 8px;
+  }
+  20% {
+    top: 42px;
+  }
+  32% {
+    top: 2px;
+  }
+  99% {
+    top: 30px;
   }
 }
 </style>
