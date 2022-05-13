@@ -1,6 +1,10 @@
 ---
 projects:
   Latest:
+    - name: 'Multichannel Transform'
+      link: 'http://www.hejian.club:8080/multichannel-transform/'
+      desc: 'Transform template from wxml to other miniprogram.'
+      icon: 'i-ic:twotone-transform'
     - name: 'Vue Starport'
       link: 'http://www.hejian.club:8080/'
       desc: 'Shared component across routes with animations.'
