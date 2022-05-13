@@ -7,24 +7,25 @@ title: Simon He
 </ClientOnly>
 
 <Typing>
-  Hey, I am Simon He, a fanatical programmers.
+  Hey, I am Simon He, a fanatical programmers located in Shanghai, China.
 </Typing>
 
-This page is meant to share some of the projects I've done and some of the things I've been doing lately.
+Through this page, I would like to share with you some projects I’ve done and what I’ve been through. 
 
-Recently，i always follow [antfu](https://github.com/antfu), he makes me gain a lot, and I even learn fresh news on Twitter every day and follow the latest github technical information.
+Recently, I have been following [Anthony Fu](https://github.com/antfu) for a couple months, his enthusiasm to coding and dedication really inspired me a lot. Now, I’m used to learning industry news from Twitter and digging myself in those forward-looking feature and innovative ecological technology. 
 
-I'm not typing code for work, just because I love it, I'll be happy to be  a Contributor for some open source projects on GitHubs.
+I’m also an active user on GitHub to communicate with people have same ambition and interests on the latest technical information and ideas. Happy to be one of the contributors for some open-source projects. 
 
-Hopefully more people can join me and love the code they write as much as I do.
+Moreover, highly recommend my terminal configuration through the link [here](/posts/ohMyZsh-alias) and hope this could bring you some convenience during your encoding process.  
 
-If you have any technical questions, you are welcome to come and talk to me.
+I wanna say - I don’t regard it as my work, it’s an indispensable part of my life. How about you? Join me to fall in love with coding along this journey. 
 
-By the way, I would like to share my [zshrc configuration](https://github.com/Simon-He95/directory-configuration) with you, hoping to bring you the convenience of encoding.
+I’m eagerly to have in-depth communication with you and looking forward to hearing your voice via below listed channels. 
+
 
 ***
 
-Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [知乎](https://www.zhihu.com/people/zka0cr).
+Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [Zhihu](https://www.zhihu.com/people/zka0cr).
 
 Mail me at [hi@Simon](mailto:674949287@qq.com).
 Chat with the community at [my Discord Server](https://discord.gg/r4hjJ6WT).
