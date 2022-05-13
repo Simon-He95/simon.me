@@ -13,6 +13,7 @@ duration: 8min
   ``` bash
   #1. run
   run package d # pnpm中会filter到package.json中的script(d是dev的缩写)
+  # 示例:
   run package i vue pinia -D # 安装vue 和 pinia 到package下的devdepdencies
   run package un vue pinia -D # 卸载package下devdepdencies的 vue 和 pinia
 
@@ -166,8 +167,7 @@ ignore() {
     return
   fi
   echo "...正在生成.gitignore"
-  touch .gitignore
-                 # 创建文件
+  touch .gitignore  # 创建文件
   echo "*.DS_Store  \nnode_modules \n*.log \nidea/ \n*.local \n.DS_Store \ndist \n.cache \n.idea \nlogs \n&-debug.log \n*-error.log" >>.gitignore # 添加内容
 }
 ```
