@@ -1,3 +1,5 @@
+![:)](https://pics.prcm.jp/fbe5da84d6e32/55910028/jpeg/55910028_339x636.jpeg)
+
 **[simon.me](http://www.hejian.club/)**
 
 my personal website powered by [Vite](https://vitejs.dev/)
