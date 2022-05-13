@@ -26,5 +26,5 @@ By the way, I would like to share my [zshrc configuration](https://github.com/Si
 
 Find me on [GitHub](https://github.com/Simon-He95), [Twitter](https://twitter.com/simon_he1995), [知乎](https://www.zhihu.com/people/zka0cr).
 
-Mail me at [hi@Simon](mailto:13917107469@163.com).
+Mail me at [hi@Simon](mailto:674949287@qq.com).
 Chat with the community at [my Discord Server](https://discord.gg/r4hjJ6WT).

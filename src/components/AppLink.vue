@@ -8,10 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 const props = defineProps<{
   to: string;
+  title: string;
 }>();
 
 const isExternalLink = computed(() => {

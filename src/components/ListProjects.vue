@@ -35,7 +35,6 @@ defineProps<{ projects: Record<string, any[]> }>();
       </a>
     </div>
   </template>
-  <cd />
 </template>
 
 <style scoped>

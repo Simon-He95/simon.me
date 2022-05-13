@@ -43,6 +43,7 @@ const posts = computed(() =>
       :key="route.path"
       class="item block font-normal mb-6 mt-2 no-underline"
       :to="route.path"
+      :title="route.title"
     >
       <li class="no-underline">
         <div class="title text-lg">
@@ -60,5 +61,4 @@ const posts = computed(() =>
       </li>
     </app-link>
   </ul>
-  <cd />
 </template>
