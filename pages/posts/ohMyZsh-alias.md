@@ -158,4 +158,16 @@ tag() {
     git tag -a $tagname -m $detail
   fi
 }
+
+# 自动生成.gitignore
+ignore() {
+  if [ -f ".gitignore" ]; then
+    echo "gitignore已存在"
+    return
+  fi
+  echo "...正在生成.gitignore"
+  touch .gitignore
+                 # 创建文件
+  echo "*.DS_Store  \nnode_modules \n*.log \nidea/ \n*.local \n.DS_Store \ndist \n.cache \n.idea \nlogs \n&-debug.log \n*-error.log" >>.gitignore # 添加内容
+}
 ```
