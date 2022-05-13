@@ -34,7 +34,7 @@ projects:
       link: 'http://www.hejian.club:8080/canvas/plum/index.html'
       desc: 'A plum animation with canvas.'
       icon: 'i-emojione-monotone:wilted-flower'
-    - name: 'Douyin'
+    - name: 'Tik Tok'
       link: 'http://www.hejian.club:8080/canvas/vue3.0%E6%8A%96%E9%9F%B3/index.html'
       desc: 'A simple demo mock douyin.'
       icon: 'i-clarity:music-note-solid'
