@@ -24,6 +24,12 @@ duration: 8min
 
   #4 updateVersion
   updateVersion # 更新版本号,自动提交commit:chore: update version并推送
+  
+  #5 ignore
+  ignore # 生成一个.ignore文件模板
+
+  #6 init
+  init # 初始化package.json 可以提前预设一下npm config author的基本信息和license
   ```
   
  #### 完整的alias:
