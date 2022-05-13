@@ -8,11 +8,12 @@ description: syntax sugar.
 
 
 > [Discussions Details](https://github.com/vuejs/rfcs/discussions/369)
+
+> 中文 [Chinese Version](/posts/reactivitytransform-zh)
   ## syntax sugar $()
 
-  ```markdown 
-    Introduce a set of compiler transforms to improve ergonomics when using Vue's reactivity APIs, specifically to be able to use refs without .value.
-  ```      
+   <p> Introduce a set of compiler transforms to improve ergonomics when using Vue's reactivity APIs, specifically to be able to use refs without .value.</p>
+
   #### Basic example
   ```js
   // declaring a reactive variable backed by an underlying ref

@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": " cross-env NODE_ENV=production vite-ssg build",
-    "dev": "vite --port 3333 --open",
+    "dev": "vite --port 3000 --open",
     "preview": "vite preview",
     "static": "rimraf temp && degit antfu/static temp --force && esno scripts/copy-sponsors",
     "redirects": "esno scripts/redirects.ts"

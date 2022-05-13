@@ -8,9 +8,6 @@
 
 <script setup lang="ts">
 const props = defineProps(["foo", "bar"]);
-const { foo } = props;
-// const [foo] = props;
-console.log(foo);
 useHead({
   meta: [
     { property: "og:title", content: "Simon He" },

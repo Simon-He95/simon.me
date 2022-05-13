@@ -7,20 +7,6 @@ function preload() {
 onMounted(() => {
   preload();
 });
-watch(isDark, () => {
-  console.log(isDark.value);
-  if (isDark.value) {
-    color.value = "#fff";
-  } else {
-    color.value = "#eee";
-  }
-});
-const color = ref();
-if (isDark.value) {
-  color.value = "rgba(255, 255, 255, 0.9)";
-} else {
-  color.value = "#eee";
-}
 </script>
 
 <template>
