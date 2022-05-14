@@ -12,7 +12,7 @@
   "author": "Simon He",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Simon-He95/simon.me"
+    "url": "git+https://github.com/Simon-He95/simon.me.git"
   },
   "private": true,
   "scripts": {
