@@ -1,4 +1,19 @@
 {
+  "name": "about-simon",
+  "keywords": [
+    "simon",
+    "about",
+    "introduction"
+  ],
+  "files": [
+    "dist"
+  ],
+  "description": "A simple introduction to Simon.",
+  "author": "Simon He",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simon-He95/simon.me"
+  },
   "private": true,
   "scripts": {
     "build": " cross-env NODE_ENV=production vite-ssg build",
