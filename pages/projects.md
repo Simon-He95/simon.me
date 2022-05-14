@@ -1,6 +1,10 @@
 ---
 projects:
   Latest:
+    - name: 'N Puzzle'
+      link: 'http://www.hejian.club:8080/n-puzzle/'
+      desc: 'Start your N Puzzle game.'
+      icon: 'i-fluent:puzzle-cube-16-filled'
     - name: 'Multichannel Transform'
       link: 'http://www.hejian.club:8080/multichannel-transform/'
       desc: 'Transform template from wxml to other miniprogram.'
@@ -19,7 +23,7 @@ projects:
       icon: 'i-mdi:mine'
     - name: 'TypeWriting'
       link: 'http://www.hejian.club:8080/type-writing/'
-      desc: 'Type writing with javascript generator Function and google diff'
+      desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   History:
     - name: 'Snake'
@@ -36,7 +40,7 @@ projects:
       icon: 'i-emojione-monotone:wilted-flower'
     - name: 'Tik Tok'
       link: 'http://www.hejian.club:8080/canvas/vue3.0%E6%8A%96%E9%9F%B3/index.html'
-      desc: 'A simple demo mock douyin.'
+      desc: 'A simple demo mock Tik Tok.'
       icon: 'i-clarity:music-note-solid'
     - name: 'Eleme'
       link: 'http://www.hejian.club:8080/eleme/'
