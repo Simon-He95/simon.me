@@ -1,6 +1,10 @@
 ---
 projects:
   Latest:
+    - name: 'Vivid Typing'
+      link: 'https://www.npmjs.com/package/vivid-typing'
+      desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
+      icon: 'i-icon-park-outline:type-drive'
     - name: 'N Puzzle'
       link: 'http://www.hejian.club:8080/n-puzzle/'
       desc: 'Start your N Puzzle game.'
