@@ -1,6 +1,10 @@
 ---
 projects:
   Latest:
+    - name: 'Matching Game'
+      link: 'https://matching-game.hejian.club/'
+      desc: 'Matching Game based on spilting pic with canvas!'
+      icon: 'i-arcticons:parimatchru'
     - name: 'Vivid Typing'
       link: 'https://www.npmjs.com/package/vivid-typing'
       desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
