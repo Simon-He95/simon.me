@@ -1,6 +1,10 @@
 ---
 projects:
   Latest:
+    - name: 'Find Gold'
+      link: 'http://find-gold.hejian.club/'
+      desc: 'Find Gold in darkness.Start your game!'
+      icon: 'i-mdi:gold'
     - name: 'Matching Game'
       link: 'https://matching-game.hejian.club/'
       desc: 'Matching Game based on spilting pic with canvas!'
