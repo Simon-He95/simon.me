@@ -6,9 +6,7 @@ title: Simon He
   <Plum/>
 </ClientOnly>
 
-<Typing>
-  Hey, I am Simon He, a fanatical programmers located in Shanghai, China.
-</Typing>
+<vivid-typing  content="Hey, I am Simon He, a fanatical programmers located in Shanghai, China." />
 
 Through this page, I would like to share with you some projects I’ve done and what I’ve been through. 
 
