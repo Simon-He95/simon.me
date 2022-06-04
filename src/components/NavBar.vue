@@ -59,14 +59,6 @@ onMounted(() => {
           <div i-bi:display class="md:hidden iconMove" />
         </router-link>
         <a
-          href="https://github.com/Simon-He95/directory-configuration"
-          target="_blank"
-          title="Config"
-          class="lt-md:hidden"
-        >
-          <div i-ri-sticky-note-line />
-        </a>
-        <a
           href="https://twitter.com/simon_he1995"
           target="_blank"
           title="Twitter"

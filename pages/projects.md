@@ -1,4 +1,6 @@
 ---
+title: projects - Simon He
+display: ''
 projects:
   Latest:
     - name: 'Find Gold'
@@ -9,10 +11,6 @@ projects:
       link: 'https://matching-game.hejian.club/'
       desc: 'Matching Game based on spilting pic with canvas!'
       icon: 'i-arcticons:parimatchru'
-    - name: 'Vivid Typing'
-      link: 'https://www.npmjs.com/package/vivid-typing'
-      desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
-      icon: 'i-icon-park-outline:type-drive'
     - name: 'N Puzzle'
       link: 'https://n-puzzle.hejian.club/'
       desc: 'Start your N Puzzle game.'
@@ -37,6 +35,15 @@ projects:
       link: 'https://type-writing.hejian.club/'
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
+  Npm:
+    - name: 'Verify Form'
+      link: 'https://www.npmjs.com/package/verify-form'
+      desc: 'Verify Form is a simple form validation library for Vue.js Form.'
+      icon: 'i-dashicons:forms'
+    - name: 'Vivid Typing'
+      link: 'https://www.npmjs.com/package/vivid-typing'
+      desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
+      icon: 'i-icon-park-outline:type-drive'
   History:
     - name: 'Snake'
       link: 'https://snake.hejian.club/'

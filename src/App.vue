@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(["foo", "bar"]);
 useHead({
   meta: [
     { property: "og:title", content: "Simon He" },
