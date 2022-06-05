@@ -22,7 +22,7 @@ onMounted(() => {
       to="/"
       focusable="false"
     >
-      <img md:border-rd-0 border-rd-full src="/black.png" alt="logo" />
+      <img border-rd-full src="/black.png" alt="logo" />
       <div overflow-hidden m-t-2>
         <vivid-typing
           flex="~"
