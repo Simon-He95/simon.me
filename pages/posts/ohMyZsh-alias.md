@@ -11,7 +11,9 @@ duration: 8min
   #### 个人觉得比较好用的alias:
   
   ``` bash
-  #1. run
+  #1. run 
+  ## 前提需要workspace中的package的name:"shared" => run shared d
+  ## 另一种方式是直接在script中使用npm -C workspace run d
   run package d # pnpm中会filter到package.json中的script(d是dev的缩写)
   # 示例:
   run package i vue pinia -D # 安装vue 和 pinia 到package下的devdepdencies
@@ -31,6 +33,9 @@ duration: 8min
 
   #6 init
   init # 初始化package.json 可以提前预设一下npm config author的基本信息和license
+
+  #7 use
+  use npm # nrm 快速切换源
   ```
   
  #### 完整的alias:
@@ -51,11 +56,12 @@ alias t="nr test"
 alias t="nr test -u"
 alias w="nr watch"
 alias lint="nr lint"
-alias lintf="nr lint --fix"
+alias lintf="nr lint:fix"
 alias s="nr start"
 alias p="nr play"
 alias pr="nr preview"
 alias pb="nr play:build"
+alias release="npm run release"
 alias updateVersion="git add . && git commit -m 'chore: update version' && git push"
 alias clean="git add . && git commit -m 'chore: clean' && git push"
 alias v="npm view"
@@ -103,7 +109,7 @@ alias flog="git reflog"
 alias see="ps -ef|grep"
 
 #--------------------------#
-# Pnpm
+# pnpm
 # -------------------------#
 
 run() {
