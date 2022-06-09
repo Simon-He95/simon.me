@@ -22,7 +22,7 @@ onMounted(() => {
       to="/"
       focusable="false"
     >
-      <img border-rd-full src="/black.png" alt="logo" />
+      <img border-rd-full src="/black.png" class="boxshadow" alt="logo" />
       <div overflow-hidden m-t-2>
         <vivid-typing
           flex="~"
@@ -81,6 +81,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.boxshadow {
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
 .header h1 {
   margin-bottom: 0;
 }
