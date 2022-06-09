@@ -1,125 +1,137 @@
 <template>
-  <div class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none" style="z-index: -1">
+  <div
+    class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none"
+    style="z-index: -1"
+  >
     <canvas ref="el" width="400" height="400" />
   </div>
 </template>
 
-<script setup='props' lang='ts'>
-import type { Fn } from '@vueuse/core'
+<script setup="props" lang="ts">
+import type { Fn } from "@vueuse/core";
 
-const r180 = Math.PI
-const r90 = Math.PI / 2
-const r15 = Math.PI / 12
-const color = '#88888825'
+const r180 = Math.PI;
+const r90 = Math.PI / 2;
+const r15 = Math.PI / 12;
+const color = "#88888825";
 
-const el = ref<HTMLCanvasElement | null>(null)
+const el = ref<HTMLCanvasElement | null>(null);
 
-const { random } = Math
-const size = reactive(useWindowSize())
+const { random } = Math;
+const size = reactive(useWindowSize());
 
-const start = ref<Fn>(() => {})
-const init = ref(4)
-const len = ref(6)
-const stopped = ref(false)
+const start = ref<Fn>(() => {});
+const init = ref(4);
+const len = ref(6);
+const stopped = ref(false);
 
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
-  const ctx = canvas.getContext('2d')!
+  const ctx = canvas.getContext("2d")!;
 
-  const dpr = window.devicePixelRatio || 1
+  const dpr = window.devicePixelRatio || 1;
   // @ts-expect-error vendor
-  const bsr = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+  const bsr =
+    ctx.webkitBackingStorePixelRatio ||
+    ctx.mozBackingStorePixelRatio ||
+    ctx.msBackingStorePixelRatio ||
+    ctx.oBackingStorePixelRatio ||
+    ctx.backingStorePixelRatio ||
+    1;
 
-  const dpi = _dpi || dpr / bsr
+  const dpi = _dpi || dpr / bsr;
 
-  canvas.style.width = `${width}px`
-  canvas.style.height = `${height}px`
-  canvas.width = dpi * width
-  canvas.height = dpi * height
-  ctx.scale(dpi, dpi)
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  canvas.width = dpi * width;
+  canvas.height = dpi * height;
+  ctx.scale(dpi, dpi);
 
-  return { ctx, dpi }
+  return { ctx, dpi };
 }
 
 function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
-  const dx = r * Math.cos(theta)
-  const dy = r * Math.sin(theta)
-  return [x + dx, y + dy]
+  const dx = r * Math.cos(theta);
+  const dy = r * Math.sin(theta);
+  return [x + dx, y + dy];
 }
 
-onMounted(async() => {
-  const canvas = el.value!
-  const { ctx } = initCanvas(canvas, size.width, size.height)
-  const { width, height } = canvas
+onMounted(async () => {
+  const canvas = el.value!;
+  const { ctx } = initCanvas(canvas, size.width, size.height);
+  const { width, height } = canvas;
 
-  let steps: Fn[] = []
-  let prevSteps: Fn[] = []
+  let steps: Fn[] = [];
+  let prevSteps: Fn[] = [];
 
-  let iterations = 0
+  let iterations = 0;
+  let colorSwitch = Math.random() > 0.5;
 
   const step = (x: number, y: number, rad: number) => {
-    const length = random() * len.value
+    const length = random() * len.value;
+    const [nx, ny] = polar2cart(x, y, length, rad);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(nx, ny);
+    ctx.stroke();
+    const r = 2 + Math.random() * 2;
+    if (colorSwitch)
+      ctx.fillStyle =
+        Math.random() > 0.5 ? "rgba(241,158,194,.1)" : "rgba(255,192,203,.1)";
+    else
+      ctx.fillStyle =
+        Math.random() > 0.5 ? "rgba(255,255,100,.1)" : "rgba(255,255,240,.1)";
+    ctx.arc(nx, ny, 1.5, 0, Math.PI);
+    ctx.fill();
 
-    const [nx, ny] = polar2cart(x, y, length, rad)
+    const rad1 = rad + random() * r15;
+    const rad2 = rad - random() * r15;
 
-    ctx.beginPath()
-    ctx.moveTo(x, y)
-    ctx.lineTo(nx, ny)
-    ctx.stroke()
+    if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100) return;
 
-    const rad1 = rad + random() * r15
-    const rad2 = rad - random() * r15
+    if (iterations <= init.value || random() > 0.5) steps.push(() => step(nx, ny, rad1));
+    if (iterations <= init.value || random() > 0.5) steps.push(() => step(nx, ny, rad2));
+  };
 
-    if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100)
-      return
+  let lastTime = performance.now();
+  const interval = 1000 / 40;
 
-    if (iterations <= init.value || random() > 0.5)
-      steps.push(() => step(nx, ny, rad1))
-    if (iterations <= init.value || random() > 0.5)
-      steps.push(() => step(nx, ny, rad2))
-  }
-
-  let lastTime = performance.now()
-  const interval = 1000 / 40
-
-  let controls: ReturnType<typeof useRafFn>
+  let controls: ReturnType<typeof useRafFn>;
 
   const frame = () => {
-    if (performance.now() - lastTime < interval)
-      return
+    if (performance.now() - lastTime < interval) return;
 
-    iterations += 1
-    prevSteps = steps
-    steps = []
-    lastTime = performance.now()
+    iterations += 1;
+    prevSteps = steps;
+    steps = [];
+    lastTime = performance.now();
 
     if (!prevSteps.length) {
-      controls.pause()
-      stopped.value = true
+      controls.pause();
+      stopped.value = true;
     }
-    prevSteps.forEach(i => i())
-  }
+    prevSteps.forEach((i) => i());
+  };
 
-  controls = useRafFn(frame, { immediate: false })
+  controls = useRafFn(frame, { immediate: false });
 
   start.value = () => {
-    controls.pause()
-    iterations = 0
-    ctx.clearRect(0, 0, width, height)
-    ctx.lineWidth = 1
-    ctx.strokeStyle = color
-    prevSteps = []
+    controls.pause();
+    iterations = 0;
+    ctx.clearRect(0, 0, width, height);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = color;
+    prevSteps = [];
     steps = [
       () => step(random() * size.width, 0, r90),
       () => step(random() * size.width, size.height, -r90),
       () => step(0, random() * size.height, 0),
       () => step(size.width, random() * size.height, r180),
-    ]
-    if (size.width < 500)
-      steps = steps.slice(0, 2)
-    controls.resume()
-    stopped.value = false
-  }
+    ];
+    if (size.width < 500) steps = steps.slice(0, 2);
+    controls.resume();
+    stopped.value = false;
+  };
 
-  start.value()
-})
+  start.value();
+});
 </script>
