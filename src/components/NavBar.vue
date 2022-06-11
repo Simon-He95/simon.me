@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { isDark } from "~/logics";
+import { isDark } from '~/logics'
 function preload() {
-  const Image = document.createElement("img");
-  Image.src = "/black.png";
+  const Image = document.createElement('img')
+  Image.src = '/black.png'
 }
 onMounted(() => {
-  preload();
-});
+  preload()
+})
 </script>
 
 <template>
@@ -22,11 +22,11 @@ onMounted(() => {
       to="/"
       focusable="false"
     >
-      <img border-rd-full src="/black.png" class="boxshadow" alt="logo" />
+      <img border-rd-full src="/black.png" class="boxshadow" alt="logo">
       <div overflow-hidden m-t-2>
         <vivid-typing
           flex="~"
-          :scrollX="true"
+          :scroll-x="true"
           items-center
           justify-center
           content="Home"
@@ -34,7 +34,7 @@ onMounted(() => {
           text-sm
           font-bold
           style="white-space: nowrap"
-        ></vivid-typing>
+        />
       </div>
     </router-link>
 
@@ -44,18 +44,12 @@ onMounted(() => {
         <router-link to="/posts" title="Blog">
           <span class="lt-md:hidden BlogMove">
             Blog
-            <div class="white"></div>
+            <div class="white" />
           </span>
           <div i-ri-article-line md:hidden />
         </router-link>
         <router-link to="/projects" title="Projects">
-          <span class="lt-md:hidden projectMove"
-            ><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span
-            ><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span
-            ><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span
-            ><span style="--delay: 0.6s">t</span
-            ><span style="--delay: 0.7s">s</span></span
-          >
+          <span class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
           <div i-bi:display class="md:hidden iconMove" />
         </router-link>
         <a

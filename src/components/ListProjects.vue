@@ -1,21 +1,23 @@
 <script setup lang="ts">
-defineProps<{ projects: Record<string, any[]> }>();
-const message = ref("List of projects that I am proud of");
+defineProps<{ projects: Record<string, any[]> }>()
+const message = ref('List of projects that I am proud of')
 function finish() {
-  if (message.value === "List of projects that I am proud of")
-    message.value = "List of projects";
-  else message.value = "List of projects that I am proud of";
+  if (message.value === 'List of projects that I am proud of')
+    message.value = 'List of projects'
+  else message.value = 'List of projects that I am proud of'
 }
 </script>
 
 <template>
   <div class="prose m-auto mb-8">
-    <h1 class="mb-0 animateTitle">Projects</h1>
+    <h1 class="mb-0 animateTitle">
+      Projects
+    </h1>
     <vivid-typing
       :content="message"
       :finish="finish"
       class="opacity-50 !-mt-6 italic animateContent"
-    ></vivid-typing>
+    />
   </div>
   <template v-for="key in Object.keys(projects)" :key="key">
     <h4 class="mt-10 font-bold">
@@ -35,7 +37,7 @@ function finish() {
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
-          <vivid-typing :content="item.name" cla ss="text-normal"></vivid-typing>
+          <vivid-typing :content="item.name" cla ss="text-normal" />
           <div class="desc text-sm opacity-50 font-normal" v-html="item.desc" />
         </div>
       </a>

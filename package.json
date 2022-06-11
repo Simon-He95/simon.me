@@ -1,26 +1,29 @@
 {
   "name": "about-simon",
+  "private": true,
+  "packageManager": "pnpm@6.32.3",
+  "description": "A simple introduction to Simon.",
   "keywords": [
     "simon",
     "about",
     "introduction"
   ],
-  "files": [
-    "dist"
-  ],
-  "description": "A simple introduction to Simon.",
   "author": "Simon He",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Simon-He95/simon.me.git"
   },
-  "private": true,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": " cross-env NODE_ENV=production vite-ssg build",
     "dev": "vite --port 3000 --open",
     "preview": "vite preview",
     "static": "rimraf temp && degit antfu/static temp --force && esno scripts/copy-sponsors",
-    "redirects": "esno scripts/redirects.ts"
+    "redirects": "esno scripts/redirects.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@vueuse/core": "^8.2.5",

@@ -1,61 +1,63 @@
 <script setup lang="ts">
-import { formatDate } from "~/logics";
+import { formatDate } from '~/logics'
 
 defineProps({
   frontmatter: {
     type: Object,
     required: true,
   },
-});
+})
 
-const router = useRouter();
-const route = useRoute();
-const content = ref<HTMLDivElement>();
+const router = useRouter()
+const route = useRoute()
+const content = ref<HTMLDivElement>()
 
 onMounted(() => {
   const navigate = () => {
     if (location.hash) {
       document
         .querySelector(decodeURIComponent(location.hash))
-        ?.scrollIntoView({ behavior: "smooth" });
+        ?.scrollIntoView({ behavior: 'smooth' })
     }
-  };
+  }
 
   const handleAnchors = (event: MouseEvent & { target: HTMLElement }) => {
-    const link = event.target.closest("a");
+    const link = event.target.closest('a')
 
     if (
-      !event.defaultPrevented &&
-      link &&
-      event.button === 0 &&
-      link.target !== "_blank" &&
-      link.rel !== "external" &&
-      !link.download &&
-      !event.metaKey &&
-      !event.ctrlKey &&
-      !event.shiftKey &&
-      !event.altKey
+      !event.defaultPrevented
+      && link
+      && event.button === 0
+      && link.target !== '_blank'
+      && link.rel !== 'external'
+      && !link.download
+      && !event.metaKey
+      && !event.ctrlKey
+      && !event.shiftKey
+      && !event.altKey
     ) {
-      const url = new URL(link.href);
-      if (url.origin !== window.location.origin) return;
+      const url = new URL(link.href)
+      if (url.origin !== window.location.origin)
+        return
 
-      event.preventDefault();
-      const { pathname, hash } = url;
+      event.preventDefault()
+      const { pathname, hash } = url
       if (hash && (!pathname || pathname === location.pathname)) {
-        window.history.replaceState({}, "", hash);
-        navigate();
-      } else {
-        router.push({ path: pathname, hash });
+        window.history.replaceState({}, '', hash)
+        navigate()
+      }
+      else {
+        router.push({ path: pathname, hash })
       }
     }
-  };
+  }
 
-  useEventListener(window, "hashchange", navigate);
-  useEventListener(content.value!, "click", handleAnchors, { passive: false });
+  useEventListener(window, 'hashchange', navigate)
+  useEventListener(content.value!, 'click', handleAnchors, { passive: false })
 
-  navigate();
-  setTimeout(navigate, 500);
-});
+  navigate()
+  setTimeout(navigate, 500)
+})
 </script>
 
 <template>

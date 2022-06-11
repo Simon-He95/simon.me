@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import { englishOnly } from "../logics";
+import { useRoute } from 'vue-router'
+import { englishOnly } from '../logics'
 
-const inactiveStyle = "opacity-20 hover:opacity-50";
+const inactiveStyle = 'opacity-20 hover:opacity-50'
 
-const route = useRoute();
+const route = useRoute()
 </script>
 
 <template>

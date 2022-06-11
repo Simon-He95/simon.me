@@ -25,21 +25,21 @@ description: 语法糖.
 
   function inc() {
     // 任然是响应式的
-   count++
+    count++
   }
   ```
   #### 原本使用
 ```js
 
-  import { watchEffect, ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
-  const count = ref(1)
+const count = ref(1)
 
-  watchEffect(() => console.log(count.value))
+watchEffect(() => console.log(count.value))
 
-  function inc() {
-    count.value++
-  }
+function inc() {
+  count.value++
+}
   ```
 
   此版本的行为与原始版本完全相同，但请注意，我们不再需要使用 .value。事实上，这使得我们的JS / TS代码的工作方式与Vue模板中的工作方式相同，其中根级引用会自动解包。
@@ -66,9 +66,9 @@ description: 语法糖.
   export default {
     plugins: [
       vue({
-        reactivityTransform: true
-      })
-    ]
+        reactivityTransform: true,
+      }),
+    ],
   }
   ```
 
@@ -78,17 +78,17 @@ description: 语法糖.
   ```js
   // vite.config.js
   module.exports = {
-  chainWebpack: (config) => {
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap((options) => {
-        return {
-          ...options,
-          reactivityTransform: true
-        }
-      })
-    }
+    chainWebpack: (config) => {
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .tap((options) => {
+          return {
+            ...options,
+            reactivityTransform: true,
+          }
+        })
+    },
   }
   ```
 
@@ -104,11 +104,11 @@ description: 语法糖.
           test: /\.vue$/,
           loader: 'vue-loader',
           options: {
-            reactivityTransform: true
-          }
-        }
-      ]
-    }
+            reactivityTransform: true,
+          },
+        },
+      ],
+    },
   }
   ```
 

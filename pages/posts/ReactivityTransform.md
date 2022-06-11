@@ -25,21 +25,21 @@ description: syntax sugar.
 
   function inc() {
     // assignments are reactive
-   count++
+    count++
   }
   ```
   #### Compiled Output
 ```js
 
-  import { watchEffect, ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
-  const count = ref(1)
+const count = ref(1)
 
-  watchEffect(() => console.log(count.value))
+watchEffect(() => console.log(count.value))
 
-  function inc() {
-    count.value++
-  }
+function inc() {
+  count.value++
+}
   ```
 
   This version behaves exactly the same as the original version, but notice that we no longer need to use .value. In fact, this makes our JS/TS code work the same way as in Vue templates where root-level refs are automatically unwrapped.
@@ -66,9 +66,9 @@ description: syntax sugar.
   export default {
     plugins: [
       vue({
-        reactivityTransform: true
-      })
-    ]
+        reactivityTransform: true,
+      }),
+    ],
   }
   ```
 
@@ -78,17 +78,17 @@ description: syntax sugar.
   ```js
   // vite.config.js
   module.exports = {
-  chainWebpack: (config) => {
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap((options) => {
-        return {
-          ...options,
-          reactivityTransform: true
-        }
-      })
-    }
+    chainWebpack: (config) => {
+      config.module
+        .rule('vue')
+        .use('vue-loader')
+        .tap((options) => {
+          return {
+            ...options,
+            reactivityTransform: true,
+          }
+        })
+    },
   }
   ```
 
@@ -104,11 +104,11 @@ description: syntax sugar.
           test: /\.vue$/,
           loader: 'vue-loader',
           options: {
-            reactivityTransform: true
-          }
-        }
-      ]
-    }
+            reactivityTransform: true,
+          },
+        },
+      ],
+    },
   }
   ```
 
