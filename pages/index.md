@@ -6,7 +6,7 @@ title: Simon He
   <Plum/>
 </ClientOnly>
 
-<vivid-typing   spilt-tag="span" content="Hey, I am Simon He, a fanatical programmers located in Shanghai, China." />
+<vivid-typing  spilt-tag="span" content="Hey, I am Simon He, a fanatical programmers located  in <%><span i-mi:location></span></%>Shanghai, China." />
 
 Through this page, I would like to share with you some projects I’ve done and what I’ve been through. 
 
@@ -22,7 +22,7 @@ I’m eagerly to have in-depth communication with you and looking forward to hea
 
 
 ***
-
+<span i-mi:location hidden></span>
 Find me on [<span i-carbon:logo-github/>GitHub](https://github.com/Simon-He95), [<span i-carbon:logo-twitter/>Twitter](https://twitter.com/simon_he1995), [<span i-ri:zhihu-fill/>Zhihu](https://www.zhihu.com/people/zka0cr).
 
 Mail me at [hi@Simon](mailto:674949287@qq.com).
