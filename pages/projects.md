@@ -39,11 +39,11 @@ projects:
     - name: 'Verify Form'
       link: 'https://www.npmjs.com/package/verify-form'
       desc: 'Verify Form is a simple form validation library for Vue.js Form.'
-      icon: 'i-dashicons:forms'
+      icon: 'i-pixelarticons:ab-testing'
     - name: 'Vivid Typing'
       link: 'https://www.npmjs.com/package/vivid-typing'
       desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
-      icon: 'i-icon-park-outline:type-drive'
+      icon: 'i-eos-icons:typing'
   History:
     - name: 'Snake'
       link: 'https://snake.hejian.club/'

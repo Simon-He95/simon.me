@@ -20,9 +20,7 @@ function finish() {
     />
   </div>
   <template v-for="key in Object.keys(projects)" :key="key">
-    <h4 class="mt-10 font-bold">
-      {{ key }}
-    </h4>
+    <vivid-typing class="mt-10 font-bold" :content="key" />
     <div class="project-grid py-2 -mx-3 gap-2">
       <a
         v-for="(item, idx) in projects[key]"

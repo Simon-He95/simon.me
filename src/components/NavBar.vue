@@ -12,8 +12,7 @@ onMounted(() => {
 <template>
   <header class="header z-40">
     <router-link
-      w-15
-      h-15
+      w-30
       absolute
       lg:fixed
       m-6
@@ -22,20 +21,7 @@ onMounted(() => {
       to="/"
       focusable="false"
     >
-      <img border-rd-full src="/black.png" class="boxshadow" alt="logo">
-      <div overflow-hidden m-t-2>
-        <vivid-typing
-          flex="~"
-          :scroll-x="true"
-          items-center
-          justify-center
-          content="Home"
-          :speed="5"
-          text-sm
-          font-bold
-          style="white-space: nowrap"
-        />
-      </div>
+      <img border-rd-full src="/signature.png" alt="logo">
     </router-link>
 
     <nav class="nav">
@@ -46,7 +32,7 @@ onMounted(() => {
             Blog
             <div class="white" />
           </span>
-          <div i-ri-article-line md:hidden />
+          <div i-simple-icons:bloglovin md:hidden />
         </router-link>
         <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
