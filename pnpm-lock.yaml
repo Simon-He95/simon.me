@@ -52,7 +52,7 @@ specifiers:
   vite-plugin-yaml: ^1.0.5
   vite-ssg: ^0.19.2
   vite-svg-loader: ^3.2.0
-  vivid-typing: ^1.1.12
+  vivid-typing: ^1.1.14
   vue: ^3.2.31
   vue-router: 4.0.14
 
@@ -109,7 +109,7 @@ devDependencies:
   vite-plugin-yaml: 1.0.5_vite@2.9.1
   vite-ssg: 0.19.2_f864115a7dc8aa6a321e22aaba7e69af
   vite-svg-loader: 3.2.0
-  vivid-typing: 1.1.12
+  vivid-typing: 1.1.14
 
 packages:
 
@@ -6179,8 +6179,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vivid-typing/1.1.12:
-    resolution: {integrity: sha512-N8n4jZA6mZXYokz/U0frKxwKZchYd1qmHtztcWzzT6gu5bL7oU1FhrC6uVceYnRGIolY0OVG7MtgvOTh9btTlw==}
+  /vivid-typing/1.1.14:
+    resolution: {integrity: sha512-Ta07F1sY7iI4gQc8erNl0MpNpu3Uk0gegjAbMM72YwYn48tib0PVUSLGU8x1xSpjJddO2CJ2gZJBzY03kvqcfg==}
     dependencies:
       '@vueuse/core': 8.2.5_vue@3.2.31
       vue: 3.2.31
