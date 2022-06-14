@@ -21,7 +21,12 @@ onMounted(() => {
       to="/"
       focusable="false"
     >
-      <img border-rd-full src="/signature.png" alt="logo">
+      <img
+        border-rd-full
+        src="/signature.png"
+        :class="isDark ? 'brightness' : ''"
+        alt="logo"
+      >
     </router-link>
 
     <nav class="nav">
@@ -61,6 +66,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.brightness {
+  filter: brightness(1500%);
+}
 .boxshadow {
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
     rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
