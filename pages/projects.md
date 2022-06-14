@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'Simon Js Tool'
+      link: 'https://www.npmjs.com/package/simon-js-tool'
+      desc: 'simon-js-tool is a collection of tools function.'
+      icon: 'i-ph:function-bold'
     - name: 'Verify Form'
       link: 'https://www.npmjs.com/package/verify-form'
       desc: 'Verify Form is a simple form validation library for Vue.js Form.'
