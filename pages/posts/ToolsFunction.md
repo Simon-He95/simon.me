@@ -123,7 +123,7 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
 - 可以避免不断的try...catch
 
-## 一些类型判断函数
+## 类型判断
 - isArray(obj) - 判断是否是数组
 - isPlainObject(obj)  - 判断是否是纯对象
 - isFn(obj) - 判断是否是函数
