@@ -6,8 +6,8 @@ lang: zh
 duration: 2day
 ---
 
-## 此文介绍的是封装的工具函数[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-持续更新中，请关注...
+## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
+还在持续更新中，尽情期待...
 
 ## 使用说明
 ```bash
