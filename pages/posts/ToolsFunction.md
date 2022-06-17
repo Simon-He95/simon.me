@@ -44,11 +44,14 @@ interceptError } from 'simon-js-tool' # 按需引入
 
 
 ## deepCompare 
+- params: { obj1: any, obj2: any, ignoreKeys: string[] | RegExp }
+- ignoreKeys忽略指定的keys可以为数组或者正则表达式
 - 比较2个对象的差异返回不同的属性和具体不同的值
 - 返回{error:[],errorMsg:[]} 格式,error对应的是不同的属性，errorMsg对应的是不同的属性的不同的值和位置
 - 如果两个对象相同，则返回{error:[],errorMsg:[]}，error为空，errorMsg为空
 
 ## deepMerge 
+- params:  params: { target: Record<any, any>, ...sources: Record<any, any>[] } => target
 - Object.assign的深度拷贝版本
 - 可以接受多个参数，存在相同层级的相同属性，后者覆盖前者
 - 返回第一个对象
