@@ -3,6 +3,10 @@ title: projects - Simon He
 display: ''
 projects:
   Latest:
+    - name: 'SMessageBox'
+      link: 'https://s-message-box.hejian.club/'
+      desc: 'Design a messageBox of your own and export code to your own project.'
+      icon: 'i-carbon:development'
     - name: 'Find Gold'
       link: 'http://find-gold.hejian.club/'
       desc: 'Find Gold in darkness.Start your game!'
