@@ -103,23 +103,34 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 支持多层级的key
 - 将对象的key转换成需要的key
 
-## VFetch
-- 基于fetch的promise请求封装
+## vFetch
+- 基于fetch的axios api 式promise请求封装
 -  {
   url: string // 请求地址
+  baseURL: string // 公共url前缀
   method?: Method // 请求方式 默认GET 可选值：GET/POST/PUT/DELETE
   headers?: Record<string, string> // 请求头  默认{'Content-Type': 'application/json'}
   credentials?: Credentials // 请求凭证 默认include 支持include,same-origin,omit
   params?: Record<string, string> // 请求参数 默认{}
   timeout?: number  // 超时时间 
-  returnType?: ReturnType // 返回类型 默认json  可选值：json,text,blob,arraybuffer
+  responseType?: ResponseType // 返回类型 默认json  可选值：json,text,blob,arraybuffer
   bodyType?: BodyType // 请求体类型 默认json 可选值："json" | "form" | "file", 根据bodyType的不同，会自动转换成对应的请求体和导入请求头
   cache?: Cache // 缓存类型 默认default 可选值：default、no-cache、reload、force-cache、only-if-cached
   redirect?: Redirect // 重定向类型 默认follow, 可选值：follow-默认跟随重定向，error-抛出错误，manual-手动处理
   mode?: Mode // 请求模式 默认cors, 可选值：no-cors, cors, same-origin
-  firstThen?: (response: Response) => Response  // 第一次请求成功后的回调 默认不做任何操作
+  transformResponse?: (response: Response) => Response  // 第一次请求成功后的回调 在传递给 then/catch 前，允许修改响应数据
+  create // 创建请求实例   baseURL?: string  timeout?: number  headers?: Record<string, string>,携带公共请求参数
+  interceptors // 拦截器 vFetch.interceptors: {
+      use: (successCallback?: Function, errorCallback?: Function) => void
+      success: Function
+      error: Function
+    }
+    response: {
+      ...
+    }
 }
-- new VFetch(options).then(res =>{}, err =>{})
+- 支持vFetch.get .post .put .delete
+- vFetch(options:Record<string,string>).then(res =>{}, err =>{})
 
 ## interceptError
 - 异常拦截
