@@ -3,10 +3,7 @@ title: projects - Simon He
 display: ''
 projects:
   Latest:
-    - name: 'sMessageBox'
-      link: 'https://s-message-box.hejian.club/'
-      desc: 'Design a messageBox of your own and export code to your own project.'
-      icon: 'i-fa:connectdevelop'
+
     - name: 'Find Gold'
       link: 'http://find-gold.hejian.club/'
       desc: 'Find Gold in darkness.Start your game!'
@@ -40,6 +37,14 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'Transform Picture'
+      link: 'https://transform-picture.hejian.club/'
+      desc: 'online transform your upload picture to jpg | jpeg | png | pdf support to download.'
+      icon: 'i-fa:connectdevelop'
+    - name: 'sMessageBox'
+      link: 'https://s-message-box.hejian.club/'
+      desc: 'Design a messageBox of your own and export code to your own project.'
+      icon: 'i-fa:connectdevelop'
     - name: 'Simon Js Tool'
       link: 'https://www.npmjs.com/package/simon-js-tool'
       desc: 'simon-js-tool is a collection of tools function.'
