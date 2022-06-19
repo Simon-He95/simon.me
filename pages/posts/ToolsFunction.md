@@ -105,33 +105,32 @@ interceptError } from 'simon-js-tool' # 按需引入
 
 ## vFetch
 - 基于fetch的axios api 式promise请求封装
--  {
+-  type VFetchConfig = {
   url: string // 请求地址
-  baseURL: string // 公共url前缀
-  method?: Method // 请求方式 默认GET 可选值：GET/POST/PUT/DELETE
-  headers?: Record<string, string> // 请求头  默认{'Content-Type': 'application/json'}
-  credentials?: Credentials // 请求凭证 默认include 支持include,same-origin,omit
-  params?: Record<string, string> // 请求参数 默认{}
-  timeout?: number  // 超时时间 
-  responseType?: ResponseType // 返回类型 默认json  可选值：json,text,blob,arraybuffer
-  bodyType?: BodyType // 请求体类型 默认json 可选值："json" | "form" | "file", 根据bodyType的不同，会自动转换成对应的请求体和导入请求头
-  cache?: Cache // 缓存类型 默认default 可选值：default、no-cache、reload、force-cache、only-if-cached
-  redirect?: Redirect // 重定向类型 默认follow, 可选值：follow-默认跟随重定向，error-抛出错误，manual-手动处理
-  mode?: Mode // 请求模式 默认cors, 可选值：no-cors, cors, same-origin
-  transformResponse?: (response: Response) => Response  // 第一次请求成功后的回调 在传递给 then/catch 前，允许修改响应数据
-  create // 创建请求实例   baseURL?: string  timeout?: number  headers?: Record<string, string>,携带公共请求参数
-  interceptors // 拦截器 vFetch.interceptors: {
-      use: (successCallback?: Function, errorCallback?: Function) => void
-      success: Function
-      error: Function
+  baseURL?: string // 基础url
+  body?: any // body参数 {},GET请求会合并到url后面
+  method?: Method // 请求类型 默认GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' 支持vFetch.get | post | delete | put的形式
+  headers?: Record<string, any> // 请求头 例如: {'Content-Type': 'application/json'} 支持在请求拦截器中设置追加 config.headers.set('x-token', token)
+  credentials?: Credentials // 请求是否带上cookie 默认omit 'include' | 'same-origin' | 'omit' 
+  params?: Record<string, string> // 请求参数 根据bodyType决定是否会被序列化
+  timeout?: number // 超时时间 ms 默认为20000
+  responseType?: ResponseType // 返回类型 默认json 'formData' | 'text' | 'blob' | 'arrayBuffer' | 'json'
+  bodyType?: BodyType // 请求类型 默认json 'json' | 'form' | 'file' 
+  cache?: Cache // 缓存类型 默认不缓存 'no-cache' | 'default' | 'force-cache' | 'only-if-cached' 
+  redirect?: Redirect // 重定向 默认follow follow：跟随重定向，error：抛出错误，manual：手动处理
+  mode?: Mode // cors, no-cors, same-origin 默认cors cors：跨域，no-cors：不跨域，same-origin：同源
+  transformResponse?: (response: Response) => Response // 响应数据转换
+}
+- interceptors: {
+    request: {
+      use: (successCallback // 请求前拦截处理, errorCallback // 错误处理)
     }
     response: {
-      ...
+      use: (successCallback // 响应后成功处理), errorCallback // 响应后失败处理)
     }
-}
-- 支持vFetch.get .post .put .delete
+  }
 - vFetch(options:Record<string,string>).then(res =>{}, err =>{})
-
+- 支持拦截前追加headers， config.headers.set('x-token', token)
 ## interceptError
 - 异常拦截
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数

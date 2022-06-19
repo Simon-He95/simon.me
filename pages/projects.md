@@ -6,7 +6,7 @@ projects:
     - name: 'sMessageBox'
       link: 'https://s-message-box.hejian.club/'
       desc: 'Design a messageBox of your own and export code to your own project.'
-      icon: 'i-carbon:logo-pinterest'
+      icon: 'i-fa:connectdevelop'
     - name: 'Find Gold'
       link: 'http://find-gold.hejian.club/'
       desc: 'Find Gold in darkness.Start your game!'
