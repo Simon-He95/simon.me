@@ -141,6 +141,27 @@ interceptError } from 'simon-js-tool' # 按需引入
 ## jsCookie
 - jsCookie.set('name', 'simon') jsCookie.get('name') => 'simon' jsCookie.remove('name')  jsCookie.get('name') => ''
 
+## uuid
+- 生成uuid 
+- uuid() => '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
+- 支持限制生成的uuid长度和类型 uuid(16, 'hex') => 'a0b1c2d3e4f5' uuid(8, 2) => '11110011'
+
+## formateData
+- 格式化日期
+- formateData(new Date(), 'yyyy-MM-dd') => '2019-01-01'
+
+## monitorPef
+- 数字化浏览器性能指标
+- 重定向时间 重定向次数 首屏时间 上一页卸载时间 浏览器读取缓存时间 DNS解析时间 TCP完成握手时间 HTTP请求响应完成时间 DOM开始加载前所花费时间 DOM加载完成时间 脚本加载时间 onload事件时间 页面完全加载时间 
+
+## getLocation
+- 基于promise封装的获取地理位置信息
+- 高精度 超时时间 缓存时间{ enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
+
+## getDevice
+- 获取系统信息
+- ReturnType { os: 'android', dev: 'chrome' } os:系统 dev:浏览器
+
 ## interceptError
 - 异常拦截
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
