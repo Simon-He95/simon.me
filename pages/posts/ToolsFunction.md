@@ -110,7 +110,7 @@ interceptError } from 'simon-js-tool' # 按需引入
   baseURL?: string // 基础url
   body?: any // body参数 {},GET请求会合并到url后面
   method?: Method // 请求类型 默认GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' 支持vFetch.get | post | delete | put的形式
-  headers?: Record<string, any> // 请求头 例如: {'Content-Type': 'application/json'} 支持在请求拦截器中设置追加 config.headers.set('x-token', token)
+  headers?: Record<string, any> // 请求头 例如: {'Content-Type': 'application/json'} 支持在请求拦截器中设置追加
   credentials?: Credentials // 请求是否带上cookie 默认omit 'include' | 'same-origin' | 'omit' 
   params?: Record<string, string> // 请求参数 根据bodyType决定是否会被序列化
   timeout?: number // 超时时间 ms 默认为20000
@@ -131,6 +131,16 @@ interceptError } from 'simon-js-tool' # 按需引入
   }
 - vFetch(options:Record<string,string>).then(res =>{}, err =>{})
 - 支持拦截前追加headers， config.headers.set('x-token', token)
+
+## stringify
+- stringify({ user: 'simon', age: '18' }) => 'user=simon&age=18'
+
+## parse
+- parse('user=simon&age=18') => { user: 'simon', age: '18' }
+
+## jsCookie
+- jsCookie.set('name', 'simon') jsCookie.get('name') => 'simon' jsCookie.remove('name')  jsCookie.get('name') => ''
+
 ## interceptError
 - 异常拦截
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
