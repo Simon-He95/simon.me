@@ -103,6 +103,10 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 支持多层级的key
 - 将对象的key转换成需要的key
 
+## once
+- once(fn)
+- 只执行一次的函数
+
 ## vFetch
 - 基于fetch的axios api 式promise请求封装
 -  type VFetchConfig = {
@@ -162,6 +166,103 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 获取系统信息
 - ReturnType { os: 'android', dev: 'chrome' } os:系统 dev:浏览器
 
+## preload
+- preload(url: string | string[])
+- 预加载图片
+
+## addScript
+- addScript(url: string)
+- 动态添加script标签
+
+## addStyle
+- addStyle(s: string)
+- 动态添加style标签
+
+## download
+- download(url: string, filename: string)
+- 下载文件
+
+## trim
+- trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
+- 字符串去除空格
+- type: '前空格' | '后空格' | '前后空格' | '所有空格'
+
+## compressCss
+- compressCss(css: string)
+- 压缩css
+
+## scrollToTop
+- 回到顶部
+
+## createEventBus
+- createEventBus() 
+- emit 事件发送
+- on 事件监听
+- off 事件取消
+- 创建发布订阅模式的实例
+
+## randomHexColor
+- randomHexColor()
+- 随机生成十六进制颜色
+
+## randomRgb
+- randomRgb()
+- 随机生成RGB颜色
+
+## httpsRedirect
+- httpsRedirect()
+- https重定向
+
+## scrollToView
+- scrollToView(el: HTMLElement | string)
+- 滚动到指定元素
+
+## getScrollPosition
+- getScrollPosition() => { x: number, y: number }
+- 获取滚动位置
+
+## camelize
+- camelize(str: string)
+- 驼峰化
+
+## hyphenate
+- hyphenate(str: string)
+- 连字符化
+
+## getUrlParam
+- getUrlParam(url: string)
+- 获取url参数
+- 默认不传入url，获取当前页面url参数
+
+## fullScreen
+- fullScreen()
+- 全屏
+
+## exitFullScreen
+- exitFullScreen()
+- 退出全屏
+
+## toBase64
+- toBase64(file: File, type: 'file' | 'blob' | 'url' = 'url')
+- 将blob | file | url转换为base64
+
+## base64ToFile
+- base64ToFile(s: string, name: string)
+- 将base64转换为file
+
+## base64ToBlob
+- base64ToBlob(s: string)
+- 将base64转换为blob
+
+## uppercaseNum
+- uppercaseNum(num: number | string)
+- 将数字转换为大写字母
+
+## formateNum
+- formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'ceil')
+- 将数字格式化
+- integer: 'floor' | 'ceil' 小数截取方式 floor:向下取整 ceil:向上取整
+
 ## interceptError
 - 异常拦截
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
@@ -180,6 +281,10 @@ interceptError } from 'simon-js-tool' # 按需引入
 - isReg(obj)  - 判断是否是正则
 - isSymbol(obj)  - 判断是否是Symbol
 - isPromise(obj)  - 判断是否是Promise
+- isDate(obj) - 判断是否是日期
+- isMobile  - 判断是否是手机号
+- isEmail - 判断是否是邮箱
+- isIdCard  - 判断是否是身份证
 
 ## GitHub地址
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)
