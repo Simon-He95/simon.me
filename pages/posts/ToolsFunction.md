@@ -42,74 +42,171 @@ interceptError } from 'simon-js-tool' # 按需引入
 
 ```
 
-
 ## deepCompare 
-- params: { obj1: any, obj2: any, ignoreKeys: string[] | RegExp }
 - ignoreKeys忽略指定的keys可以为数组或者正则表达式
 - 比较2个对象的差异返回不同的属性和具体不同的值
 - 返回{error:[],errorMsg:[]} 格式,error对应的是不同的属性，errorMsg对应的是不同的属性的不同的值和位置
 - 如果两个对象相同，则返回{error:[],errorMsg:[]}，error为空，errorMsg为空
-
+```javascript
+// params: { obj1: any, obj2: any, ignoreKeys: string[] | RegExp }
+const obj1 = {a:1,b:2,c:3}
+const obj2 = {a:1,b:2,c:3}
+const obj3 = {a:1,b:2,c:4}
+deepCompare(obj1,obj2) // {error:[],errorMsg:[]}
+deepCompare(obj1,obj3) // {error:['c'],errorMsg:['3','4']}
+```
 ## deepMerge 
-- params:  params: { target: Record<any, any>, ...sources: Record<any, any>[] } => target
 - Object.assign的深度拷贝版本
 - 可以接受多个参数，存在相同层级的相同属性，后者覆盖前者
 - 返回第一个对象
-
+```javascript
+// params:  params: { target: Record<any, any>, ...sources: Record<any, any>[] } => target
+const target = { a: 1, b: 2, c: { d: 3, e: 4 } }
+const source1 = { b: 4, c: { d: 5 } }
+const source2 = { c: { e: 6 } }
+const result = deepMerge(target, source1, source2)
+console.log(result) // { a: 1, b: 4, c: { d: 5, e: 6 } }
+```
 ## asyncPool 
 - 控制异步并发执行的数量
 - 参数： limit-控制异步并发执行的数量，tasks-异步任务数组
+```js
+asyncPool(limit, tasks).then((results) => {
+  // results is an array of results
+})
+```
 
 ## quickFind 
 -  quickFind(array: any[], key: any) ,返回一个新的实例
 - 在实例中find方法可以根据key查找对应的项-O(1)
 - set更新或新增项-O(1)
 - delete删除项-O(1)
-
+```javascript
+const find = quickFind([{id:1,name:'simon'},{id:2,name:'simon'},'id'])
+find.find(1)
+find.set({id:1,name:'simon'})
+find.delete(1)
+```
 ## quickFilter 
-- quickFilter(array: any[], key: string | number | Array<string | number>, value: string | number | RegExp)
 - 快速模糊查找key名字的项,value支持正则匹配
-
+```javascript
+// quickFilter(array: any[], key: string | number | Array<string | number>, value: string | number | RegExp)
+const arr = [{name: 'simon', age: 18}, {name: 'simon', age: 18}]
+const arr2 = quickFilter(arr, 'name', 'simon')
+console.log(arr2)
+// [{name: 'simon', age: 18}, {name: 'simon', age: 18}]
+```
 ## deepClone 
 - 支持循环依赖
 - 支持复杂类型
 - 轻量级的深拷贝
-
+```javascript
+const obj = {
+  a: 1,
+  b: {
+    c: 2,
+    d: {
+      e: 3
+    }
+  }
+}
+obj.self = obj
+const obj2 = deepClone(obj)
+```
 ## curry 
-- curry(fn)(1,2)(3)
 - 函数柯里化
+```javascript
+const add = (a, b) => a + b
+const add1 = curry(add)
+const add2 = add1(1)
+const add3 = add2(2)
+add3(3) // 6
+```
 
 ## memorizeFn 
 - 根据参数返回一个能缓存结果的函数
 - 参数：fn-需要缓存的函数
+```javascript
+let count = 0
+const fn = memorizeFn(()=> count++)
+fn()
+fn()
+count => 1
+```
 
 ## debounce 
 -  函数防抖
 -  参数：fn-需要防抖的函数，delay-防抖的时间
-
+```javascript
+const f = debounce(() => {
+  console.log('debounce')
+}, 1000)
+```
 ## throttle 
 - 函数节流
 - 参数：fn-要节流的函数, delay-节流时间
+``` javascript
+  const f = throttle(() => {
+    console.log('throttle')
+  }, 1000)
+```
 
 ## traverse 
-- traverse(arr, { 'family.name'(target: any, index: number, item: any) { console.log(target, index,) } })
 - 遍历对象或数组,快速从options中函数名获取arr中的值
 - 函数接收target-当前遍历的值，index-当前遍历的索引, item-当前遍历的那一项
 - 可以指定多个属性
 - 使用类似与babel的traverse方法
+```javascript
+// traverse(arr, { 'family.name'(target: any, index: number, item: any) { console.log(target, index) } })
+const obj = {
+  name: 'simon',
+  age: 18,
+  family: {
+    name: 'simon',
+    age: 18,
+  },
+}
+traverse(obj, {
+  'family.name'(target: any, index: number, item: any) {
+    console.log(target, index)
+  }
+})
+```
 
 ## transformKey 
-- transformKey(obj, { 'family.name': 'familyName', 'family.age': 'familyAge' })
 - 支持多层级的key
 - 将对象的key转换成需要的key
+```javascript
+// transformKey(obj, { 'family.name': 'familyName', 'family.age': 'familyAge' })
+const obj = {
+  family: {
+    name: 'simon',
+    age: 18
+  },
+  name: 'simon'
+}
+const newObj = transformKey(obj, {
+  'family.name': 'familyName',
+  'family.age': 'familyAge'
+})
+console.log(newObj)
+// { familyName: 'simon', familyAge: 18, name: 'simon' }
+```
+
 
 ## once
-- once(fn)
 - 只执行一次的函数
+```javascript
+document.addEventListener('click', once(() => {
+  console.log('click')
+}))
+```
 
 ## vFetch
 - 基于fetch的axios api 式promise请求封装
--  type VFetchConfig = {
+- 支持拦截前追加headers
+```javascript
+type VFetchConfig = {
   url: string // 请求地址
   baseURL?: string // 基础url
   body?: any // body参数 {},GET请求会合并到url后面
@@ -125,7 +222,7 @@ interceptError } from 'simon-js-tool' # 按需引入
   mode?: Mode // cors, no-cors, same-origin 默认cors cors：跨域，no-cors：不跨域，same-origin：同源
   transformResponse?: (response: Response) => Response // 响应数据转换
 }
-- interceptors: {
+interface Interceptors {
     request: {
       use: (successCallback // 请求前拦截处理, errorCallback // 错误处理)
     }
@@ -133,66 +230,117 @@ interceptError } from 'simon-js-tool' # 按需引入
       use: (successCallback // 响应后成功处理), errorCallback // 响应后失败处理)
     }
   }
-- vFetch(options:Record<string,string>).then(res =>{}, err =>{})
-- 支持拦截前追加headers， config.headers.set('x-token', token)
+  // useage
+vFetch(options:Record<string,string>).then(res =>{}, err =>{})
+```
+
 
 ## stringify
-- stringify({ user: 'simon', age: '18' }) => 'user=simon&age=18'
-
+```javascript
+stringify({ user: 'simon', age: '18' }) => 'user=simon&age=18'
+```
 ## parse
-- parse('user=simon&age=18') => { user: 'simon', age: '18' }
-
+```javascript
+parse('user=simon&age=18') => { user: 'simon', age: '18' }
+```
 ## jsCookie
-- jsCookie.set('name', 'simon') jsCookie.get('name') => 'simon' jsCookie.remove('name')  jsCookie.get('name') => ''
-
+```javascript
+jsCookie.set('name', 'simon') 
+jsCookie.get('name') => 'simon' 
+jsCookie.remove('name')  
+jsCookie.get('name') => ''
+```
 ## uuid
 - 生成uuid 
-- uuid() => '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
-- 支持限制生成的uuid长度和类型 uuid(16, 'hex') => 'a0b1c2d3e4f5' uuid(8, 2) => '11110011'
-
+- 支持限制生成的uuid长度和类型 
+```javascript
+uuid() => '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
+uuid(16, 'hex') => 'a0b1c2d3e4f5' uuid(8, 2) => '11110011'
+```
 ## formateData
 - 格式化日期
-- formateData(new Date(), 'yyyy-MM-dd') => '2019-01-01'
-
+```javascript
+formateData(new Date(), 'yyyy-MM-dd') => '2019-01-01'
+```
 ## monitorPef
 - 数字化浏览器性能指标
 - 重定向时间 重定向次数 首屏时间 上一页卸载时间 浏览器读取缓存时间 DNS解析时间 TCP完成握手时间 HTTP请求响应完成时间 DOM开始加载前所花费时间 DOM加载完成时间 脚本加载时间 onload事件时间 页面完全加载时间 
-
+``` javascript
+monitorPef() 
+/*
+重定向时间	0
+重定向次数	0
+首屏时间	414
+上一页卸载时间	0
+浏览器读取缓存时间	28.200000047683716
+DNS解析时间	0
+TCP完成握手时间	0.3097000000476837
+HTTP请求响应完成时间	0.026600000143051146
+DOM开始加载前所花费时间	0.36460000014305116
+DOM加载完成时间	2.600299999952316
+脚本加载时间	0.00040000009536743164
+onload事件时间	0
+页面完全加载时间	3.0144000000953675
+*/
+```
 ## getLocation
 - 基于promise封装的获取地理位置信息
-- 高精度 超时时间 缓存时间{ enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
-
+- params: 高精度 超时时间 缓存时间
+```javascript
+await getLocation() =>  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
+```
 ## getDevice
 - 获取系统信息
-- ReturnType { os: 'android', dev: 'chrome' } os:系统 dev:浏览器
-
+- os:系统 dev:浏览器
+```javascript
+getDevice() => { os: 'android', dev: 'chrome' }
+```
 ## preload
-- preload(url: string | string[])
 - 预加载图片
+```javascript
+preload('https://img.yzcdn.cn/vant/cat.jpeg')
+preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jpeg'])
+```
 
 ## addScript
-- addScript(url: string)
 - 动态添加script标签
-
+```javascript
+addScript('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
+```
 ## addStyle
-- addStyle(s: string)
 - 动态添加style标签
-
+```javascript
+addStyle(`
+  .test {
+    color: red;
+  }
+`)
+```
 ## download
-- download(url: string, filename: string)
 - 下载文件
+```javascript
+download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
+```
 
 ## trim
-- trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
 - 字符串去除空格
 - type: '前空格' | '后空格' | '前后空格' | '所有空格'
+```javascript
+trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
+```
 
 ## compressCss
-- compressCss(css: string)
 - 压缩css
+- 参数: css: string
+```javascript
+compressCss(css: string) => string
+```
 
 ## scrollToTop
 - 回到顶部
+```javascript
+scrollToTop()
+```
 
 ## createEventBus
 - createEventBus() 
@@ -202,37 +350,55 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 创建发布订阅模式的实例
 
 ## randomHexColor
-- randomHexColor()
 - 随机生成十六进制颜色
+```javascript
+randomHexColor() => '#ff0000'
+```
 
 ## randomRgb
-- randomRgb()
 - 随机生成RGB颜色
+```javascript
+randomRgb() => 'rgb(255,0,0)'
+```
 
 ## httpsRedirect
-- httpsRedirect()
 - https重定向
+```javascript
+httpsRedirect()
+```
 
 ## scrollToView
-- scrollToView(el: HTMLElement | string)
 - 滚动到指定元素
+```javascript
+scrollToView(el: HTMLElement | string)
+```
 
 ## getScrollPosition
-- getScrollPosition() => { x: number, y: number }
 - 获取滚动位置
+```javascript
+getScrollPosition() => { x: number, y: number }
+```
 
 ## camelize
-- camelize(str: string)
 - 驼峰化
+```javascript
+// hello-world
+camelize(str: string) => 'helloWorld'
+```
 
 ## hyphenate
-- hyphenate(str: string)
 - 连字符化
+```javascript
+// helloWorld
+hyphenate(str: string) => 'hello-world'
+```
 
 ## getUrlParam
-- getUrlParam(url: string)
 - 获取url参数
 - 默认不传入url，获取当前页面url参数
+```javascript
+getUrlParam('?name=simon&age=18') => { name: 'simon', age: '18' }
+```
 
 ## fullScreen
 - fullScreen()
@@ -243,30 +409,46 @@ interceptError } from 'simon-js-tool' # 按需引入
 - 退出全屏
 
 ## toBase64
-- toBase64(file: File, type: 'file' | 'blob' | 'url' = 'url')
 - 将blob | file | url转换为base64
+```javascript
+toBase64(file: File, type: 'file' | 'blob' | 'url' = 'url') => string
+```
 
 ## base64ToFile
-- base64ToFile(s: string, name: string)
 - 将base64转换为file
+```javascript
+base64ToFile(s: string, name: string) => File
+```
 
 ## base64ToBlob
-- base64ToBlob(s: string)
 - 将base64转换为blob
+```javascript
+base64ToBlob(s: string) => Blob
+```
 
 ## uppercaseNum
-- uppercaseNum(num: number | string)
 - 将数字转换为大写字母
+```javascript
+// 1 => '一'
+uppercaseNum(num: number | string) => string
+```
 
 ## formateNum
-- formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'ceil')
 - 将数字格式化
 - integer: 'floor' | 'ceil' 小数截取方式 floor:向下取整 ceil:向上取整
+```javascript
+// 12253.123 => 12,253.12
+formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'ceil') => string
+```
 
 ## interceptError
 - 异常拦截
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
 - 可以避免不断的try...catch
+```javascript
+// interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
+interceptError(fn: Function) => Promise<any>
+```
 
 ## 类型判断
 - isArray(obj) - 判断是否是数组
