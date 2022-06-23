@@ -7,38 +7,15 @@ duration: 2day
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-还在持续更新中，尽情期待...
+目前整理了<strong>60+</strong>的常用函数,还在持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 
 ## 使用说明
 ```bash
 npm i simon-js-tool # 安装
 
 import { 
-asyncPool, 
-curry, 
-debounce, 
-deepClone, 
-deepCompare, 
-deepMerge, 
-memorizeFn, 
-quickFilter, 
-quickFind, 
-throttle, 
-transformKey, 
-traverse,
-isFn,
-isStr,
-isNum,
-isPlainObject,
-isUndef,
-isArray,
-isPromise,
-isNaN.
-isSymbol,
-isNull,
-isReg,
-VFetch,
-interceptError } from 'simon-js-tool' # 按需引入
+  deepCompare
+ } from 'simon-js-tool' # 按需引入
 
 ```
 
@@ -156,6 +133,7 @@ const f = debounce(() => {
 - 函数接收target-当前遍历的值，index-当前遍历的索引, item-当前遍历的那一项
 - 可以指定多个属性
 - 使用类似与babel的traverse方法
+- 使用场景：快速提取数据中的某些属性,转换为新的数据结构
 ```javascript
 // traverse(arr, { 'family.name'(target: any, index: number, item: any) { console.log(target, index) } })
 const obj = {
@@ -176,6 +154,7 @@ traverse(obj, {
 ## transformKey 
 - 支持多层级的key
 - 将对象的key转换成需要的key
+- 使用场景: 前端定义字段有后端不一样的key，比如后端的key是id，前端的key是_id
 ```javascript
 // transformKey(obj, { 'family.name': 'familyName', 'family.age': 'familyAge' })
 const obj = {
@@ -300,6 +279,21 @@ getDevice() => { os: 'android', dev: 'chrome' }
 ```javascript
 preload('https://img.yzcdn.cn/vant/cat.jpeg')
 preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jpeg'])
+```
+
+## lazyLoad
+- 图片懒加载
+- params-1: 图片的集合 Element | Element[] | NodeList[] | class | id | tagName 
+- params-2: root 指定相对容器默认是body 
+- params-3: rootMargin 指定相对容器的边距 默认距离容器底部200px时候加载(↑ → ↓ ←) '0px 0px 200px 0px' 
+- params-4: threshold 指定图片加载的阈值
+```javascript
+// usage
+  lazyLoad(document.querySelectorAll("img"));
+  lazyLoad("img[data-src]");
+  lazyLoad(".img-wrapper>img");
+// template
+  <img src="temp" data-src="../public/favicon.svg" alt="" h-10 bg-red />
 ```
 
 ## addScript
@@ -449,6 +443,22 @@ formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'c
 // interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
 interceptError(fn: Function) => Promise<any>
 ```
+## isBottom
+- 判断滚动是否触底
+- distance: 距离底部的距离作为触底的判断标准 默认0
+```javascript
+isBottom(distance: string = 0) => boolean
+```
+
+## calNum
+- 计算数字
+- type: '加' | '减' | '乘' | '除'
+```javascript
+console.log(calNum.add(0.1, 0.2, 0.2)) => 0.5
+console.log(calNum.div(0.1, 0.2, 0.2)) => 2.5
+console.log(calNum.sub(0.1, 0.2, 0.2)) => -0.3
+console.log(calNum.mul(0.1, 0.2, 0.2)) => 0.004
+```
 
 ## 类型判断
 - isArray(obj) - 判断是否是数组
@@ -467,6 +477,8 @@ interceptError(fn: Function) => Promise<any>
 - isMobile  - 判断是否是手机号
 - isEmail - 判断是否是邮箱
 - isIdCard  - 判断是否是身份证
+- isSet(o)  - 判断是否是Set
+- isMap(o)  - 判断是否是Map
 
 ## GitHub地址
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)
