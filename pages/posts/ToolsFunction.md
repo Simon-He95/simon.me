@@ -4,6 +4,7 @@ description: Wish this is the end.
 date: 2022-06-12T22:00:00.000+00:00
 lang: zh
 duration: 2day
+subtitle: 'Author: Simon'
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)

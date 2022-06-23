@@ -4,6 +4,7 @@ description: Wish this is the end.
 date: 2022-05-14T22:00:00.000+00:00
 lang: zh
 duration: 3day
+subtitle: 'Author: Simon'
 ---
 
   ## [在线体验](https://n-puzzle.hejian.club/)

@@ -4,6 +4,7 @@ description: Wish this is the end.
 date: 2022-05-11T22:00:00.000+00:00
 lang: zh
 duration: 8min
+subtitle: 'Author: Simon'
 ---
 
   ## 这篇blog是来分享一下我的terminal,另外推荐一些好用的[vscode插件和配置](https://github.com/Simon-He95/directory-configuration)
@@ -93,6 +94,8 @@ alias ga="git add ."
 alias gs="git status"
 alias gpl="git pull --rebase"
 alias gpf="git push --force"
+alias gpt="git push --tags"
+alias gptf="git push --tags --force"
 alias gcl="git clone"
 alias gp="git push"
 alias gst="git stash"
