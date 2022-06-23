@@ -24,7 +24,7 @@ subtitle: 'Author: Simon'
   tag # 打tag等待你输入tag名称和描述
 
   #3. template
-  template # clone一个vitesse的项目模板,需要安装degit
+  template # clone一个vitesse的项目模板,并自动打开这个项目,需要安装degit
 
   #4 updateVersion
   updateVersion # 更新版本号,自动提交commit:chore: update version并推送
@@ -37,6 +37,16 @@ subtitle: 'Author: Simon'
 
   #7 use
   use npm # nrm 快速切换源
+
+  #8 remove
+  remove # 删除目录或文件
+
+  #9 clone
+  clone # 克隆一个项目,并自动打开这个项目
+
+  #10 p
+  p # 默认执行pnpm run play命令一般配置指向playground的play命令,可能当前不是workspace结构,则执行当前目录下的dev命令运行项目
+
   ```
   
  #### 完整的alias:
