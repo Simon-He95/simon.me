@@ -49,6 +49,7 @@ console.log(result) // { a: 1, b: 4, c: { d: 5, e: 6 } }
 - 控制异步并发执行的数量
 - 参数： limit-控制异步并发执行的数量，tasks-异步任务数组
 ```js
+// limit 并发数量 , tasks httpRequest[]
 asyncPool(limit, tasks).then((results) => {
   // results is an array of results
 })
@@ -298,12 +299,12 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 ```
 
 ## addScript
-- 动态添加script标签
+- 动态添加script标签放 => ead
 ```javascript
 addScript('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
 ```
 ## addStyle
-- 动态添加style标签
+- 动态添加style标签 => head
 ```javascript
 addStyle(`
   .test {
@@ -322,6 +323,10 @@ download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
 - type: '前空格' | '后空格' | '前后空格' | '所有空格'
 ```javascript
 trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
+trim('  h e l l o  ') => 'h e l l o'
+trim('  h e l l o  ', 'pre') => 'h e l l o  '
+trim('  h e l l o  ', 'post') => '  h e l l o'
+trim('  h e l l o  ', 'all') => 'hello'
 ```
 
 ## compressCss
