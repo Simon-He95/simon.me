@@ -39,7 +39,7 @@ subtitle: 'Author: Simon'
   use npm # nrm 快速切换源
 
   #8 remove
-  remove # 删除目录或文件
+  remove # 删除目录或文件 需要全局安装一下rimraf
 
   #9 clone
   clone # 克隆一个项目,并自动打开这个项目
