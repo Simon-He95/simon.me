@@ -8,7 +8,7 @@ subtitle: 'Author: Simon'
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-目前整理了<strong>60+</strong>的常用函数,还在持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>60+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 
 ## 使用说明
 ```bash
@@ -18,6 +18,14 @@ import {
   deepCompare
  } from 'simon-js-tool' # 按需引入
 
+```
+
+## randomDate
+- 随机生成日期
+- 可指定随机范围 start:'1999/01/01' end:'2099/12/31'
+```javascript
+// end默认是当前日期
+randomDate('1999/01/01') // Mon Jun 06 2011 15:11:37 GMT+0800 (中国标准时间) 可再通过formateDate转换为其他格式 如'yyyy-MM-dd'
 ```
 
 ## uniqueArray
@@ -230,10 +238,10 @@ type VFetchConfig = {
 }
 interface Interceptors {
     request: {
-      use: (successCallback // 请求前拦截处理, errorCallback // 错误处理)
+      use: (successCallback /* 请求前拦截处理*/, errorCallback /* 错误处理*/)
     }
     response: {
-      use: (successCallback // 响应后成功处理), errorCallback // 响应后失败处理)
+      use: (successCallback /* 响应后成功处理*/, errorCallback /* 响应后失败处理*/)
     }
   }
   // useage
@@ -263,10 +271,10 @@ jsCookie.get('name') => ''
 uuid() => '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
 uuid(16, 'hex') => 'a0b1c2d3e4f5' uuid(8, 2) => '11110011'
 ```
-## formateData
+## formateDate
 - 格式化日期
 ```javascript
-formateData(new Date(), 'yyyy-MM-dd') => '2019-01-01'
+formateDate(new Date(), 'yyyy-MM-dd') => '2019-01-01'
 ```
 ## monitorPef
 - 数字化浏览器性能指标
