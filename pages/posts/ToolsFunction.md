@@ -8,7 +8,8 @@ subtitle: 'Author: Simon'
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-整理了<strong>60+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>70+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+<div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便洁 <img src="/images/simple.svg" alt="convenient" w-7 style="margin-top:0 !important;margin-bottom:0 !important" m-l-1></div>
 
 ## 使用说明
 ```bash
@@ -18,6 +19,43 @@ import {
   deepCompare
  } from 'simon-js-tool' # 按需引入
 
+```
+
+## log
+- 简化console.log的使用
+```javascript
+log('hello world') # 打印日志
+```
+
+## copy
+- js控制复制的内容
+- copy(str: string): boolean # 成功返回true,失败返回false
+```javascript
+btn.onclick = () =>  {
+  if(copy(textarea.value)){
+    alert('复制成功')
+  }
+}
+```
+
+## getDateList
+- 获取指定日期范围内正负多少天的日期列表
+- getDateList(start: string, day: number = 0) start: 开始日期以/或-分割 1991/03/02 1001-03-02, day: 正负多少天
+
+```javascript
+getDateList('1991/3/02', 7)
+// [ '1991-3-02', '1991-3-03', '1991-3-04', '1991-3-05', '1991-3-06', '1991-3-07', '1991-3-08' ]
+```
+
+## isType
+- `isType(o:any, type:string)`: 判断obj是否是type类型
+- 混合类型判断,type 如果是多种类型,用'|'分隔 如: 缩写 - 'O|S'  全写 - 'Object|String' 
+```javascript
+isType(1, 'Number') // true
+isType('1', 'N') // false
+isType({}, 'O | A') // true (Object | Array)
+isType(new Promise(), 'P') // true (Promise)
+isType(function(){}, 'P | F') // true (Promise | Function)
 ```
 
 ## randomDate
