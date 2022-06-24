@@ -206,7 +206,7 @@ template() {
     return 0
   fi
   echo "正在创建$1目录,下载vitesse-lite模板,请稍等..."
-  npx degit Simon-He95/vitesse-lite $1 && echo '正在打开$1' && code $1
+  npx degit Simon-He95/vitesse-lite $1 && echo "正在打开$1" && code $1
 }
 
 # remove
