@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <section class="lg:w-1/3 flex flex-wrap items-center relative">
+  <section class="lg:w-1/3 flex flex-wrap items-center" fixed left-0 bottom-10>
     <div class="astronaut-wrapper">
       <div class="astronaut" />
     </div>
