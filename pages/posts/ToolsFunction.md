@@ -151,7 +151,7 @@ find.set({id:1,name:'simon'})
 find.delete(1)
 ```
 ## quickFilter 
-- 快速模糊查找key名字的项,value支持正则匹配
+- 快速模糊查找key名字的项和值 如: 'name=/h/'
 ```javascript
 // quickFilter(array: any[], key: string | Array<string>)
     const arr = [
@@ -568,25 +568,13 @@ console.log(calNum.sub(0.1, 0.2, 0.2)) => -0.3
 console.log(calNum.mul(0.1, 0.2, 0.2)) => 0.004
 ```
 
-## 类型判断
-- isArray(obj) - 判断是否是数组
-- isPlainObject(obj)  - 判断是否是纯对象
-- isFn(obj) - 判断是否是函数
-- isStr(obj)  - 判断是否是字符串
-- isNum(obj)  - 判断是否是数字
-- isBool(obj) - 判断是否是布尔值
-- isUndef(obj)  - 判断是否是undefined
-- isNull(obj) - 判断是否是null
-- isNaN(obj)  - 判断是否是NaN
-- isReg(obj)  - 判断是否是正则
-- isSymbol(obj)  - 判断是否是Symbol
-- isPromise(obj)  - 判断是否是Promise
-- isDate(obj) - 判断是否是日期
+## 规则判断
 - isMobile  - 判断是否是手机号
 - isEmail - 判断是否是邮箱
 - isIdCard  - 判断是否是身份证
-- isSet(o)  - 判断是否是Set
-- isMap(o)  - 判断是否是Map
+- hasCn - 判断是否含有中文
+- isFile - 判断是否是File类型
+- isBlob - 判断是否是Blob类型
 
 ## GitHub地址
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)
