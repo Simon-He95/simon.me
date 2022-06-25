@@ -1,35 +1,31 @@
 <script setup lang="ts">
-import { preload } from 'simon-js-tool'
-preload([
-  '/images/white.png',
-  '/images/yellow.png',
-  '/images/red.png',
-  '/images/blue.png',
-  '/images/purple.png',
+import { preload, toBase64 } from 'simon-js-tool'
+const map = Promise.all([
+  toBase64('/images/white.png'),
+  toBase64('/images/yellow.png'),
+  toBase64('/images/red.png'),
+  toBase64('/images/blue.png'),
+  toBase64('/images/purple.png'),
 ])
-const el = ref(null)
-const wrapperEl = ref(null)
+let cache
 const color = ref('white')
 const backgroundImage = ref('url(/images/R.png)')
-function animationend() {
-  backgroundImage.value = 'url(/images/portrait.png)'
-  executorAnimate()
-}
-
-function executorAnimate() {
+async function animationend() {
+  cache = await map
+  backgroundImage.value = `url(${cache[0]})`
   requestAnimationFrame(step)
 }
 let start
 let index = 0
 const bgColors = ['yellow', 'red', 'blue', 'purple', 'white']
 const colors = ['#FEF222', '#8D022B', '#3AEFFB', '##CF78EB', '#ffffff']
+
 function step(timestamp) {
   if (start === undefined)
     start = timestamp
-
   const delta = timestamp - start
-  if (delta > 2000) {
-    backgroundImage.value = `url(/images/${bgColors[index]}.png)`
+  if (delta > 1000) {
+    backgroundImage.value = `url(${cache[index]})`
     color.value = colors[index]
     start = timestamp
     if (index < 4)
@@ -43,7 +39,6 @@ function step(timestamp) {
 <template>
   <section class="lg:w-1/3 flex flex-wrap items-center" fixed left-0 bottom-10>
     <div
-      ref="wrapperEl"
       class="astronaut-wrapper"
       :style="{
         color: 'red',
@@ -51,7 +46,7 @@ function step(timestamp) {
       }"
       @animationend="animationend"
     >
-      <div ref="el" class="astronaut" :style="{ backgroundImage: backgroundImage }" />
+      <div class="astronaut" :style="{ backgroundImage: backgroundImage }" />
     </div>
   </section>
 </template>
@@ -94,7 +89,7 @@ function step(timestamp) {
     position: relative;
     left: 20%;
     top: 30%;
-    animation: flyaway 60s 0s ease-in 1 forwards;
+    animation: flyaway 5s 0s ease-in 1 forwards;
   }
   .astronaut {
     width: 15vmax;
