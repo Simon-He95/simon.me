@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { preload } from 'simon-js-tool'
 preload([
-  '/images/portrait.png',
+  '/images/white.png',
   '/images/yellow.png',
   '/images/red.png',
   '/images/blue.png',
@@ -13,27 +13,30 @@ const color = ref('white')
 const backgroundImage = ref('url(/images/R.png)')
 function animationend() {
   backgroundImage.value = 'url(/images/portrait.png)'
-  setTimeout(yellow, 1000)
+  executorAnimate()
 }
-function yellow() {
-  color.value = '#FEF222'
-  backgroundImage.value = 'url(/images/yellow.png)'
-  setTimeout(red, 1000)
+
+function executorAnimate() {
+  requestAnimationFrame(step)
 }
-function red() {
-  color.value = '#8D022B'
-  backgroundImage.value = 'url(/images/red.png)'
-  setTimeout(blue, 1000)
-}
-function blue() {
-  color.value = '#3AEFFB'
-  backgroundImage.value = 'url(/images/blue.png)'
-  setTimeout(purple, 1000)
-}
-function purple() {
-  color.value = '#CF78EB'
-  backgroundImage.value = 'url(/images/purple.png)'
-  setTimeout(yellow, 1000)
+let start
+let index = 0
+const bgColors = ['yellow', 'red', 'blue', 'purple', 'white']
+const colors = ['#FEF222', '#8D022B', '#3AEFFB', '##CF78EB', '#ffffff']
+function step(timestamp) {
+  if (start === undefined)
+    start = timestamp
+
+  const delta = timestamp - start
+  if (delta > 2000) {
+    backgroundImage.value = `url(/images/${bgColors[index]}.png)`
+    color.value = colors[index]
+    start = timestamp
+    if (index < 4)
+      index++
+    else index = 0
+  }
+  window.requestAnimationFrame(step)
 }
 </script>
 
