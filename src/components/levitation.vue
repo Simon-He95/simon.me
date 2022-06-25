@@ -1,5 +1,51 @@
 <script setup lang="ts">
-import { preload, toBase64 } from 'simon-js-tool'
+import { preload } from 'simon-js-tool'
+
+async function toBase64(o: File | string, type = 'url') {
+  if (type === 'file' || type === 'blob')
+    return await fileToBase64(o as File | Blob)
+  else if (type === 'url')
+    return await urlToBase64(o as string)
+}
+
+function fileToBase64(file: File | Blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    try {
+      reader.onload = function(e) {
+        resolve(e?.target?.result)
+      }
+    }
+    catch (error: any) {
+      reject(new Error(error))
+    }
+  })
+}
+
+function urlToBase64(url: string) {
+  return new Promise((resolve, reject) => {
+    try {
+      const canvas: HTMLCanvasElement = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      img.crossOrigin = 'Anonymous'
+      img.src = `${url}?timeStamp=${new Date().getTime()}`
+      img.onload = function() {
+        ctx?.drawImage(
+          img,
+          0,
+          0,
+          (canvas.width = img.width),
+          (canvas.height = img.height),
+        )
+        resolve(canvas.toDataURL())
+      }
+    }
+    catch (error: any) {}
+  })
+}
+
 const map = Promise.all([
   toBase64('/images/white.png'),
   toBase64('/images/yellow.png'),
@@ -17,8 +63,7 @@ async function animationend() {
 }
 let start
 let index = 0
-const bgColors = ['yellow', 'red', 'blue', 'purple', 'white']
-const colors = ['#FEF222', '#8D022B', '#3AEFFB', '##CF78EB', '#ffffff']
+const colors = ['#ffffff', '#FEF222', '#8D022B', '#3AEFFB', '##CF78EB']
 
 function step(timestamp) {
   if (start === undefined)
