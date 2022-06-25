@@ -15,6 +15,6 @@ useHead({
   <main class="px-7 py-10" overflow-x-hidden>
     <router-view />
     <Footer />
-    <levitation />
+    <Levitation />
   </main>
 </template>
