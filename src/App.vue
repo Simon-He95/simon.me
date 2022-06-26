@@ -11,7 +11,7 @@ useHead({
 
 import { ref, onMounted } from "vue";
 import { DotTextCanvas } from "simon-js-tool";
-const dotText = new DotTextCanvas("China", 20, "rgb(187, 187, 187)", 10);
+const dotText = new DotTextCanvas("China", 20, "rgb(187, 187, 187)", 5);
 const el = ref(null);
 onMounted(() => {
   el.value?.appendChild(dotText.canvas);
