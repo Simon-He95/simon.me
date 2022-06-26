@@ -2,6 +2,7 @@
 title: Simon He
 ---
 
+<span ref=el fixed bottom-5 right-0></span>
 <ClientOnly>
   <Plum/>
 </ClientOnly>
@@ -28,3 +29,13 @@ I’m eagerly to have in-depth communication with you and looking forward to hea
 
 <span i-simple-icons:minutemailer></span>Mail me at [hi@Simon](mailto:674949287@qq.com).
 Chat with the community at [<span i-teenyicons:discord-outline/>my Discord Server](https://discord.gg/r4hjJ6WT).
+
+<script setup lang="ts">
+  import {ref,onMounted} from 'vue'
+import { DotTextCanvas } from "simon-js-tool";
+const dotText = new DotTextCanvas("China", 20, "rgb(187, 187, 187)", 10);
+const el = ref(null);
+onMounted(() => {
+  el.value?.appendChild(dotText.canvas);
+});
+</script>

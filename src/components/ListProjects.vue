@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DotTextCanvas } from 'simon-js-tool'
+const dotText = new DotTextCanvas('Projects', 30, 'rgb(187, 187, 187)', 10)
 defineProps<{ projects: Record<string, any[]> }>()
 const message = ref('List of projects that I am proud of')
 function finish() {
@@ -6,12 +8,16 @@ function finish() {
     message.value = 'List of projects'
   else message.value = 'List of projects that I am proud of'
 }
+const projectEl = ref(null)
+onMounted(() => {
+  projectEl.value?.appendChild(dotText.canvas)
+})
 </script>
 
 <template>
   <div class="prose m-auto mb-8">
-    <h1 class="mb-0 animateTitle">
-      Projects
+    <h1 ref="projectEl" class="mb-0 animateTitle">
+      <dot-text text="Projects" />
     </h1>
     <vivid-typing
       :content="message"
