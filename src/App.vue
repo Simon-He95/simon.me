@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { isDark } from "~/logics";
+import { ref, onMounted } from "vue";
+import { DotTextCanvas } from "simon-js-tool";
+import { useRouter, onBeforeRouteUpdate } from "vue-router";
 useHead({
   meta: [
     { property: "og:title", content: "Simon He" },
@@ -8,14 +12,41 @@ useHead({
     { name: "twitter:creator", content: "@simon_he1995" },
   ],
 });
-
-import { ref, onMounted } from "vue";
-import { DotTextCanvas } from "simon-js-tool";
-const dotText = new DotTextCanvas("China", 20, "rgb(187, 187, 187)", 5);
+const text = ref("");
+const dotText = new DotTextCanvas(text.value, 20, isDark.value ? "white" : "black", 10);
 const el = ref(null);
 onMounted(() => {
   el.value?.appendChild(dotText.canvas);
 });
+watch(isDark, update);
+const router = useRouter();
+
+const routerMap = {
+  "/": "Simon",
+  "/projects": "Projects",
+  "/posts": "Blog",
+};
+watch(
+  router.currentRoute,
+  (val) => {
+    text.value = routerMap[val.path] || "China";
+    setTimeout(update);
+  },
+  {
+    immediate: true,
+  }
+);
+
+function update() {
+  const newDotText = dotText.repaint(
+    text.value,
+    20,
+    isDark.value ? "white" : "black",
+    10
+  );
+  const child = el.value.childNodes[0];
+  if (child) el.value?.replaceChild(newDotText.canvas, child);
+}
 </script>
 
 <template>
