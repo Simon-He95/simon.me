@@ -1,16 +1,18 @@
 <script setup lang="ts">
-defineProps<{ projects: Record<string, any[]> }>();
-const message = ref("List of projects that I am proud of");
+defineProps<{ projects: Record<string, any[]> }>()
+const message = ref('List of projects that I am proud of')
 function finish() {
-  if (message.value === "List of projects that I am proud of")
-    message.value = "List of projects";
-  else message.value = "List of projects that I am proud of";
+  if (message.value === 'List of projects that I am proud of')
+    message.value = 'List of projects'
+  else message.value = 'List of projects that I am proud of'
 }
 </script>
 
 <template>
   <div class="prose m-auto mb-8">
-    <h1 ref="projectEl" class="mb-0 animateTitle">Projects</h1>
+    <h1 ref="projectEl" class="mb-0 animateTitle">
+      Projects
+    </h1>
     <vivid-typing
       :content="message"
       :finish="finish"

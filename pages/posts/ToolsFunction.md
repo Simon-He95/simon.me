@@ -21,6 +21,49 @@ import {
 
 ```
 
+## CreateSignatureCanvas
+- 生成一个签名的canvas模板
+```javascript
+const signature = new CreateSignatureCanvas(400, 400)
+document.body.appendChild(signature.canvas)
+const base64 = signature.save()
+signature.clear() // 清除签名
+```
+
+## DotTextCanvas
+- 根据文字返回一个点阵的canvas
+- 入参：text: string // 内容, fontSize: number // 文字大小, color: string // 颜色, fontWeight: number  // 字体粗细
+```javascript
+const dotText = DotTextCanvas('hello', 20, '#000', 1)
+document.body.appendChild(dotText.canvas)
+```
+
+## getLru
+- 记录有限的数据,删除最久未访问的数据
+- 参数: maxSize, 存储的最大数据量 (默认为50)
+```javascript
+const lru = getLru(2)
+lru.set('a', 1)
+lru.set('b', 2)
+lru.get('a') // 1
+lru.set('b', 3)
+lru.cache.size // 2
+lru.get('a') // 1
+lru.get('b') // undefined
+```
+
+## escapeHtml
+- 将html字符串转换为实体字符串
+```javascript
+excapeHtml("< a href=" ">xx</ a>") // "&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;"
+```
+
+## unescapeHtml
+- 将实体字符串转换为html字符串
+```javascript
+unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;') // "< a href=" ">xx</ a>"
+```
+
 ## timeCost
 - 计算函数执行时间
 - timeCost(fn: Function) : number
