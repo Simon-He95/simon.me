@@ -8,7 +8,7 @@ subtitle: 'Author: Simon'
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-整理了<strong>70+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>80+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便洁 <svg t="1656097148236" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1337" w-7 m-l-1><path d="M838.485333 589.653333a65.194667 65.194667 0 0 1-65.194666-65.365333 64.682667 64.682667 0 0 1-19.285334 46.250667 63.829333 63.829333 0 0 1-46.08 19.114666 65.194667 65.194667 0 0 1-65.365333-65.365333 65.194667 65.194667 0 0 1-19.114667 46.250667 64.170667 64.170667 0 0 1-46.08 19.114666A65.194667 65.194667 0 0 1 512 524.288a65.194667 65.194667 0 0 1-19.114667 46.250667 64.512 64.512 0 0 1-46.250666 19.114666 65.194667 65.194667 0 0 1-65.194667-65.365333 65.194667 65.194667 0 0 1-19.114667 46.250667 64.512 64.512 0 0 1-46.250666 19.114666 65.365333 65.365333 0 0 1-65.365334-65.365333A65.365333 65.365333 0 0 1 187.733333 589.653333a58.538667 58.538667 0 0 1-21.162666-3.242666V899.413333h690.517333V586.752a67.242667 67.242667 0 0 1-18.602667 2.901333z" fill="#EDF4FF" p-id="1338"></path><path d="M512 833.024a3334.826667 3334.826667 0 0 1-345.088-17.066667v83.456h690.176v-84.138666A3334.826667 3334.826667 0 0 1 512 833.024z" fill="#D8E3F0" p-id="1339"></path><path d="M331.264 240.298667h60.074667v81.066666h-60.074667zM692.906667 321.365333h-60.074667v-81.066666h60.074667z" fill="#FCFEFF" p-id="1340"></path><path d="M280.234667 657.237333H489.813333v130.218667H280.234667z" fill="#96DDFF" p-id="1341"></path><path d="M395.434667 657.237333l-41.130667 130.218667H307.2l41.130667-130.218667h47.104zM500.565333 657.237333l-6.997333 130.218667h-81.237333l41.130666-130.218667h47.104z" fill="#69BAF9" p-id="1342"></path><path d="M599.04 657.237333h144.725333V899.413333H599.04z" fill="#96DDFF" p-id="1343"></path><path d="M599.04 848.896v51.2h144.725333v-58.197333c-47.616 3.242667-95.232 5.802667-144.725333 6.997333z" fill="#69BAF9" p-id="1344"></path><path d="M274.090667 124.586667h475.989333v115.712H274.090667z" fill="#FFC670" p-id="1345"></path><path d="M749.909333 124.586667v115.712H496.469333l31.061334-115.712h222.378666z" fill="#FFA742" p-id="1346"></path><path d="M904.533333 524.288a65.365333 65.365333 0 1 1-130.56 0z" fill="#D8E3F0" p-id="1347"></path><path d="M903.850667 524.288h-130.56l-37.376-202.922667h111.957333l55.978667 202.922667z" fill="#FCFEFF" p-id="1348"></path><path d="M773.290667 524.288a65.365333 65.365333 0 0 1-130.730667 0z" fill="#F0504D" p-id="1349"></path><path d="M773.290667 524.288h-130.730667l-18.602667-202.922667h111.957334l37.376 202.922667z" fill="#F6716F" p-id="1350"></path><path d="M642.56 524.288a65.365333 65.365333 0 1 1-130.56 0z" fill="#D8E3F0" p-id="1351"></path><path d="M642.56 524.288H512V321.365333h111.957333l18.602667 202.922667z" fill="#FCFEFF" p-id="1352"></path><path d="M512 524.288a65.365333 65.365333 0 1 1-130.56 0z" fill="#F0504D" p-id="1353"></path><path d="M512 321.365333v202.922667h-130.56l18.602667-202.922667H512z" fill="#F6716F" p-id="1354"></path><path d="M381.44 524.288a65.365333 65.365333 0 0 1-130.730667 0z" fill="#D8E3F0" p-id="1355"></path><path d="M400.042667 321.365333l-18.602667 202.922667h-130.730667l37.376-202.922667h111.957334z" fill="#FCFEFF" p-id="1356"></path><path d="M250.709333 524.288A65.365333 65.365333 0 0 1 187.733333 589.653333a68.266667 68.266667 0 0 1-68.266666-65.365333z" fill="#F0504D" p-id="1357"></path><path d="M288.085333 321.365333l-37.376 202.922667H120.32a18.602667 18.602667 0 0 1 0-3.072l55.978667-199.850667z" fill="#F6716F" p-id="1358"></path><path d="M506.88 771.072v-113.834667a17.066667 17.066667 0 0 0-17.066667-17.066666H280.234667a17.066667 17.066667 0 0 0-17.066667 17.066666v113.834667a17.066667 17.066667 0 0 0-13.824 17.066667 17.066667 17.066667 0 0 0 17.066667 17.066666h237.397333a17.066667 17.066667 0 0 0 17.066667-17.066666 17.066667 17.066667 0 0 0-13.994667-17.066667z m-138.922667 0h-70.656v-96.768h70.656z m104.789334 0h-70.656v-96.768h70.656zM657.408 787.456a20.992 20.992 0 1 0-20.992-20.992 20.992 20.992 0 0 0 20.992 20.992z" fill="#3D3D63" p-id="1359"></path><path d="M921.6 882.346667h-47.445333V598.357333A81.408 81.408 0 0 0 921.6 524.288a18.602667 18.602667 0 0 0 0-4.437333l-55.978667-203.093334a17.066667 17.066667 0 0 0-17.066666-12.458666h-138.752v-46.933334h40.106666a17.066667 17.066667 0 0 0 17.066667-17.066666V124.586667a17.066667 17.066667 0 0 0-17.066667-17.066667H274.090667a17.066667 17.066667 0 0 0-17.066667 17.066667v115.712a17.066667 17.066667 0 0 0 17.066667 17.066666h40.106666v46.933334h-138.069333a17.066667 17.066667 0 0 0-17.066667 12.458666L103.765333 516.778667a18.602667 18.602667 0 0 0 0 4.437333 87.04 87.04 0 0 0 26.794667 62.634667 79.018667 79.018667 0 0 0 19.285333 13.482666v285.013334H102.4a17.066667 17.066667 0 0 0 0 34.133333h819.2a17.066667 17.066667 0 0 0 0-34.133333zM649.728 300.885333v-40.106666h25.941333v40.106666z m-358.4-159.232h441.514667v81.578667H291.157333z m83.114667 119.466667v40.106667h-26.112v-40.448z m34.133333-3.413333h207.018667v46.933333H408.405333z m318.122667 624.64H616.106667V674.304h110.592z m113.322666 0h-79.189333V657.237333a17.066667 17.066667 0 0 0-17.066667-17.066666H599.04a17.066667 17.066667 0 0 0-17.066667 17.066666V882.346667H183.978667V606.378667h4.778666a81.066667 81.066667 0 0 0 54.784-24.064 64.853333 64.853333 0 0 0 7.168-8.192 82.432 82.432 0 0 0 65.365334 32.256 80.896 80.896 0 0 0 58.197333-24.064 104.789333 104.789333 0 0 0 7.168-8.021334 82.432 82.432 0 0 0 65.194667 32.085334 81.066667 81.066667 0 0 0 58.197333-24.064 82.090667 82.090667 0 0 0 7.168-8.192 82.432 82.432 0 0 0 65.365333 32.256 81.066667 81.066667 0 0 0 58.026667-24.064 82.090667 82.090667 0 0 0 7.168-8.192 82.432 82.432 0 0 0 65.365333 32.256 81.066667 81.066667 0 0 0 58.197334-24.064 104.789333 104.789333 0 0 0 7.168-8.021334 82.090667 82.090667 0 0 0 65.194666 32.085334h1.536z m-1.536-309.76a48.298667 48.298667 0 0 1-48.128-48.298667 17.066667 17.066667 0 0 0-34.133333 0 48.128 48.128 0 0 1-14.336 34.133333 47.104 47.104 0 0 1-34.133333 13.994667 48.298667 48.298667 0 0 1-48.298667-48.298667 17.066667 17.066667 0 0 0-34.133333 0 48.298667 48.298667 0 0 1-48.128 48.298667A48.298667 48.298667 0 0 1 529.066667 524.288a17.066667 17.066667 0 0 0-34.133334 0 48.298667 48.298667 0 1 1-96.426666 0 17.066667 17.066667 0 0 0-34.133334 0 48.298667 48.298667 0 1 1-96.597333 0 17.066667 17.066667 0 0 0-34.133333 0A48.128 48.128 0 0 1 187.733333 572.586667a47.104 47.104 0 0 1-34.133333-13.312 52.565333 52.565333 0 0 1-16.213333-35.84l51.2-185.002667h78.506666l-20.309333 110.762667a17.066667 17.066667 0 0 0 13.653333 19.797333h3.072a17.066667 17.066667 0 0 0 17.066667-13.994667l21.504-116.906666h79.189333l-10.410666 112.128a17.066667 17.066667 0 0 0 15.530666 18.602666h1.536a17.066667 17.066667 0 0 0 17.066667-15.530666l10.581333-115.370667H494.933333v114.346667a17.066667 17.066667 0 0 0 34.133334 0v-113.834667h79.189333l10.581333 115.370667a17.066667 17.066667 0 0 0 17.066667 15.530666h1.536a17.066667 17.066667 0 0 0 15.530667-18.602666l-10.410667-112.128h79.189333l21.504 116.906666a17.066667 17.066667 0 0 0 17.066667 13.994667h3.072a17.066667 17.066667 0 0 0 13.653333-19.797333l-20.309333-110.762667h78.506667l51.2 187.733333a47.957333 47.957333 0 0 1-14.165334 32.085334 47.104 47.104 0 0 1-33.792 13.824z" fill="#3D3D63" p-id="1360"></path></svg></div>
 
 ## 使用说明
@@ -19,6 +19,32 @@ import {
   deepCompare
  } from 'simon-js-tool' # 按需引入
 
+```
+
+## pwdLevel
+- 判断数字的强度
+- 参数: 数字 (必须) , 最小长度 (可选) 默认6
+- 返回: 强度等级 0-4
+```javascript
+const levels = ['', '低', '中', '高', '极高']
+console.log(levels[pwdLevel('123456')]) // 低
+console.log(levels[pwdLevel('123456', 7)]) // ''
+console.log(levels[pwdLevel('q123456')]) // 高
+```
+
+## sort
+- 数组排序
+- 支持升序降序和多条件排序
+```javascript
+const numbers =  [1, 5, 7, 3, 2, 4, 6, 8, 9, 10]
+console.log(sort(numbers,1)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(sort(numbers,-1)) // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+const array = [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+console.log(sort(array, 'name')) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}]
+console.log(sort(array, '-name')) // [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+const array2 = [{name: 'simon', age: 18}, {name: 'kitty', age: 20},{name: 'simon', age: 19}]
+console.log(sort(array2, ['age','name'])) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}, {name: 'simon', age: 19}]
+console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 'simon', age: 18}, {name: 'kitty', age: 20}]
 ```
 
 ## CreateSignatureCanvas
@@ -45,23 +71,23 @@ document.body.appendChild(dotText.canvas)
 const lru = getLru(2)
 lru.set('a', 1)
 lru.set('b', 2)
-lru.get('a') // 1
+console.log(lru.get('a')) // 1
 lru.set('b', 3)
-lru.cache.size // 2
-lru.get('a') // 1
-lru.get('b') // undefined
+console.log(lru.size()) // 2
+console.log(lru.get('a')) // 1
+console.log(lru.get('b')) // undefined
 ```
 
 ## escapeHtml
 - 将html字符串转换为实体字符串
 ```javascript
-excapeHtml("< a href=" ">xx</ a>") // "&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;"
+console.log(excapeHtml("< a href=" ">xx</ a>")) // "&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;"
 ```
 
 ## unescapeHtml
 - 将实体字符串转换为html字符串
 ```javascript
-unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;') // "< a href=" ">xx</ a>"
+console.log(unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;')) // "< a href=" ">xx</ a>"
 ```
 
 ## timeCost
@@ -69,8 +95,9 @@ unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;') // "< a href=" ">xx</
 - timeCost(fn: Function) : number
 ```javascript
 timeCost(()=>{
+  let a = 1
   for(let i=0;i<1000;i++){
-    console.log(i)
+    a++
   }
 }) // 输出: timeCost: 0.046s
 ```
@@ -78,9 +105,8 @@ timeCost(()=>{
 ## log
 - 简化console.log的使用
 - log(s: string,color: string,fontSize: number)
-- color: 输出的颜色, fontSize: 字体大小
 ```javascript
-log('hello world') # 打印日志
+log('hello world') // hello world
 ```
 
 ## copy
@@ -97,21 +123,19 @@ btn.onclick = () =>  {
 ## getDateList
 - 获取指定日期范围内正负多少天的日期列表
 - getDateList(start: string, day: number = 0) start: 开始日期以/或-分割 1991/03/02 1001-03-02, day: 正负多少天
-
 ```javascript
-getDateList('1991/3/02', 7)
-// [ '1991-3-02', '1991-3-03', '1991-3-04', '1991-3-05', '1991-3-06', '1991-3-07', '1991-3-08' ]
+console.log(getDateList('1991/3/02', 7)) // [ '1991-3-02', '1991-3-03', '1991-3-04', '1991-3-05', '1991-3-06', '1991-3-07', '1991-3-08' ]
 ```
 
 ## isType
 - `isType(o:any, type:string)`: 判断obj是否是type类型
 - 混合类型判断,type 如果是多种类型,用'|'分隔 如: 缩写 - 'O|S'  全写 - 'Object|String' 
 ```javascript
-isType(1, 'Number') // true
-isType('1', 'N') // false
-isType({}, 'O | A') // true (Object | Array)
-isType(new Promise(), 'P') // true (Promise)
-isType(function(){}, 'P | F') // true (Promise | Function)
+console.log(isType(1, 'Number')) // true
+console.log(isType('1', 'N')) // false
+console.log(isType({}, 'O | A')) // true (Object | Array)
+console.log(isType(new Promise(), 'P')) // true (Promise)
+console.log(isType(function(){}, 'P | F')) // true (Promise | Function)
 ```
 
 ## randomDate
@@ -119,13 +143,14 @@ isType(function(){}, 'P | F') // true (Promise | Function)
 - 可指定随机范围 start:'1999/01/01' end:'2099/12/31'
 ```javascript
 // end默认是当前日期
-randomDate('1999/01/01') // Mon Jun 06 2011 15:11:37 GMT+0800 (中国标准时间) 可再通过formateDate转换为其他格式 如'yyyy-MM-dd'
+console.log(randomDate('1999/01/01')) // Mon Jun 06 2011 15:11:37 GMT+0800 (中国标准时间) 可再通过formateDate转换为其他格式 如'yyyy-MM-dd'
 ```
 
 ## uniqueArray
 - 去除数组中重复的元素
 - 支持去除数组中的对象的重复元素
 ```javascript
+// 完全比对值来判断是否重复
 const array = [
       {
         name: "simon",
@@ -189,9 +214,9 @@ asyncPool(limit, tasks).then((results) => {
 - delete删除项-O(1)
 ```javascript
 const find = quickFind([{id:1,name:'simon'},{id:2,name:'simon'},'id'])
-find.find(1)
+find.find(1) // find: id = 1 => {id:1,name:'simon'}
 find.set({id:1,name:'simon'})
-find.delete(1)
+find.delete(1) // delete: id = 1 => {id:1,name:'simon'}
 ```
 ## quickFilter 
 - 快速模糊查找key名字的项和值 如: 'name=/h/'
@@ -235,7 +260,7 @@ const obj = {
   }
 }
 obj.self = obj
-const obj2 = deepClone(obj)
+const obj2 = deepClone(obj) // 返回一个新对象
 ```
 ## curry 
 - 函数柯里化
@@ -255,7 +280,7 @@ let count = 0
 const fn = memorizeFn(()=> count++)
 fn()
 fn()
-count => 1
+console.log(count) // => 1
 ```
 
 ## debounce 
@@ -292,7 +317,7 @@ const obj = {
   },
 }
 traverse(obj, {
-  'family.name'(target: any, index: number, item: any) {
+  'family.name'(target: any, index: number, item: any) { // 遍历obj.family.name
     console.log(target, index)
   }
 })
@@ -311,7 +336,7 @@ const obj = {
   },
   name: 'simon'
 }
-const newObj = transformKey(obj, {
+const newObj = transformKey(obj, { // 将obj的key转换成新的key
   'family.name': 'familyName',
   'family.age': 'familyAge'
 })
@@ -326,12 +351,14 @@ console.log(newObj)
 document.addEventListener('click', once(() => {
   console.log('click')
 }))
+document.click() // click
+document.click() // 
 ```
 
 ## vFetch
 - 基于fetch的axios api 式promise请求封装
 - 支持拦截前追加headers
-```javascript
+```typescript
 type VFetchConfig = {
   url: string // 请求地址
   baseURL?: string // 基础url
@@ -357,36 +384,41 @@ interface Interceptors {
     }
   }
   // useage
-vFetch(options:Record<string,string>).then(res =>{}, err =>{})
+vFetch(options:Record<string,string>).then(res =>{
+  // success
+}, err =>{
+  // error
+})
 ```
 
 
 ## stringify
 ```javascript
-stringify({ user: 'simon', age: '18' }) => 'user=simon&age=18'
+console.log(stringify({ user: 'simon', age: '18' })) // 'user=simon&age=18'
 ```
 ## parse
 ```javascript
-parse('user=simon&age=18') => { user: 'simon', age: '18' }
+console.log(parse('user=simon&age=18')) // { user: 'simon', age: '18' }
 ```
 ## jsCookie
 ```javascript
 jsCookie.set('name', 'simon') 
-jsCookie.get('name') => 'simon' 
+console.log(jsCookie.get('name')) // 'simon' 
 jsCookie.remove('name')  
-jsCookie.get('name') => ''
+console.log(jsCookie.get('name')) // ''
 ```
 ## uuid
 - 生成uuid 
 - 支持限制生成的uuid长度和类型 
 ```javascript
-uuid() => '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
-uuid(16, 'hex') => 'a0b1c2d3e4f5' uuid(8, 2) => '11110011'
+console.log(uuid()) // '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
+console.log(uuid(16, 'hex')) // 'a0b1c2d3e4f5' 
+console.log(uuid(8, 2)) // '11110011'
 ```
 ## formateDate
 - 格式化日期
 ```javascript
-formateDate(new Date(), 'yyyy-MM-dd') => '2019-01-01'
+console.log(formateDate(new Date(), 'yyyy-MM-dd')) // '2019-01-01'
 ```
 ## monitorPef
 - 数字化浏览器性能指标
@@ -413,19 +445,20 @@ onload事件时间	0
 - 基于promise封装的获取地理位置信息
 - params: 高精度 超时时间 缓存时间
 ```javascript
-await getLocation() =>  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
+console.log(await getLocation()) //  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
 ```
 ## getDevice
 - 获取系统信息
 - os:系统 dev:浏览器
 ```javascript
-getDevice() => { os: 'android', dev: 'chrome' }
+console.log(getDevice()) // { os: 'android', dev: 'chrome' }
 ```
 ## preload
 - 预加载图片
 ```javascript
 preload('https://img.yzcdn.cn/vant/cat.jpeg')
 preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jpeg'])
+<img src="https://img.yzcdn.cn/vant/cat.jpeg" /> // memory cache
 ```
 
 ## lazyLoad
@@ -436,6 +469,7 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 - params-4: threshold 指定图片加载的阈值
 ```javascript
 // usage
+// 默认展示src的图片，当滚动到图片的时候data-src替换src
   lazyLoad(document.querySelectorAll("img"));
   lazyLoad("img[data-src]");
   lazyLoad(".img-wrapper>img");
@@ -451,6 +485,14 @@ addScript('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
 ## addStyle
 - 动态添加style标签 => head
 ```javascript
+/* 
+<style>
+ .test {
+  color: red;
+ }
+</style>
+将会杯插入head标签中
+*/
 addStyle(`
   .test {
     color: red;
@@ -460,6 +502,7 @@ addStyle(`
 ## download
 - 下载文件
 ```javascript
+// 下载名为baidu.png地址为https://www.baidu.com/img/bd_logo1.png图片
 download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
 ```
 
@@ -468,22 +511,23 @@ download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
 - type: '前空格' | '后空格' | '前后空格' | '所有空格'
 ```javascript
 trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
-trim('  h e l l o  ') => 'h e l l o'
-trim('  h e l l o  ', 'pre') => 'h e l l o  '
-trim('  h e l l o  ', 'post') => '  h e l l o'
-trim('  h e l l o  ', 'all') => 'hello'
+console.log(trim('  h e l l o  ')) // 'h e l l o'
+console.log(trim('  h e l l o  ', 'pre')) // 'h e l l o  '
+console.log(trim('  h e l l o  ', 'post')) // '  h e l l o'
+console.log(trim('  h e l l o  ', 'all')) // 'hello'
 ```
 
 ## compressCss
 - 压缩css
 - 参数: css: string
-```javascript
-compressCss(css: string) => string
+```typescript
+compressCss(css: string): string
 ```
 
 ## scrollToTop
 - 回到顶部
 ```javascript
+// 缓慢回到顶部
 scrollToTop()
 ```
 
@@ -493,22 +537,32 @@ scrollToTop()
 - on 事件监听
 - off 事件取消
 - 创建发布订阅模式的实例
+```javascript
+const eventBus = createEventBus()
+eventBus.emit('test', 'hello')
+const listener = (data: string) => {
+  console.log(data)
+}
+eventBus.on('test', listener)
+eventBus.off('test',listener)
+```
 
 ## randomHexColor
 - 随机生成十六进制颜色
 ```javascript
-randomHexColor() => '#ff0000'
+console.log(randomHexColor()) // '#ff0000'
 ```
 
 ## randomRgb
 - 随机生成RGB颜色
 ```javascript
-randomRgb() => 'rgb(255,0,0)'
+console.log(randomRgb())// 'rgb(255,0,0)'
 ```
 
 ## httpsRedirect
 - https重定向
 ```javascript
+// http://www.baidu.com => https://www.baidu.com
 httpsRedirect()
 ```
 
@@ -521,69 +575,73 @@ scrollToView(el: HTMLElement | string)
 ## getScrollPosition
 - 获取滚动位置
 ```javascript
-getScrollPosition() => { x: number, y: number }
+console.log(getScrollPosition()) // { x: number, y: number }
 ```
 
 ## camelize
 - 驼峰化
 ```javascript
-// hello-world
-camelize(str: string) => 'helloWorld'
+console.log(camelize(hello-world)) // 'helloWorld'
 ```
 
 ## hyphenate
 - 连字符化
 ```javascript
-// helloWorld
-hyphenate(str: string) => 'hello-world'
+console.log(hyphenate(helloWorld)) // 'hello-world'
 ```
 
 ## getUrlParam
 - 获取url参数
 - 默认不传入url，获取当前页面url参数
 ```javascript
-getUrlParam('?name=simon&age=18') => { name: 'simon', age: '18' }
+console.log(getUrlParam('?name=simon&age=18'))// { name: 'simon', age: '18' }
 ```
 
 ## fullScreen
 - fullScreen()
 - 全屏
+```javascript
+fullScreen()
+```
 
 ## exitFullScreen
 - exitFullScreen()
 - 退出全屏
+```javascript
+exitFullScreen()
+```
 
 ## toBase64
 - 将blob | file | url转换为base64
-```javascript
-toBase64(file: File, type: 'file' | 'blob' | 'url' = 'url') => string
+```typescript
+toBase64(file: File, type: 'file' | 'blob' | 'url' = 'url'): string
 ```
 
 ## base64ToFile
 - 将base64转换为file
-```javascript
-base64ToFile(s: string, name: string) => File
+```typescript
+base64ToFile(s: string, name: string): File
 ```
 
 ## base64ToBlob
 - 将base64转换为blob
-```javascript
-base64ToBlob(s: string) => Blob
+```typescript
+base64ToBlob(s: string): Blob
 ```
 
 ## uppercaseNum
 - 将数字转换为大写字母
 ```javascript
-// 1 => '一'
-uppercaseNum(num: number | string) => string
+// uppercaseNum(num: number | string) => string
+console.log(uppercaseNum(1)) // '一'
 ```
 
 ## formateNum
 - 将数字格式化
 - integer: 'floor' | 'ceil' 小数截取方式 floor:向下取整 ceil:向上取整
 ```javascript
-// 12253.123 => 12,253.12
-formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'ceil') => string
+// formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'ceil') => string
+console.log(formateNum(12253.123, 2)) // '12,253.12'
 ```
 
 ## interceptError
@@ -591,24 +649,25 @@ formateNum(number: number | string, decimals = 2, integer: 'floor' | 'ceil' = 'c
 - 参数：可能存在异常的函数，返回一个promise类型的错误处理函数
 - 可以避免不断的try...catch
 ```javascript
-// interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
-interceptError(fn: Function) => Promise<any>
+// interceptError(fn: Function) => Promise<any>
+interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
 ```
 ## isBottom
 - 判断滚动是否触底
 - distance: 距离底部的距离作为触底的判断标准 默认0
 ```javascript
-isBottom(distance: string = 0) => boolean
+// isBottom(distance: string = 0): boolean
+console.log(isBottom()) // false
 ```
 
 ## calNum
 - 计算数字
 - type: '加' | '减' | '乘' | '除'
 ```javascript
-console.log(calNum.add(0.1, 0.2, 0.2)) => 0.5
-console.log(calNum.div(0.1, 0.2, 0.2)) => 2.5
-console.log(calNum.sub(0.1, 0.2, 0.2)) => -0.3
-console.log(calNum.mul(0.1, 0.2, 0.2)) => 0.004
+console.log(calNum.add(0.1, 0.2, 0.2)) // 0.5
+console.log(calNum.div(0.1, 0.2, 0.2)) // 2.5
+console.log(calNum.sub(0.1, 0.2, 0.2)) // -0.3
+console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 ```
 
 ## 规则判断

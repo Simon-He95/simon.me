@@ -59,6 +59,14 @@ onMounted(() => {
         >
           <div i-uil-github-alt />
         </a>
+        <a
+          href="https://github.com/Simon-He95/sponsor"
+          target="_blank"
+          title="GitHub"
+          class="lt-md:hidden"
+        >
+          <div i-ph:heart />
+        </a>
         <toggle-theme />
       </div>
     </nav>
