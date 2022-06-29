@@ -37,6 +37,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'Dot Image'
+      link: 'http://dot-image.hejian.club/'
+      desc: 'Transform image to DotImage with canvas.'
+      icon: 'i-fa:image'
     - name: 'Dot Text'
       link: 'https://dot-text.hejian.club/'
       desc: 'Transform text to DotText with canvas.'
