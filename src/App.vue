@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { DotImageCanvas, DotTextCanvas } from 'simon-js-tool'
+import { DotImageCanvas, DotTextCanvas, animationFrameWrapper } from 'simon-js-tool'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { useStorage } from '@vueuse/core'
 import { isDark } from '~/logics'
-import lufei from '/images/lufei.png'
+import hy from '/images/hy1.jpg'
 import flag from '/images/flag.jpg'
 useHead({
   meta: [
@@ -16,8 +17,8 @@ useHead({
 })
 const text = ref('')
 const dotText = new DotTextCanvas(text.value, 20, isDark.value ? 'white' : 'black', 10)
-const dotImage = new DotImageCanvas(lufei, 3)
-const dotImage1 = new DotImageCanvas(flag, 3)
+const dotImage = new DotImageCanvas(hy, '', 2, 'transparent')
+const dotImage1 = new DotImageCanvas(flag, '', 1, 'transparent')
 const el = ref<HTMLElement>(null)
 const imageEl = ref(null)
 const flagEl = ref(null)
@@ -39,7 +40,7 @@ watch(
   router.currentRoute,
   (val) => {
     text.value = routerMap[val.path] || 'China'
-    setTimeout(update)
+    animationFrameWrapper(update, 0, true)
   },
   {
     immediate: true,
@@ -53,15 +54,15 @@ function update() {
     isDark.value ? 'white' : 'black',
     10,
   )
-  const child = el.value.childNodes[0]
+  const child = el.value?.childNodes[0]
   if (child)
     el.value?.replaceChild(newDotText.canvas, child)
 }
 </script>
 
 <template>
-  <span ref="imageEl" fixed top-20 w-100 h-100 />
-  <span ref="flagEl" fixed bottom--5 right--10 flex w-40 h-40 />
+  <span ref="imageEl" fixed top-20 w-100 h-100 bg-color-white z--1 />
+  <span ref="flagEl" fixed bottom--5 right--10 flex w-40 h-40 z--1 />
   <span ref="el" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
