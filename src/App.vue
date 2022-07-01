@@ -4,6 +4,7 @@ import { DotImageCanvas, DotTextCanvas } from 'simon-js-tool'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { isDark } from '~/logics'
 import lufei from '/images/lufei.png'
+import flag from '/images/flag.jpg'
 useHead({
   meta: [
     { property: 'og:title', content: 'Simon He' },
@@ -15,13 +16,16 @@ useHead({
 })
 const text = ref('')
 const dotText = new DotTextCanvas(text.value, 20, isDark.value ? 'white' : 'black', 10)
-const dotImage = new DotImageCanvas(lufei, 2)
+const dotImage = new DotImageCanvas(lufei, 3)
+const dotImage1 = new DotImageCanvas(flag, 3)
 const el = ref<HTMLElement>(null)
 const imageEl = ref(null)
+const flagEl = ref(null)
 onMounted(() => {
   el.value?.appendChild(dotText.canvas)
   dotImage.canvas.style.width = '10rem'
   imageEl.value?.appendChild(dotImage.canvas)
+  flagEl.value?.appendChild(dotImage1.canvas)
 })
 watch(isDark, update)
 const router = useRouter()
@@ -57,6 +61,7 @@ function update() {
 
 <template>
   <span ref="imageEl" fixed top-20 w-100 h-100 />
+  <span ref="flagEl" fixed bottom--5 right--10 flex w-40 h-40 />
   <span ref="el" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
