@@ -56,7 +56,7 @@ function update() {
 </script>
 
 <template>
-  <span ref="imageEl" fixed top-20 w-100 h-100 lt-md:hidden />
+  <span ref="imageEl" fixed top-20 w-100 h-100 />
   <span ref="el" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>

@@ -6,6 +6,8 @@ lang: zh
 duration: 8min
 subtitle: 'Author: Simon'
 ---
+  [[toc]]
+  > alias部分实现基于[@antfu/ni](https://github.com/antfu/ni)
 
   ## 这篇blog是来分享一下我的terminal,另外推荐一些好用的[vscode插件和配置](https://github.com/Simon-He95/directory-configuration)
 
