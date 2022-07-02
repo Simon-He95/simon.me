@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { DotImageCanvas, DotTextCanvas, animationFrameWrapper } from 'simon-js-tool'
+import {
+  DotImageCanvas,
+  DotTextCanvas,
+  animationFrameWrapper,
+  scrollToTop,
+} from 'simon-js-tool'
+import { useEventListener } from '@vueuse/core'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
-import { useStorage } from '@vueuse/core'
 import { isDark } from '~/logics'
 import hy from '/images/hy1.jpg'
 import flag from '/images/flag.jpg'
@@ -58,6 +63,12 @@ function update() {
   if (child)
     el.value?.replaceChild(newDotText.canvas, child)
 }
+const isShow = ref(false)
+useEventListener(document, 'scroll', (e) => {
+  if (document.documentElement.scrollTop > 500)
+    isShow.value = true
+  else isShow.value = false
+})
 </script>
 
 <template>
@@ -70,4 +81,15 @@ function update() {
     <Footer />
     <Levitation />
   </main>
+  <span
+    v-if="isShow"
+    i-icon-park-outline:rocket-one
+    animate-bounce
+    fixed
+    bottom-40
+    right-5
+    text-3xl
+    cursor-pointer
+    @click="scrollToTop()"
+  />
 </template>
