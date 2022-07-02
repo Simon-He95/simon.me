@@ -90,6 +90,7 @@ useEventListener(document, 'scroll', (e) => {
     right-5
     text-3xl
     cursor-pointer
+    style="-webkit-tap-highlight-color: rgba(255, 255, 255, 0)"
     @click="scrollToTop()"
   />
 </template>
