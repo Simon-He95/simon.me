@@ -24,6 +24,18 @@ import {
 ## 目录结构
 <Directory></Directory>
 
+## createElement
+- 创建dom函数
+- 参数:
+  - tagName: string, 元素标签名称
+  - attrs: object, 元素属性对象
+```javascript
+const div = createElement('div', {
+  class: 'className',
+  style: 'color: red;',
+  style: 'color: red;font-size: 20px;'',
+})
+```
 ## sleep
 - 睡眠函数
 - 参数:
@@ -722,6 +734,15 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 ```javascript
 addScript('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js')
 ```
+
+## addLink
+- 动态添加link标签放 => head
+- 参数:
+  - src: link路径
+```javascript
+addLink('https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css')
+```
+
 ## addStyle
 - 动态添加style标签 => head
 - 参数:
@@ -774,6 +795,7 @@ compressCss(css: string): string
 
 ## scrollToTop
 - 回到顶部
+- 如果中途再次滚动,立即停止
 ```javascript
 // 缓慢回到顶部
 scrollToTop()

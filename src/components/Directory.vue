@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { uppercaseNum } from 'simon-js-tool'
 const lists = {
+  createElement: '创建dom元素',
   sleep: '睡眠函数',
   htmlTransform: '强大的template模板ast渲染器',
   idleCallbackWrapper: '强大的requestIdleCallback',
@@ -46,6 +47,7 @@ const lists = {
   preload: '预加载图片函数',
   lazyLoad: '图片懒加载函数',
   addScript: '动态添加script函数',
+  addLink: '动态添加link函数',
   addStyle: '动态添加style函数',
   download: '文件下载函数',
   trim: '字符串去空格函数',
