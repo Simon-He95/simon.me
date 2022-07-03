@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { preload } from 'simon-js-tool'
+import { animationFrameWrapper, preload } from 'simon-js-tool'
 
 async function toBase64(o: File | string, type = 'url') {
   if (type === 'file' || type === 'blob')
@@ -47,50 +47,31 @@ function urlToBase64(url: string) {
 }
 
 const map = Promise.all([
-  toBase64('/images/white.png'),
-  toBase64('/images/yellow.png'),
-  toBase64('/images/red.png'),
-  toBase64('/images/blue.png'),
-  toBase64('/images/purple.png'),
+  toBase64('/images/1.png'),
+  toBase64('/images/2.png'),
+  toBase64('/images/6.png'),
+  toBase64('/images/4.png'),
+  toBase64('/images/5.png'),
 ])
 let cache
 const color = ref('white')
-const backgroundImage = ref('url(/images/R.png)')
+const backgroundImage = ref('url(/images/3.png)')
+let index = 0
 async function animationend() {
   cache = await map
   backgroundImage.value = `url(${cache[0]})`
-  requestAnimationFrame(step)
-}
-let start
-let index = 0
-const colors = ['#ffffff', '#FEF222', '#8D022B', '#3AEFFB', '##CF78EB']
-
-function step(timestamp) {
-  if (start === undefined)
-    start = timestamp
-  const delta = timestamp - start
-  if (delta > 1000) {
+  animationFrameWrapper(() => {
     backgroundImage.value = `url(${cache[index]})`
-    color.value = colors[index]
-    start = timestamp
     if (index < 4)
       index++
     else index = 0
-  }
-  window.requestAnimationFrame(step)
+  }, 1000)
 }
 </script>
 
 <template>
   <section class="lg:w-1/3 flex flex-wrap items-center" fixed left-0 bottom-10>
-    <div
-      class="astronaut-wrapper"
-      :style="{
-        color: 'red',
-        filter: 'drop-shadow(2px 4px 6px ' + color + ')',
-      }"
-      @animationend="animationend"
-    >
+    <div class="astronaut-wrapper" @animationend="animationend">
       <div class="astronaut" :style="{ backgroundImage: backgroundImage }" />
     </div>
   </section>
@@ -134,7 +115,8 @@ function step(timestamp) {
     position: relative;
     left: 20%;
     top: 30%;
-    animation: flyaway 5s 0s ease-in 1 forwards;
+    will-change: transform;
+    animation: flyaway 15s 0s ease-in 1 forwards;
   }
   .astronaut {
     width: 15vmax;
