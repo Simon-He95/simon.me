@@ -9,8 +9,7 @@ import {
 import { useEventListener } from '@vueuse/core'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { isDark } from '~/logics'
-import hy from '/images/gm1.jpg'
-import tr from '/images/gm5.jpg'
+import kb from '/images/kb.png'
 import flag from '/images/flag.jpg'
 useHead({
   meta: [
@@ -23,18 +22,14 @@ useHead({
 })
 const text = ref('')
 const dotText = new DotTextCanvas(text.value, 20, isDark.value ? 'white' : 'black', 10)
-const dotImage = new DotImageCanvas(hy, '', 2, 'transparent')
 const dotImage1 = new DotImageCanvas(flag, '', 1, 'transparent')
-const dotImage2 = new DotImageCanvas(tr, '', 2, 'transparent')
+const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
 const el = ref<HTMLElement>(null)
 const imageEl = ref(null)
-const imageEl1 = ref(null)
 const flagEl = ref(null)
 onMounted(() => {
   el.value?.appendChild(dotText.canvas)
-  dotImage.canvas.style.width = '10rem'
   imageEl.value?.appendChild(dotImage.canvas)
-  imageEl1.value?.appendChild(dotImage2.canvas)
   flagEl.value?.appendChild(dotImage1.canvas)
 })
 watch(isDark, update)
@@ -76,15 +71,25 @@ useEventListener(document, 'scroll', (e) => {
 </script>
 
 <template>
-  <span ref="imageEl" fixed top-20 w-100 h-100 z--1 />
-  <span ref="imageEl1" fixed top-20 right-0 h-100 z--1 />
+  <span ref="imageEl" fixed top-20 right-0 z--1 />
+  <img
+    src="/images/1.gif"
+    alt="dragon"
+    fixed
+    left-0
+    bottom-40
+    z--1
+    lt-md:hidden
+    animate-shake-x
+    animate-duration-4000
+  >
   <span ref="flagEl" fixed bottom--5 right--10 flex w-40 h-40 z--1 />
   <span ref="el" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
     <router-view />
     <Footer />
-    <Levitation />
+    <!-- <Levitation /> -->
   </main>
   <span
     v-if="isShow"

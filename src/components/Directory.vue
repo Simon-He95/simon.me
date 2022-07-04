@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { uppercaseNum } from 'simon-js-tool'
 const lists = {
+  sThree: 'three封装函数',
+  sCharts: 'echarts封装函数',
+  addEventListener: '添加事件函数',
   createElement: '创建dom元素',
   sleep: '睡眠函数',
   htmlTransform: '强大的template模板ast渲染器',
