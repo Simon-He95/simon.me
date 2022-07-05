@@ -37,11 +37,11 @@ onMounted(() => {
             Blog
             <div class="white" />
           </span>
-          <div i-simple-icons:bloglovin md:hidden />
+          <div i-clarity:book-solid md:hidden />
         </router-link>
         <router-link to="/projects" title="Projects">
           <span class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
-          <div i-bi:display class="md:hidden iconMove" />
+          <div i-iwwa:power class="md:hidden iconMove" />
         </router-link>
         <a
           href="https://twitter.com/simon_he1995"
@@ -59,12 +59,7 @@ onMounted(() => {
         >
           <div i-uil-github-alt />
         </a>
-        <a
-          href="https://github.com/Simon-He95/sponsor"
-          target="_blank"
-          title="GitHub"
-          class="lt-md:hidden"
-        >
+        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="GitHub">
           <div i-ph:heart />
         </a>
         <toggle-theme />

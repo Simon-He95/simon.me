@@ -7,7 +7,7 @@ display: ''
 <ClientOnly>
   <Plum/>
 </ClientOnly>
-<vivid-typing :style="{color:isDark?'#339933':'#009966'}" text-sm content="<%><span i-ic:outline-tips-and-updates></span></%> 如果我的blog对你有帮助，请在GitHub关注我，持续更新，记得点一下<%><span i-mdi:star-face></span></%>star哦~\n 当然也欢迎踊跃的PR<%><span i-ph:smiley-wink-bold></span></%>"></vivid-typing>
+<vivid-typing  spilt-tag="span" :style="{color:isDark?'#339933':'#009966'}" text-sm content="<%><span i-ic:outline-tips-and-updates></span></%> 如果我的blog对你有帮助，请在GitHub关注我，持续更新，记得点一下<%><span i-mdi:star-face></span></%>star哦~\n 当然也欢迎踊跃的PR<%><span i-ph:smiley-wink-bold/></%>"></vivid-typing>
 <ListPosts />
 <span i-ic:outline-tips-and-updates hidden></span>
 <span i-mdi:star-face hidden></span>

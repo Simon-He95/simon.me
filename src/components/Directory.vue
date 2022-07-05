@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { uppercaseNum } from 'simon-js-tool'
 const lists = {
+  dragEvent: '点击拖拽松开事件封装函数',
+  compressImage: '图片压缩函数',
   sThree: 'three封装函数',
   sCharts: 'echarts封装函数',
   addEventListener: '添加事件函数',

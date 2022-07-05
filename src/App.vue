@@ -4,6 +4,7 @@ import {
   DotImageCanvas,
   DotTextCanvas,
   animationFrameWrapper,
+  lazyLoad,
   scrollToTop,
 } from 'simon-js-tool'
 import { useEventListener } from '@vueuse/core'
@@ -21,16 +22,14 @@ useHead({
   ],
 })
 const text = ref('')
-const dotText = new DotTextCanvas(text.value, 20, isDark.value ? 'white' : 'black', 10)
+const dotText = new DotTextCanvas(text.value, 10, isDark.value ? 'white' : 'black', 10)
 const dotImage1 = new DotImageCanvas(flag, '', 1, 'transparent')
 const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
 const el = ref<HTMLElement>(null)
 const imageEl = ref(null)
-const flagEl = ref(null)
 onMounted(() => {
   el.value?.appendChild(dotText.canvas)
   imageEl.value?.appendChild(dotImage.canvas)
-  flagEl.value?.appendChild(dotImage1.canvas)
 })
 watch(isDark, update)
 const router = useRouter()
@@ -54,7 +53,7 @@ watch(
 function update() {
   const newDotText = dotText.repaint(
     text.value,
-    20,
+    16,
     isDark.value ? 'white' : 'black',
     10,
   )
@@ -72,18 +71,6 @@ useEventListener(document, 'scroll', (e) => {
 
 <template>
   <span ref="imageEl" fixed top-20 right-0 z--1 />
-  <img
-    src="/images/1.gif"
-    alt="dragon"
-    fixed
-    left-0
-    bottom-40
-    z--1
-    lt-md:hidden
-    animate-shake-x
-    animate-duration-4000
-  >
-  <span ref="flagEl" fixed bottom--5 right--10 flex w-40 h-40 z--1 />
   <span ref="el" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
