@@ -8,7 +8,7 @@ subtitle: 'Author: Simon'
 ---
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-整理了<strong>70+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>80+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 使用说明
@@ -24,6 +24,81 @@ import {
 
 ## 目录结构
 <Directory></Directory>
+
+## sliderValidation
+- 滑块验证功能
+- 参数:
+  - url: 背景图片地址
+  - container: 滑块容器
+  - width: 滑块大小 默认42px
+  - callback: 滑块验证成功回调函数
+```javascript
+sliderValidation('/assets/image.jpg', document.body)
+```
+
+## picInPic
+- 给video开启画中画模式
+- 参数:
+  - video: string | HTMLVideoElement
+```javascript
+const toggle = picInPic('#video')
+toggle() // 开启关闭画中画模式
+```
+
+## shareScreen
+- 浏览器屏幕分享
+- 部分浏览器可能存在兼容问题
+- 浏览器需要授权
+- 参数:
+  - container: 屏幕分享的展示容器
+  - callback: 停止分享时的回调
+```javascript
+shareScreen('#main',() => {
+  console.log("已停止分享");
+});
+```
+
+## dbStorage
+- 浏览器大数据存储
+- 存储容量大 >250MB
+- 同源策略
+- 异步操作
+- 持久化存储
+- 支持二进制储存
+```javascript
+  const { add, read, remove } = await dbStorage()
+  set('key', { video:Blob }) // 添加数据或更新数据 key: string | number, value: object
+  read('key') // 读取数据 key: string | number, 返回 { video:Blob }
+  remove('key') // 删除数据 key: string | number
+```
+
+## waterfall
+- 瀑布流布局
+- 宽度固定
+- 支持追加新的图片
+- 参数:
+  - urlList 图片地址列表
+  - container 父容器 默认为body
+  - width 图片宽度 默认为200
+```javascript
+const append = waterfall([
+  '../assets/1.jpg',
+  '../assets/2.jpg',
+  '../assets/3.jpg',
+  ...
+])
+// 如果触底了,追加新的图片
+addEventListener(window,'scroll',()=>{
+  if(isBottom()){
+    append([
+      '../assets/4.jpg',
+      '../assets/5.jpg',
+      '../assets/6.jpg',
+      ...
+    ])
+  }
+})
+```
 
 ## numWheel
 - 数字滚轮控件
