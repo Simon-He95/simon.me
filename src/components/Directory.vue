@@ -4,6 +4,11 @@ defineProps({
   type: String,
 })
 const lists = {
+  calFps: '计算FPS;Calculate the FPS',
+  useResizeObserver: '监听浏览器窗口变化;useResizeObserver',
+  useWindowScroll: '监听浏览器滚动;useWindowScroll',
+  useElementBounding: '监听元素变化;getBoundingClientRect encapsulation',
+  useMutationObserver: '监听元素变化;MutationObserver encapsulation',
   sliderValidation: '滑块验证功能;Slider verification function',
   picInPic: 'video画中画模式;Switch video-in-picture mode',
   shareScreen: '浏览器屏幕分享;Browser screen sharing',
