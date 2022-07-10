@@ -12,7 +12,7 @@ subtitle: 'Author: Simon'
 > [英文 English Version](/posts/ToolsFunction)
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-整理了<strong>80+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>90+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 使用说明
@@ -28,6 +28,45 @@ import {
 
 ## 目录结构
 <Directory type="zh"></Directory>
+
+
+## insertElement
+- 插入dom元素
+- 参数:
+  - parent: string | HTMLElement 父元素
+  - element: 插入元素
+  - target: 插入位置 (默认插入到第一个节点)
+```js
+const div = createElement('div', {
+  id: 'main',
+  style: 'background: red;font-size:20px',
+})
+insertElement('#main', div) // 插入到第一个节点
+insertElement('#main', div, null) // 插入到最后
+```
+
+## removeElement
+- 删除dom元素
+- 参数:
+  - element: dom元素
+```js
+removeElement(element)
+```
+## findElement
+- 查找dom元素
+- 参数:
+  - selector: 查找的选择器
+  - single: 是否只查找一个元素
+```js
+findElement('video') // <video>
+findElement('video', true) // [<video>, <video>]
+```
+
+## useWebp
+- 判断当前环境是否支持webp
+```javascript
+useWebp() // true or false
+```
 
 ## calFps
 - 计算FPS

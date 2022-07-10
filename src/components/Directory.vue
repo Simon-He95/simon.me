@@ -4,6 +4,11 @@ defineProps({
   type: String,
 })
 const lists = {
+  insertElement: '插入dom元素;Insert a dom element',
+  removeElement: '删除dom元素;Delete dom element',
+  findElement: '查找dom元素;Look for the dom element',
+  useWebp:
+    '判断当前浏览器是否支持webp;Determine whether the current environment supports webp',
   calFps: '计算FPS;Calculate the FPS',
   useResizeObserver: '监听浏览器窗口变化;useResizeObserver',
   useWindowScroll: '监听浏览器滚动;useWindowScroll',
