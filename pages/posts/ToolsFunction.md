@@ -6,7 +6,103 @@ lang: en
 duration: 2day
 subtitle: 'Author: Simon'
 ---
-
+<script setup lang="ts">
+const directoryList = {
+  insertElement: 'Insert a dom element',
+  removeElement: 'Remove a dom element',
+  findElement: 'Find the dom element',
+  useWebp:    'Determine whether the current environment supports webp',
+  calFps: 'Calculate the FPS',
+  useResizeObserver: 'useResizeObserver',
+  useWindowScroll: 'useWindowScroll',
+  useElementBounding: 'useElementBounding',
+  useMutationObserver: 'useMutationObserver',
+  sliderValidation: 'Slider validation',
+  picInPic: 'Picture in picture',
+  shareScreen: 'Screen sharing',
+  dbStorage: 'Big data storage',
+  waterfall: 'Waterfall layout of pictures',
+  numWheel: 'Digital wheel control',
+  dragEvent:
+    'Click to drag and drop to release the event encapsulation',
+  compressImage: 'Picture compression function',
+  sThree: 'Simplify the use of three',
+  sCharts: 'Simplify the use of echarts',
+  addEventListener: 'Add an event function to the element',
+  createElement: 'Create the dom function',
+  sleep: 'Sleep function',
+  htmlTransform: 'Powerful template ast renderer',
+  idleCallbackWrapper: 'Powerful requestIdleCallback',
+  animationFrameWrapper: 'Powerful requestAnimationFrame',
+  DotImageCanvas: 'Dot image drawing',
+  DotTextCanvas: 'Dot matrix text',
+  CreateSignatureCanvas: 'Create a signature canvas',
+  fileSplice: 'Big file splitting',
+  pwdLevel: 'Identify the strength of the number',
+  sort: 'Powerful array sorting',
+  getLru: 'Get the most recently used cache',
+  escapeHtml: 'Convert html string to entity string',
+  unescapeHtml: 'Convert entity string to html string',
+  timeCost: 'Calculate the time it takes to execute the function',
+  log: 'Simplify the use of console.log',
+  copy: 'Copy the content to the clipboard',
+  getDateList: 'Get the date list',
+  isType: 'Type judgment function',
+  randomDate: 'Random date',
+  uniqueArray: 'Powerful array de-duplication',
+  deepCompare: 'Powerful object comparison function',
+  deepMerge: 'Deep copy of Object.assign',
+  asyncPool: 'Concurrent execution function',
+  quickFind: 'O(1) search function',
+  quickFilter: 'Fuzzy search for array',
+  deepClone: 'Powerful object deep copy',
+  curry: 'Currying',
+  memorizeFn: 'Cache function',
+  debounce: 'Debounce function',
+  throttle: 'Throttle function',
+  traverse: 'Magical traversal of object function',
+  transformKey: 'Map the key function of an object',
+  once: 'Only execute once function',
+  vFetch: 'Powerful fetch function',
+  stringify: 'Object to string',
+  parse: 'String to object',
+  jsCookie: 'Cookie function',
+  uuid: 'Generate uuid',
+  formateDate: 'Date formatting function',
+  monitorPef: 'Performance monitoring function',
+  getLocation: 'Get the current location function',
+  getDevice: 'Get the device information function',
+  preload: 'Preload image function',
+  lazyLoad: 'Image lazy load function',
+  addScript: 'Add script function',
+  addLink: 'Add link function',
+  addStyle: 'Add style function',
+  download: 'File download function',
+  trim: 'String trim function',
+  compressCss: 'Css compression function',
+  scrollToTop: 'Scroll to the top function',
+  createEventBus: 'Event bus function',
+  randomHexColor: 'Random generate hex color function',
+  randomRgb: 'Random generate RGB function',
+  httpsRedirect: 'Https redirect function',
+  scrollToView: 'Scroll to the view function',
+  getScrollPosition: 'Get the scroll position function',
+  camelize: 'Camelize function',
+  hyphenate: 'Hyphenate function',
+  getUrlParam: 'Get the url parameter function',
+  fullScreen: 'Full screen function',
+  exitFullScreen: 'Exit full screen function',
+  toBase64: 'To base64 function',
+  base64ToFile: 'Base64 to file function',
+  base64ToBlob: 'Base64 to blob function',
+  uppercaseNum: 'Number to uppercase function',
+  formateNum: 'Number formatting function',
+  interceptError: 'Error interception function',
+  isBottom: 'Judge whether to reach the bottom function',
+  calNum: 'Calculate number function',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob',
+}
+</script>
 [[toc]]
 
 > [中文 Chinese Version](/posts/ToolsFunction-zh)
@@ -14,6 +110,9 @@ subtitle: 'Author: Simon'
 ## This article is documentation that describes the encapsulated utility functions [simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
 Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>peculiarity</strong>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></div>
+
+
+Additional [exports-functions](/posts/exportsfunction-zh)
 
 
 ## Instructions for use
@@ -26,7 +125,73 @@ import {
 ```
 
 ## 目录结构
-<Directory type="en"></Directory>
+<Directory  :lists="directoryList"></Directory>
+
+## jsonExportZip
+- json导出为zip文件
+- 参数:
+  - header: string[]
+  - data: any[][]
+  - fileName: string
+```js
+jsonExportZip({
+  header: ['colums1', 'colums2', 'colums3'],
+  data: [
+    ['data1', 'data2', 'data3'],
+    ['data4', 'data5', 'data6'],
+    ['data7', 'data8', 'data9'],
+  ],
+  fileName: 'test',
+})
+```
+
+## tableExportExcel
+- HTMLTableElement 转换为 Excel 导出
+- 参数:
+  - table: HTMLTableElement | string
+  - filename: string = 'test.xlsx
+  - sheetname: string = 'sheet1'
+```js
+tableExportExcel('.my-table', '表格.xlsx') // 导出 .my-table 元素的表格.xlsx
+```
+
+## jsonExportExcel
+- json导出成excel
+- 参数:
+  - exportExcelOptions： {
+    multiHeader?: [],
+    header: [],
+    data: any[][],
+    filename?: string = 'excel-list',
+    merges?: string[] = [],
+    autoWidth: Boolean = false,
+    bookType?: string = 'xlsx',
+    sheetName?:string = 'sheet1',
+  }
+```js
+jsonExportExcel({
+  header: ['姓名', '年龄', '性别'],
+  data: [
+    ['小王', '18', '男'],
+    ['小李', '20', '男'],
+    ['小赵', '21', '男'],
+    ['小张', '22', '男'],
+    ['小刘', '23', '男'],
+  ],
+  fileName: '三年二班学生信息',
+  bookType: 'xlsx',
+  sheetName: '学生信息表',
+}) // 导出三年二班学生信息.xlsx
+```
+
+## exportPdf
+- 导出pdf文件
+- 参数:
+  - src: 图片地址
+  - filename: 文件名
+```js
+exportPdf('./a.jpg', 'xxx') // 导出xxx.pdf
+```
 
 ## insertElement
 - Insert a dom element
