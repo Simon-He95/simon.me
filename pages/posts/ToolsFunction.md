@@ -109,7 +109,7 @@ const directoryList = {
 
 ## This article is documentation that describes the encapsulated utility functions [simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
 Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
-<div flex="~" items-center><strong>peculiarity</strong>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></div>
+<div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 
 Additional [exports-functions](/posts/exportsfunction-zh)

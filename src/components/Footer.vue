@@ -1,11 +1,8 @@
 <template>
-  <div class="mt-10 mb-6 prose m-auto opacity-50 flex">
-    <span class="text-sm"><a
-      target="_blank"
-      href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
-      style="color: inherit"
-    >CC BY-NC-SA 4.0</a>
-      2021-PRESENT © Simon He</span>
+  <div class="mt-10 mb-6 prose m-auto opacity-50 flex" items-center>
+    <a text-sm class="banquan" href="https://beian.miit.gov.cn/" target="_blank"
+      >沪ICP备20020389号-1 © Simon He</a
+    >
     <div class="flex-auto" />
   </div>
 </template>

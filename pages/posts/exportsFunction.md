@@ -19,7 +19,7 @@ const directoryList = {
 > [中文 Chinese Version](/posts/exportsFunction-zh)
 
 ## This article is documentation that describes the encapsulated utility functions [exports functions](https://www.npmjs.com/package/exports-function)
-<div flex="~" items-center><strong>peculiarity</strong>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></div>
+<div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 Additional common functions [simon-js-tool](/posts/ToolsFunction)
 
