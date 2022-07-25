@@ -37,6 +37,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'Json Schema Transform Form'
+      link: 'https://www.npmjs.com/package/json-schema-transform-form'
+      desc: 'Transform form from json schema to form with dependency of vue3 and element-plus.'
+      icon: 'i-mdi:code-json'
     - name: 'Dot Image'
       link: 'http://dot-image.hejian.club/'
       desc: 'Transform image to DotImage with canvas.'
