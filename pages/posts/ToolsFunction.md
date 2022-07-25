@@ -8,6 +8,8 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+   sortByOrder:'Sorts the array in the order of another array',
+  ExportPlugin:'VitePlugin file is exported directly',
   insertElement: 'Insert a dom element',
   removeElement: 'Remove a dom element',
   findElement: 'Find the dom element',
@@ -127,70 +129,69 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
-## jsonExportZip
-- json导出为zip文件
-- 参数:
-  - header: string[]
-  - data: any[][]
-  - fileName: string
+## sortByOrder
+- Sorts the array in the order of another array
+- params:
+  - arr: Array
+  - prop: The name of the property in the array object
+  - order: Sorts the array
 ```js
-jsonExportZip({
-  header: ['colums1', 'colums2', 'colums3'],
-  data: [
-    ['data1', 'data2', 'data3'],
-    ['data4', 'data5', 'data6'],
-    ['data7', 'data8', 'data9'],
+const order = ['name', '*', 'weight']
+const arr = [{
+  props: {
+    key: 'weight',
+  },
+}, {
+  props: {
+    key: 'name',
+  },
+}, {
+  props: {
+    key: 'width',
+  },
+}, {
+  props: {
+    key: 'age',
+  },
+},
+]
+const result = sortByOrder(arr, 'props.key', order)
+/*
+ [
+        {
+          "props": {
+            "key": "name",
+          },
+        },
+        {
+          "props": {
+            "key": "width",
+          },
+        },
+        {
+          "props": {
+            "key": "age",
+          },
+        },
+        {
+          "props": {
+            "key": "weight",
+          },
+        },
+      ]
+*/
+```
+
+## ExportPlugin
+- VitePlugin
+- Export directly to a file that ends with parameters
+```js
+// The glsl file is available for import glsl from 'xxx.glsl
+export default defineConfig({
+  plugins: [
+    exportPlugin('glsl'),
   ],
-  fileName: 'test',
 })
-```
-
-## tableExportExcel
-- HTMLTableElement 转换为 Excel 导出
-- 参数:
-  - table: HTMLTableElement | string
-  - filename: string = 'test.xlsx
-  - sheetname: string = 'sheet1'
-```js
-tableExportExcel('.my-table', '表格.xlsx') // 导出 .my-table 元素的表格.xlsx
-```
-
-## jsonExportExcel
-- json导出成excel
-- 参数:
-  - exportExcelOptions： {
-    multiHeader?: [],
-    header: [],
-    data: any[][],
-    filename?: string = 'excel-list',
-    merges?: string[] = [],
-    autoWidth: Boolean = false,
-    bookType?: string = 'xlsx',
-    sheetName?:string = 'sheet1',
-  }
-```js
-jsonExportExcel({
-  header: ['姓名', '年龄', '性别'],
-  data: [
-    ['小王', '18', '男'],
-    ['小李', '20', '男'],
-    ['小赵', '21', '男'],
-    ['小张', '22', '男'],
-    ['小刘', '23', '男'],
-  ],
-  fileName: '三年二班学生信息',
-  bookType: 'xlsx',
-  sheetName: '学生信息表',
-}) // 导出三年二班学生信息.xlsx
-```
-
-## exportPdf
-- 导出pdf文件
-- 参数:
-  - src: 图片地址
-  - filename: 文件名
-```js
-exportPdf('./a.jpg', 'xxx') // 导出xxx.pdf
 ```
 
 ## insertElement

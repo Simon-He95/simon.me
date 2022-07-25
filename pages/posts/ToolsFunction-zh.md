@@ -9,6 +9,8 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  sortByOrder:'将数组按照另一个数组的顺序排序',
+  ExportPlugin:'VitePlugin文件直接导出',
   insertElement: '插入dom元素',
   removeElement: '删除dom元素',
   findElement: '查找dom元素',
@@ -132,70 +134,68 @@ import {
 <Directory  :lists="directoryList"></Directory>
 
 
-## jsonExportZip
-- jJson is exported as a zip file
-- params:
-  - header: string[]
-  - data: any[][]
-  - fileName: string
-```js
-jsonExportZip({
-  header: ['colums1', 'colums2', 'colums3'],
-  data: [
-    ['data1', 'data2', 'data3'],
-    ['data4', 'data5', 'data6'],
-    ['data7', 'data8', 'data9'],
-  ],
-  fileName: 'test',
-})
-```
-
-## tableExportExcel
-- HTMLTableElement Convert to Excel export
-- params:
-  - table: HTMLTableElement | string
-  - filename: string = 'test.xlsx
-  - sheetname: string = 'sheet1'
-```js
-tableExportExcel('.my-table', 'table表格.xlsx') // Export the table .xlsx of the .my-table element
-```
-
-## jsonExportExcel
-- Json is exported to excel
+## sortByOrder
+- 将数组按照另一个数组的顺序排序
 - 参数:
-  - exportExcelOptions： {
-    multiHeader?: [],
-    header: [],
-    data: any[][],
-    filename?: string = 'excel-list',
-    merges?: string[] = [],
-    autoWidth: Boolean = false,
-    bookType?: string = 'xlsx',
-    sheetName?:string = 'sheet1',
-  }
+  - arr: 数组
+  - prop: 数组的对象中的属性名称
+  - order: 排序的数组
 ```js
-jsonExportExcel({
-  header: ['Name', 'Age', 'Gender'],
-  data: [
-    ['Little King', '18', 'Male'],
-    ['Little Lee', '20', 'Male'],
-    ['Xiao Zhao', '21', 'male'],
-    ['Xiao Zhang', '22', 'male'],
-    ['Xiao Liu', '23', 'male'],
-  ],
-  fileName: 'Information on students in the second class of the third year',
-  bookType: 'xlsx',
-  sheetName: 'Student Information Form',
-}) // Export information .xlsx for students in the second class of the third year
+const order = ['name', '*', 'weight']
+const arr = [{
+  props: {
+    key: 'weight',
+  },
+}, {
+  props: {
+    key: 'name',
+  },
+}, {
+  props: {
+    key: 'width',
+  },
+}, {
+  props: {
+    key: 'age',
+  },
+}]
+const result = sortByOrder(arr, order, 'props.key')
+/*
+ [
+        {
+          "props": {
+            "key": "name",
+          },
+        },
+        {
+          "props": {
+            "key": "width",
+          },
+        },
+        {
+          "props": {
+            "key": "age",
+          },
+        },
+        {
+          "props": {
+            "key": "weight",
+          },
+        },
+      ]
+*/
 ```
 
-## exportPdf
-- Export the pdf file
-- params:
-  - src: Picture address
-  - filename: filename
+## ExportPlugin
+- VitePlugin
+- 将以参数结尾的文件直接导出
 ```js
-exportPdf('./a.jpg', 'xxx') // Export xxx .pdf
+// glsl文件即可import glsl from 'xxx.glsl
+export default defineConfig({
+  plugins: [
+    exportPlugin('glsl'),
+  ],
+})
 ```
 
 ## insertElement

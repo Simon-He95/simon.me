@@ -69,6 +69,15 @@ projects:
       link: 'https://www.npmjs.com/package/vivid-typing'
       desc: 'vivid typing Component for Vue3.0 and Vite. Try to use it!'
       icon: 'i-eos-icons:typing'
+  Three:
+    - name: 'Galaxy'
+      link: 'http://three.hejian.club/#/galaxy'
+      desc: 'Galaxy with three.'
+      icon: 'i-ic:round-storm'
+    - name: 'Wave'
+      link: 'http://three.hejian.club'
+      desc: 'Wave with three.'
+      icon: 'i-ic:round-waves'
   History:
     - name: 'Snake'
       link: 'https://snake.hejian.club/'
