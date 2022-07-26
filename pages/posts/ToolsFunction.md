@@ -28,8 +28,6 @@ const directoryList = {
   dragEvent:
     'Click to drag and drop to release the event encapsulation',
   compressImage: 'Picture compression function',
-  sThree: 'Simplify the use of three',
-  sCharts: 'Simplify the use of echarts',
   addEventListener: 'Add an event function to the element',
   createElement: 'Create the dom function',
   sleep: 'Sleep function',
@@ -113,9 +111,10 @@ const directoryList = {
 Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
-
-Additional [exports-functions](/posts/exportsfunction-zh)
-
+## More
+- Export functions [exports-functions](/posts/exportsfunction)
+- Threejs simplistic[s-three](/posts/threejs)
+- Echarts simplistic[s-charts](/posts/charts)
 
 ## Instructions for use
 ```bash
@@ -126,7 +125,7 @@ import {
  } from 'simon-js-tool' # Ingestion on demand
 ```
 
-## 目录结构
+## Directory structure
 <Directory  :lists="directoryList"></Directory>
 
 ## sortByOrder
@@ -410,99 +409,6 @@ dragEvent('#main', {
     type: "blob",
   }); // Blob {size: 3095, type: 'image/jpeg'}
 ```
-
-## sThree
-- Simplify the use of three
-- It can make your code more concise and beautiful
-- Automatically listens for resize events and automatically updates the size of the canvas
-- params:
-  - container: string | HTMLElement /* Parent container */
-  - options: {
-     createMesh: (
-    c?: (fnName: keyof FnNameMap | keyof T, ...args: any[]) => Mesh[], // 一个创建函数c,const material = c("Mesh", {
-        matcap: texture,
-      });
-    animationArray?: Mesh[], // It will be passed in in the animate and can be used to manipulate mesh that may be merged, but want to handle mesh, animationArray, which you want to handle separately
-    THREE?: T,
-    track?: (...args: [target: Object, propName: string, min?: number, max?: number, step?: number]) => dat.GUIController 
-  ) => any[] // track is only used in debug mode, you can add controls to the track, return an array, each element in the array is a dat. The GUIController object can be used to manipulate the control, and the returned control is added to the gui
-  createCamera: (c: (fnName: keyof FnNameMap | keyof T, ...args: any[]) => any, meshes: Mesh[], scene: Object3D) => PerspectiveCamera // Create camera, const camera = c("PC"); Return camera, the returned camera will be added to the scene
-  animate?: (animationOptions: AnimateOptions) => void | THREE.PerspectiveCamera // The animation function, at 60 frames per second, can be added here to modify the camera or mesh property, which will be automatically updated, if you need to use the new camera here to return a new camera
-  middleware?: (middlewareOptions: MiddlewareOptions) => any // Middleware functions, you can do an extra operation here, such as adding axes, using OrbitControls, etc., the returned content will be passed into the params in the organization function
-  mousemove?: (e: Event) => void // Automatically listens for mousemove events on the canvas
-  mousedown?: (e: Event) => void // Automatically listens for mousedown events on canvas
-  mouseup?: (e: Event) => void // Automatically listens for mouseup events on the canvas
-  debug?: boolean // Whether debug mode is enabled, false is the default
-  alias?: Record<string, string> // Configure aliases, such as {m:Mesh", pc:PerspectiveCamera"} in the c function, as mappings, etc., according to their own naming conventions
-  }
-```javascript
- const cursor = {
-    x: 0,
-    y: 0,
-  };
-  SThree("#main", {
-    createMesh(c, animationArray, track, THREE) {
-      const texture = c("tl", "../public/door.png");
-      const material = c("mmm", {
-        matcap: texture,
-      });
-
-      const sphere = c("m", c("sg", 0.5, 16, 16), material);
-      sphere.position.x = -1.5;
-      const plane = c("m", c("planeg", 1, 1), material);
-      const torus = c("m", c("torusg", 0.3, 0.2, 16, 32), material);
-      torus.position.x = 1.5;
-      return [sphere, plane, torus];
-    },
-    createCamera(c, meshes) {
-      const camera = c("PC");
-      camera.position.z = 5;
-      return camera;
-    },
-    middleware({ c, meshes, camera, scene, OrbitControls, dom }) {
-      const controls = new OrbitControls(camera, dom);
-      controls.enableDamping = true;
-      return controls;
-    },
-    animate({ c, meshes, camera, elapsedTime, params }) {
-      // console.log(params);
-      // meshes.forEach((mesh) => {
-      //   mesh.rotation.y = time * Math.PI;
-      // });
-      // meshes[0].rotation.x += 0.01;
-      // meshes[0].rotation.y += 0.01;
-      params.update();
-    },
-    debug: true,
-  });
-```
-
-## sCharts
-- Simplify the use of echarts
-- It can make your code more concise and beautiful
-- Automatically listens for resize events and automatically updates the size of the canvas
-- params:
-  - container: string | HTMLElement  /* Parent container */
-  - options: SChartsOption  /* With echarts options, w: initialization width, h: initialization height, theme: echarts subject, all event behaviors starting with on are called */
-  - autoResize: boolean  /* Whether to adjust the width and height automatically */
-```javascript
-const charts = sCharts('#main', {
-  w: 500,
-  h: 300,
-  theme: 'dark',
-  xAxis: {
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  },
-  yAxis: {},
-  series: [
-    {
-      type: 'bar',
-      data: [23, 24, 18, 25, 27, 28, 25],
-    },
-  ],
-})
-```
-
 ## addEventListener
 - Add an event function to the element
 - Returns a delete function
@@ -1479,5 +1385,5 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isFile - Determine if it is a File type
 - isBlob - Determine if it is a Blob type
 
-## GitHub地址
+## GitHub
 [Welcome to PR](https://github.com/Simon-He95/simon-js-tool)

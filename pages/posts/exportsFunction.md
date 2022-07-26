@@ -21,20 +21,23 @@ const directoryList = {
 ## This article is documentation that describes the encapsulated utility functions [exports functions](https://www.npmjs.com/package/exports-function)
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
-Additional common functions [simon-js-tool](/posts/ToolsFunction)
+## More
+- Common functions [simon-js-tool](/posts/ToolsFunction)
+- Threejs simplistic[s-three](/posts/threejs)
+- Echarts simplistic[s-charts](/posts/charts)
 
-## 使用说明
+## Instructions for use
 ```bash
-npm i simon-js-tool # 安装
+npm i exports-function # install
 
 import { 
-  deepCompare,
+  jsonExportZip,
   ...
- } from 'simon-js-tool' # 按需引入
+ } from 'exports-function' # Ingestion on demand
 
 ```
 
-## 目录结构
+## Directory structure
 <Directory type="zh" :lists="directoryList"></Directory>
 
 
@@ -68,7 +71,7 @@ tableExportExcel('.my-table', 'table表格.xlsx') // Export the table .xlsx of t
 
 ## jsonExportExcel
 - Json is exported to excel
-- 参数:
+- params:
   - exportExcelOptions： {
     multiHeader?: [],
     header: [],
@@ -104,5 +107,5 @@ jsonExportExcel({
 exportPdf('./a.jpg', 'xxx') // Export xxx .pdf
 ```
 
-## GitHub地址
-[欢迎PR](https://github.com/SimonHe1995/exportsFunction)
+## GitHub
+[Welcome to PR](https://github.com/SimonHe1995/exportsFunction)

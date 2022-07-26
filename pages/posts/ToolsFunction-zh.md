@@ -30,8 +30,6 @@ const directoryList = {
   dragEvent:
     '点击拖拽松开事件封装函数',
   compressImage: '图片压缩函数',
-  sThree: 'three封装函数',
-  sCharts: 'echarts封装函数',
   addEventListener: '添加事件函数',
   createElement: '创建dom元素',
   sleep: '睡眠函数',
@@ -116,7 +114,10 @@ const directoryList = {
 整理了<strong>90+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
-额外的导出函数[exports-functions](/posts/exportsfunction-zh)
+## 更多
+- 导出函数[exports-functions](/posts/exportsfunction-zh)
+- threejs简单化[s-three](/posts/threejs-zh)
+- Echarts简单化[s-charts](/posts/charts-zh)
 
 
 ## 使用说明
@@ -415,101 +416,6 @@ dragEvent('#main', {
     maxHeight: 100,
     type: "blob",
   }); // Blob {size: 3095, type: 'image/jpeg'}
-```
-
-## sThree
-- 简单化three的使用
-- 可以让你的代码更加简洁,更加美观
-- 不需要在onMounted中执行,可以在任意时刻使用
-- 自动监听resize事件,自动更新canvas的大小
-- 内置了一下简单的创建函数和一些修改属性函数后自动化更新视图的功能
-- 参数:
-  - container: string | HTMLElement, 父容器
-  - options: {
-     createMesh: (
-    c?: (fnName: keyof FnNameMap | keyof T, ...args: any[]) => Mesh[], // 一个创建函数c,const material = c("Mesh", {
-        matcap: texture,
-      });
-    animationArray?: Mesh[], // 会在animate中传入,可以用来操作可能被合并的mesh，但是想单独处理的mesh,animationArray
-    THREE?: T,
-    track?: (...args: [target: Object, propName: string, min?: number, max?: number, step?: number]) => dat.GUIController 
-  ) => any[] // track只有在开启debug模式下使用,可以在track中添加控件,返回一个数组,数组中的每个元素是一个dat.GUIController对象,可以用来操作控件,返回的控件会被添加到gui中
-  createCamera: (c: (fnName: keyof FnNameMap | keyof T, ...args: any[]) => any, meshes: Mesh[], scene: Object3D) => PerspectiveCamera // 创建camera, const camera = c("PC"); return camera, 返回的camera会被添加到scene中
-  animate?: (animationOptions: AnimateOptions) => void | THREE.PerspectiveCamera // 动画函数,每秒60帧,可以在这里添加修改camera或者mesh的属性,会被自动update,如果需要使用新的camera在这里返回一个新的camera即可
-  middleware?: (middlewareOptions: MiddlewareOptions) => any // 中间件函数,可以在这里额外做一下操作，比如添加axes,使用 OrbitControls等等，返回的内容会被传入到animation函数中的params中
-  mousemove?: (e: Event) => void // 自动监听画布的mousemove事件
-  mousedown?: (e: Event) => void // 自动监听画布的mousedown事件
-  mouseup?: (e: Event) => void // 自动监听画布的mouseup事件
-  debug?: boolean // 是否开启debug模式,默认false
-  alias?: Record<string, string> // 配置别名,在c函数中作为映射使用例如 {m:"Mesh",pc:"PerspectiveCamera"}等等，根据自己的命名规则来配置别名
-  }
-```javascript
- const cursor = {
-    x: 0,
-    y: 0,
-  };
-  SThree("#main", {
-    createMesh(c, animationArray, track, THREE) {
-      const texture = c("tl", "../public/door.png");
-      const material = c("mmm", {
-        matcap: texture,
-      });
-
-      const sphere = c("m", c("sg", 0.5, 16, 16), material);
-      sphere.position.x = -1.5;
-      const plane = c("m", c("planeg", 1, 1), material);
-      const torus = c("m", c("torusg", 0.3, 0.2, 16, 32), material);
-      torus.position.x = 1.5;
-      return [sphere, plane, torus];
-    },
-    createCamera(c, meshes) {
-      const camera = c("PC");
-      camera.position.z = 5;
-      return camera;
-    },
-    middleware({ c, meshes, camera, scene, OrbitControls, dom }) {
-      const controls = new OrbitControls(camera, dom);
-      controls.enableDamping = true;
-      return controls;
-    },
-    animate({ c, meshes, camera, elapsedTime, params }) {
-      // console.log(params);
-      // meshes.forEach((mesh) => {
-      //   mesh.rotation.y = time * Math.PI;
-      // });
-      // meshes[0].rotation.x += 0.01;
-      // meshes[0].rotation.y += 0.01;
-      params.update();
-    },
-    debug: true,
-  });
-```
-
-## sCharts
-- 简单化echarts使用
-- 可以让你的代码更加简洁,更加美观
-- 不需要在onMounted中执行,可以在任意时刻使用
-- 自动监听resize事件,自动更新canvas的大小
-- 参数:
-  - container: string | HTMLElement, 父容器
-  - options: SChartsOption, echarts配置options,扩展了w: 初始化宽度, h: 初始化高度, theme: echarts主题, 所有的事件行为以on开头都会被调用
-  - autoResize: boolean, 是否自动调整宽高
-```javascript
-const charts = sCharts('#main', {
-  w: 500,
-  h: 300,
-  theme: 'dark',
-  xAxis: {
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  },
-  yAxis: {},
-  series: [
-    {
-      type: 'bar',
-      data: [23, 24, 18, 25, 27, 28, 25],
-    },
-  ],
-})
 ```
 
 ## addEventListener
@@ -1481,5 +1387,5 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isFile - 判断是否是File类型
 - isBlob - 判断是否是Blob类型
 
-## GitHub地址
+## GitHub
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)
