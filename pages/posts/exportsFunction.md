@@ -23,8 +23,8 @@ const directoryList = {
 
 ## More
 - Common functions [simon-js-tool](/posts/ToolsFunction)
-- Threejs simplistic[s-three](/posts/threejs)
-- Echarts simplistic[s-charts](/posts/charts)
+- Threejs simplistic [s-three](/posts/threejs)
+- Echarts simplistic [s-charts](/posts/charts)
 
 ## Instructions for use
 ```bash

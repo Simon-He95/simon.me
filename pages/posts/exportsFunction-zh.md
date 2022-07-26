@@ -24,9 +24,9 @@ const directoryList = {
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 更多
-- 通用函数[simon-js-tool](/posts/ToolsFunction-zh)
-- threejs简单化[s-three](/posts/threejs-zh)
-- Echarts简单化[s-charts](/posts/charts-zh)
+- 通用函数 [simon-js-tool](/posts/ToolsFunction-zh)
+- threejs简单化 [s-three](/posts/threejs-zh)
+- Echarts简单化 [s-charts](/posts/charts-zh)
 
 
 ## 使用说明

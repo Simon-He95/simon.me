@@ -113,8 +113,8 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 
 ## More
 - Export functions [exports-functions](/posts/exportsfunction)
-- Threejs simplistic[s-three](/posts/threejs)
-- Echarts simplistic[s-charts](/posts/charts)
+- Threejs simplistic [s-three](/posts/threejs)
+- Echarts simplistic [s-charts](/posts/charts)
 
 ## Instructions for use
 ```bash
