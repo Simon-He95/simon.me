@@ -3,7 +3,6 @@ title: projects - Simon He
 display: ''
 projects:
   Latest:
-
     - name: 'Find Gold'
       link: 'http://find-gold.hejian.club/'
       desc: 'Find Gold in darkness.Start your game!'
@@ -37,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: '@simon_he/nums-wheel'
+      link: 'https://www.npmjs.com/package/@simon_he/nums-wheel'
+      desc: 'Digital wheel control.'
+      icon: 'i-fa:sort-numeric-asc'
     - name: '@simon_he/s-charts'
       link: 'https://www.npmjs.com/package/@simon_he/s-charts'
       desc: 'Simplify the use of echarts.'
