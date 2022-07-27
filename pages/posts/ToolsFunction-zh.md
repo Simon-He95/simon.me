@@ -118,6 +118,7 @@ const directoryList = {
 - 导出函数 [exports-functions](/posts/exportsfunction-zh)
 - threejs简单化 [s-three](/posts/threejs-zh)
 - Echarts简单化 [s-charts](/posts/charts-zh)
+- numsWheel 组件 [s-nums-wheel](/posts/numsWheel-zh)
 
 
 ## 使用说明

@@ -24,6 +24,7 @@ const directoryList = {
 - 通用函数[simon-js-tool](/posts/ToolsFunction-zh)
 - 导出函数[exports-functions](/posts/exportsfunction-zh)
 - Echarts简单化[s-three](/posts/charts-zh)
+- numsWheel 组件 [s-nums-wheel](/posts/numsWheel)
 
 ## 使用说明
 ```bash
@@ -190,4 +191,4 @@ const {
 
 
 ## GitHub
-[欢迎PR](https://github.com/SimonHe1995/sThree)
+[欢迎PR](https://github.com/Simon-He95/sThree)

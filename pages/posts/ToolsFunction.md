@@ -8,7 +8,7 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
-   sortByOrder:'Sorts the array in the order of another array',
+  sortByOrder:'Sorts the array in the order of another array',
   ExportPlugin:'VitePlugin file is exported directly',
   insertElement: 'Insert a dom element',
   removeElement: 'Remove a dom element',
@@ -115,6 +115,7 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
 - Echarts simplistic [s-charts](/posts/charts)
+- numsWheel component [s-nums-wheel](/posts/numsWheel)
 
 ## Instructions for use
 ```bash

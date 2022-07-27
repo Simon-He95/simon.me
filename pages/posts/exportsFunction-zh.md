@@ -27,7 +27,7 @@ const directoryList = {
 - 通用函数 [simon-js-tool](/posts/ToolsFunction-zh)
 - threejs简单化 [s-three](/posts/threejs-zh)
 - Echarts简单化 [s-charts](/posts/charts-zh)
-
+- numsWheel 组件 [s-nums-wheel](/posts/numsWheel)
 
 ## 使用说明
 ```bash
@@ -110,5 +110,5 @@ jsonExportExcel({
 exportPdf('./a.jpg', 'xxx') // Export xxx .pdf
 ```
 
-## GitHub地址
+## GitHub
 [欢迎PR](https://github.com/SimonHe1995/exportsFunction)

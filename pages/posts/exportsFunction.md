@@ -25,6 +25,7 @@ const directoryList = {
 - Common functions [simon-js-tool](/posts/ToolsFunction)
 - Threejs simplistic [s-three](/posts/threejs)
 - Echarts simplistic [s-charts](/posts/charts)
+- numsWheel component [s-nums-wheel](/posts/numsWheel)
 
 ## Instructions for use
 ```bash

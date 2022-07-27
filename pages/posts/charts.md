@@ -25,6 +25,7 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 - Common functions [simon-js-tool](/posts/ToolsFunction)
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
+- numsWheel component [s-nums-wheel](/posts/numsWheel)
 
 ## Instructions for use
 ```bash
@@ -68,4 +69,4 @@ const charts = sCharts('#main', {
 ```
 
 ## GitHub
-[Welcome to PR](https://github.com/SimonHe1995/sCharts)
+[Welcome to PR](https://github.com/Simon-He95/sCharts)

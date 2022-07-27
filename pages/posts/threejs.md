@@ -25,6 +25,7 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 - Common functions [simon-js-tool](/posts/ToolsFunction)
 - Export functions [exports-functions](/posts/exportsfunction)
 - Echarts simplistic [s-charts](/posts/charts)
+- numsWheel component [s-nums-wheel](/posts/numsWheel)
 
 ## Instructions for use
 ```bash
@@ -118,4 +119,4 @@ import {
 
 
 ## GitHub
-[Welcome to PR](https://github.com/SimonHe1995/sThree)
+[Welcome to PR](https://github.com/Simon-He95/sThree)
