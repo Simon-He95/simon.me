@@ -8,6 +8,9 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  writeFile: "Quickly modify file contents",
+  insertUnocssInclude:'@unocss-include insert header',
+  useIntersectionObserver:'监听元素重叠事件',
   sortByOrder:'Sorts the array in the order of another array',
   ExportPlugin:'VitePlugin file is exported directly',
   insertElement: 'Insert a dom element',
@@ -128,6 +131,42 @@ import {
 
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
+
+
+## writeFile
+- Quickly modify file content, support multiple files to modify at the same time
+- params:
+  - filePath: string | string[]  file path
+  - callback: (content: string, index: number) => string Incoming file string type content can be modified to return new content
+```js
+writeFile('./a.js', (content) => {
+  return content.replace('a', 'b')
+})
+```
+
+## insertUnocssInclude
+- Unocss packaged components passed in as props will lose comments) @unocss-include, this function is automatically inserted into the header of the packaged file
+- params:
+  - path: string | string[] File path, default is ['./dist/index.js', './dist/index.mjs']
+```js
+insertUnocssInclude()
+```
+
+## useIntersectionObserver
+- Listen for element overlap events
+- Parameters:
+  - element: Element | String is observed element
+  - callback: Function callback function
+  - options: {
+    root?: Element | Document | null; Optionally, you can specify a node as the root node of the viewport, which defaults to document.body
+    rootMargin?: string; Optionally, you can specify a node as the root node of the viewport, which defaults to document.body
+    threshold?: number | number[]; Optionally, you can specify one or more thresholds that trigger overlap detection, which defaults to 0
+}
+```js
+useIntersectionObserver('.loading', (entries) => {
+  // Overlapping events relative to body container.loading
+})
+```
 
 ## sortByOrder
 - Sorts the array in the order of another array

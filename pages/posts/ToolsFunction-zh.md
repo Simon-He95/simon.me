@@ -9,6 +9,9 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  writeFile:"快速修改文件内容",
+  insertUnocssInclude:'@unocss-include插入文件头部',
+  useIntersectionObserver: 'Listening for element overlap events',
   sortByOrder:'将数组按照另一个数组的顺序排序',
   ExportPlugin:'VitePlugin文件直接导出',
   insertElement: '插入dom元素',
@@ -135,6 +138,41 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
+
+## writeFile
+- 快速修改文件内容,支持多个文件同时修改
+- 参数:
+  - filePath: string | string[] 文件路径
+  - callback: (content: string, index: number) => string 传入文件string类型的内容,可以修改后返回新的内容
+```js
+writeFile('./a.js', (content) => {
+  return content.replace('a', 'b')
+})
+```
+
+## insertUnocssInclude
+- unocss作为props传入的组件打包会丢失注释// @unocss-include,这个函数会自动插入到打包后的文件头部
+- 参数:
+  - path: string | string[] 文件路径, 默认 ['./dist/index.js', './dist/index.mjs']
+```js
+insertUnocssInclude()
+```
+
+## useIntersectionObserver
+- 监听元素重叠事件
+- 参数:
+  - element: Element | string 被观察元素
+  - callback: Function 回调函数
+  - options: {
+    root?: Element | Document | null; // 可选，可以指定一个节点作为视口的根节点，默认为document.body
+    rootMargin?: string; // 可选，可以指定一个节点作为视口的根节点，默认为document.body
+    threshold?: number | number[]; // 可选，可以指定一个或多个触发重叠检测的阈值，默认为0
+}
+```js
+useIntersectionObserver('.loading', (entries) => {
+  // 相对body容器.loading的重叠事件
+})
+```
 
 ## sortByOrder
 - 将数组按照另一个数组的顺序排序

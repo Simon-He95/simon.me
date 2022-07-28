@@ -22,8 +22,6 @@ I’m eagerly to have in-depth communication with you and looking forward to hea
 
 
 ***
-<span i-mi:location hidden></span>
-<span i-openmoji:flag-china hidden></span>
 <span i-ri:user-search-fill></span>Find me on [<span i-carbon:logo-github/>GitHub](https://github.com/Simon-He95), [<span i-carbon:logo-twitter/>Twitter](https://twitter.com/simon_he1995), [<span i-ri:zhihu-fill/>Zhihu](https://www.zhihu.com/people/zka0cr).
 
 <span i-simple-icons:minutemailer></span>Mail me at [hi@Simon](mailto:674949287@qq.com).
