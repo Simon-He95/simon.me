@@ -6,7 +6,7 @@ title: Simon He
   <Plum/>
 </ClientOnly>
 
-<vivid-typing spilt-tag="span" content="Hey, I am Simon He, a fanatical programmers located  in <%><span i-mi:location></span></%>Shanghai, <%><span i-openmoji:flag-china></span></%>China." />
+<vivid-typing spilt-tag="span" content="Hey, I am Simon He, a fanatical programmers located  in <%><span class='i-mi:location'></span></%>Shanghai, <%><span class='i-openmoji:flag-china'></span></%>China." />
 
 Through this page, I would like to share with you some projects I’ve done and what I’ve been through. 
 

@@ -18,6 +18,7 @@ const directoryList = {
 > [英文 English Version](/posts/charts)
 
 ## 此文是介绍封装的工具函数的文档[@simon_he/s-charts](https://www.npmjs.com/package/@simon_he/s-charts)
+
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 更多

@@ -18,7 +18,6 @@ const directoryList = {
 > [中文 Chinese Version](/posts/numsWheel-zh)
 
 ## This article is documentation that describes the encapsulated utility functions [@simon_he/nums-wheel](https://www.npmjs.com/package/@simon_he/nums-wheel)
-Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 ## More
