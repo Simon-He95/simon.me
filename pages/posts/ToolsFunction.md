@@ -114,6 +114,12 @@ const directoryList = {
 Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
+## Highlights
+- Pure js tool functions, not dependent on vue, react, angular
+- API encapsulation for dom operations, such as those used in vue, does not require onMounted to obtain dom nodes, and can be passed in directly using class or id
+- Side effect functions, which can be destop as a result of function execution, are also automatically stopped when the page is destroyed
+- Api design is simple and practical
+
 ## More
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
@@ -237,21 +243,23 @@ export default defineConfig({
 - Insert a dom element
 - params:
   - parent: string | HTMLElement /* The parent element */
-  - element: HTMLElement /* Insert elements */
+  - element: string | HTMLElement /* inserts the element */
   - target?: null | HTMLElement /* Insertion position (inserted to first node by default) */
 ```js
 const div = createElement('div', {
-  id: 'main',
+  id: 'test',
   style: 'background: red;font-size:20px',
 })
 insertElement('#main', div) // Insert into the first node
+insertElement('#main', 'test') // Insert into the first node
 insertElement('#main', div, null) // Insert to the end
 ```
 
 ## removeElement
 - Delete the dom element
+- Quickly remove the current node from the parent container
 - params:
-  - element: dom element
+  - element: HTMLElement | String dom element
 ```js
 removeElement(element)
 ```
@@ -680,7 +688,8 @@ console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 
   - height: canvas Height
 ```javascript
 const signature = new CreateSignatureCanvas(400, 400)
-document.body.appendChild(signature.canvas)
+signature.mount('#main') // Mount the canvas to the element with id 'main'
+signature.unmount() // Unmount the canvas
 const base64 = signature.save()
 signature.clear() // Clear the signature
 ```

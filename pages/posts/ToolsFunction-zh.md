@@ -117,6 +117,12 @@ const directoryList = {
 整理了<strong>90+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
+## 亮点
+- 纯js的工具函数,不依赖vue,react,angular
+- dom操作的api封装,如在vue中使用是不需要onMounted获取dom节点的,可以直接使用class或者id传入
+- 副作用函数,可以在函数执行的结果去stop,也会在页面销毁时被自动stop
+- api设计简单、实用
+
 ## 更多
 - 导出函数 [exports-functions](/posts/exportsfunction-zh)
 - threejs简单化 [s-three](/posts/threejs-zh)
@@ -242,21 +248,23 @@ export default defineConfig({
 - 插入dom元素
 - 参数:
   - parent: string | HTMLElement 父元素
-  - element: 插入元素
+  - element: string | HTMLElement 插入元素
   - target: 插入位置 (默认插入到第一个节点)
 ```js
 const div = createElement('div', {
-  id: 'main',
+  id: 'test',
   style: 'background: red;font-size:20px',
 })
 insertElement('#main', div) // 插入到第一个节点
+insertElement('#main', '#test') // 插入到第一个节点
 insertElement('#main', div, null) // 插入到最后
 ```
 
 ## removeElement
 - 删除dom元素
+- 快速从父容器移除当前节点
 - 参数:
-  - element: dom元素
+  - element: HTMLElement | string dom元素
 ```js
 removeElement(element)
 ```
@@ -689,7 +697,8 @@ console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 
   - height: canvas高度
 ```javascript
 const signature = new CreateSignatureCanvas(400, 400)
-document.body.appendChild(signature.canvas)
+signature.mount('#main') // 将canvas挂载到id为main的元素上
+signature.unmount() // 卸载canvas
 const base64 = signature.save()
 signature.clear() // 清除签名
 ```
