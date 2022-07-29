@@ -24,6 +24,7 @@ const directoryList = {
 - 通用函数 [simon-js-tool](/posts/ToolsFunction-zh)
 - 导出函数 [exports-functions](/posts/exportsfunction-zh)
 - threejs简单化 [s-three](/posts/threejs-zh)
+- vAxios 请求封装[v-axios](/posts/vAxios)
 
 ## 使用说明
 ```bash

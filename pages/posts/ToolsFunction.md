@@ -125,6 +125,8 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 - Threejs simplistic [s-three](/posts/threejs)
 - Echarts simplistic [s-charts](/posts/charts)
 - numsWheel component [s-nums-wheel](/posts/numsWheel)
+- vAxios Request encapsulation[v-axios](/posts/vAxios)
+
 
 ## Instructions for use
 ```bash

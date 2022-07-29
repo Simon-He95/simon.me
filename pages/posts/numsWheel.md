@@ -25,6 +25,7 @@ const directoryList = {
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
 - Echarts simplistic [s-charts](/posts/charts-zh)
+- vAxios Request encapsulation[v-axios](/posts/vAxios)
 
 ## Instructions for use
 ```bash

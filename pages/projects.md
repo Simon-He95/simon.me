@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: '@simon_he/v-axios'
+      link: 'https://www.npmjs.com/package/@simon_he/v-axios'
+      desc: 'Axios encapsulates the function.'
+      icon: 'i-mdi:electron-framework'
     - name: '@simon_he/nums-wheel'
       link: 'https://www.npmjs.com/package/@simon_he/nums-wheel'
       desc: 'Digital wheel control.'

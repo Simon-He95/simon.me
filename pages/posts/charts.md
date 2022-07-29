@@ -26,6 +26,7 @@ const directoryList = {
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
 - numsWheel component [s-nums-wheel](/posts/numsWheel)
+- vAxios Request encapsulation[v-axios](/posts/vAxios)
 
 ## Instructions for use
 ```bash

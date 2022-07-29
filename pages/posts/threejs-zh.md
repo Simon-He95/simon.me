@@ -25,6 +25,7 @@ const directoryList = {
 - 导出函数[exports-functions](/posts/exportsfunction-zh)
 - Echarts简单化[s-three](/posts/charts-zh)
 - numsWheel 组件 [s-nums-wheel](/posts/numsWheel)
+- vAxios 请求封装[v-axios](/posts/vAxios)
 
 ## 使用说明
 ```bash

@@ -128,6 +128,7 @@ const directoryList = {
 - threejs简单化 [s-three](/posts/threejs-zh)
 - Echarts简单化 [s-charts](/posts/charts-zh)
 - numsWheel 组件 [s-nums-wheel](/posts/numsWheel-zh)
+- vAxios 请求封装[v-axios](/posts/vAxios)
 
 
 ## 使用说明
