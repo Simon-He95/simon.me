@@ -400,33 +400,30 @@ shareScreen('#main',() => {
   - width 图片宽度 默认为200
 ```javascript
 const append = waterfall([
-  '../assets/1.jpg',
-  '../assets/2.jpg',
-  '../assets/3.jpg',
-  ...
-])
-// 如果触底了,追加新的图片
-addEventListener(window,'scroll',()=>{
-  if(isBottom()){
-    append([
-      '../assets/4.jpg',
-      '../assets/5.jpg',
-      '../assets/6.jpg',
-      ...
-    ])
-  }
-})
-```
+  "../public/kt.png",
+  "../public/favicon.svg",
+  "../public/wechat.jpg",
+  "../public/favicon.svg",
+  "../public/favicon.svg",
+  "../public/zfb.jpg",
+  "../public/favicon.svg",
+  "../public/favicon.svg",
+]);
 
-## numWheel
-- 数字滚轮控件
-- 无需在onMounted中调用,可以在任意地方调用
-- 基于odometer封装, 更简单的在业务中使用
-- 参数:
-  - container: string | HTMLElement 父容器
-  - options: {  format: '(,ddd)' | '(,ddd).dd' | '(.ddd),dd' | '( ddd),dd' | 'd' 数字格式 startVal: number 起始数字 endVal: number 最终数字  duration: number 动画时长  animation: 'count' | 'countdown' 动画方式 }
-```javascript
-numWheel('#main', {  endVal: 9000.12 }) // 默认format: '(,ddd).dd' startVal: 0 duration: 500 animation: 'countdown', 可以自定义format, startVal, duration, animation
+useWindowScroll(() => {
+  if (isBottom()) { // 触底追加新图片
+    append([
+      "../public/kt.png",
+      "../public/favicon.svg",
+      "../public/wechat.jpg",
+      "../public/favicon.svg",
+      "../public/favicon.svg",
+      "../public/zfb.jpg",
+      "../public/favicon.svg",
+      "../public/favicon.svg",
+    ]);
+  }
+});
 ```
 
 ## dragEvent
@@ -436,6 +433,7 @@ numWheel('#main', {  endVal: 9000.12 }) // 默认format: '(,ddd).dd' startVal: 0
 - 参数:
   - target: string | HTMLElement 目标元素
   - options: { dragStart: (e) => void 按下, dragMove: (e) => void 拖拽, dragEnd: (e) => void 松开 }
+  - trigger: boolean 默认false,在容器上移动就会触发，为true时，只有按下在目标元素上移动才会触发
 ```javascript
 dragEvent('#main', {
   dragStart(e) {
@@ -449,7 +447,6 @@ dragEvent('#main', {
   },
 })
 ```
-
 ## compressImage
 - 图片压缩函数
 - Promise
