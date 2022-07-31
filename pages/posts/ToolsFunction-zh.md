@@ -9,6 +9,9 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  treeToArray:'树状转数组',
+  arrayToTree:'数组转树状',
+  useShare:'使用共享',
   writeFile:"快速修改文件内容",
   insertUnocssInclude:'@unocss-include插入文件头部',
   useIntersectionObserver: 'Listening for element overlap events',
@@ -105,7 +108,7 @@ const directoryList = {
   interceptError: '错误拦截函数',
   isBottom: '判断是否到达底部函数',
   calNum: '计算数字函数',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl',
 }
 </script>
 
@@ -1432,6 +1435,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - hasCn - 判断是否含有中文
 - isFile - 判断是否是File类型
 - isBlob - 判断是否是Blob类型
+- isUrl - 判断是否是Url类型
 
 ## GitHub
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)

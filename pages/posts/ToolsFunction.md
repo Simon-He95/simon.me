@@ -8,7 +8,10 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
-  writeFile: "Quickly modify file contents",
+  treeToArray:'Speaks of converting tree structures to arrays',
+  arrayToTree:'Speaks of converting arrays to tree structures',
+  useShare:'Web Share API',
+  writeFile: 'Quickly modify file contents',
   insertUnocssInclude:'@unocss-include insert header',
   useIntersectionObserver:'监听元素重叠事件',
   sortByOrder:'Sorts the array in the order of another array',
@@ -103,7 +106,7 @@ const directoryList = {
   interceptError: 'Error interception function',
   isBottom: 'Judge whether to reach the bottom function',
   calNum: 'Calculate number function',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl',
 }
 </script>
 [[toc]]
@@ -140,6 +143,84 @@ import {
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
 
+
+## treeToArray
+- Speaks of converting tree structures to arrays
+- Parameters:
+  - tree: {} /* Tree structure data */
+  - children: 'children' /* child node field name */
+```js
+const tree = {
+  id: 1,
+  label: '一级',
+  parent_id: 0,
+  children: [
+    {
+      id: 2,
+      label: '二级',
+      parent_id: 1,
+    },
+    {
+      id: 3,
+      label: '二级',
+      parent_id: 1,
+    },
+  ],
+}
+
+const arr = treeToArray(tree)
+console.log(arr)
+// [
+//   {"id":1,"parent_id":0,"label":"一级"},
+//   {"id":2,"parent_id":1,"label":"二级"},
+//   {"id":3,"parent_id":1,"label":"二级"}
+// ]
+```
+
+## arrayToTree
+- Converts an array to a tree structure
+- Parameters:
+  - array: Array
+  - rootId: Root node id
+  - options: {
+    id: 'id', /* id field name */
+    pid: 'pid', /* parent id field name */
+    children: 'children' /* child node field name */
+  }
+```js
+const arr = [
+  { id: 1, parent_id: 0, label: '一级' },
+  { id: 2, parent_id: 1, label: '二级' },
+  { id: 3, parent_id: 1, label: '二级' },
+]
+console.log(arrayToTree(arr, { pid: 'parent_id' }))
+// [
+//   {
+//     id: 1,
+//     parent_id: 0,
+//     label: '一级',
+//     children: [
+//       {id: 2, parent_id: 1, label: '二级', children: []},
+//       {id: 3, parent_id: 1, label: '二级', children: []}
+//     ]
+//   }
+// ]
+```
+
+## useShare
+- By calling the native sharing mechanism as part of the Web Share API. If the Web Share API is not supported, this method is undefined.
+- Parameters:
+  - url: The URL to share  
+  - text: The text to share  
+  - title: The title to share
+  - files: Files to share
+```js
+useShare({
+  url: 'https://www.baidu.com',
+  text: '分享文本',
+  title: '分享标题',
+})
+```
 
 ## writeFile
 - Quickly modify file content, support multiple files to modify at the same time
@@ -1435,6 +1516,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - hasCn - Determines whether there is Chinese
 - isFile - Determine if it is a File type
 - isBlob - Determine if it is a Blob type
+- isUrl - Determine if it is a Url type
 
 ## GitHub
 [Welcome to PR](https://github.com/Simon-He95/simon-js-tool)
