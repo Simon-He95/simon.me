@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'tiny-tinify-compress'
+      link: 'https://www.npmjs.com/package/@simon_he/v-axios'
+      desc: 'Axios encapsulates the function.'
+      icon: 'i-iconoir:compress-lines'
     - name: '@simon_he/v-axios'
       link: 'https://www.npmjs.com/package/@simon_he/v-axios'
       desc: 'Axios encapsulates the function.'
