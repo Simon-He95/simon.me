@@ -149,6 +149,46 @@ import {
 <Directory  :lists="directoryList"></Directory>
 
 
+## useVideo
+- video的封装
+- 参数:
+  - sources: [] 数组,每个元素是一个对象,对象包含两个属性,一个是type,一个是src
+  - options: {
+      container: dom节点,播放器的容器
+      controls?: true 是否使用原生播放器的controls
+      width?: number 宽度
+      height?: number 高度
+      className?: string 播放器的className
+      style?: string 播放器的style
+    }
+```js
+// play 播放 或 暂停
+// playRest 重新播放
+// playRate 播放速率 2倍速 3倍速 4倍速 5倍速 playTime(n)
+// playTime 设置一个播放时间，如果之前有记录播放时间，则从记录的时间开始播放 platTime(n)
+// playProgress 快进n秒 playProgress(n) 或后退n秒 playProgress(-n)
+const { play, playReset, playRate, playTime, playProgress } = useVideo(
+  [
+    {
+      src:
+        'https://mdn.github.io/learning-area/javascript/apis/video-audio/finished/video/sintel-short.mp4',
+      type: 'video/mp4',
+    },
+    {
+      src:
+        'https://mdn.github.io/learning-area/javascript/apis/video-audio/finished/video/sintel-short.webm',
+      type: 'video/webm',
+    },
+  ],
+  {
+    container: '#main',
+    width: 1000,
+    height: 600,
+    className: 'bg-red',
+  },
+)
+```
+
 ## treeToArray
 - 讲树结构转换为数组
 - 参数:
@@ -226,7 +266,6 @@ useShare({
   title: '分享标题',
 })
 ```
-
 
 ## writeFile
 - 快速修改文件内容,支持多个文件同时修改
@@ -345,9 +384,8 @@ insertElement('#main', div, null) // 插入到最后
 
 ## removeElement
 - 删除dom元素
-- 快速从父容器移除当前节点
 - 参数:
-  - element: HTMLElement | string dom元素
+  - element: dom元素
 ```js
 removeElement(element)
 ```
@@ -397,11 +435,15 @@ stop() // 停止监听
 ```
 
 ## useElementBounding
-- getBoundingClientRect封装
+- getBoundingClientRect响应式的封装
 - 参数:
   - element: string | Element
+  - callback: (rect: DOMRect) => void
 ```javascript
-const rect = useElementBounding('#id')
+const stop = useElementBounding('#id',(rect)=>{
+  console.log(rect)
+})
+stop() // 停止监听
 ```
 
 ## useMutationObserver
@@ -460,7 +502,7 @@ shareScreen('#main',() => {
 
 ## dbStorage
 - 浏览器大数据存储
-- 存储容量大 >250MB
+- 存储容量 >250MB
 - 同源策略
 - 异步操作
 - 持久化存储
@@ -529,6 +571,7 @@ dragEvent('#main', {
   },
 })
 ```
+
 ## compressImage
 - 图片压缩函数
 - Promise
@@ -565,7 +608,6 @@ addEventListener(document,'DOMContentLoaded', () => {
   console.log('我就执行一次,然后事件就被自动移除了')
 }, false, true)
 ```
-
 ## createElement
 - 创建dom函数
 - 参数:
@@ -707,7 +749,7 @@ const stop = animationFrameWrapper(() => {
 - 将图片的像素转为点阵图片
 - 参数:
   - src: 图片路径
-  - fontWeigth: 点阵的粗细
+  - fontWeight: 点阵的粗细
   - color: 点阵的颜色 默认为原图片色
 - 可以await repaint中的dotImage.repaint(xxx)中的dotImage.status判断正确的src被加载完成的时机
 ```javascript
@@ -777,15 +819,14 @@ console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 
   - height: canvas高度
 ```javascript
 const signature = new CreateSignatureCanvas(400, 400)
-signature.mount('#main') // 将canvas挂载到id为main的元素上
-signature.unmount() // 卸载canvas
+document.body.appendChild(signature.canvas)
 const base64 = signature.save()
 signature.clear() // 清除签名
 ```
 
 ## DotTextCanvas
 - 根据文字返回一个点阵的canvas
-- 入参：
+- 参数：
   - text: 文字
   - fontSize: 字体大小
   - color: 字体颜色
@@ -921,6 +962,7 @@ const array = [
 ```
 
 ## deepCompare 
+- 深度比较两个对象是否相等
 - ignoreKeys忽略指定的keys可以为数组或者正则表达式
 - 参数:
   - a: 待比较的对象
@@ -964,7 +1006,7 @@ asyncPool(limit, tasks).then((results) => {
 ```
 
 ## quickFind 
--  quickFind(array: any[], key: any) ,返回一个新的实例
+- quickFind(array: any[], key: any) ,返回一个新的实例
 - 参数:
   - array: 待查找的数组
   - key: 待查找的key,根据key来查找
@@ -1008,6 +1050,7 @@ find.delete(1) // delete: id = 1 => {id:1,name:'simon'}
  quickFilter(arr,['name=/h/']) // [{"age": "2","en": "0","name": "hi"},{"name": "hi"}]
 ```
 ## deepClone 
+- 深拷贝对象
 - 支持循环依赖
 - 支持复杂类型
 - 轻量级的深拷贝
@@ -1134,54 +1177,113 @@ document.click() // click
 document.click() // 
 ```
 
-## vFetch
+## VFetch
 - 基于fetch的axios api 式promise请求封装
-- 支持拦截前追加headers
+- 重复请求上一个请求如果没有完成，则会取消上一个请求，并重新发起请求
 ```typescript
-type VFetchConfig = {
+interface IFetchInterceptors {
+  request?: {
+    success?: (config: IFetchConfig) => IFetchConfig
+    error?: (error: any) => Promise<never>
+  }
+  response?: {
+    success?: (response: any) => any
+    error?: (error: any) => Promise<never>
+  }
+  success?: (response: Response) => Response
+  error?: (error: any) => Promise<never>
+}
+
+interface IFetchConfig extends IFetchOptions {
   url: string // 请求地址
-  baseURL?: string // 基础url
-  body?: any // body参数 {},GET请求会合并到url后面
+  keepalive?: boolean // 属性用于页面卸载时，告诉浏览器在后台保持连接，继续发送数据
+  body?: any  // body参数 {},GET请求会合并到url后面
+  integrity?: string  // 属性指定一个哈希值，用于检查 HTTP 回应传回的数据是否等于这个预先设定的哈希值。
+  referrer?: string  // 属性用于设定fetch()请求的referer标头。
+  referrerPolicy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'origin' | 'origin-when-cross-origin' | 'unsafe-url' | 'strict-origin' | 'strict-origin-when-cross-origin' | 'same-origin'
   method?: Method // 请求类型 默认GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' 支持vFetch.get | post | delete | put的形式
-  headers?: Record<string, any> // 请求头 例如: {'Content-Type': 'application/json'} 支持在请求拦截器中设置追加
-  credentials?: Credentials // 请求是否带上cookie 默认omit 'include' | 'same-origin' | 'omit' 
-  params?: Record<string, string> // 请求参数 根据bodyType决定是否会被序列化
-  timeout?: number // 超时时间 ms 默认为20000
+  credentials?: Credentials // 请求是否带上cookie 默认omit 'include' | 'same-origin' | 'omit'
+  params?: Record<string, string>  // 请求参数 根据bodyType决定是否会被序列化
   responseType?: ResponseType // 返回类型 默认json 'formData' | 'text' | 'blob' | 'arrayBuffer' | 'json'
-  bodyType?: BodyType // 请求类型 默认json 'json' | 'form' | 'file' 
-  cache?: Cache // 缓存类型 默认不缓存 'no-cache' | 'default' | 'force-cache' | 'only-if-cached' 
-  redirect?: Redirect // 重定向 默认follow follow：跟随重定向，error：抛出错误，manual：手动处理
+  bodyType?: BodyType // 请求类型 默认json 'json' | 'form' | 'file'
+  cache?: Cache // 缓存类型 默认不缓存 'no-cache' | 'default' | 'force-cache' | 'only-if-cached'
+  redirect?: Redirect // 属性指定 HTTP 跳转的处理方法。可能的取值如下： 默认follow follow：跟随重定向，error：抛出错误，manual：手动处理
   mode?: Mode // cors, no-cors, same-origin 默认cors cors：跨域，no-cors：不跨域，same-origin：同源
+  signal?: AbortSignal // 取消请求的信号
+  cancel?: () => void // 取消请求的方法
   transformResponse?: (response: Response) => Response // 响应数据转换
 }
-interface Interceptors {
-    request: {
-      use: (successCallback /* 请求前拦截处理*/, errorCallback /* 错误处理*/)
-    }
-    response: {
-      use: (successCallback /* 响应后成功处理*/, errorCallback /* 响应后失败处理*/)
-    }
-  }
+
+interface IFetchOptions {
+  baseURL?: string  // 基础url
+  timeout?: number // 超时时间 ms 默认为20000
+  headers?: Record<string, any>  // 请求头 例如: {'Content-Type': 'application/json'}
+  interceptors?: IFetchInterceptors // 请求拦截器
+}
   // useage
-vFetch(options:Record<string,string>).then(res =>{
-  // success
-}, err =>{
-  // error
+const request = new VFetch({
+  baseURL: 'http://localhost:3001/',
+  interceptors: {
+    response: {
+      success(data) {
+        console.log('拦截', data)
+        return `${data}nihao`
+      },
+    },
+    request: {
+      success(data) {
+        // data.headers.token = 'test'
+        return data
+      },
+    },
+  },
+})
+request.get({
+  url: 'nihao',
+  responseType: 'text',
+}).then((res: any) => {
+  console.log(res)
+})
+
+request.get({ // 取消上一个请求
+  url: 'nihao',
+  responseType: 'text',
+}).then((res: any) => {
+  console.log(res)
 })
 ```
 
-
 ## stringify
-- 参数:
-  - obj: 待转换的对象
+- 将对象序列化为字符串
+- 参数：
+  - obj: 要转换的对象
+  - 选项: 转换选项{
+    sep?: 字符串;分隔符默认“&”
+    eq?: 字符串;等号默认“=”
+    hyp?: 布尔值;是否将驼峰设置为连字符默认 false
+    px?: 布尔值;是否启用数字到 px 默认 false
+  }
 ```javascript
 console.log(stringify({ user: 'simon', age: '18' })) // 'user=simon&age=18'
+console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep:';', eq:':', hyp:true, px: true})) // 'width:100px;height:18px;background-color:red'
 ```
+
 ## parse
+- 将字符串转换为对象
 - 参数:
   - str: 待转换的字符串
+  - opts: 转换选项 {
+    sep?: string;  字符串;分隔符默认“&”
+    eq?: string;  字符串;等号默认“=”
+    camel?: boolean; 布尔值;是否将连字符设置为驼峰默认 false
+  }
 ```javascript
 console.log(parse('user=simon&age=18')) // { user: 'simon', age: '18' }
+console.log(parse('width:100px;height:18px;background-color:red', {
+  sep: ";",
+  eq: ":",
+  camel: true,
+})) // {width: '100px', height: '18px', backgroundColor: 'red'}
 ```
 ## jsCookie
 ```javascript
@@ -1232,7 +1334,10 @@ onload事件时间	0
 ```
 ## getLocation
 - 基于promise封装的获取地理位置信息
-- params: 高精度 超时时间 缓存时间
+- params: 
+  - enableHighAccuracy: boolean 高精度 
+  - timeout: number 超时时间 
+  - maximumAge: number 缓存时间
 ```javascript
 console.log(await getLocation()) //  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
 ```
@@ -1256,10 +1361,10 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 - 图片懒加载
 - 参数:
   - element: 图片元素,如果是属性会自动获取element
-- params-1: 图片的集合 Element | Element[] | NodeList[] | class | id | tagName 
-- params-2: root 指定相对容器默认是body 
-- params-3: rootMargin 指定相对容器的边距 默认距离容器底部200px时候加载(↑ → ↓ ←) '0px 0px 200px 0px' 
-- params-4: threshold 指定图片加载的阈值
+  - params-1: 图片的集合 Element | Element[] | NodeList[] | class | id | tagName 
+  - params-2: root 指定相对容器默认是body 
+  - params-3: rootMargin 指定相对容器的边距 默认距离容器底部200px时候加载(↑ → ↓ ←) '0px 0px 200px 0px' 
+  - params-4: threshold 指定图片加载的阈值
 ```javascript
 // usage
 // 默认展示src的图片，当滚动到图片的时候data-src替换src
@@ -1338,7 +1443,6 @@ compressCss(css: string): string
 
 ## scrollToTop
 - 回到顶部
-- 如果中途再次滚动,立即停止
 ```javascript
 // 缓慢回到顶部
 scrollToTop()

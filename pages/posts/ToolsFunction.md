@@ -144,6 +144,47 @@ import {
 <Directory  :lists="directoryList"></Directory>
 
 
+
+## useVideo
+- Encapsulation of video
+- Parameters:
+  - sources: [] array, each element is an object, the object contains two properties, one is type and one is src
+  - options: {
+      container: HTMLElement | string /* the container of the player */
+      controls?: true /* Whether to use controls of native players */
+      width?: Number /* width */
+      height?: number /* height */
+      className?: string /* ClassName for string players */
+      style?: String /* player style */
+    }
+```js
+// play Play or Pause
+// PlayRest replays
+// playRate playback rate 2x speed 3x speed 4x speed 5x speed playTime(n)
+// playTime sets a playback time, if there is a previous recorded playback time, then play from the recorded time platTime(n)
+// playProgress fast forward n seconds playProgress(n) or back n seconds playProgress(-n)
+const { play, playReset, playRate, playTime, playProgress } = useVideo(
+  [
+    {
+      src:
+        'https://mdn.github.io/learning-area/javascript/apis/video-audio/finished/video/sintel-short.mp4',
+      type: 'video/mp4',
+    },
+    {
+      src:
+        'https://mdn.github.io/learning-area/javascript/apis/video-audio/finished/video/sintel-short.webm',
+      type: 'video/webm',
+    },
+  ],
+  {
+    container: '#main',
+    width: 1000,
+    height: 600,
+    className: 'bg-red',
+  },
+)
+```
+
 ## treeToArray
 - Speaks of converting tree structures to arrays
 - Parameters:
@@ -340,9 +381,8 @@ insertElement('#main', div, null) // Insert to the end
 
 ## removeElement
 - Delete the dom element
-- Quickly remove the current node from the parent container
 - params:
-  - element: HTMLElement | String dom element
+  - element: dom element
 ```js
 removeElement(element)
 ```
@@ -540,6 +580,7 @@ dragEvent('#main', {
     type: "blob",
   }); // Blob {size: 3095, type: 'image/jpeg'}
 ```
+
 ## addEventListener
 - Add an event function to the element
 - Returns a delete function
@@ -1130,58 +1171,113 @@ document.click() // click
 document.click() // 
 ```
 
-## vFetch
+## VFetch
 - Fetch-based axios API-style promise request wrapping
-- Supports appending headers before interception
+- Repeating a request if the previous request is not completed cancels the previous request and re-initiates the request
 ```typescript
-type VFetchConfig = {
-  url: string // The request address
-  baseURL?: string // Base URL
-  body?: any // Body parameter {}, GET request is merged after url
-  keepalive?: boolean // The Page property is used when the page is unloaded, telling the browser to stay connected in the background and continue sending data
-  integrity?: string // The Hash property specifies a hash value that checks whether the data sent back by the HTTP response is equal to this preset hash value.
-  referrer?: string // The Fetch() property is used to set the referer header for fetch() requests.
-  referrerPolicy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'origin' | 'origin-when-cross-origin' | 'unsafe-url' | 'strict-origin' | 'strict-origin-when-cross-origin' | 'same-origin' // The Referer header is used to set the rules for the Referer header.
-  method?: Method // Request Type The default GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' supports vFetch.get | post | delete | Put in the form
-  headers?: Record<string, any> // Request headers such as: {'Content-Type': 'application/json'} supports setting appends in the request interceptor
-  credentials?: Credentials // The default | to request whether to bring a cookie or not 'same-origin' | 'omit' 
-  params?: Record<string, string> // The request parameters are determined according to the bodyType whether they will be serialized
-  timeout?: number // The timeout ms defaults to 20000
-  responseType?: ResponseType // Returns type the default json 'formData' | 'text' | 'blob' | 'arrayBuffer' | 'json'
-  bodyType?: BodyType // Request Type Default json 'json' | 'form' | 'file' 
-  cache?: Cache // Cache type The 'no-cache' | is not cached by default 'default' | 'force-cache' | 'only-if-cached' 
-  redirect?: Redirect // The HTTP Jump property specifies how HTTP jumps are handled. The possible values are as follows: default follow: follow redirect, error: throw error, manual: manual processing
-  mode?: Mode // cors, no-cors, same-origin default cors cors: cross-domain, no-cors: not cross-domain, same-origin: homologous
-  transformResponse?: (response: Response) => Response // Response data transformation
-}
-interface Interceptors {
-    request: {
-      use: (successCallback /* Pre-request interception processing */, errorCallback /* Error handling */)
-    }
-    response: {
-      use: (successCallback /* Successful processing after response */, errorCallback /* Failed processing after response */)
-    }
+interface IFetchInterceptors {
+  request?: {
+    success?: (config: IFetchConfig) => IFetchConfig
+    error?: (error: any) => Promise<never>
   }
+  response?: {
+    success?: (response: any) => any
+    error?: (error: any) => Promise<never>
+  }
+  success?: (response: Response) => Response
+  error?: (error: any) => Promise<never>
+}
+
+interface IFetchConfig extends IFetchOptions {
+  url: string // Request address
+  Keepalive?: The boolean // property is used when the page is unloaded, telling the browser to keep the connection in the background and continue sending data
+  body?: any // body parameter {}, GET requests are merged after url
+  Integrity?: The string // attribute specifies a hash value that checks whether the data sent back by the HTTP response is equal to this preset hash value.
+  referrer?: The string // attribute is used to set the referer header for fetch() requests.
+  referrerPolicy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'origin' | 'origin-when-cross-origin' | 'unsafe-url' | 'strict-origin' | 'strict-origin-when-cross-origin' | 'same-origin'
+  method?: Method // Request Type The default GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' supports vFetch.get | post | delete | Put in the form
+  credentials?: Credentials // Request with cookie Default of ofomi 'include' | 'same-origin' | 'omit'
+  params?: Record<tring, string> // Request parameters determine whether they will be serialized according to the bodyType
+  responseType?: ResponseType // Return Type Default json 'formData' | 'text' | 'blob' | 'arrayBuffer' | 'json'
+  bodyType?: BodyType // Request Type Default json 'json' | 'form' | 'file'
+  cache?: Cache // Cache type The 'no-cache' | is not cached by default 'default' | 'force-cache' | 'only-if-cached'
+  Redirect?: The Redirect // property specifies how HTTP jumps are handled. The possible values are as follows: default follow: follow redirect, error: throw error, manual: manual processing
+  mode?: Mode // cors, no-cors, same-origin default cors cors: cross-domain, no-cors: not cross-domain, same-origin: homologous
+  signal?: AbortSignal // Cancels the requested signal
+  cancel?: () = > void // method to cancel the request
+  transformResponse?: (response: Response) = > Response // Response data conversion
+}
+
+interface IFetchOptions {
+  baseURL?: string // base url
+  timeout?: number // Timeout ms defaults to 20000
+  headers?: Record<tring, any> // request header For example: {'Content-Type': 'application/json'}
+  interceptors?: IFetchInterceptors // Request Interceptor
+}
   // useage
-vFetch(options:Record<string,string>).then(res =>{
-  // success
-}, err =>{
-  // error
+const request = new VFetch({
+  baseURL: 'http://localhost:3001/',
+  interceptors: {
+    response: {
+      success(data) {
+        console.log('拦截', data)
+        return `${data}nihao`
+      },
+    },
+    request: {
+      success(data) {
+        // data.headers.token = 'test'
+        return data
+      },
+    },
+  },
+})
+request.get({
+  url: 'nihao',
+  responseType: 'text',
+}).then((res: any) => {
+  console.log(res)
+})
+
+request.get({ // Cancels the previous request
+  url: 'nihao',
+  responseType: 'text',
+}).then((res: any) => {
+  console.log(res)
 })
 ```
 
 
 ## stringify
-- params:
+- Serializes an object to a string
+- Parameters:
   - obj: The object to be converted
+  - opts: conversion option {
+    sep?: string; Separator Default '&'
+    eq?: string; Equal sign default '='
+    hyp?: boolean; Whether to turn hump to hyphenate default false
+    px?: boolean; Whether to enable number to px default false
+  }
 ```javascript
 console.log(stringify({ user: 'simon', age: '18' })) // 'user=simon&age=18'
+console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep:';', eq:':', hyp:true, px: true})) // 'width:100px;height:18px;background-color:red'
 ```
 ## parse
-- params:
+- Deserializes a string to an object
+- Parameters:
   - str: The string to be converted
+  - opts: conversion option {
+    sep?: string;  String; Delimiter default "&"
+    eq?: string;  String; The equal sign defaults to "="
+    camel?: boolean; Boolean; Whether to set the hyphen to the hump default false
+  }
 ```javascript
 console.log(parse('user=simon&age=18')) // { user: 'simon', age: '18' }
+console.log(parse('width:100px;height:18px;background-color:red', {
+  sep: ";",
+  eq: ":",
+  camel: true,
+})) // {width: '100px', height: '18px', backgroundColor: 'red'}
 ```
 ## jsCookie
 ```javascript
