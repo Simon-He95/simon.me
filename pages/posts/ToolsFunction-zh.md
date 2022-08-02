@@ -9,6 +9,8 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  getPkg:'获取package.json对象',
+  useVideo: 'video封装',
   treeToArray:'树状转数组',
   arrayToTree:'数组转树状',
   useShare:'使用共享',
@@ -108,7 +110,7 @@ const directoryList = {
   interceptError: '错误拦截函数',
   isBottom: '判断是否到达底部函数',
   calNum: '计算数字函数',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute',
 }
 </script>
 
@@ -148,6 +150,15 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
+
+## getPkg
+- 获取package.json的Object 对象
+- 可使用相对路径或绝对路径
+- 参数:
+  - url: 路径
+```js
+const pkg = await getPkg('package.json')
+```
 
 ## useVideo
 - video的封装
@@ -190,7 +201,7 @@ const { play, playReset, playRate, playTime, playProgress } = useVideo(
 ```
 
 ## treeToArray
-- 讲树结构转换为数组
+- 将树结构转换为数组
 - 参数:
   - tree: {} // 树结构数据
   - children: 'children' // 子节点字段名
@@ -1619,6 +1630,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isFile - 判断是否是File类型
 - isBlob - 判断是否是Blob类型
 - isUrl - 判断是否是Url类型
+- isAbsolute - 判断是否是绝对路径
 
 ## GitHub
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)

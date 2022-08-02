@@ -8,6 +8,8 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  getPkg:'Get package.json object',
+  useVideo: 'video encapsulation',
   treeToArray:'Speaks of converting tree structures to arrays',
   arrayToTree:'Speaks of converting arrays to tree structures',
   useShare:'Web Share API',
@@ -106,7 +108,7 @@ const directoryList = {
   interceptError: 'Error interception function',
   isBottom: 'Judge whether to reach the bottom function',
   calNum: 'Calculate number function',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute',
 }
 </script>
 [[toc]]
@@ -144,6 +146,14 @@ import {
 <Directory  :lists="directoryList"></Directory>
 
 
+## getPkg
+- Get the Object object for package.json
+-You can use relative or absolute paths
+- Parameters:
+  - url: Path
+```js
+const pkg = await getPkg('package.json')
+```
 
 ## useVideo
 - Encapsulation of video
@@ -1613,6 +1623,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isFile - Determine if it is a File type
 - isBlob - Determine if it is a Blob type
 - isUrl - Determine if it is a Url type
+- isAbsolute - Determine if it is an absolute path
 
 ## GitHub
 [Welcome to PR](https://github.com/Simon-He95/simon-js-tool)
