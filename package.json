@@ -31,6 +31,8 @@
     "dayjs": "^1.11.0",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.2",
+    "simon-js-tool": "^4.0.19",
+    "vivid-typing": "^1.1.26",
     "vue": "^3.2.31",
     "vue-router": "4.0.14"
   },

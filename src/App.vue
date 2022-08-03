@@ -22,15 +22,9 @@ useHead({
   ],
 })
 const text = ref('')
-const dotText = new DotTextCanvas(text.value, 10, isDark.value ? 'white' : 'black', 10)
-const dotImage1 = new DotImageCanvas(flag, '', 1, 'transparent')
 const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
-const el = ref<HTMLElement>(null)
-const imageEl = ref(null)
-onMounted(() => {
-  el.value?.appendChild(dotText.canvas)
-  imageEl.value?.appendChild(dotImage.canvas)
-})
+dotImage.append('.dotImage')
+
 watch(isDark, update)
 const router = useRouter()
 
@@ -42,36 +36,32 @@ const routerMap = {
 watch(
   router.currentRoute,
   (val) => {
-    text.value = routerMap[val.path] || 'China'
+    text.value = routerMap[val.path] || 'Docs'
     animationFrameWrapper(update, 0, true)
   },
   {
     immediate: true,
   },
 )
-
+const el = ref(null)
 function update() {
-  const newDotText = dotText.repaint(
-    text.value,
-    16,
-    isDark.value ? 'white' : 'black',
-    10,
-  )
+  const dotText = new DotTextCanvas(text.value, 16, isDark.value ? 'white' : 'black', 10)
   const child = el.value?.childNodes[0]
   if (child)
-    el.value?.replaceChild(newDotText.canvas, child)
+    el.value?.replaceChild(dotText.canvas, child)
+  else dotText.append('.dotText')
 }
 const isShow = ref(false)
-useEventListener(document, 'scroll', (e) => {
-  if (document.documentElement.scrollTop > 500)
-    isShow.value = true
-  else isShow.value = false
-})
+useEventListener(
+  document,
+  'scroll',
+  e => (isShow.value = document.documentElement.scrollTop > 500),
+)
 </script>
 
 <template>
-  <span ref="imageEl" fixed top-20 right-0 z--1 />
-  <span ref="el" fixed bottom-5 right-0 />
+  <span class="dotImage" fixed top-20 right-0 z--1 />
+  <span ref="el" class="dotText" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
     <router-view />

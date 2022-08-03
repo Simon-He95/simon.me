@@ -21,12 +21,7 @@ const routes = autoRoutes.map((i) => {
   }
 })
 
-const scrollBehavior = (to: any, from: any, savedPosition: any) => {
-  if (savedPosition)
-    return savedPosition
-  else
-    return { top: 0 }
-}
+const scrollBehavior = (to: any, from: any, savedPosition: any) => savedPosition || { top: 0 }
 
 export const createApp = ViteSSG(
   App,
