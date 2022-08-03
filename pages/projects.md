@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'transform-json-to-vitest'
+      link: 'https://github.com/Simon-He95/transform-json-to-vitest'
+      desc: 'Generate a vitest file with json.'
+      icon: 'i-ri:test-tube-fill'
     - name: 'tiny-tinify-compress'
       link: 'https://github.com/Simon-He95/tiny-tinify-compress'
       desc: 'Implement a simple compression tool with the api provided by Tinify.'
