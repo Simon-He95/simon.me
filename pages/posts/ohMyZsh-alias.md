@@ -208,30 +208,44 @@ clone() {
 
 # template
 template() {
-  echo "请输入模板: ts | vue"
+  echo "请输入模板: ts | vue | nuxt | vitesse"
   read templateName
   if [ ! $1 ]; then
     echo "请输入模板名称"
     return 0
   fi
 
-  if [ $templateName = "ts" ]; then
+  if [ ! $templateName ]; then
+    templateName=1
+  fi
+
+  if [[ $templateName = "ts" || $templateName = 0 ]]; then
     echo "正在创建$1目录,下载starter-ts模板,请稍等..."
     if [ ! $2 ]; then
       npx degit Simon-He95/starter-ts $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni
     else
       npx degit Simon-He95/starter-ts $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni || ni || ni || echo '安装依赖失败，请重新尝试' && echo "正在执行 nr $2" && nr $2 || eval ${2}
     fi
-  else
-    if [ $templateName = "vue" ]; then
-      echo "正在创建$1目录,下载vitesse-lite模板,请稍等..."
-      if [ ! $2 ]; then
-        npx degit Simon-He95/vitesse-lite $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni
-      else
-        npx degit Simon-He95/vitesse-lite $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni || ni || ni || echo '安装依赖失败，请重新尝试' && echo "正在执行 nr $2" && nr $2 || eval ${2}
-      fi
+  elif [[ $templateName = "vue" || $templateName = 1 ]]; then
+    echo "正在创建$1目录,下载vitesse-lite模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-lite $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni
     else
-      echo "模板不存在"
+      npx degit Simon-He95/vitesse-lite $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni || ni || ni || echo '安装依赖失败，请重新尝试' && echo "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [[ $templateName = "nuxt" || $templateName = 2 ]]; then
+    echo "正在创建$1目录,下载vitesse-nuxt3模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-nuxt3 $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-nuxt3 $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni || ni || ni || echo '安装依赖失败，请重新尝试' && echo "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [[ $templateName = "vitesse" || $templateName = 3 ]]; then
+    echo "正在创建$1目录,下载vitesse模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse $1 && echo "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && echo '正在下载依赖' && ni || ni || ni || echo '安装依赖失败，请重新尝试' && echo "正在执行 nr $2" && nr $2 || eval ${2}
     fi
   fi
 }
@@ -346,5 +360,18 @@ pkginit() {
   else
     echo '创建失败'
   fi
+}
+
+# grant 授予文件权限
+grant() {
+  chmod +x $1
+}
+
+# update 安装最新版本
+update() {
+  all=$*
+  str=${all// /@latest }
+  echo ni $str
+  ni $str
 }
 ```

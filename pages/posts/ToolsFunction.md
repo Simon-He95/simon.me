@@ -8,6 +8,7 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  getResolvedPath:'Gets the true path',
   getPkg:'Get package.json object',
   useVideo: 'video encapsulation',
   treeToArray:'Speaks of converting tree structures to arrays',
@@ -145,6 +146,13 @@ import {
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
 
+## getResolvedPath
+- Gets the absolute path
+- params:
+  - url: string relative path
+```js
+const resolvedPath = getResolvedPath('/assets/kt.png') // /mnt/d/GitHub/assets/kt.png
+```
 
 ## getPkg
 - Get the Object object for package.json

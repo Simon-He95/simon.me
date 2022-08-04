@@ -9,6 +9,7 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  getResolvedPath:'获取真实路径',
   getPkg:'获取package.json对象',
   useVideo: 'video封装',
   treeToArray:'树状转数组',
@@ -150,6 +151,14 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
+
+## getResolvedPath
+- 获取绝对路径
+- 参数:
+  - url: string 相对路径
+```js
+const resolvedPath = getResolvedPath('/assets/kt.png') // /mnt/d/GitHub/assets/kt.png
+```
 
 ## getPkg
 - 获取package.json的Object 对象
