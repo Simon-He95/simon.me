@@ -108,7 +108,7 @@ const directoryList = {
   interceptError: 'Error interception function',
   isBottom: 'Judge whether to reach the bottom function',
   calNum: 'Calculate number function',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute isElement',
 }
 </script>
 [[toc]]
@@ -209,14 +209,14 @@ const tree = {
     {
       id: 2,
       label: '二级',
-      parent_id: 1,
+      parent_id: 1
     },
     {
       id: 3,
       label: '二级',
-      parent_id: 1,
-    },
-  ],
+      parent_id: 1
+    }
+  ]
 }
 
 const arr = treeToArray(tree)
@@ -318,21 +318,21 @@ useIntersectionObserver('.loading', (entries) => {
 const order = ['name', '*', 'weight']
 const arr = [{
   props: {
-    key: 'weight',
-  },
+    key: 'weight'
+  }
 }, {
   props: {
-    key: 'name',
-  },
+    key: 'name'
+  }
 }, {
   props: {
-    key: 'width',
-  },
+    key: 'width'
+  }
 }, {
   props: {
-    key: 'age',
-  },
-},
+    key: 'age'
+  }
+}
 ]
 const result = sortByOrder(arr, 'props.key', order)
 /*
@@ -394,7 +394,7 @@ insertElement('#main', div, null) // Insert to the end
 - params:
   - element: dom element
 ```js
-removeElement(element)
+removeElement(element) // Returns the parentNode of element
 ```
 ## findElement
 - Look for the dom element
@@ -1616,6 +1616,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isBlob - Determine if it is a Blob type
 - isUrl - Determine if it is a Url type
 - isAbsolute - Determine if it is an absolute path
+- isElement - Determine if it is an HTMLElement
 
 ## GitHub
 [Welcome to PR](https://github.com/Simon-He95/simon-js-tool)

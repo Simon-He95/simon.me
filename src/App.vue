@@ -37,19 +37,16 @@ watch(
   router.currentRoute,
   (val) => {
     text.value = routerMap[val.path] || 'Docs'
-    animationFrameWrapper(update, 0, true)
+    animationFrameWrapper(update, 200, true)
   },
   {
     immediate: true,
   },
 )
-const el = ref(null)
+const dotText = new DotTextCanvas(text.value, 16, isDark.value ? 'white' : 'black', 10)
+dotText.append('.dotText')
 function update() {
-  const dotText = new DotTextCanvas(text.value, 16, isDark.value ? 'white' : 'black', 10)
-  const child = el.value?.childNodes[0]
-  if (child)
-    el.value?.replaceChild(dotText.canvas, child)
-  else dotText.append('.dotText')
+  dotText.repaint(text.value, 16, isDark.value ? 'white' : 'black', 10)
 }
 const isShow = ref(false)
 useEventListener(
@@ -61,7 +58,7 @@ useEventListener(
 
 <template>
   <span class="dotImage" fixed top-20 right-0 z--1 />
-  <span ref="el" class="dotText" fixed bottom-5 right-0 />
+  <span class="dotText" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
     <router-view />
@@ -72,12 +69,13 @@ useEventListener(
     v-if="isShow"
     i-icon-park-outline:rocket-one
     animate-bounce
+    hover="animate-none bg-red-400 "
     fixed
     bottom-40
     right-5
     text-3xl
     cursor-pointer
-    style="-webkit-tap-highlight-color: rgba(255, 255, 255, 0)"
+    title="Top"
     @click="scrollToTop()"
   />
 </template>

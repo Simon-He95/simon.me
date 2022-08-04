@@ -25,6 +25,7 @@ onMounted(() => {
         border-rd-full
         src="/signature.png"
         :class="isDark ? 'brightness' : ''"
+        title="Home"
         alt="logo"
       >
     </router-link>
@@ -59,7 +60,7 @@ onMounted(() => {
         >
           <div i-uil-github-alt />
         </a>
-        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="GitHub">
+        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
           <div i-ph:heart />
         </a>
         <toggle-theme />

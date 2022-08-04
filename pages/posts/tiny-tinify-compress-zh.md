@@ -9,7 +9,11 @@ subtitle: 'Author: Simon'
 
 
 ## 介绍tiny-tinify-compress的实现
-tiny-tinify-compress是一个自动监听文件变化的工具,并自动高效、高质量的压缩图片,实现原理：借助[tinify](https://tinypng.com/)提供的api实现一个简单的压缩工具
+- tiny-tinify-compress是一个自动监听文件变化的工具,并自动高效、高质量的压缩图片
+- 依赖tinify提供的api实现一个简单的压缩工具
+- gif图片的实现来源于imagemin-gifsicle
+- 压缩过的图片会被自动跳过，不会重复压缩
+- 下面有申请key的链接,免费提供一个我自己的key：DZkjgp25tVjhkLG8GXk0nF3tpNSkq7kX
 
 ## 安装
 ```shell

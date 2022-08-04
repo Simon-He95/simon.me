@@ -110,7 +110,7 @@ const directoryList = {
   interceptError: '错误拦截函数',
   isBottom: '判断是否到达底部函数',
   calNum: '计算数字函数',
-  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute',
+  ruleJudgment: 'isMobile isEmail isIdCard hasCn isFile isBlob isUrl isAbsolute isElement',
 }
 </script>
 
@@ -214,14 +214,14 @@ const tree = {
     {
       id: 2,
       label: '二级',
-      parent_id: 1,
+      parent_id: 1
     },
     {
       id: 3,
       label: '二级',
-      parent_id: 1,
-    },
-  ],
+      parent_id: 1
+    }
+  ]
 }
 
 const arr = treeToArray(tree)
@@ -323,20 +323,20 @@ useIntersectionObserver('.loading', (entries) => {
 const order = ['name', '*', 'weight']
 const arr = [{
   props: {
-    key: 'weight',
-  },
+    key: 'weight'
+  }
 }, {
   props: {
-    key: 'name',
-  },
+    key: 'name'
+  }
 }, {
   props: {
-    key: 'width',
-  },
+    key: 'width'
+  }
 }, {
   props: {
-    key: 'age',
-  },
+    key: 'age'
+  }
 }]
 const result = sortByOrder(arr, order, 'props.key')
 /*
@@ -398,7 +398,7 @@ insertElement('#main', div, null) // 插入到最后
 - 参数:
   - element: dom元素
 ```js
-removeElement(element)
+removeElement(element) // 返回element的parentNode
 ```
 ## findElement
 - 查找dom元素
@@ -1623,6 +1623,7 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isBlob - 判断是否是Blob类型
 - isUrl - 判断是否是Url类型
 - isAbsolute - 判断是否是绝对路径
+- isElement - 判断是否是HTMLElement
 
 ## GitHub
 [欢迎PR](https://github.com/Simon-He95/simon-js-tool)
