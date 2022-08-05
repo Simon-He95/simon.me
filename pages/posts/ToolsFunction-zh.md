@@ -9,6 +9,8 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  getExportBundle:'获取npm包打包文件',
+  Canvas:'快速创建canvas实例',
   getResolvedPath:'获取真实路径',
   getPkg:'获取package.json对象',
   useVideo: 'video封装',
@@ -151,6 +153,18 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
+
+## getExportBundle
+- 返回npm打包文件
+```js
+console.log(getExportBundle('vitest')) // 读取node_modules/vitest/package.json的module字段如果没有才会读取main字段, 返回打包文件的内容
+```
+
+# Canvas
+- 快速拿到canvas和ctx
+```js
+const { canvas, ctx } = new Canvas()
+```
 
 ## getResolvedPath
 - 获取绝对路径

@@ -8,6 +8,8 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  getExportBundle:'Get the npm package package file',
+  Canvas:'Quickly create canvas instances',
   getResolvedPath:'Gets the true path',
   getPkg:'Get package.json object',
   useVideo: 'video encapsulation',
@@ -145,6 +147,18 @@ import {
 
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
+
+## getExportBundle
+- Returns the npm packaging file
+```js
+console.log(getExportBundle('vitest')) // Reading the module field of node_modules/vitest/package.json if not will only read the main field, returning the contents of the packaged file
+```
+
+# Canvas
+- Get canvas and ctx quickly
+```js
+const { canvas, ctx } = new Canvas()
+```
 
 ## getResolvedPath
 - Gets the absolute path
