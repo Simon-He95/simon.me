@@ -26,6 +26,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@simon_he/s-three": "^0.0.6",
     "@vueuse/core": "^8.2.5",
     "@vueuse/head": "^0.7.5",
     "dayjs": "^1.11.0",
