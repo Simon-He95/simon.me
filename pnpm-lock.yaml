@@ -7,7 +7,7 @@ specifiers:
   '@antfu/eslint-config': ^0.25.2
   '@iconify/json': ^2.1.26
   '@octokit/rest': ^18.12.0
-  '@simon_he/s-three': ^0.0.6
+  '@simon_he/s-three': ^0.0.8
   '@types/degit': ^2.8.3
   '@types/diacritics': ^1.3.1
   '@types/fs-extra': ^9.0.13
@@ -59,7 +59,7 @@ specifiers:
   vue-router: 4.0.14
 
 dependencies:
-  '@simon_he/s-three': 0.0.6
+  '@simon_he/s-three': 0.0.8
   '@vueuse/core': 8.9.4_vue@3.2.37
   '@vueuse/head': 0.7.0_vue@3.2.37
   dayjs: 1.11.4
@@ -1692,8 +1692,8 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@simon_he/s-three/0.0.6:
-    resolution: {integrity: sha512-JyetzSylvtGjjKPOvJTs1pGG0/dFJs9kgqmAm7dtdITGoxI3n4ebtJgqffJ7Qi60YHtuyWcu3Ra6N1WTqaBsZw==}
+  /@simon_he/s-three/0.0.8:
+    resolution: {integrity: sha512-sByLLvFvk4WbQOErTLo1BovGaS3Ad7PIhCsVDtcv+gDFhR3XXZ4rkF+pFh6BySn2lNuBaR+dEAIXPTSe0pitQA==}
     dependencies:
       '@vueuse/core': 8.9.4_vue@3.2.37
       dat.gui: 0.7.9
