@@ -3,16 +3,16 @@
   "private": true,
   "packageManager": "pnpm@6.32.3",
   "description": "A simple introduction to Simon.",
-  "keywords": [
-    "simon",
-    "about",
-    "introduction"
-  ],
   "author": "Simon He",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Simon-He95/simon.me.git"
   },
+  "keywords": [
+    "simon",
+    "about",
+    "introduction"
+  ],
   "files": [
     "dist"
   ],
@@ -38,7 +38,7 @@
     "vue-router": "4.0.14"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.20.2",
+    "@antfu/eslint-config": "^0.25.2",
     "@iconify/json": "^2.1.26",
     "@octokit/rest": "^18.12.0",
     "@types/degit": "^2.8.3",
@@ -82,12 +82,12 @@
     "vite-ssg": "^0.19.2",
     "vite-svg-loader": "^3.2.0"
   },
-  "eslintConfig": {
-    "extends": "@antfu"
-  },
   "pnpm": {
     "overrides": {
       "@vueuse/head": "0.7.0"
     }
+  },
+  "eslintConfig": {
+    "extends": "@antfu"
   }
 }

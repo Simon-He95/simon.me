@@ -9,6 +9,7 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  transformArgv: '处理命令行参数',
   getExportBundle:'获取npm包打包文件',
   Canvas:'快速创建canvas实例',
   getResolvedPath:'获取真实路径',
@@ -122,7 +123,7 @@ const directoryList = {
 > [英文 English Version](/posts/ToolsFunction)
 
 ## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-整理了<strong>90+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+整理了<strong>100+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 亮点
@@ -153,6 +154,12 @@ import {
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
 
+## transformArgv
+- 处理命令行参数
+```js
+// build --minify --mode=production --type=es5
+const args = transformArgv() // {minify: true, mode: 'production', type: 'es5'}
+```
 
 ## getExportBundle
 - 返回npm打包文件

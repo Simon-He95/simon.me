@@ -8,6 +8,7 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  transformArgv: 'Handle command-line arguments',
   getExportBundle:'Get the npm package package file',
   Canvas:'Quickly create canvas instances',
   getResolvedPath:'Gets the true path',
@@ -119,7 +120,7 @@ const directoryList = {
 > [中文 Chinese Version](/posts/ToolsFunction-zh)
 
 ## This article is documentation that describes the encapsulated utility functions [simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
-Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
+Compiled <strong>100+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 ## Highlights
@@ -147,6 +148,14 @@ import {
 
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
+
+
+## transformArgv
+- Handle command-line arguments
+```js
+// build --minify --mode=production --type=es5
+const args = transformArgv() // {minify: true, mode: 'production', type: 'es5'}
+```
 
 ## getExportBundle
 - Returns the npm packaging file

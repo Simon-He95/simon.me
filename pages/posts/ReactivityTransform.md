@@ -30,7 +30,6 @@ description: syntax sugar.
   ```
   #### Compiled Output
 ```js
-
 import { ref, watchEffect } from 'vue'
 
 const count = ref(1)

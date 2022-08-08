@@ -26,7 +26,7 @@ const scrollBehavior = (to: any, from: any, savedPosition: any) => savedPosition
 export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
-  async({ app, router, isClient }) => {
+  async ({ app, router, isClient }) => {
     app.component('VividTyping', VividTyping)
     dayjs.extend(LocalizedFormat)
 

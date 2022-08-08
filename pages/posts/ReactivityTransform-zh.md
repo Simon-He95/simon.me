@@ -30,7 +30,6 @@ description: 语法糖.
   ```
   #### 原本使用
 ```js
-
 import { ref, watchEffect } from 'vue'
 
 const count = ref(1)

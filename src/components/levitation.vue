@@ -13,7 +13,7 @@ function fileToBase64(file: File | Blob) {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     try {
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         resolve(e?.target?.result)
       }
     }
@@ -31,7 +31,7 @@ function urlToBase64(url: string) {
       const img = new Image()
       img.crossOrigin = 'Anonymous'
       img.src = `${url}?timeStamp=${new Date().getTime()}`
-      img.onload = function() {
+      img.onload = function () {
         ctx?.drawImage(
           img,
           0,
@@ -72,7 +72,7 @@ async function animationend() {
 <template>
   <section class="lg:w-1/3 flex flex-wrap items-center" fixed left-0 bottom-10>
     <div class="astronaut-wrapper" @animationend="animationend">
-      <div class="astronaut" :style="{ backgroundImage: backgroundImage }" />
+      <div class="astronaut" :style="{ backgroundImage }" />
     </div>
   </section>
 </template>

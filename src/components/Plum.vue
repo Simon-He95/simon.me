@@ -46,7 +46,7 @@ function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
   return [x + dx, y + dy]
 }
 
-onMounted(async() => {
+onMounted(async () => {
   const canvas = el.value!
   const { ctx } = initCanvas(canvas, size.width, size.height)
   const { width, height } = canvas

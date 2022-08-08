@@ -28,30 +28,35 @@ subtitle: 'Author: Simon'
   #3. template
   template vue-starpot d # 目前支持2种模板ts | vue，输入vue，clone一个vitesse的项目模板文件名vue-starpot,并自动打开这个项目,并安装依赖如果依赖安装失败会重新尝试超过3次结束，如果配置了第二个参数，在安装依赖完成后会执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装degit 和 @antfu/ni
 
-  #4 updateVersion
-  updateVersion # 更新版本号,自动提交commit:chore: update version并推送
-  
-  #5 ignore
+  #4 ignore
   ignore # 生成一个.ignore文件模板
 
-  #6 pkginit
+  #5 pkginit
   pkginit # 要求输入一个pkgname，然后会生成一个预设package.json文件
 
-  #7 use
+  #6 use
   use npm # nrm 快速切换源
 
-  #8 remove
-  remove # 删除目录或文件 注意：需要全局安装rimraf
+  #7 remove
+  remove # 删除目录或文件 注意：需要全局安装rimraf, 支持直接remove node_modules, 如果不传会自动匹配当前目录下所有文件或目录供选择删除
 
-  #9 clone
+  #8 clone
   clone git@github.com:Simon-He95/vitesse-lite.git d # 克隆一个项目,并自动打开这个项目, 安装依赖，后自动执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装@antfu/ni
 
-  #10 p
+  #9 p
   p # 默认执行pnpm run play命令一般配置指向playground的play命令,可能当前不是workspace结构,则执行当前目录下的dev命令运行项目
 
-  #11 nii
+  #10 nii
   nii # 如果网络不太好ni在线安装依赖比较慢，会自动使用nio缓存安装依赖，注意：需要全局安装@antfu/ni,在zshrc配置nio, alias nio="ni --prefer-offline"
 
+  #11 template
+  template project-name # 将会有对应的项目模板可供选择,并clone下来自动打开并安装依赖
+
+  #12 commit
+  commit # 配置常用的commit提交信息,比如chore: init ; chore: update denpendency; fix: typo 等等快速提交commit
+ 
+  #13 grant
+  grant # 分配文件权限 对于某些.sh文件没办法直接执行,可以通过grant a.sh 分配权限后执行 source a.sh
   ```
   
  #### 完整的alias:
@@ -78,7 +83,7 @@ alias p="nr play || d"
 alias pr="nr preview"
 alias pb="nr play:build || b"
 alias release="npm run release"
-alias updateVersion="git add . && git commit -m 'chore: update version' && git push"
+alias publish="npm publish"
 alias clean="git add . && git commit -m 'chore: clean' && git push"
 alias v="npm view"
 alias lock="pnpm install --no-frozen-lockfile"
@@ -239,8 +244,8 @@ clone() {
 
 # template
 template() {
-  console.skyblue "请输入模板: ts | vue | nuxt | vitesse"
-  read templateName
+  console.skyblue "请选择一个模板: ts | vue | nuxt | vitesse | react | next"
+  templateName=$(gum choose "ts" "vue" "nuxt" "react" "next")
   if [ ! $1 ]; then
     console.red "需要指定一个模板名称"
     return 0
@@ -250,51 +255,70 @@ template() {
     templateName=1
   fi
 
-  if [[ $templateName = "ts" || $templateName = 0 ]]; then
+  if [ $templateName = "ts" ]; then
     console.blue "正在创建$1目录,下载starter-ts模板,请稍等..."
     if [ ! $2 ]; then
       npx degit Simon-He95/starter-ts $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
       npx degit Simon-He95/starter-ts $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
-  elif [[ $templateName = "vue" || $templateName = 1 ]]; then
+  elif [ $templateName = "vue" ]; then
     console.blue "正在创建$1目录,下载vitesse-lite模板,请稍等..."
     if [ ! $2 ]; then
       npx degit Simon-He95/vitesse-lite $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
       npx degit Simon-He95/vitesse-lite $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
-  elif [[ $templateName = "nuxt" || $templateName = 2 ]]; then
+  elif [ $templateName = "nuxt" ]; then
     console.blue "正在创建$1目录,下载vitesse-nuxt3模板,请稍等..."
     if [ ! $2 ]; then
       npx degit Simon-He95/vitesse-nuxt3 $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
       npx degit Simon-He95/vitesse-nuxt3 $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
-  elif [[ $templateName = "vitesse" || $templateName = 3 ]]; then
+  elif [ $templateName = "vitesse" ]; then
     console.blue "正在创建$1目录,下载vitesse模板,请稍等..."
     if [ ! $2 ]; then
       npx degit Simon-He95/vitesse $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
       npx degit Simon-He95/vitesse $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
+  elif [ $templateName = "react" ]; then
+    console.blue "正在创建$1目录,下载vitesse-lite-react模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-lite-react $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-lite-react $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [ $templateName = "next" ]; then
+    console.blue "正在创建$1目录,下载vitesse-next模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
   fi
 }
 
 # remove
 remove() {
-  if [ ! $1 ]; then
-    console.red "指定一个删除的目录名称"
-    return 0
+  if [ $1 ]; then
+    if [ ! -f $1 ] && [ ! -d $1 ]; then
+      console.red '文件或目录不存在'
+      return 0
+    else
+      console.blue "正在删除$1"
+      rimraf $1 && console.green "删除成功" || console.red "删除失败,请重新尝试"
+      return 1
+    fi
   fi
-  if [ ! -f $1 ] && [ ! -d $1 ]; then
-    console.red '文件或目录不存在'
-    return 0
-  else
-    console.blue "正在删除$1目录"
-    rimraf $1 && console.green "删除成功" || console.red "删除失败,请重新尝试"
-    return 1
-  fi
+  for file in $(ls); do
+    str="$str\"$file\" "
+  done
+  content=$(echo $(ls) | sed 's/ /\n/g' | gum choose)
+  console.blue "正在删除$content"
+  rimraf $content && console.green "删除成功" || console.red "删除失败,请重新尝试"
+  return 1
 }
 
 # reni
@@ -405,5 +429,10 @@ update() {
   str=${all// /@latest }
   console.green ni $str
   ni $str
+}
+
+commit() {
+  commitMessage=$(gum choose "chore: update" "feature: add new funciton" "chore: update dependency" "fix: typo" "chore: init")
+  git add . && git commit -m $commitMessage
 }
 ```

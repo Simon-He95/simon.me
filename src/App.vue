@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import {
   DotImageCanvas,
   DotTextCanvas,
   animationFrameWrapper,
-  lazyLoad,
+  getDevice,
   scrollToTop,
 } from 'simon-js-tool'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
-import flag from '/images/flag.jpg'
+// import flag from '/images/flag.jpg'
 useHead({
   meta: [
     { property: 'og:title', content: 'Simon He' },
@@ -24,12 +24,18 @@ useHead({
 })
 const text = ref('')
 const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
-dotImage.append('.dotImage')
+
+const imageShow = computed(() => {
+  const { os } = getDevice()
+  return os === 'mac' || os === 'windows'
+})
+if (imageShow.value)
+  dotImage.append('.dotImage')
 
 watch(isDark, update)
 const router = useRouter()
 
-const routerMap = {
+const routerMap: Record<string, string> = {
   '/': 'Simon',
   '/projects': 'Projects',
   '/posts': 'Blog',
@@ -56,8 +62,8 @@ useEventListener(
   e => (isShow.value = document.documentElement.scrollTop > 500),
 )
 
-let points
-let unmount
+let points: any
+let unmount: any
 let geometry
 let material
 const params = {
@@ -83,7 +89,7 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
 })
 function generateGalaxy() {
   if (points) {
-    unmount()
+    unmount?.()
     animationArray.shift()
   }
   geometry = c('bufferg')
@@ -99,7 +105,7 @@ function generateGalaxy() {
     vertexColors: true,
   })
   points = c('p', geometry, material)
-  unmount = scene._add(points)
+  unmount = scene._add?.(points)
   renderer.setClearColor(c('c', 'transparent'), 0)
   animationArray.push(points)
 }
@@ -128,7 +134,7 @@ function getRandomColorPosition() {
 
 <template>
   <div id="snow" fixed w-full h-full z--1 />
-  <span class="dotImage" fixed top-20 right-0 z--1 />
+  <span v-if="imageShow" class="dotImage" fixed top-20 right-0 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>

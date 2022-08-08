@@ -2,6 +2,11 @@
 import { useRouter } from 'vue-router'
 import { englishOnly, formatDate } from '~/logics'
 
+const props = defineProps<{
+  type?: string
+  posts?: Post[]
+}>()
+
 export interface Post {
   path: string
   title: string
@@ -9,11 +14,6 @@ export interface Post {
   lang?: string
   duration?: string
 }
-
-const props = defineProps<{
-  type?: string
-  posts?: Post[]
-}>()
 
 const router = useRouter()
 const routes: Post[] = router
