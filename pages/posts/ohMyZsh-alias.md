@@ -60,6 +60,9 @@ subtitle: 'Author: Simon'
   
   #14 new
   new a/b/c/d.ts # 如果路径上的目录不存在,则会自动创建目录,并生成对应的文件
+
+  #15 ccommand
+  ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand
   
  #### 完整的alias:
 
