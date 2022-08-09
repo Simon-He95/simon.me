@@ -38,7 +38,7 @@
     "vue-router": "4.0.14"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.25.2",
+    "@antfu/eslint-config": "^0.26.0",
     "@iconify/json": "^2.1.26",
     "@octokit/rest": "^18.12.0",
     "@types/degit": "^2.8.3",
@@ -47,6 +47,8 @@
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/nprogress": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "@unocss/reset": "^0.31.0",
     "@vitejs/plugin-vue": "^2.3.1",
     "critters": "0.0.16",

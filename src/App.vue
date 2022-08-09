@@ -34,7 +34,6 @@ if (imageShow.value)
 
 watch(isDark, update)
 const router = useRouter()
-
 const routerMap: Record<string, string> = {
   '/': 'Simon',
   '/projects': 'Projects',
