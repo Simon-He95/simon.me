@@ -26,7 +26,7 @@ subtitle: 'Author: Simon'
     tag # 打tag等待你输入tag名称和描述
 
   #3. template
-    template vue-starpot d # 目前支持2种模板ts | vue，输入vue，clone一个vitesse的项目模板文件名vue-starpot,并自动打开这个项目,并安装依赖如果依赖安装失败会重新尝试超过3次结束，如果配置了第二个参数，在安装依赖完成后会执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装degit 和 @antfu/ni
+    template vue-starpot d # 目前支持ts | vue | nuxt | react | next 模板的clone（可从我的GitHub上去fork）, clone一个vitesse的项目模板文件名vue-starpot,并自动打开这个项目,并安装依赖如果依赖安装失败会重新尝试超过3次结束，如果配置了第二个参数，在安装依赖完成后会执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装degit 和 @antfu/ni
 
   #4. ignore
     ignore # 生成一个.ignore文件模板
