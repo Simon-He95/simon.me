@@ -8,6 +8,8 @@ subtitle: 'Author: Simon'
 ---
 <script setup lang="ts">
 const directoryList = {
+  transformVdeep:'Convert `>>>` and `/deep/` to `:deep()`',
+  isExist:'Determine if the file exists',
   transformArgv: 'Handle command-line arguments',
   getExportBundle:'Get the npm package package file',
   Canvas:'Quickly create canvas instances',
@@ -149,6 +151,23 @@ import {
 ## Directory structure
 <Directory  :lists="directoryList"></Directory>
 
+## transformVdeep
+- vite-plugin
+- Convert `>>>` and `/deep/` to `:deep()`
+```js
+// vite.config.ts
+// import { transformVdeep } from 'simon-js-tool'
+// plugins: [
+//   transformVdeep(),
+// ]
+```
+
+## isExist
+- Determine if the file exists
+```js
+isExist('./README.md') // true
+isExist('./a.md') // false
+```
 
 ## transformArgv
 - Handle command-line arguments

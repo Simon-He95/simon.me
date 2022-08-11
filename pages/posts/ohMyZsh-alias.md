@@ -15,55 +15,61 @@ subtitle: 'Author: Simon'
   
   ``` bash
   #1. run 
-  ## 前提需要workspace中的package的name:"shared" => run shared d
-  ## 另一种方式是直接在script中使用npm -C workspace run d
-  run package d # pnpm中会filter到package.json中的script(d是dev的缩写)
+  # 前提需要workspace中的package的name:"shared" => run shared d
+  # 另一种方式是直接在script中使用npm -C workspace run d
+    run package d # pnpm中会filter到package.json中的script(d是dev的缩写)
   # 示例:
-  run package i vue pinia -D # 安装vue 和 pinia 到package下的devdepdencies
-  run package un vue pinia -D # 卸载package下devdepdencies的 vue 和 pinia
+    run package i vue pinia -D # 安装vue 和 pinia 到package下的devdepdencies
+    run package un vue pinia -D # 卸载package下devdepdencies的 vue 和 pinia
 
   #2. tag
-  tag # 打tag等待你输入tag名称和描述
+    tag # 打tag等待你输入tag名称和描述
 
   #3. template
-  template vue-starpot d # 目前支持2种模板ts | vue，输入vue，clone一个vitesse的项目模板文件名vue-starpot,并自动打开这个项目,并安装依赖如果依赖安装失败会重新尝试超过3次结束，如果配置了第二个参数，在安装依赖完成后会执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装degit 和 @antfu/ni
+    template vue-starpot d # 目前支持2种模板ts | vue，输入vue，clone一个vitesse的项目模板文件名vue-starpot,并自动打开这个项目,并安装依赖如果依赖安装失败会重新尝试超过3次结束，如果配置了第二个参数，在安装依赖完成后会执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装degit 和 @antfu/ni
 
-  #4 ignore
-  ignore # 生成一个.ignore文件模板
+  #4. ignore
+    ignore # 生成一个.ignore文件模板
 
-  #5 pkginit
-  pkginit # 要求输入一个pkgname，然后会生成一个预设package.json文件
+  #5. pkginit
+    pkginit # 要求输入一个pkgname，然后会生成一个预设package.json文件
 
-  #6 use
-  use npm # nrm 快速切换源
+  #6. use
+    use npm # nrm 快速切换源
 
-  #7 remove
-  remove # 删除目录或文件 注意：需要全局安装rimraf, 支持直接remove node_modules, 如果不传会自动匹配当前目录下所有文件或目录供选择删除
+  #7. remove
+    remove # 删除目录或文件 注意：需要全局安装rimraf, 支持直接remove node_modules, 如果不传会自动匹配当前目录下所有文件或目录供选择删除
 
-  #8 clone
-  clone git@github.com:Simon-He95/vitesse-lite.git d # 克隆一个项目,并自动打开这个项目, 安装依赖，后自动执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装@antfu/ni
+  #8. clone
+    clone git@github.com:Simon-He95/vitesse-lite.git d # 克隆一个项目,并自动打开这个项目, 安装依赖，后自动执行nr d 如果找不到package.json中的d就会取全局zshrc中找d的alias来启动，注意：需要全局安装@antfu/ni
 
-  #9 p
-  p # 默认执行pnpm run play命令一般配置指向playground的play命令,可能当前不是workspace结构,则执行当前目录下的dev命令运行项目
+  #9. p
+    p # 默认执行pnpm run play命令一般配置指向playground的play命令,可能当前不是workspace结构,则执行当前目录下的dev命令运行项目
 
-  #10 nii
-  nii # 如果网络不太好ni在线安装依赖比较慢，会自动使用nio缓存安装依赖，注意：需要全局安装@antfu/ni,在zshrc配置nio, alias nio="ni --prefer-offline"
+  #10. nii
+    nii # 如果网络不太好ni在线安装依赖比较慢，会自动使用nio缓存安装依赖，注意：需要全局安装@antfu/ni,在zshrc配置nio, alias nio="ni --prefer-offline"
 
-  #11 template
-  template project-name # 将会有对应的项目模板可供选择,并clone下来自动打开并安装依赖
+  #11. template
+    template project-name # 将会有对应的项目模板可供选择,并clone下来自动打开并安装依赖
 
-  #12 commit
-  commit # 配置常用的commit提交信息,比如chore: init ; chore: update denpendency; fix: typo 等等快速提交commit
+  #12. commit
+    commit # 配置常用的commit提交信息,比如chore: init ; chore: update denpendency; fix: typo 等等快速提交commit
  
-  #13 grant
-  grant # 分配文件权限 对于某些.sh文件没办法直接执行,可以通过grant a.sh 分配权限后执行 source a.sh
+  #13. grant
+    grant # 分配文件权限 对于某些.sh文件没办法直接执行,可以通过grant a.sh 分配权限后执行 source a.sh
   
-  #14 new
-  new a/b/c/d.ts # 如果路径上的目录不存在,则会自动创建目录,并生成对应的文件
+  #14. new
+    new a/b/c/d.ts # 如果路径上的目录不存在,则会自动创建目录,并生成对应的文件
 
-  #15 ccommand
-  ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand
+  #15. ccommand
+    ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand, 可调用子包script： ccommand ./playground 
   
+  #16. cnrm 选择源
+    cnrm # 通过选项切换nrm 的源 npm taobao ...
+
+  #17. cnvm 选择node版本
+    cnvm # 通过选项切换nvm下安装的node版本
+
  #### 完整的alias:
 
 ```bash
@@ -133,7 +139,7 @@ alias proxy="git config --global http.proxy http://127.0.0.1:57932 && git config
 alias pullmaster="git pull origin master"
 alias pullmain="git pull origin main"
 alias flog="git reflog"
-alias see="ps -ef|grep"
+alias see="ps -ef"
 
 #--------------------------#
 # Pnpm
@@ -463,5 +469,19 @@ new() {
       return 1
     fi
   done
+}
+
+# cnrm 选择源
+cnrm() {
+  registery=$(echo $(nrm ls) | sed 's/\/ /\n/g' | gum choose)
+  a=${registery/\* /}
+  b=${a%% -*}
+  nrm use $b
+}
+
+# cnvm 选择node版本
+cnvm() {
+  registery=$(echo $(nvm_ls) | sed 's/ /\n/g' | gum choose)
+  nvm use $registery
 }
 ```

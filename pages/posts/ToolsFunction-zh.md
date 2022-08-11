@@ -9,6 +9,8 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  transformVdeep:'将`>>>` 和 `/deep/` 转换成 `:deep()`',
+  isExist:'判断文件是否存在',
   transformArgv: '处理命令行参数',
   getExportBundle:'获取npm包打包文件',
   Canvas:'快速创建canvas实例',
@@ -153,6 +155,24 @@ import {
 
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
+
+## transformVdeep
+- vite-plugin
+- 将`>>>` 和 `/deep/` 转换成 `:deep()`
+```js
+// vite.config.ts
+// import { transformVdeep } from 'simon-js-tool'
+// plugins: [
+//   transformVdeep(),
+// ]
+```
+
+## isExist
+- 判断文件是否存在
+```js
+isExist('./README.md') // true
+isExist('./a.md') // false
+```
 
 ## transformArgv
 - 处理命令行参数
