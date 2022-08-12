@@ -64,12 +64,14 @@ subtitle: 'Author: Simon'
   #15. ccommand
     ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand, 可调用子包script： ccommand ./playground 
   
-  #16. cnrm 选择源
+  #16. cnrm 选择源 - nrm
     cnrm # 通过选项切换nrm 的源 npm taobao ...
 
-  #17. cnvm 选择node版本
+  #17. cnvm 选择node版本 - nvm
     cnvm # 通过选项切换nvm下安装的node版本
 
+  #18. cfnm 选择node版本 - fnm
+    cfnm #通过选项切换fnm下安装的node版本
  #### 完整的alias:
 
 ```bash
@@ -479,9 +481,16 @@ cnrm() {
   nrm use $b
 }
 
-# cnvm 选择node版本
+# cnvm 选择node版本 - nvm
 cnvm() {
   registery=$(echo $(nvm_ls) | sed 's/ /\n/g' | gum choose)
   nvm use $registery
+}
+
+# cfnm 选择node版本 - fnm
+cfnm() {
+  current=$(echo $(fnm current))
+  registery=$(echo $(fnm ls) | sed "s/$current/$current --- current/g" | sed 's/default//g' | sed 's/\* /\n/g' | gum choose)
+  fnm use ${registery% -*}
 }
 ```

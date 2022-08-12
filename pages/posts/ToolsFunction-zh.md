@@ -9,6 +9,7 @@ subtitle: 'Author: Simon'
 
 <script setup lang="ts">
 const directoryList = {
+  jsShell: '简单的js调用shell命令封装',
   transformVdeep:'将`>>>` 和 `/deep/` 转换成 `:deep()`',
   isExist:'判断文件是否存在',
   transformArgv: '处理命令行参数',
@@ -155,6 +156,27 @@ import {
 
 ## 目录结构
 <Directory  :lists="directoryList"></Directory>
+
+## jsShell
+- 基于node封装的js调用shell命令
+- 参数:
+  - cmd: shell命令
+```js
+const data = jsShell('ls')
+const term1 = data?.split('\n').map(item => item).join(' ')
+jsShell(`gum choose  ${term1}`)
+// 非常简单的就可以实现一个pick框选功能，你同样可以继续接收选择的结果，做下一步操作
+// > README.md
+//   README_en.md
+//   assets
+//   dist
+//   node_modules
+//   package.json
+//   playground
+//   pnpm-lock.yaml
+//   pnpm-workspace.yaml
+//   src
+```
 
 ## transformVdeep
 - vite-plugin
