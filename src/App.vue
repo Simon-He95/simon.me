@@ -49,10 +49,10 @@ watch(
     immediate: true,
   },
 )
-const dotText = new DotTextCanvas(text.value, 16, isDark.value ? 'white' : 'black', 10)
+const dotText = new DotTextCanvas(text.value, 14, isDark.value ? 'white' : 'black', 6)
 dotText.append('.dotText')
 function update() {
-  dotText.repaint(text.value, 16, isDark.value ? 'white' : 'black', 10)
+  dotText.repaint(text.value, 14, isDark.value ? 'white' : 'black', 6)
 }
 const isShow = ref(false)
 useEventListener(
@@ -142,16 +142,7 @@ function getRandomColorPosition() {
     <!-- <Levitation /> -->
   </main>
   <span
-    v-if="isShow"
-    i-icon-park-outline:rocket-one
-    animate-bounce
-    hover="animate-none bg-red-400 "
-    fixed
-    bottom-40
-    right-5
-    text-3xl
-    cursor-pointer
-    title="Top"
-    @click="scrollToTop()"
+    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none bg-red-400 " fixed bottom-40
+    right-5 text-3xl cursor-pointer title="Top" @click="scrollToTop()"
   />
 </template>
