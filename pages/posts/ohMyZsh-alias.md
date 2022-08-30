@@ -17,7 +17,7 @@ subtitle: 'Author: Simon'
   #1. run 
   # 前提需要workspace中的package的name:"shared" => run shared d
   # 另一种方式是直接在script中使用npm -C workspace run d
-    run package d # pnpm中会filter到package.json中的script(d是dev的缩写)
+    run package d --flag # pnpm中会filter到package.json中的script(d是dev的缩写), 支持命令行参数, 如果是yarn环境,则会使用yarn来执行
   # 示例:
     run package i vue pinia -D # 安装vue 和 pinia 到package下的devdepdencies
     run package un vue pinia -D # 卸载package下devdepdencies的 vue 和 pinia
@@ -257,8 +257,8 @@ clone() {
 
 # template
 template() {
-  console.skyblue "请选择一个模板: ts | vue | nuxt | vitesse | react | next"
-  templateName=$(gum choose "ts" "vue" "nuxt" "react" "next")
+  console.skyblue "请选择一个模板: ts | vue-h | vue-template | vue-tsx | nuxt | vitesse | react | next | vitepress"
+  templateName=$(gum choose "ts" "vue-h" "vue-template" "vue-tsx" "nuxt" "react" "next" "vitepress")
   if [ ! $1 ]; then
     console.red "需要指定一个模板名称"
     return 0
@@ -275,12 +275,26 @@ template() {
     else
       npx degit Simon-He95/starter-ts $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
-  elif [ $templateName = "vue" ]; then
+  elif [ $templateName = "vue-h" ]; then
     console.blue "正在创建$1目录,下载vitesse-lite模板,请稍等..."
     if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-lite $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+      npx degit Simon-He95/vitesse-h $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
-      npx degit Simon-He95/vitesse-lite $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+      npx degit Simon-He95/vitesse-h $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [ $templateName = "vue-template" ]; then
+    console.blue "正在创建$1目录,下载vitesse-lite模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-template $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-template $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [ $templateName = "vue-tsx" ]; then
+    console.blue "正在创建$1目录,下载vitesse-tsx模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-tsx $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-tsx $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
   elif [ $templateName = "nuxt" ]; then
     console.blue "正在创建$1目录,下载vitesse-nuxt3模板,请稍等..."
@@ -309,6 +323,13 @@ template() {
       npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
     else
       npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+    fi
+  elif [ $templateName = "vitepress" ]; then
+    console.blue "正在创建$1目录,下载vitesse-vitepress模板,请稍等..."
+    if [ ! $2 ]; then
+      npx degit Simon-He95/vitesse-vitepress $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+    else
+      npx degit Simon-He95/vitesse-vitepress $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
     fi
   fi
 }
