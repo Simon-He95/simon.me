@@ -4,9 +4,7 @@ function preload() {
   const Image = document.createElement('img')
   Image.src = '/black.png'
 }
-onMounted(() => {
-  preload()
-})
+onMounted(preload)
 </script>
 
 <template>
@@ -60,7 +58,11 @@ onMounted(() => {
         >
           <div i-uil-github-alt />
         </a>
-        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
+        <a
+          href="https://github.com/Simon-He95/sponsor"
+          target="_blank"
+          title="Sponsor"
+        >
           <div i-ph:heart />
         </a>
         <toggle-theme />
@@ -107,7 +109,6 @@ onMounted(() => {
 }
 
 .nav a {
-  cursor: pointer;
   text-decoration: none;
   color: inherit;
   transition: opacity 0.2s ease;

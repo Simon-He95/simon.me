@@ -38,7 +38,7 @@ html {
 }
 
 .sponsor-avatar {
-    cursor: pointer;
+    cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png) , pointer!important
 }
 
 .sponsor-tier-title {

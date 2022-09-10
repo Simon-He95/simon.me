@@ -49,7 +49,12 @@ watch(
     immediate: true,
   },
 )
-const dotText = new DotTextCanvas(text.value, 14, isDark.value ? 'white' : 'black', 6)
+const dotText = new DotTextCanvas(
+  text.value,
+  14,
+  isDark.value ? 'white' : 'black',
+  6,
+)
 dotText.append('.dotText')
 function update() {
   dotText.repaint(text.value, 14, isDark.value ? 'white' : 'black', 6)
@@ -141,8 +146,27 @@ function getRandomColorPosition() {
     <Footer />
     <!-- <Levitation /> -->
   </main>
-  <span
-    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none bg-red-400 " fixed bottom-40
-    right-5 text-3xl cursor-pointer title="Top" @click="scrollToTop()"
+  <a
+    v-if="isShow"
+    i-icon-park-outline:rocket-one
+    animate-bounce
+    hover="animate-none bg-red-400 "
+    fixed
+    bottom-40
+    right-5
+    text-3xl
+    title="Top"
+    @click="scrollToTop()"
   />
 </template>
+
+<style>
+body {
+  cursor: url(https://cdn.custom-cursor.com/db/8130/32/manga-himouto-umaru-chan-umaru-and-cola-cursor.png),
+    default !important;
+}
+a {
+  cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png),
+    pointer !important;
+}
+</style>
