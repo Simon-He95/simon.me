@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: '@simon_he/browser-compress-image'
+      link: 'https://github.com/Simon-He95/browser-compress-image'
+      desc: 'Compress image in browser.'
+      icon: 'i-fa:compress'
     - name: 'transform-json-to-vitest'
       link: 'https://github.com/Simon-He95/transform-json-to-vitest'
       desc: 'Generate a vitest file with json.'
