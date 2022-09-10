@@ -34,8 +34,8 @@ subtitle: 'Author: Simon'
   #5. pkginit
     pkginit # 要求输入一个pkgname，然后会生成一个预设package.json文件
 
-  #6. use
-    use npm # nrm 快速切换源
+  #6. co nvm 和 gum
+    co # fnm 快速切换源
 
   #7. remove
     remove # 删除目录或文件 注意：需要全局安装rimraf, 支持直接remove node_modules, 如果不传会自动匹配当前目录下所有文件或目录供选择删除
@@ -64,20 +64,15 @@ subtitle: 'Author: Simon'
   #15. ccommand
     ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand, 可调用子包script： ccommand ./playground 
   
-  #16. cnrm 选择源 - nrm
-    cnrm # 通过选项切换nrm 的源 npm taobao ...
+  #16. cn 选择node版本 - fnm和gum
+    cn # 通过选项切换fnm下安装的node版本
 
-  #17. cnvm 选择node版本 - nvm
-    cnvm # 通过选项切换nvm下安装的node版本
-
-  #18. cfnm 选择node版本 - fnm
-    cfnm #通过选项切换fnm下安装的node版本
  #### 完整的alias:
 
 ```bash
 # User configuration
 # -------------------------#
-#  Node Package Manager
+#  Node Package Managerƒ
 # -------------------------#
 # alias - ni
 
@@ -113,8 +108,9 @@ alias ....="cd ../../.."
 #--------------------------#
 # Git
 # -------------------------#
-
+alias remote="git remote"
 alias gs="git status"
+alias fetch="git fetch --all"
 alias gcc="git checkout"
 alias gccb="git checkout -b"
 alias gl="git log"
@@ -130,11 +126,11 @@ alias gpf="git push --force"
 alias gpt="git push origin --tags"
 alias gptf="git push origin --tags -f"
 alias gp="git push"
-alias gst="git stash"
+alias stash="git stash"
+alias pop="git stash pop"
 alias rebase="git rebase"
-alias reset="git reset HEAD"
-alias reset1="git reset HEAD~1"
 alias main="git checkout main"
+alias master="git checkout master"
 alias use="nrm use"
 alias unproxy="git config --global --unset http.proxy && git config --global --unset https.proxy"
 alias proxy="git config --global http.proxy http://127.0.0.1:57932 && git config --global https.proxy https://127.0.0.1:57932"
@@ -180,21 +176,39 @@ console.pink() {
 
 run() {
   command="$2"
+  workspace=$1
+  if [ ! -d "/yarn.lock" ]; then
+    tag=1
+  else
+    tag=0
+  fi
   if [ "$2" = "" ]; then
-    pnpm run $1
+    if [ $tag = 1 ]; then
+      yarn $workspace
+    else
+      pnpm run $workspace
+    fi
     return
-  elif [ "$2" = "i" -o "$2" = "install" ]; then
+  elif [ "$2" = "i" -o "$2" = "install" -o "$2" = "add" ]; then
     data=$*
-    len1=$1
+    len1=$workspace
     len2=$2
-    result="pnpm --filter "$1" i ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    if [ $tag = 1 ]; then
+      result="yarn workspace "$1" add ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    else
+      result="pnpm --filter "$1" i ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    fi
     eval $result
     return
-  elif [ "$2" = "un" -o "$2" = "uninstall" ]; then
+  elif [ "$2" = "un" -o "$2" = "uninstall" -o "$2" = "remove" ]; then
     data=$*
-    len1=$1
+    len1=$workspace
     len2=$2
-    result="pnpm --filter "$1" uninstall ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    if [ $tag = 1 ]; then
+      result="yarn workspace "$1" remove ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    else
+      result="pnpm --filter "$1" uninstall ${data:$(expr ${#len1} + ${#len2} + 2)}"
+    fi
     eval $result
     return
   elif [ "$2" = "d" ]; then
@@ -208,7 +222,21 @@ run() {
   elif [ "$2" = "pr" ]; then
     command="preview"
   fi
-  pnpm --filter $1 run $command
+  all=$*
+  argv=${all#* --}
+  if [ $argv = $all ]; then
+    if [ $tag = 1 ]; then
+      yarn workspace $workspace $command
+    else
+      pnpm --filter $workspace run $command
+    fi
+  else
+    if [ $tag = 1 ]; then
+      yarn workspace $workspace run $command --$argv
+    else
+      pnpm --filter $workspace run $command --$argv
+    fi
+  fi
 }
 
 # 创建git tag
@@ -467,12 +495,18 @@ update() {
 
 # commit
 commit() {
-  commitMessage=$(gum choose "chore: update" "feature: add new funciton" "chore: update dependency" "fix: typo" "chore: init")
+  commitMessage=$(gum choose "chore: update" "feat: add new funciton" "chore: update dependency" "fix: typo" "chore: init" "perf: optimize" "refactor: refactor code" "docs: update docs" "style: update style" "test: update test")
   git add . && git commit -m $commitMessage
 }
 
 # new 创建新文件
 new() {
+  dir=$(echo $1 | grep '/')
+  if [[ $dir = "" ]]; then
+    touch $1
+    console.green "$1, created successfully"
+    return 1
+  fi
   currentDir=$(echo ${1%%/*})
   right=$1
   if [ -f $1 ]; then
@@ -494,9 +528,20 @@ new() {
   done
 }
 
+# reset
+reset() {
+  echo "选择回退版本到前几个版本"
+  head=$(gum choose {1..5})
+  git reset HEAD~$head && echo "回退成功,已回退到前$head个版本"
+}
+
 # cnrm 选择源
-cnrm() {
+co() {
   registery=$(echo $(nrm ls) | sed 's/\/ /\n/g' | gum choose)
+  if [ $? = 130 ]; then
+    echo "已取消"
+    return 1
+  fi
   a=${registery/\* /}
   b=${a%% -*}
   nrm use $b
@@ -504,14 +549,42 @@ cnrm() {
 
 # cnvm 选择node版本 - nvm
 cnvm() {
-  registery=$(echo $(nvm_ls) | sed 's/ /\n/g' | gum choose)
+  registery=$(echo $(nvm_ls) | sed 's/system//g' | sed 's/ /\n/g' | gum choose)
+  if [ $? = 130 ]; then
+    echo "已取消"
+    return 1
+  fi
   nvm use $registery
 }
 
 # cfnm 选择node版本 - fnm
-cfnm() {
+cn() {
   current=$(echo $(fnm current))
-  registery=$(echo $(fnm ls) | sed "s/$current/$current --- current/g" | sed 's/default//g' | sed 's/\* /\n/g' | gum choose)
+  registery=$(echo $(fnm ls) | sed 's/system//g' | sed 's/default//g' | sed 's/\* /\n/g' | sed "s/$current/* $current/g" | gum choose)
+  if [ $? = 130 ]; then
+    echo "已取消"
+    return 1
+  fi
   fnm use ${registery% -*}
+}
+
+# cb 选择分支
+cb() {
+  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum choose)
+  if [ $? = 130 ]; then
+    echo "已取消"
+    return 1
+  fi
+  gcc $(echo $branch | sed "s/*//g")
+}
+
+# merge
+merge() {
+  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum choose)
+  if [ $? = 130 ]; then
+    echo "已取消"
+    return 1
+  fi
+  git merge $(echo $branch | sed "s/*//g")
 }
 ```
