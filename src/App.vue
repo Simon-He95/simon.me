@@ -134,13 +134,13 @@ function getRandomColorPosition() {
   }
   return { colors, positions }
 }
-const left = ref(50)
-const top = ref(200)
+const left = ref(0)
+const top = ref(0)
 const maxWidth = document.documentElement.clientWidth
 const maxHeight = document.documentElement.clientHeight
 document.addEventListener('mousemove', (e) => {
-  left.value = 200 - (e.x / maxWidth) * 200 + 50
-  top.value = 200 - (e.y / maxHeight) * 200 + 200
+  left.value = 200 - (e.x / maxWidth) * 200
+  top.value = 200 - (e.y / maxHeight) * 200
 })
 </script>
 
@@ -171,9 +171,10 @@ document.addEventListener('mousemove', (e) => {
     fixed
     w-100
     z--5
+    left-1
+    top-80
     :style="{
-      left: `${left}px`,
-      top: `${top}px`,
+      transform: `translate(${left}px, ${top}px)`,
     }"
   >
     <div className="planet">
