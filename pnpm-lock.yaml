@@ -37,6 +37,7 @@ specifiers:
   markdown-it-prism: ^2.2.3
   markdown-it-shiki: ^0.4.0
   markdown-it-table-of-contents: ^0.6.0
+  mouse-element: ^0.0.4
   nprogress: ^0.2.0
   pnpm: ^6.32.6
   prism-theme-vars: ^0.2.2
@@ -102,6 +103,7 @@ devDependencies:
   markdown-it-prism: 2.2.4
   markdown-it-shiki: 0.4.0
   markdown-it-table-of-contents: 0.6.0
+  mouse-element: 0.0.4
   pnpm: 6.34.0
   prismjs: 1.28.0
   rimraf: 3.0.2
@@ -4750,6 +4752,15 @@ packages:
 
   /minimist/1.2.6:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
+    dev: true
+
+  /mouse-element/0.0.4:
+    resolution: {integrity: sha512-WgP4Y9+QjPTky/6uvC54WLD5dvkchXH11OVhh8L2c8wQFz8qQVk1kd+0oeMDxdgMfAIK2Yb/jGc/5Cgm4fSHsg==}
+    dependencies:
+      '@vueuse/core': 8.9.4_vue@3.2.37
+      vue: 3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
     dev: true
 
   /mrmime/1.0.1:
