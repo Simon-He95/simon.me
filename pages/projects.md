@@ -36,6 +36,10 @@ projects:
       desc: 'Type writing with javascript generator Function and google diff.'
       icon: 'i-tabler:writing'
   Npm:
+    - name: 'zsh-install'
+      link: 'https://github.com/Simon-He95/zsh-install'
+      desc: 'Quick install zsh terminal and some useful tools.'
+      icon: 'i-ic:baseline-install-desktop'
     - name: '@simon_he/browser-compress-image'
       link: 'https://github.com/Simon-He95/browser-compress-image'
       desc: 'Compress image in browser.'
