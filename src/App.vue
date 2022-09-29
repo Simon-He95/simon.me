@@ -5,6 +5,7 @@ import {
   DotTextCanvas,
   animationFrameWrapper,
   getDevice,
+  scrollToTop,
 } from "simon-js-tool";
 import { createElement } from "mouse-element";
 import { sThree } from "@simon_he/s-three";
