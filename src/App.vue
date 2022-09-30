@@ -150,6 +150,7 @@ document.addEventListener('mousemove', (e) => {
 
 <template>
   <git-fork
+    v-if="imageShow"
     link="https://github.com/Simon-He95"
     type="ribbons"
     position="left"
