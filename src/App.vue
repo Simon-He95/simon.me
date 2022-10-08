@@ -155,6 +155,7 @@ document.addEventListener('mousemove', (e) => {
     type="ribbons"
     position="left"
     top="100px"
+    class="lt-md:hidden"
   />
   <div id="snow" fixed w-full h-full z--1 />
   <span v-if="imageShow" class="dotImage" fixed top-20 right-0 z--1 />
