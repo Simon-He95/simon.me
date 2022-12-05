@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { setLan } from '../../lang'
 import { isDark } from '~/logics'
+const show = ref(true)
 function preload() {
   const Image = document.createElement('img')
   Image.src = '/black.png'
@@ -50,6 +52,7 @@ onMounted(preload)
         >
           <feather-twitter />
         </a>
+
         <a
           href="https://github.com/Simon-He95"
           target="_blank"
@@ -58,13 +61,10 @@ onMounted(preload)
         >
           <div i-uil-github-alt />
         </a>
-        <a
-          href="https://github.com/Simon-He95/sponsor"
-          target="_blank"
-          title="Sponsor"
-        >
+        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
           <div i-ph:heart />
         </a>
+        <div i-fa:language @click="setLan" />
         <toggle-theme />
       </div>
     </nav>

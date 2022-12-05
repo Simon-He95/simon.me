@@ -56,6 +56,7 @@
     "cross-env": "^7.0.3",
     "degit": "^2.8.4",
     "diacritics": "^1.3.0",
+    "element-plus": "^2.2.26",
     "eslint": "^8.13.0",
     "esno": "^0.14.1",
     "fast-glob": "^3.2.11",

@@ -11,7 +11,6 @@ import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
 import { VividTyping } from 'vivid-typing'
 import App from './App.vue'
-
 const routes = autoRoutes.map((i) => {
   return {
     ...i,
