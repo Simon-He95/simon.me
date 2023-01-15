@@ -4,6 +4,7 @@
   "packageManager": "pnpm@6.32.3",
   "description": "A simple introduction to Simon.",
   "author": "Simon He",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Simon-He95/simon.me.git"
