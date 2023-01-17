@@ -1,10 +1,15 @@
 // @unocss-include
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+import type { Ref } from 'vue'
 
 const language = ref<'en' | 'zh'>('en')
-export const lan = useLocalStorage('simon.me.language', language)
-const json = {
+export const lan = useLocalStorage('simon.me.language', language) as Ref<'en' | 'zh'>
+interface JSON {
+  en: Record<string, any>
+  zh: Record<string, any>
+}
+const json: JSON = {
   en: {
     title: 'Hey, I am Simon He, a fanatical programmers located  in <%><span class=\'i-mi:location\'></span></%>Shanghai, <%><span class=\'i-openmoji:flag-china\'></span></%>China.',
     contents: [

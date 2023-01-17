@@ -16,5 +16,4 @@ title: Simon He
 <p v-for="content in $t.findMe" v-html="content"></p>
 <script setup>
   import {$t,lan} from '../lang'
-  console.log($t.value.title)
 </script>

@@ -1,21 +1,25 @@
 <script setup lang="ts">
+import { lan } from '../../lang'
 defineProps<{ projects: Record<string, any[]> }>()
-const message = ref('List of projects that I am proud of')
+const isZh = computed(() => lan.value === 'zh')
+
+const message = ref(isZh ? '我引以为豪的项目清单' : 'List of projects that I am proud of')
 function finish() {
-  if (message.value === 'List of projects that I am proud of')
-    message.value = 'List of projects'
-  else message.value = 'List of projects that I am proud of'
+  if (message.value === 'List of projects that I am proud of' || message.value === '我引以为豪的项目清单')
+    message.value = isZh ? '我引以为豪' : 'List of projects'
+  else message.value = isZh ? '我引以为豪的项目清单' : 'List of projects that I am proud of'
 }
 </script>
 
 <template>
   <div class="prose m-auto mb-8">
     <h1 ref="projectEl" class="mb-0 animateTitle">
-      Projects
+      {{ isZh ? '项目' : 'Projects' }}
     </h1>
     <vivid-typing
       :content="message"
       :finish="finish"
+      :interval="200"
       class="opacity-50 !-mt-6 italic animateContent"
     />
   </div>
@@ -29,14 +33,14 @@ function finish() {
         :href="item.link"
         target="_blank"
         :class="!item.link ? 'opacity-0 pointer-events-none h-0 -mt-8 -mb-4' : ''"
-        :title="item.name"
+        :title="isZh ? item.nameZh || item.name : item.name"
       >
         <div v-if="item.icon" class="pt-2 pr-5">
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
-          <vivid-typing :content="item.name" cla ss="text-normal" />
-          <div class="desc text-sm opacity-50 font-normal" v-html="item.desc" />
+          <vivid-typing :content="isZh ? item.nameZh || item.name : item.name" cla ss="text-normal" />
+          <div class="desc text-sm opacity-50 font-normal" v-html="isZh ? item.descZh || item.desc : item.desc" />
         </div>
       </a>
     </div>

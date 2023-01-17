@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { setLan } from '../../lang'
+import { lan, setLan } from '../../lang'
 import { isDark } from '~/logics'
-const show = ref(true)
+const isZh = computed(() => lan.value === 'zh')
+const color = ref('black')
 function preload() {
   const Image = document.createElement('img')
   Image.src = '/black.png'
 }
+const Blog = ref(isZh ? '博客' : 'Blog')
 onMounted(preload)
 </script>
 
@@ -34,14 +36,15 @@ onMounted(preload)
       <div class="spacer" />
       <div class="right">
         <router-link to="/posts" title="Blog">
-          <span class="lt-md:hidden BlogMove">
-            Blog
+          <span class="lt-md:hidden BlogMove" :style="`--blog:'${Blog}''`">
+            {{ isZh ? '博客' : 'Blog' }}
             <div class="white" />
           </span>
           <div i-clarity:book-solid md:hidden />
         </router-link>
         <router-link to="/projects" title="Projects">
-          <span class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
+          <span v-if="isZh" class="lt-md:hidden projectMove"><span style="--delay: 0s">项</span><span style="--delay: 0.1s">目</span></span>
+          <span v-else class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
           <div i-iwwa:power class="md:hidden iconMove" />
         </router-link>
         <a
@@ -166,7 +169,8 @@ onMounted(preload)
 }
 
 .BlogMove::before {
-  content: "Blog";
+  width: 100%;
+  content: var(--blog);
   position: absolute;
   top: 0;
   left: 0.5px;
