@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { uppercaseNum } from 'simon-js-tool'
 defineProps({
   lists: Object,
 })

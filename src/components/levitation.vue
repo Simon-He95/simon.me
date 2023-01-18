@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { animationFrameWrapper, preload } from 'simon-js-tool'
+import { useAnimationFrame } from 'lazy-js-utils'
 
 async function toBase64(o: File | string, type = 'url') {
   if (type === 'file' || type === 'blob')
@@ -53,14 +53,14 @@ const map = Promise.all([
   toBase64('/images/4.png'),
   toBase64('/images/5.png'),
 ])
-let cache
+let cache: any
 const color = ref('white')
 const backgroundImage = ref('url(/images/3.png)')
 let index = 0
 async function animationend() {
   cache = await map
   backgroundImage.value = `url(${cache[0]})`
-  animationFrameWrapper(() => {
+  useAnimationFrame(() => {
     backgroundImage.value = `url(${cache[index]})`
     if (index < 4)
       index++

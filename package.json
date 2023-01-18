@@ -34,7 +34,6 @@
     "dayjs": "^1.11.0",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.2",
-    "simon-js-tool": "^4.0.19",
     "vivid-typing": "^1.1.26",
     "vue": "^3.2.31",
     "vue-router": "4.0.14"
@@ -64,6 +63,7 @@
     "feed": "^4.2.2",
     "fs-extra": "^10.0.1",
     "gray-matter": "^4.0.3",
+    "lazy-js-utils": "^0.0.21",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.6.2",
     "markdown-it-link-attributes": "^4.0.0",

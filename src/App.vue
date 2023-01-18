@@ -3,10 +3,10 @@ import { ref } from 'vue'
 import {
   DotImageCanvas,
   DotTextCanvas,
-  animationFrameWrapper,
   getDevice,
   scrollToTop,
-} from 'simon-js-tool'
+  useAnimationFrame,
+} from 'lazy-js-utils'
 
 import gitFork from '@simon_he/git-fork'
 import { createElement } from 'mouse-element'
@@ -16,6 +16,7 @@ import { useRouter } from 'vue-router'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
 // import flag from '/images/flag.jpg'
+
 useHead({
   meta: [
     { property: 'og:title', content: 'Simon He' },
@@ -46,7 +47,7 @@ watch(
   router.currentRoute,
   (val) => {
     text.value = routerMap[val.path] || 'Docs'
-    animationFrameWrapper(update, 200, true)
+    useAnimationFrame(update, 200, true)
   },
   {
     immediate: true,
@@ -60,7 +61,11 @@ const dotText = new DotTextCanvas(
 )
 dotText.append('.dotText')
 function update() {
-  dotText.repaint(text.value, 14, isDark.value ? 'white' : 'black', 6)
+  try {
+    dotText.repaint(text.value, 14, isDark.value ? 'white' : 'black', 6)
+  }
+  catch (error) {
+  }
 }
 const isShow = ref(false)
 useEventListener(

@@ -1,6 +1,7 @@
 // @unocss-include
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+import { debounce } from 'lazy-js-utils'
 import type { Ref } from 'vue'
 
 const language = ref<'en' | 'zh'>('en')

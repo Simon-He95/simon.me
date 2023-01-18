@@ -3,11 +3,11 @@ import { lan } from '../../lang'
 defineProps<{ projects: Record<string, any[]> }>()
 const isZh = computed(() => lan.value === 'zh')
 
-const message = ref(isZh ? '我引以为豪的项目清单' : 'List of projects that I am proud of')
+const message = ref(isZh.value ? '我引以为豪的项目清单' : 'List of projects that I am proud of')
 function finish() {
   if (message.value === 'List of projects that I am proud of' || message.value === '我引以为豪的项目清单')
-    message.value = isZh ? '我引以为豪' : 'List of projects'
-  else message.value = isZh ? '我引以为豪的项目清单' : 'List of projects that I am proud of'
+    message.value = isZh.value ? '我引以为豪' : 'List of projects'
+  else message.value = isZh.value ? '我引以为豪的项目清单' : 'List of projects that I am proud of'
 }
 </script>
 
@@ -39,8 +39,16 @@ function finish() {
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
-          <vivid-typing :content="isZh ? item.nameZh || item.name : item.name" cla ss="text-normal" />
-          <div class="desc text-sm opacity-50 font-normal" v-html="isZh ? item.descZh || item.desc : item.desc" />
+          <template v-if="isZh">
+            <vivid-typing min-h-6 lh-6 :content=" item.nameZh || item.name " :delay="idx * 200 " class="text-normal" />
+            <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content=" item.descZh || item.desc " :delay="idx * 200" />
+          </template>
+
+          <template v-else>
+            <vivid-typing min-h-6 lh-6 :content="item.name" :delay="idx * 200 " class="text-normal" />
+            <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content="item.desc" :delay="idx * 200" />
+          </template>
+          <!-- <div class="desc text-sm opacity-50 font-normal" v-html="isZh ? item.descZh || item.desc : item.desc" /> -->
         </div>
       </a>
     </div>

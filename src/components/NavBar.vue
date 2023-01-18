@@ -7,7 +7,8 @@ function preload() {
   const Image = document.createElement('img')
   Image.src = '/black.png'
 }
-const Blog = ref(isZh ? '博客' : 'Blog')
+
+const Blog = computed(() => isZh.value ? '博客' : 'Blog')
 onMounted(preload)
 </script>
 
@@ -36,7 +37,7 @@ onMounted(preload)
       <div class="spacer" />
       <div class="right">
         <router-link to="/posts" title="Blog">
-          <span class="lt-md:hidden BlogMove" :style="`--blog:'${Blog}''`">
+          <span class="lt-md:hidden BlogMove" :style="`--blog:'${Blog}'`">
             {{ isZh ? '博客' : 'Blog' }}
             <div class="white" />
           </span>
