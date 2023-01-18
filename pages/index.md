@@ -11,7 +11,6 @@ title: Simon He
 
 <p v-for="content in $t.contents" v-html="content"></p>
 
-
 ***
 <p v-for="content in $t.findMe" v-html="content"></p>
 <script setup>

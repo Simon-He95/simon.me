@@ -1,7 +1,6 @@
 // @unocss-include
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
-import { debounce } from 'lazy-js-utils'
 import type { Ref } from 'vue'
 
 const language = ref<'en' | 'zh'>('en')
@@ -12,7 +11,7 @@ interface JSON {
 }
 const json: JSON = {
   en: {
-    title: 'Hey, I am Simon He, a fanatical programmers located  in <%><span class=\'i-mi:location\'></span></%>Shanghai, <%><span class=\'i-openmoji:flag-china\'></span></%>China.',
+    title: 'Hey, I am Simon He, a fanatical programmers located  in <%><span class="i-mi:location"></span></%>Shanghai, <%><span class="i-openmoji:flag-china"></span></%>China.',
     contents: [
       'Through this page, I would like to share with you some projects I’ve done and what I’ve been through. ',
       'Recently, I have been following <a href="https://github.com/antfu" alt="Anthony Fu" ><span i-mdi:face-man-outline></span> Anthony Fu</a> for a couple months, his enthusiasm to coding and dedication really inspired me a lot. Now, I’m used to learning industry news from Twitter and digging myself in those forward-looking feature and innovative ecological technology.',
@@ -28,7 +27,7 @@ const json: JSON = {
     ],
   },
   zh: {
-    title: '大家好，我是Simon He，一个狂热的程序员，位于 <%><span class=\'i-mi:location\'></span></%>上海, <%><span class=\'i-openmoji:flag-china\'></span></%>中国。',
+    title: '大家好，我是Simon He，一个狂热的程序员，位于 <%><span class="i-mi:location"></span></%>上海, <%><span class="i-openmoji:flag-china"></span></%>中国。',
     contents: [
       '通过这个页面，我想和大家分享一些我做过的项目和经历的事情。 ',
       '最近，我一直在关注 <a href="https://github.com/antfu" alt="Anthony Fu" ><span i-mdi:face-man-outline></span> Anthony Fu</a> 几个月来，他对编码的热情和奉献精神真的激励了我很多。 现在，我习惯了从推特上了解行业新闻，在那些前瞻性的功能和创新的生态技术中挖掘自己。',
