@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { type SpeechOptions, speech, useAnimationFrame } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 import { isDark } from '~/logics'
 const isZh = computed(() => lan.value === 'zh')
@@ -10,6 +11,29 @@ function preload() {
 
 const Blog = computed(() => isZh.value ? '博客' : 'Blog')
 onMounted(preload)
+const { speak, isSpeaking } = speech()
+const getSpeechOptions = computed(() =>
+  isZh.value
+    ? {
+        text: '大家好，我是Simon，一个狂热的程序员，位于上海,中国',
+        lang: 'zh-CN',
+      }
+    : {
+        text: 'Hey, I am Simon, a fanatical programmers located  in Shanghai, China',
+        lang: 'en-US',
+      },
+)
+const pending = ref(false)
+const say = () => {
+  speak(getSpeechOptions.value as SpeechOptions)
+  pending.value = true
+  const stop = useAnimationFrame(() => {
+    if (!isSpeaking()) {
+      pending.value = false
+      stop()
+    }
+  }, 500)
+}
 </script>
 
 <template>
@@ -68,7 +92,8 @@ onMounted(preload)
         <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
           <div i-ph:heart />
         </a>
-        <div i-fa:language @click="setLan" />
+        <div i-fa:language class="link" @click="setLan" />
+        <div i-iconoir:sound-high class="link" :class="[pending ? 'text-red' : 'xxx']" @click="say()" />
         <toggle-theme />
       </div>
     </nav>

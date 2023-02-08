@@ -33,7 +33,7 @@ specifiers:
   feed: ^4.2.2
   fs-extra: ^10.0.1
   gray-matter: ^4.0.3
-  lazy-js-utils: ^0.0.21
+  lazy-js-utils: ^0.0.28
   markdown-it: ^12.3.2
   markdown-it-anchor: ^8.6.2
   markdown-it-link-attributes: ^4.0.0
@@ -100,7 +100,7 @@ devDependencies:
   feed: 4.2.2
   fs-extra: 10.1.0
   gray-matter: 4.0.3
-  lazy-js-utils: 0.0.21_typescript@4.7.4
+  lazy-js-utils: 0.0.28_typescript@4.7.4
   markdown-it: 12.3.2
   markdown-it-anchor: 8.6.4_2zb4u3vubltivolgu556vv4aom
   markdown-it-link-attributes: 4.0.0
@@ -5026,8 +5026,8 @@ packages:
     resolution: {integrity: sha512-lxpCM3HTvquGxKGzHeknB/sUjuVoUElLlfYnXZT73K8geR9jQbroGlSCFBax9/0mpGoD3kzcMLnOlGQPJJNyqQ==}
     dev: true
 
-  /lazy-js-utils/0.0.21_typescript@4.7.4:
-    resolution: {integrity: sha512-Ze3rxF4yDaZJc+VWggvEMM748ayHBjsaJeQjefLGD3/wsgn1814xl7RgKYh4ePLV01tU/K/w+aes5Q5vjezHtg==}
+  /lazy-js-utils/0.0.28_typescript@4.7.4:
+    resolution: {integrity: sha512-WhCoTF4cuhsG2GcZnsm27TreMGpAroYZ4dMjr0dwOa0mcLICxjvWFC9jbxWWkeegqTn/w11ChMP/ebnVtL15dQ==}
     dependencies:
       '@vueuse/core': 8.9.4_vue@3.2.45
       htmlparser2: 8.0.1

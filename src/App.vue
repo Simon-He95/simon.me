@@ -227,7 +227,7 @@ body {
   cursor: url(https://cdn.custom-cursor.com/db/8130/32/manga-himouto-umaru-chan-umaru-and-cola-cursor.png),
     default !important;
 }
-a {
+a,.link {
   cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png),
     pointer !important;
 }
