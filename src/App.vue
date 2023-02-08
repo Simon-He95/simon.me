@@ -13,6 +13,7 @@ import { createElement } from 'mouse-element'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
 // import flag from '/images/flag.jpg'
@@ -38,15 +39,22 @@ if (imageShow.value)
 
 watch(isDark, update)
 const router = useRouter()
-const routerMap: Record<string, string> = {
-  '/': 'Simon',
-  '/projects': 'Projects',
-  '/posts': 'Blog',
+const routerMap: any = {
+  en: {
+    '/': 'Simon',
+    '/projects': 'Projects',
+    '/posts': 'Blog',
+  },
+  zh: {
+    '/': 'Simon',
+    '/projects': '项目',
+    '/posts': '博客',
+  },
 }
 watch(
   router.currentRoute,
   (val) => {
-    text.value = routerMap[val.path] || 'Docs'
+    text.value = routerMap[isZh.value ? 'zh' : 'en'][val.path] || 'Docs'
     useAnimationFrame(update, 200, true)
   },
   {
@@ -57,7 +65,7 @@ const dotText = new DotTextCanvas(
   text.value,
   14,
   isDark.value ? 'white' : 'black',
-  6,
+  5,
 )
 dotText.append('.dotText')
 function update() {

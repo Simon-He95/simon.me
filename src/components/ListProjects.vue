@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { lan } from '../../lang'
+import { isZh } from '../../lang'
 defineProps<{ projects: Record<string, any[]> }>()
-const isZh = computed(() => lan.value === 'zh')
 
 const message = ref(isZh.value ? '我引以为豪的项目清单' : 'List of projects that I am proud of')
 function finish() {
