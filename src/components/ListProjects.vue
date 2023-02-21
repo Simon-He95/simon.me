@@ -35,7 +35,7 @@ function finish() {
         :title="isZh ? item.nameZh || item.name : item.name"
         hover="transform-scale-110"
       >
-        <div v-if="item.icon" class="pt-2 pr-5 haha">
+        <div v-if="item.icon" class="pt-2 pr-5">
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
