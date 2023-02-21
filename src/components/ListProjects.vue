@@ -33,13 +33,14 @@ function finish() {
         target="_blank"
         :class="!item.link ? 'opacity-0 pointer-events-none h-0 -mt-8 -mb-4' : ''"
         :title="isZh ? item.nameZh || item.name : item.name"
+        hover="transform-scale-110"
       >
-        <div v-if="item.icon" class="pt-2 pr-5">
+        <div v-if="item.icon" class="pt-2 pr-5 haha">
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
           <template v-if="isZh">
-            <vivid-typing min-h-6 lh-6 :content=" item.nameZh || item.name " :delay="idx * 200 " class="text-normal" />
+            <vivid-typing min-h-6 lh-6:content=" item.nameZh || item.name " :delay="idx * 200 " class="text-normal" />
             <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content=" item.descZh || item.desc " :delay="idx * 200" />
           </template>
 
