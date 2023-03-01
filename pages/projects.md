@@ -3,6 +3,12 @@ title: projects - Simon He
 display: ''
 projects:
   Latest:
+    - name: 'transformToUnocss'
+      nameZh: '将css转换为unocss'
+      link: 'https://github.com/Simon-He95/transformToUnocss'
+      desc: 'transform css in vue to unocss'
+      descZh: '将vue中的css转换为unocss'
+      icon: 'i-ic:twotone-css'
     - name: 'Find Gold'
       nameZh: '找金币'
       link: 'https://find-gold.netlify.app'

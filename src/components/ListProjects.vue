@@ -40,7 +40,7 @@ function finish() {
         </div>
         <div class="flex-auto">
           <template v-if="isZh">
-            <vivid-typing min-h-6 lh-6:content=" item.nameZh || item.name " :delay="idx * 200 " class="text-normal" />
+            <vivid-typing min-h-6 lh-6 :content="item.nameZh || item.name" :delay="idx * 200 " class="text-normal" />
             <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content=" item.descZh || item.desc " :delay="idx * 200" />
           </template>
 
