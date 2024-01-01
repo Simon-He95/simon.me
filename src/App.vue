@@ -9,7 +9,7 @@ import {
 } from 'lazy-js-utils'
 
 import gitFork from '@simon_he/git-fork'
-import { createElement } from 'mouse-element'
+import { createMouseAnimation } from 'mouse-element'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
 import { useRouter } from 'vue-router'
@@ -157,7 +157,7 @@ const maxHeight = document.documentElement.clientHeight
 document.addEventListener('mousemove', (e) => {
   left.value = 200 - (e.x / maxWidth) * 200
   top.value = 200 - (e.y / maxHeight) * 200
-  createElement(e)
+  createMouseAnimation(e)
 })
 </script>
 

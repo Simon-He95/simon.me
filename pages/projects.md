@@ -3,6 +3,18 @@ title: projects - Simon He
 display: ''
 projects:
   Latest:
+    - name: 'fast-jump'
+      nameZh: 'fast-jump'
+      link: 'https://github.com/Simon-He95/fast-jump'
+      desc: 'Provides viewing deeper types and skipping unnecessary paths to quickly reach the target path'
+      descZh: '提供了查看更深层次类型和跳过不需要的路径快速直达目标路径'
+      icon: 'i-game-icons:jump-across'
+    - name: 'fast-create-variable'
+      nameZh: 'fast-create-variable'
+      link: 'https://github.com/Simon-He95/fast-create-variable'
+      desc: 'Provides the ability to create variables with shortcut keys, solving the problem of scrolling back and forth to a specified position and creating variables through input'
+      descZh: '提供了快捷键创建变量的能力，解决了来回滚动到指定位置，通过输入去创建变量'
+      icon: 'i-mdi:variable'
     - name: 'transformToUnocss'
       nameZh: '将css转换为unocss'
       link: 'https://github.com/Simon-He95/transformToUnocss'
