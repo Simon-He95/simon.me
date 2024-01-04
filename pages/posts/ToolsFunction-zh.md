@@ -125,7 +125,7 @@ const directoryList = {
 
 > [英文 English Version](/posts/ToolsFunction)
 
-## 此文是介绍封装的工具函数的文档[simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
+## 此文是介绍封装的工具函数的文档[lazy-js-utils](https://www.npmjs.com/package/lazy-js-utils)
 整理了<strong>100+</strong>常用函数,持续更新中<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
@@ -145,12 +145,12 @@ const directoryList = {
 
 ## 使用说明
 ```bash
-npm i simon-js-tool # 安装
+npm i lazy-js-utils # 安装
 
 import { 
   deepCompare,
   ...
- } from 'simon-js-tool' # 按需引入
+ } from 'lazy-js-utils' # 按需引入
 
 ```
 
@@ -183,7 +183,7 @@ jsShell(`gum choose  ${term1}`)
 - 将`>>>` 和 `/deep/` 转换成 `:deep()`
 ```js
 // vite.config.ts
-// import { transformVdeep } from 'simon-js-tool'
+// import { transformVdeep } from 'lazy-js-utils'
 // plugins: [
 //   transformVdeep(),
 // ]
@@ -1698,4 +1698,4 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isElement - 判断是否是HTMLElement
 
 ## GitHub
-[欢迎PR](https://github.com/Simon-He95/simon-js-tool)
+[欢迎PR](https://github.com/Simon-He95/lazy-js-utils)

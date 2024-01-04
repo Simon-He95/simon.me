@@ -22,7 +22,7 @@ Compiled <strong>90+</strong> commonly used functions, constantly updated<vivid-
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 ## More
-- Common functions [simon-js-tool](/posts/ToolsFunction)
+- Common functions [lazy-js-utils](/posts/ToolsFunction)
 - Export functions [exports-functions](/posts/exportsfunction)
 - Echarts simplistic [s-charts](/posts/charts)
 - numsWheel component [s-nums-wheel](/posts/numsWheel)

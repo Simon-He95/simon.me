@@ -5,7 +5,7 @@ import {
   DotTextCanvas,
   getDevice,
   scrollToTop,
-  useAnimationFrame,
+  useRaf,
 } from 'lazy-js-utils'
 
 // import gitFork from '@simon_he/git-fork-vue'
@@ -55,7 +55,7 @@ watch(
   router.currentRoute,
   (val) => {
     text.value = routerMap[isZh.value ? 'zh' : 'en'][val.path] || 'Docs'
-    useAnimationFrame(update, 200, true)
+    useRaf(update, 200, true)
   },
   {
     immediate: true,

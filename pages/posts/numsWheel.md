@@ -21,7 +21,7 @@ const directoryList = {
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
 ## More
-- Common functions [simon-js-tool](/posts/ToolsFunction)
+- Common functions [lazy-js-utils](/posts/ToolsFunction)
 - Export functions [exports-functions](/posts/exportsfunction)
 - Threejs simplistic [s-three](/posts/threejs)
 - Echarts simplistic [s-charts](/posts/charts-zh)

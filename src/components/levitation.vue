@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAnimationFrame } from 'lazy-js-utils'
+import { useRaf } from 'lazy-js-utils'
 
 async function toBase64(o: File | string, type = 'url') {
   if (type === 'file' || type === 'blob')
@@ -60,7 +60,7 @@ let index = 0
 async function animationend() {
   cache = await map
   backgroundImage.value = `url(${cache[0]})`
-  useAnimationFrame(() => {
+  useRaf(() => {
     backgroundImage.value = `url(${cache[index]})`
     if (index < 4)
       index++

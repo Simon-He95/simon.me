@@ -22,7 +22,7 @@ const directoryList = {
 <div flex="~" items-center><strong>特点</strong>: 扩展性高,调用灵活便捷 <span i-fluent:flash-28-filled bg-amber  /></div>
 
 ## 更多
-- 通用函数 [simon-js-tool](/posts/ToolsFunction-zh)
+- 通用函数 [lazy-js-utils](/posts/ToolsFunction-zh)
 - 导出函数 [exports-functions](/posts/exportsfunction-zh)
 - threejs简单化 [s-three](/posts/threejs-zh)
 - numsWheel 组件 [s-nums-wheel](/posts/numsWheel)

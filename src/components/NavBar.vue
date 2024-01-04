@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type SpeechOptions, speech, useAnimationFrame } from 'lazy-js-utils'
+import { type SpeechOptions, speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 import { isDark } from '~/logics'
 const isZh = computed(() => lan.value === 'zh')
@@ -27,7 +27,7 @@ const pending = ref(false)
 const say = () => {
   speak(getSpeechOptions.value as SpeechOptions)
   pending.value = true
-  const stop = useAnimationFrame(() => {
+  const stop = useRaf(() => {
     if (!isSpeaking()) {
       pending.value = false
       stop()

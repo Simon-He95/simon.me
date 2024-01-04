@@ -122,7 +122,7 @@ const directoryList = {
 
 > [中文 Chinese Version](/posts/ToolsFunction-zh)
 
-## This article is documentation that describes the encapsulated utility functions [simon-js-tool](https://www.npmjs.com/package/simon-js-tool)
+## This article is documentation that describes the encapsulated utility functions [lazy-js-utils](https://www.npmjs.com/package/lazy-js-utils)
 Compiled <strong>100+</strong> commonly used functions, constantly updated<vivid-typing content="......" inline-block :infinity="true"></vivid-typing>
 <div flex="~" ><strong>peculiarity</strong><span>: High scalability, flexible and convenient calling <span i-fluent:flash-28-filled bg-amber  /></span></div>
 
@@ -142,11 +142,11 @@ Compiled <strong>100+</strong> commonly used functions, constantly updated<vivid
 
 ## Instructions for use
 ```bash
-npm i simon-js-tool # Installation
+npm i lazy-js-utils # Installation
 
 import { 
   deepCompare
- } from 'simon-js-tool' # Ingestion on demand
+ } from 'lazy-js-utils' # Ingestion on demand
 ```
 
 ## Directory structure
@@ -178,7 +178,7 @@ jsShell(`gum choose  ${term1}`)
 - Convert `>>>` and `/deep/` to `:deep()`
 ```js
 // vite.config.ts
-// import { transformVdeep } from 'simon-js-tool'
+// import { transformVdeep } from 'lazy-js-utils'
 // plugins: [
 //   transformVdeep(),
 // ]
@@ -1691,4 +1691,4 @@ console.log(calNum.mul(0.1, 0.2, 0.2)) // 0.004
 - isElement - Determine if it is an HTMLElement
 
 ## GitHub
-[Welcome to PR](https://github.com/Simon-He95/simon-js-tool)
+[Welcome to PR](https://github.com/Simon-He95/lazy-js-utils)
