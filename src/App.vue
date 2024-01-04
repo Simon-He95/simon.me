@@ -8,7 +8,7 @@ import {
   useAnimationFrame,
 } from 'lazy-js-utils'
 
-import gitFork from '@simon_he/git-fork'
+// import gitFork from '@simon_he/git-fork-vue'
 import { createMouseAnimation } from 'mouse-element'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
@@ -162,14 +162,6 @@ document.addEventListener('mousemove', (e) => {
 </script>
 
 <template>
-  <git-fork
-    v-if="imageShow"
-    link="https://github.com/Simon-He95"
-    type="ribbons"
-    position="left"
-    top="100px"
-    class="lt-md:hidden"
-  />
   <div id="snow" fixed w-full h-full z--1 />
   <span v-if="imageShow" class="dotImage" fixed top-20 right-0 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />

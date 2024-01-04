@@ -27,7 +27,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@simon_he/git-fork": "^0.1.3",
+    "@simon_he/git-fork-vue": "^0.0.12",
     "@simon_he/s-three": "^0.0.8",
     "@vueuse/core": "^8.2.5",
     "@vueuse/head": "^0.7.5",

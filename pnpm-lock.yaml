@@ -11,6 +11,9 @@ dependencies:
   '@simon_he/git-fork':
     specifier: ^0.1.3
     version: 0.1.3
+  '@simon_he/git-fork-vue':
+    specifier: ^0.0.12
+    version: 0.0.12
   '@simon_he/s-three':
     specifier: ^0.0.8
     version: 0.0.8
@@ -1799,6 +1802,15 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@simon_he/git-fork-vue@0.0.12:
+    resolution: {integrity: sha512-6CXqopQKR62mBaoxJdf88eulevd2vhEbnt4RjaKpKyXayewO89gkSFsaSvXRKg02+gs13P/dufxH8Rg1+7TPew==}
+    dependencies:
+      '@vueuse/core': 8.9.4(vue@3.2.37)
+      vue: 3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: false
 
   /@simon_he/git-fork@0.1.3:
     resolution: {integrity: sha512-PtNQWWxiPLjiT664/4IOr2u4CCAPwdZocq8W1DRvwYl9qqXs8i0HzUChxG6GwhD6UAX5sgjf/N+xFlKKG7ZbVQ==}
