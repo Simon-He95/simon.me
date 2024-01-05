@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@simon_he/git-fork-vue": "^0.0.12",
-    "@simon_he/s-three": "^0.0.8",
+    "@simon_he/s-three": "0.0.16",
     "@vueuse/core": "^8.2.5",
     "@vueuse/head": "^0.7.5",
     "dayjs": "^1.11.0",
@@ -63,7 +63,7 @@
     "feed": "^4.2.2",
     "fs-extra": "^10.0.1",
     "gray-matter": "^4.0.3",
-    "lazy-js-utils": "^0.0.80",
+    "lazy-js-utils": "^0.0.82",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.6.2",
     "markdown-it-link-attributes": "^4.0.0",
