@@ -66,6 +66,9 @@ const config: UserConfig = {
         presetAttributify(),
         presetUno(),
       ],
+      shortcuts: {
+        moveY: ['translate-y-[-500px]'],
+      },
     }),
 
     Vue({

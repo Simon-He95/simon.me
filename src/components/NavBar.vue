@@ -47,6 +47,7 @@ const say = () => {
       outline-none
       to="/"
       focusable="false"
+      class="signature"
     >
       <img
         border-rd-full

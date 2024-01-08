@@ -134,8 +134,8 @@ devDependencies:
     specifier: ^0.6.0
     version: 0.6.0
   mouse-element:
-    specifier: ^0.0.6
-    version: 0.0.6
+    specifier: ^0.0.7
+    version: 0.0.7
   pnpm:
     specifier: ^6.32.6
     version: 6.34.0
@@ -5002,8 +5002,8 @@ packages:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
     dev: true
 
-  /mouse-element@0.0.6:
-    resolution: {integrity: sha512-aQwYf+4syai8hecg1DMhK7uSBvO1gS6i9CfpJ0l2lT9RmwCMkCtldHUWhRb7Z8ZHoLVIMqA+UJcyiq0nFT6c7w==}
+  /mouse-element@0.0.7:
+    resolution: {integrity: sha512-rRxQGAhitd/ZZaRpo7yKNnWb7GSJnkBdHsT2qLTD+07uaevXuzg4xfjxgFkqZQYJNw85ljlZY3r/M9QXvpDz+w==}
     dependencies:
       '@vueuse/core': 8.9.4(vue@3.2.37)
       lazy-js-utils: 0.0.63(vue@3.2.37)

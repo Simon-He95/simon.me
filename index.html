@@ -18,8 +18,9 @@
                   if (setting === 'dark' || (prefersDark && setting !== 'light')) document.documentElement.classList.toggle('dark', true)
             })()
     </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   </head>
-  <body class="font-sans text-gray-700 dark:text-gray-200">
+  <body class="font-sans text-gray-700 dark:text-gray-200 relative">
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
