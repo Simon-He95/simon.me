@@ -38,56 +38,35 @@ const say = () => {
 
 <template>
   <header class="header z-40">
-    <router-link
-      w-30
-      absolute
-      lg:fixed
-      m-6
-      select-none
-      outline-none
-      to="/"
-      focusable="false"
-      class="signature"
-    >
-      <img
-        border-rd-full
-        src="/signature.png"
-        :class="isDark ? 'brightness' : ''"
-        title="Home"
-        alt="logo"
-      >
+    <router-link w-30 absolute lg:fixed m-6 select-none outline-none to="/" focusable="false" class="signature">
+      <img border-rd-full src="/signature.png" :class="isDark ? 'brightness' : ''" title="Home" alt="logo">
     </router-link>
-
     <nav class="nav">
       <div class="spacer" />
       <div class="right">
         <router-link to="/posts" title="Blog">
-          <span class="lt-md:hidden BlogMove" :style="`--blog:'${Blog}'`">
-            {{ isZh ? '博客' : 'Blog' }}
+          <span class="lt-md:hidden BlogMove" :style="`--blog:'${Blog}'`"> {{ isZh ? '博客' : 'Blog' }}
             <div class="white" />
           </span>
           <div i-clarity:book-solid md:hidden />
         </router-link>
         <router-link to="/projects" title="Projects">
-          <span v-if="isZh" class="lt-md:hidden projectMove"><span style="--delay: 0s">项</span><span style="--delay: 0.1s">目</span></span>
-          <span v-else class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span style="--delay: 0.1s">r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span style="--delay: 0.4s">e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span style="--delay: 0.7s">s</span></span>
+          <span v-if="isZh" class="lt-md:hidden projectMove"><span style="--delay: 0s">项</span><span
+            style="--delay: 0.1s"
+          >目</span></span>
+          <span v-else class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span
+            style="--delay: 0.1s"
+          >r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span
+            style="--delay: 0.4s"
+          >e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span
+            style="--delay: 0.7s"
+          >s</span></span>
           <div i-iwwa:power class="md:hidden iconMove" />
         </router-link>
-        <a
-          href="https://twitter.com/simon_he1995"
-          target="_blank"
-          title="Twitter"
-          class="lt-md:hidden"
-        >
-          <feather-twitter />
+        <a href="https://twitter.com/simon_he1995" target="_blank" title="Twitter" class="lt-md:hidden">
+          <feather-twitter class="svg-dash" />
         </a>
-
-        <a
-          href="https://github.com/Simon-He95"
-          target="_blank"
-          title="GitHub"
-          class="lt-md:hidden"
-        >
+        <a href="https://github.com/Simon-He95" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-uil-github-alt />
         </a>
         <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
@@ -105,6 +84,7 @@ const say = () => {
 .brightness {
   filter: brightness(1500%);
 }
+
 .boxshadow {
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
     rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
@@ -112,6 +92,7 @@ const say = () => {
     rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
     rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
 .header h1 {
   margin-bottom: 0;
 }
@@ -130,7 +111,7 @@ const say = () => {
   box-sizing: border-box;
 }
 
-.nav > * {
+.nav>* {
   margin: auto;
 }
 
@@ -157,26 +138,30 @@ const say = () => {
   grid-auto-flow: column;
 }
 
-.nav .right > * {
+.nav .right>* {
   margin: auto;
 }
 
-.projectMove > span {
+.projectMove>span {
   position: relative;
   animation: bounce 0.5s ease infinite alternate;
 }
-.projectMove > span:nth-child(1n + 0) {
+
+.projectMove>span:nth-child(1n + 0) {
   animation-delay: var(--delay);
 }
+
 @keyframes bounce {
   100% {
     top: -2px;
     font-weight: bold;
   }
 }
+
 .iconMove {
   animation: iconMove 1s ease-in-out infinite alternate;
 }
+
 @keyframes iconMove {
   100% {
     transform: rotate(360deg);
@@ -186,6 +171,7 @@ const say = () => {
 .BlogMove {
   position: relative;
 }
+
 .white {
   position: absolute;
   left: 0;
@@ -214,9 +200,11 @@ const say = () => {
   20% {
     height: 32px;
   }
+
   60% {
     height: 6px;
   }
+
   100% {
     height: 42px;
   }
@@ -226,17 +214,40 @@ const say = () => {
   8% {
     top: 38px;
   }
+
   14% {
     top: 8px;
   }
+
   20% {
     top: 42px;
   }
+
   32% {
     top: 2px;
   }
+
   99% {
     top: 30px;
+  }
+}
+
+:deep(.svg-dash) {
+  animation: draw 20s linear forwards;
+}
+
+@keyframes draw {
+  from {
+    stroke-dasharray: 1000;
+    /* 设置初始的虚线样式，使图标不可见 */
+    stroke-dashoffset: 1000;
+    /* 设置初始的虚线偏移量，使图标不可见 */
+  }
+
+  to {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+    /* 设置最终的虚线偏移量，完全描绘出图标 */
   }
 }
 </style>
