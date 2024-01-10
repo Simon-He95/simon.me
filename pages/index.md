@@ -16,8 +16,10 @@ title: Simon He
 <script setup>
   import { $t, lan } from '../lang'
   import { onMounted } from 'vue'
-  // const anime = require('animejs');
   onMounted(() => {
+    const title = document.querySelector('main>div:first-child>h1')
+    title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
+    const s = document.querySelector('.title-split:nth-child(1)')
     anime({
         targets: '.signature',
         translateY: 0,
@@ -46,3 +48,30 @@ title: Simon He
     })
   })
 </script>
+<style >
+  .title-split:nth-child(1) {
+    display:inline-block;
+    animation: title-split 8s 20s ease-in-out infinite;
+    animation-delay: 3s;
+  }
+  @keyframes title-split{
+    0%{
+      transform: translate3d(0,0,0) ;
+    }
+    20%{
+      transform: translate3d(0,0,0) rotateY(720deg);
+      animation-play-state: paused;
+    }
+    50%{
+      transform: translate3d(0,0,0) rotateY(720deg);
+      animation-play-state: paused;
+    }
+    80%{
+      transform: translate3d(0,0,0) rotateY(0deg);
+      animation-play-state: paused;
+    }
+    100%{
+      transform: translate3d(0,0,0) rotateY(0deg);
+    }
+  }
+</style>
