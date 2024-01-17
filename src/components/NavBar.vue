@@ -84,7 +84,7 @@ const say = () => {
             />
           </svg>
         </a>
-        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor">
+        <a href="https://github.com/Simon-He95/sponsor" target="_blank" title="Sponsor" class="lt-md:hidden">
           <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path
               fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
@@ -102,13 +102,55 @@ const say = () => {
             d="M16 28h-3c-3.9 0-7-3.1-7-7v-4h2v4c0 2.8 2.2 5 5 5h3zm12 2h2.2l-4.6-11h-2.2l-4.6 11H21l.8-2h5.3zm-5.3-4l1.8-4.4l1.8 4.4zM28 15h-2v-4c0-2.8-2.2-5-5-5h-4V4h4c3.9 0 7 3.1 7 7zM14 5V3H9V1H7v2H2v2h8.2c-.2.9-.8 2.5-2.2 4c-.6-.7-1.1-1.4-1.4-2H4.3c.4 1 1.1 2.2 2.1 3.3c-.8.7-2 1.3-3.4 1.8l.7 1.9c1.8-.7 3.2-1.5 4.3-2.3c1.1.9 2.5 1.7 4.3 2.3l.7-1.9c-1.4-.5-2.6-1.2-3.5-1.8c1.9-2 2.5-4.1 2.7-5.3z"
           />
         </svg>
-        <svg class="svg-dash" :class="[pending ? 'text-red' : 'xxx']" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" @click="say()">
+        <router-link to="/friends" title="Friends">
+          <svg xmlns="http://www.w3.org/2000/svg" class="svg-dash" width="20" height="20" viewBox="0 0 48 48">
+            <g fill="none">
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20"
+              />
+              <path d="M31 7v17z" clip-rule="evenodd" />
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M31 7v17" />
+              <path d="m16.636 6.636l14.142 14.142z" clip-rule="evenodd" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="m16.636 6.636l14.142 14.142"
+              />
+              <path d="M7 17h17z" clip-rule="evenodd" />
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 17h17" />
+              <path d="M20.364 17.636L6.222 31.778z" clip-rule="evenodd" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M20.364 17.636L6.222 31.778"
+              />
+              <path d="M17 25v17z" clip-rule="evenodd" />
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 25v17" />
+              <path d="m17.636 27.636l14.142 14.142z" clip-rule="evenodd" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="m17.636 27.636l14.142 14.142"
+              />
+              <path d="M24 31h18z" clip-rule="evenodd" />
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M24 31h18" />
+              <path d="M42.364 16.636L28.222 30.778z" clip-rule="evenodd" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M42.364 16.636L28.222 30.778M24 31a7 7 0 1 0 0-14a7 7 0 0 0 0 14"
+              />
+            </g>
+          </svg>
+        </router-link>
+        <!-- <svg
+          class="svg-dash lt-md:hidden" :class="[pending ? 'text-red' : 'xxx']" xmlns="http://www.w3.org/2000/svg"
+          width="18" height="18" viewBox="0 0 24 24" @click="say()"
+        >
           <path
-            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" fill-rule="evenodd"
+            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+            fill-rule="evenodd"
             d="M1.25 12C1.25 6.063 6.063 1.25 12 1.25S22.75 6.063 22.75 12v5.634c0 .913 0 1.526-.151 2.063a3.852 3.852 0 0 1-1.976 2.412c-.495.246-1.086.343-1.941.484l-.121.02l-.022.003c-.304.05-.565.094-.782.116a2.27 2.27 0 0 1-.698-.019a2.271 2.271 0 0 1-1.675-1.486a2.474 2.474 0 0 1-.121-.69c-.013-.225-.013-.5-.013-.823v-4.628c0-.477 0-.873.1-1.212a2.278 2.278 0 0 1 1.64-1.572c.344-.083.737-.05 1.185-.012l.102.008l.12.01c.84.07 1.421.117 1.914.308c.341.132.656.312.939.532V12a9.25 9.25 0 1 0-18.5 0v1.148c.283-.22.598-.4.939-.532c.493-.191 1.073-.239 1.913-.308l.12-.01l.103-.008c.448-.038.84-.07 1.186.012c.79.19 1.406.798 1.638 1.572c.102.338.102.735.101 1.212v4.628c0 .324 0 .598-.013.823a2.48 2.48 0 0 1-.12.69a2.271 2.271 0 0 1-1.676 1.486a2.27 2.27 0 0 1-.698.019a13.83 13.83 0 0 1-.782-.116l-.022-.003a45.79 45.79 0 0 0-.12-.02c-.856-.141-1.447-.238-1.942-.485a3.852 3.852 0 0 1-1.976-2.411c-.13-.462-.148-.98-.15-1.697v-.142l-.001-.225v-.642zm1.5 5.514c0 1.078.007 1.465.095 1.775a2.353 2.353 0 0 0 1.2 1.476c.267.133.615.199 1.639.368c.331.055.547.09.712.107c.162.016.22.009.243.004a.772.772 0 0 0 .562-.513c.012-.034.029-.105.039-.279c.01-.177.01-.409.01-.759v-4.506c0-.634-.008-.784-.037-.881a.78.78 0 0 0-.552-.545c-.078-.019-.203-.018-.815.032c-1.008.083-1.352.12-1.616.222A2.335 2.335 0 0 0 2.837 15.6c-.08.299-.087.677-.087 1.728zM12 5.75a.75.75 0 0 1 .75.75v5a.75.75 0 1 1-1.5 0v-5a.75.75 0 0 1 .75-.75m-3 1.5a.75.75 0 0 1 .75.75v2a.75.75 0 0 1-1.5 0V8A.75.75 0 0 1 9 7.25m6 0a.75.75 0 0 1 .75.75v2a.75.75 0 1 1-1.5 0V8a.75.75 0 0 1 .75-.75m3.154 6.543c-.612-.05-.737-.051-.815-.032a.78.78 0 0 0-.552.545c-.029.097-.037.247-.037.881v4.506c0 .35 0 .582.01.76c.01.173.027.244.04.278a.772.772 0 0 0 .561.513a.863.863 0 0 0 .243-.004c.166-.017.38-.052.713-.107c1.023-.17 1.371-.235 1.638-.367a2.353 2.353 0 0 0 1.2-1.477c.088-.31.095-.697.095-1.775v-.186c0-1.05-.006-1.43-.087-1.728a2.337 2.337 0 0 0-1.393-1.585c-.264-.103-.608-.139-1.616-.222"
             clip-rule="evenodd"
           />
-        </svg>
+        </svg> -->
         <toggle-theme />
       </div>
     </nav>
