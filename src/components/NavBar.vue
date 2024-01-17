@@ -310,7 +310,7 @@ const say = () => {
 }
 
 :deep(.svg-dash) {
-  animation: draw 20s linear forwards;
+  animation: draw 10s linear infinite;
 }
 
 :deep(.svg-dash):active {

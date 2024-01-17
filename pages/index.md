@@ -33,9 +33,7 @@ title: Simon He
         targets: 'main>div:first-child>h1',
         translateY: 0,
         rotateZ: 360,
-        delay: function(el, i) { 
-          return i * 200;
-        },
+        delay: 10000,
     })
      anime({
         targets: '.v-content',
