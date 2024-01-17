@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { isDark } from '~/logics'
 const friends = [
   {
@@ -10,8 +10,14 @@ const friends = [
   },
 ]
 onMounted(() => {
+  const prose = document.querySelector('article > .prose')!
+  prose.classList.add('whole-width')
   const figure = document.querySelectorAll('figure')
   figure?.forEach(f => f.style.setProperty('--border-color', isDark.value ? 'rgb(220 252 231 / 0.1)' : 'rgb(20 184 166 / 0.1)'))
+})
+onBeforeUnmount(() => {
+  const prose = document.querySelector('article > .prose')!
+  prose.classList.remove('whole-width')
 })
 </script>
 
@@ -55,7 +61,7 @@ onMounted(() => {
 </template>
 
 <style>
-article>.prose {
+.whole-width{
   max-width: 100% !important;
 }
 </style>

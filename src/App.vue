@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
   DotImageCanvas,
   DotTextCanvas,
   getDevice,
+  prefetch,
   scrollToTop,
   useRaf,
 } from 'lazy-js-utils'
@@ -26,6 +27,9 @@ useHead({
     { name: 'twitter:card', content: 'summary' },
     { name: 'twitter:creator', content: '@simon_he1995' },
   ],
+})
+onMounted(() => {
+  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
 })
 const text = ref('')
 const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
