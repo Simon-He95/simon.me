@@ -49,7 +49,7 @@ const json: JSON = {
     findMe: [
       '<span i-ri:user-search-fill></span>可以在 <a href="https://github.com/Simon-He95" alt="GitHub" ><span i-carbon:logo-github></span> GitHub</a>, <a href="https://twitter.com/simon_he1995" alt="Twitter" ><span i-carbon:logo-twitter></span> Twitter</a>, <a href="https://www.zhihu.com/people/zka0cr" alt="Zhihu" ><span i-ri:zhihu-fill></span> Zhihu</a>, <a href="https://juejin.cn/user/4319334608151533" alt="掘金" ><svg xmlns="http://www.w3.org/2000/svg" inline-block width="1.2em" height="1.2em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m2 12l10 7.422L22 12"/><path d="m7 9l5 4l5-4m-6-3l1 .8l1-.8l-1-.8z"/></g></svg> 掘金</a> 找到我。',
       `<span i-simple-icons:minutemailer></span> <span>通过邮件联系我</span> <a href="mailto:674949287@qq.com" alt="Mail" > hi@Simon</a>。
-      在 <a href="https://discord.gg/r4hjJ6WT" alt="Discord" ><span i-teenyicons:discord-outline></span> Discord</a>上联系我。`,
+      在 <a href="https://discord.gg/ZnjxzMKWNW" alt="Discord" ><span i-teenyicons:discord-outline></span> Discord</a>上联系我。`,
     ],
   },
 }
