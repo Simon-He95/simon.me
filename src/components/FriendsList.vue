@@ -55,7 +55,7 @@ const friends = [
     name: '_geekris1',
     avatar: 'https://raw.githubusercontent.com/geekris1/geekris1.me/master/public/icon.jpg',
     blog: 'https://www.thez.cc/',
-    description: 'excel at chatting more than coding.',
+    description: 'Excel at chatting more than coding.',
     position: 'Developer',
   },
   {
@@ -106,6 +106,27 @@ const friends = [
     blog: 'https://t.co/MQH8nT5ono',
     description: '做一个自由自在的废物。',
     position: 'Full-Stack development',
+  },
+  {
+    name: 'Richard Zhang',
+    avatar: 'https://avatars.githubusercontent.com/u/76982270?v=4',
+    blog: 'https://richard-docs.netlify.app/',
+    description: 'Don\'t just daydream，to do it',
+    position: 'Front-end developer',
+  },
+  {
+    name: 'Kuizuo',
+    avatar: 'https://kuizuo.cn/img/logo.png',
+    blog: 'https://kuizuo.cn',
+    description: 'The road is long, but keep going you will arrive.',
+    position: 'Typescripter',
+  },
+  {
+    name: 'Licodeao',
+    avatar: 'https://avatars.githubusercontent.com/u/81912331?v=4',
+    blog: 'https://t.co/f0fH6gBQJC',
+    description: 'The water flows incessantly, without vying for precedence.',
+    position: 'Full-stack developer & Rustacean',
   },
 ]
 onMounted(() => {
