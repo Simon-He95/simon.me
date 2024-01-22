@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import {
   DotImageCanvas,
   DotTextCanvas,
@@ -36,8 +36,9 @@ const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
 
 const imageShow = computed(() => {
   const { os } = getDevice()
-  return os === 'mac' || os === 'windows'
+  return os === 'mac' || os === 'windows' || os === 'macOS'
 })
+
 if (imageShow.value)
   dotImage.append('.dotImage')
 
@@ -65,16 +66,18 @@ watch(
     immediate: true,
   },
 )
+const fontSize = 18
+const fontWeight = 7
 const dotText = new DotTextCanvas(
   text.value,
-  14,
+  fontSize,
   isDark.value ? 'white' : 'black',
-  5,
+  fontWeight,
 )
-dotText.append('.dotText')
+// dotText.append('.dotText')
 function update() {
   try {
-    dotText.repaint(text.value, 14, isDark.value ? 'white' : 'black', 6)
+    // dotText.repaint(text.value, fontSize, isDark.value ? 'white' : 'black', fontWeight)
   }
   catch (error) {
   }
@@ -178,30 +181,25 @@ document.addEventListener('mousemove', (e) => {
     <!-- <Levitation /> -->
   </main>
   <a
-    v-if="isShow"
-    i-icon-park-outline:rocket-one
-    animate-bounce
-    hover="animate-none bg-red-400 "
-    fixed
-    bottom-40
-    right-5
-    text-3xl
-    title="Top"
-    @click="scrollToTop()"
+    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none bg-red-400 " fixed bottom-40 right-5
+    text-3xl title="Top" @click="scrollToTop()"
   />
-
   <div
-    fixed
-    w-100
-    z--5
-    left-1
-    top-80
-    :style="{
+    fixed w-100 z--5 left-1 top-80 :style="{
       transform: `translate(${left}px, ${top}px)`,
     }"
   >
     <div className="planet">
-      <svg class="ball" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><g fill="none" stroke="#cccccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7c.08.703 1.725 1.722 3.656 1c1.261-.472 1.96-1.45 2.344-2.5m5.767-3.328c0-1.39 1.577-2.493 3.5-2.172c2.823.47 4.113 6.006 4 7c-.08.703-1.725 1.722-3.656 1c-1.261-.472-1.855-1.45-2.239-2.5M8 14v.5m8-.5v.5m-4.75 1.75h1.5L12 17z" /><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306" /></g></svg>
+      <svg class="ball" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+        <g fill="none" stroke="#cccccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path
+            d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7c.08.703 1.725 1.722 3.656 1c1.261-.472 1.96-1.45 2.344-2.5m5.767-3.328c0-1.39 1.577-2.493 3.5-2.172c2.823.47 4.113 6.006 4 7c-.08.703-1.725 1.722-3.656 1c-1.261-.472-1.855-1.45-2.239-2.5M8 14v.5m8-.5v.5m-4.75 1.75h1.5L12 17z"
+          />
+          <path
+            d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"
+          />
+        </g>
+      </svg>
       <!-- <svg width="100" height="100" class="ball" viewBox="0 0 24 24">
         <g fill="none" stroke-width="1.5">
           <g
@@ -234,7 +232,9 @@ body {
   cursor: url(https://cdn.custom-cursor.com/db/8130/32/manga-himouto-umaru-chan-umaru-and-cola-cursor.png),
     default !important;
 }
-a,.link {
+
+a,
+.link {
   cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png),
     pointer !important;
 }
@@ -243,6 +243,7 @@ a,.link {
   0% {
     transform: rotate(45deg) rotate(0);
   }
+
   100% {
     transform: rotate(45deg) rotate(360deg);
   }
@@ -252,6 +253,7 @@ a,.link {
   0% {
     transform: rotate(0) rotate(-45deg);
   }
+
   100% {
     transform: rotate(-360deg) rotate(-45deg);
   }
@@ -260,9 +262,11 @@ a,.link {
 .planet {
   animation: planet-rotate 20s linear infinite;
 }
+
 .ball {
   animation: self-rotate 20s linear infinite;
 }
+
 .planet svg {
   filter: drop-shadow(2px 4px 6px black);
   color: rgb(229, 232, 235);

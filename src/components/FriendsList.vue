@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useResizeObserver } from 'lazy-js-utils'
+import Avatars from './avatar'
 import { isDark } from '~/logics'
 const friends = [
   {
     name: 'Simon He',
-    avatar: 'https://avatars.githubusercontent.com/u/57086651?v=4',
+    avatar: Avatars.simon,
     blog: 'https://simonme.netlify.app/',
     description: 'core member of unocss and vue vine, webview-use author',
     position: 'Front-end development, Open source',
   },
   {
     name: 'Innei',
-    avatar: 'https://innei.ren/api/v2/objects/avatar/d5obusvl8ihmamw5qu.png',
+    avatar: 'https://github.com/innei.png',
     blog: 'https://innei.in/friends',
     description: 'Future core members of Next',
     position: 'Zolplay, Next master',
@@ -128,13 +130,51 @@ const friends = [
     description: 'The water flows incessantly, without vying for precedence.',
     position: 'Full-stack developer & Rustacean',
   },
+  {
+    name: 'Doiiars',
+    avatar: 'https://pbs.twimg.com/profile_images/1715358170082926592/g8UJWqK6_400x400.jpg',
+    blog: 'https://notion.doiiars.com/',
+    description: '阅读、编程、生活',
+    position: '寻求自我实现的人',
+  },
 ]
+
+const friends1 = ref<any>([])
+const friends2 = ref<any>([])
+const friends3 = ref<any>([])
+
 onMounted(() => {
   const prose = document.querySelector('article > .prose')!
+  useResizeObserver((width) => {
+    updateFriends(width)
+  })
+  const w = window.innerWidth
+  updateFriends(w)
   prose.classList.add('whole-width')
   const figure = document.querySelectorAll('figure')
   figure?.forEach(f => f.style.setProperty('--border-color', isDark.value ? 'rgb(220 252 231 / 0.1)' : 'rgb(20 184 166 / 0.1)'))
 })
+
+function updateFriends(width) {
+  if (width >= 1024) {
+    // 变成 3 列
+    const i = Math.ceil(friends.length / 3)
+    friends1.value = friends.slice(0, i)
+    const ii = Math.ceil((friends.length - i) / 2)
+    friends2.value = friends.slice(i, i + ii)
+    friends3.value = friends.slice(i + ii)
+  }
+  else if (width >= 640) {
+    // 变成 2 列
+    const i = Math.ceil(friends.length / 2)
+    friends1.value = friends.slice(0, i)
+    friends2.value = friends.slice(i)
+  }
+  else {
+    // 变成 1 列
+    friends1.value = friends
+  }
+}
 onBeforeUnmount(() => {
   const prose = document.querySelector('article > .prose')!
   prose.classList.remove('whole-width')
@@ -143,34 +183,92 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    <ul class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      <li v-for="friend in friends" :key="friend.name" class="text-sm leading-6">
-        <figure
-          :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
-          class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
-        >
-          <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
-            <p xt-marked="ok">
-              {{ friend.description }}
-            </p>
-          </blockquote>
-          <figcaption class="flex items-center space-x-4">
-            <img
-              :src="friend.avatar" alt="" class="flex-none w-14 h-14 rounded-full object-cover" loading="lazy"
-              decoding="async"
-            >
-            <div class="flex-auto">
-              <div class="text-base text-slate-900 font-semibold dark:text-slate-300">
-                <a :href="friend.blog" tabindex="0"><span class="absolute inset-0" />{{ friend.name }}</a>
+    <div class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="space-y-8">
+        <li v-for="friend in friends1" :key="friend.name" class="text-sm leading-6">
+          <figure
+            :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
+            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+          >
+            <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
+              <p xt-marked="ok">
+                {{ friend.description }}
+              </p>
+            </blockquote>
+            <figcaption class="flex items-center space-x-4">
+              <img
+                :src="friend.avatar" alt="" class="flex-none w-14 h-14 rounded-full object-cover" loading="lazy"
+                decoding="async"
+              >
+              <div class="flex-auto">
+                <div class="text-base text-slate-900 font-semibold dark:text-slate-300">
+                  <a :href="friend.blog" tabindex="0"><span class="absolute inset-0" />{{ friend.name }}</a>
+                </div>
+                <div class="mt-0.5">
+                  {{ friend.position }}
+                </div>
               </div>
-              <div class="mt-0.5">
-                {{ friend.position }}
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+      <ul class="space-y-8 hidden sm:block">
+        <li v-for="friend in friends2" :key="friend.name" class="text-sm leading-6">
+          <figure
+            :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
+            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+          >
+            <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
+              <p xt-marked="ok">
+                {{ friend.description }}
+              </p>
+            </blockquote>
+            <figcaption class="flex items-center space-x-4">
+              <img
+                :src="friend.avatar" alt="" class="flex-none w-14 h-14 rounded-full object-cover" loading="lazy"
+                decoding="async"
+              >
+              <div class="flex-auto">
+                <div class="text-base text-slate-900 font-semibold dark:text-slate-300">
+                  <a :href="friend.blog" tabindex="0"><span class="absolute inset-0" />{{ friend.name }}</a>
+                </div>
+                <div class="mt-0.5">
+                  {{ friend.position }}
+                </div>
               </div>
-            </div>
-          </figcaption>
-        </figure>
-      </li>
-    </ul>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+      <ul class="space-y-8 hidden lg:block">
+        <li v-for="friend in friends3" :key="friend.name" class="text-sm leading-6">
+          <figure
+            :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
+            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+          >
+            <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
+              <p xt-marked="ok">
+                {{ friend.description }}
+              </p>
+            </blockquote>
+            <figcaption class="flex items-center space-x-4">
+              <img
+                :src="friend.avatar" alt="" class="flex-none w-14 h-14 rounded-full object-cover" loading="lazy"
+                decoding="async"
+              >
+              <div class="flex-auto">
+                <div class="text-base text-slate-900 font-semibold dark:text-slate-300">
+                  <a :href="friend.blog" tabindex="0"><span class="absolute inset-0" />{{ friend.name }}</a>
+                </div>
+                <div class="mt-0.5">
+                  {{ friend.position }}
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
     <div class="prose m-auto mt-8">
       <h1>Sponsors</h1>
     </div>
@@ -181,8 +279,14 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-.whole-width{
-  max-width: 100% !important;
+.whole-width {
+  max-width: 85% !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .whole-width {
+    max-width: 100% !important;
+  }
 }
 </style>
 

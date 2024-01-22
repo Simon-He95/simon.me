@@ -10,6 +10,7 @@ const route = useRoute()
 <template>
   <div class="prose m-auto mb-8 select-none">
     <button
+      v-if="route.path === '/posts'"
       flex="~ gap1"
       items-center
       mb2
@@ -29,7 +30,7 @@ const route = useRoute()
       >
         Blog
       </router-link>
-      <!-- <router-link
+      <router-link
         to="/talks"
         class="!border-none !font-400"
         :class="route.path === '/talks' ? '' : inactiveStyle"
@@ -37,19 +38,19 @@ const route = useRoute()
         Talks
       </router-link>
       <router-link
-        to="/podcasts"
+        to="/projects"
         class="!border-none !font-400"
-        :class="route.path === '/podcasts' ? '' : inactiveStyle"
+        :class="route.path === '/projects' ? '' : inactiveStyle"
       >
-        Podcasts
+        Projects
       </router-link>
       <router-link
-        to="/streams"
+        to="/friends"
         class="!border-none !font-400"
-        :class="route.path === '/streams' ? '' : inactiveStyle"
+        :class="route.path === '/friends' ? '' : inactiveStyle"
       >
-        Streams
-      </router-link> -->
+        Friends
+      </router-link>
     </div>
   </div>
 </template>
