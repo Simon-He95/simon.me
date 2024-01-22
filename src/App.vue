@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import {
   DotImageCanvas,
   DotTextCanvas,
@@ -17,6 +17,7 @@ import { useRouter } from 'vue-router'
 import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
+import antfu from '/images/af.png'
 // import flag from '/images/flag.jpg'
 
 useHead({
@@ -28,19 +29,19 @@ useHead({
     { name: 'twitter:creator', content: '@simon_he1995' },
   ],
 })
-onMounted(() => {
-  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
-})
-const text = ref('')
-const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
-
 const imageShow = computed(() => {
   const { os } = getDevice()
   return os === 'mac' || os === 'windows' || os === 'macOS'
 })
 
-if (imageShow.value)
-  dotImage.append('.dotImage')
+const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
+const text = ref('')
+
+onMounted(() => {
+  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
+  if (imageShow.value)
+    dotImage.append('.dotImage')
+})
 
 watch(isDark, update)
 const router = useRouter()
@@ -61,6 +62,10 @@ watch(
   (val) => {
     text.value = routerMap[isZh.value ? 'zh' : 'en'][val.path] || 'Docs'
     useRaf(update, 200, true)
+    if (val.path === '/friends') {
+      dotImage.clearCanvas()
+      dotImage.repaint(antfu, '', 3, 'transparent')
+    }
   },
   {
     immediate: true,
@@ -68,12 +73,12 @@ watch(
 )
 const fontSize = 18
 const fontWeight = 7
-const dotText = new DotTextCanvas(
-  text.value,
-  fontSize,
-  isDark.value ? 'white' : 'black',
-  fontWeight,
-)
+// const dotText = new DotTextCanvas(
+//   text.value,
+//   fontSize,
+//   isDark.value ? 'white' : 'black',
+//   fontWeight,
+// )
 // dotText.append('.dotText')
 function update() {
   try {
