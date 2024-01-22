@@ -12,6 +12,13 @@ const friends = [
     position: 'Front-end development, Open source',
   },
   {
+    name: 'Anthony Fu',
+    avatar: 'https://github.com/antfu.png',
+    blog: 'https://antfu.me/',
+    description: 'A ship in harbor is safe, but that is not what ships are built for.',
+    position: 'Front-end development, nuxt, unocss, vueuse, slidev, vitest, shikiji',
+  },
+  {
     name: 'Innei',
     avatar: 'https://github.com/innei.png',
     blog: 'https://innei.in/friends',
@@ -113,7 +120,7 @@ const friends = [
     name: 'Richard Zhang',
     avatar: 'https://avatars.githubusercontent.com/u/76982270?v=4',
     blog: 'https://richard-docs.netlify.app/',
-    description: 'Don\'t just daydream，to do it',
+    description: 'Don\'t just daydream, to do it',
     position: 'Front-end developer',
   },
   {
@@ -136,6 +143,13 @@ const friends = [
     blog: 'https://notion.doiiars.com/',
     description: '阅读、编程、生活',
     position: '寻求自我实现的人',
+  },
+  {
+    name: 'Wei Jun',
+    avatar: 'https://pbs.twimg.com/profile_images/1715358170082926592/g8UJWqK6_400x400.jpg',
+    blog: 'https://notion.doiiars.com/',
+    description: '前端工程师，全栈实践者，AI降临派',
+    position: 'Developer',
   },
 ]
 
