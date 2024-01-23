@@ -151,6 +151,13 @@ const friends = [
     description: '前端工程师，全栈实践者，AI降临派',
     position: 'Developer',
   },
+  {
+    name: 'Sankyu',
+    avatar: 'https://github.com/sankyutang.png',
+    blog: 'https://sankyu.me/',
+    description: '网名三桥，80后程序员，互联网第一批原住民，亲身经历过互联网任何一个阶段。从2000年开始接触编程，做过网络工程师，做过Java工程师，目前专注于前端技术领域的发展',
+    position: '一名很复杂的全栈前端技术资深玩家',
+  },
 ]
 
 const friends1 = ref<any>([])

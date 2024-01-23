@@ -18,6 +18,7 @@ import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
 import antfu from '/images/af.png'
+import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
 
 useHead({
@@ -61,11 +62,17 @@ watch(
   router.currentRoute,
   (val) => {
     text.value = routerMap[isZh.value ? 'zh' : 'en'][val.path] || 'Docs'
-    useRaf(update, 200, true)
-    if (val.path === '/friends') {
-      dotImage.clearCanvas()
-      dotImage.repaint(antfu, '', 3, 'transparent')
-    }
+    // useRaf(update, 200, true)
+    // if (val.path === '/friends') {
+    //   setTimeout(() => {
+    //     dotImage.repaint(antfu, '', 3, 'transparent')
+    //   })
+    // } else if (val.path === '/') {
+    //   setTimeout(() => {
+    //     dotImage.clearCanvas()
+    //     dotImage.repaint(kb, '', 3, 'transparent')
+    //   })
+    // }
   },
   {
     immediate: true,
