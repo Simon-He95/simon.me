@@ -158,6 +158,13 @@ const friends = [
     description: '网名三桥，80后程序员，互联网第一批原住民，亲身经历过互联网任何一个阶段。从2000年开始接触编程，做过网络工程师，做过Java工程师，目前专注于前端技术领域的发展',
     position: '正在实践线上课程和独立产品的全栈开发者',
   },
+  {
+    name: 'XiuerOld',
+    avatar: 'https://hundren.github.io/head.png',
+    blog: 'https://hundren.github.io/',
+    description: 'Front-end Developer',
+    position: 'Just do IT!',
+  },
 ]
 
 const friends1 = ref<any>([])
