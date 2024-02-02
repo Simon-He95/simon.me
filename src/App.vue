@@ -283,4 +283,16 @@ a,
   filter: drop-shadow(2px 4px 6px black);
   color: rgb(229, 232, 235);
 }
+.rotated-hand{
+  animation: rotate 1s 0.5s infinite linear alternate-reverse;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(30deg);
+  }
+
+}
 </style>

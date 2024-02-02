@@ -11,7 +11,7 @@ interface JSON {
 }
 const json: JSON = {
   en: {
-    title: 'Hey👋, I am Simon He, currently a front-end programmer. My hobbies include watching cartoon, playing basketball, watching some mystery dramas, and werewolf, lived in <%><span class="i-mi:location"></span></%>Shanghai <%><span class="i-openmoji:flag-china"></span></%>',
+    title: 'Hey <%><span class="rotated-hand" i-noto:waving-hand></span></%>, I am Simon He, currently a front-end programmer. My hobbies include watching cartoon, playing basketball, watching some mystery dramas, and werewolf, lived in <%><span class="i-mi:location"></span></%>Shanghai <%><span class="i-openmoji:flag-china"></span></%>',
     contents: [
       'After graduating from college in 2018, I accept my parents\' arrangement and entered an ordinary Japanese company. At that time, my daily work was mainly to communicate with customers and complete various tasks according to the requirements of the leaders. Including writing Word documents, studying Excel macros, doing PPT, etc. In such a boring working environment, I stay for two years. Until the help of a colleague, I saw the turnaround of my career. At that time, work was relatively leisure. He suggested that I could use this time to learn a technology, so he gave me a tutorial video of Vue.js.',
       'This is the first time I have come into contact with Vue.js. I was surprised to find that using vue.js can be so simple and convenient to develop amazing web applications. This makes me full of endless imagination and yearning for the front-end development industry. That year, when I was 24 years old, with expectations for the future, I resolutely quit the stable but uncertain job and began a three-month closed study.',
@@ -32,7 +32,7 @@ const json: JSON = {
     ],
   },
   zh: {
-    title: 'Hi，你好👋，我是Simon He，目前是一位前端程序员，兴趣爱好有追动漫、打篮球、看一些推理剧、狼人杀，居住在 <%><span class="i-mi:location"></span></%>上海 <%><span class="i-openmoji:flag-china"></span></%>',
+    title: 'Hi，你好 <%><span class="rotated-hand" i-noto:waving-hand></span></%>，我是Simon He，目前是一位前端程序员，兴趣爱好有追动漫、打篮球、看一些推理剧、狼人杀，居住在 <%><span class="i-mi:location"></span></%>上海 <%><span class="i-openmoji:flag-china"></span></%>',
     contents: [
       '2018 年大学毕业后，我听从父母的安排，进入了一家普通的日企工作。那时候，我的日常工作主要就是和客户沟通，按照领导的要求完成各种任务。包括写 Word 文档，研究 Excel 宏，做 PPT 等等。在这样枯燥乏味的工作环境下，我一待就是两年。直到一位同事的帮助，让我看到了事业的转机。那时候工作相对闲暇，他建议我可以利用这段时间去学习一门技术，于是便给了我一份 Vue.js 的教程视频。',
       '这是我第一次接触到 Vue.js。我惊讶的发现，使用 vue.js 竟可以如此简单便捷的开发出令人惊艳的 Web 应用。这让我对前端开发行业充满了无尽的想象和向往。那年我 24 岁，怀揣着对未来的期待，我毅然决然地辞掉了那份稳定但看不到前途的工作，开始了长达三个月的封闭式学习。',
