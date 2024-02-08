@@ -7,7 +7,7 @@ const friends = [
   {
     name: 'Simon He',
     avatar: Avatars.simon,
-    blog: 'https://simonme.netlify.app/',
+    blog: 'https://simonhe.me/',
     description: 'core member of unocss and vue vine, webview-use author',
     position: 'Front-end development, Open source',
   },
@@ -135,7 +135,7 @@ const friends = [
     avatar: 'https://avatars.githubusercontent.com/u/81912331?v=4',
     blog: 'https://t.co/f0fH6gBQJC',
     description: 'The water flows incessantly, without vying for precedence.',
-    position: 'Full-stack developer & Rustacean',
+    position: 'Full-stack Developer & Rustacean',
   },
   {
     name: 'Doiiars',
@@ -164,6 +164,27 @@ const friends = [
     blog: 'https://hundren.github.io/',
     description: 'Front-end Developer',
     position: 'Just do IT!',
+  },
+  {
+    name: 'Daydreamer-riri',
+    avatar: 'https://github.com/Daydreamer-riri.png',
+    blog: 'https://daydreamer-riri.me/',
+    description: 'Stay gold, pony boy',
+    position: 'Front-end Developer',
+  },
+  {
+    name: 'Berlin',
+    avatar: 'https://github.com/childrentime.png',
+    blog: 'https://lianwenwu.me/',
+    description: 'Positive man🤪',
+    position: 'Full-stack Developer',
+  },
+  {
+    name: 'JounQin',
+    avatar: 'https://github.com/JounQin.png',
+    blog: 'https://www.1stg.me/',
+    description: 'Write Less, Think More.',
+    position: 'Full-stack Developer',
   },
 ]
 
