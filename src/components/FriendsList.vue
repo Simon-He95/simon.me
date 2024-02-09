@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useResizeObserver } from 'lazy-js-utils'
 import Avatars from './avatar'
 import { isDark } from '~/logics'
@@ -146,8 +146,8 @@ const friends = [
   },
   {
     name: 'Wei Jun',
-    avatar: 'https://pbs.twimg.com/profile_images/1715358170082926592/g8UJWqK6_400x400.jpg',
-    blog: 'https://notion.doiiars.com/',
+    avatar: 'https://github.com/weijunext.png',
+    blog: 'https://weijunext.com/',
     description: '前端工程师，全栈实践者，AI降临派',
     position: 'Developer',
   },
@@ -196,12 +196,18 @@ onMounted(() => {
   const prose = document.querySelector('article > .prose')!
   useResizeObserver((width) => {
     updateFriends(width)
+    nextTick(() => {
+      const figure = document.querySelectorAll('figure')
+      figure?.forEach(f => f.style.setProperty('--border-color', isDark.value ? 'rgb(220 252 231 / 0.5)' : 'rgb(20 184 166 / 0.5)'))
+    })
   })
   const w = window.innerWidth
   updateFriends(w)
   prose.classList.add('whole-width')
-  const figure = document.querySelectorAll('figure')
-  figure?.forEach(f => f.style.setProperty('--border-color', isDark.value ? 'rgb(220 252 231 / 0.1)' : 'rgb(20 184 166 / 0.1)'))
+  nextTick(() => {
+    const figure = document.querySelectorAll('figure')
+    figure?.forEach(f => f.style.setProperty('--border-color', isDark.value ? 'rgb(220 252 231 / 0.5)' : 'rgb(20 184 166 / 0.5)'))
+  })
 })
 
 function updateFriends(width) {
