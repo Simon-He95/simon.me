@@ -9,7 +9,7 @@ import {
   useRaf,
 } from 'lazy-js-utils'
 
-// import gitFork from '@simon_he/git-fork-vue'
+import gitFork from '@simon_he/git-fork-vue'
 import { createMouseAnimation } from 'mouse-element'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
@@ -17,8 +17,8 @@ import { useRouter } from 'vue-router'
 import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
-import antfu from '/images/af.png'
-import fs from '/images/fs.jpeg'
+// import antfu from '/images/af.png'
+// import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
 
 useHead({
@@ -183,6 +183,7 @@ document.addEventListener('mousemove', (e) => {
 </script>
 
 <template>
+  <gitFork lt-md:hidden position="left" link="https://github.com/Simon-He95" />
   <div id="snow" fixed w-full h-full z--1 />
   <span v-if="imageShow" class="dotImage" fixed top-20 right-0 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
@@ -193,7 +194,7 @@ document.addEventListener('mousemove', (e) => {
     <!-- <Levitation /> -->
   </main>
   <a
-    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none bg-red-400 " fixed bottom-40 right-5
+    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none dark:bg-light-300 bg-pink-300 " fixed bottom-40 right-5
     text-3xl title="Top" @click="scrollToTop()"
   />
   <div

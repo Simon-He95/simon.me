@@ -38,7 +38,7 @@ const say = () => {
 
 <template>
   <header class="header z-40">
-    <router-link w-30 absolute lg:fixed m-6 select-none outline-none to="/" focusable="false" class="signature">
+    <router-link w-30 absolute lg:fixed my6 mx15 lt-md:mx4 select-none outline-none to="/" focusable="false" class="signature">
       <img border-rd-full src="/signature.png" :class="isDark ? 'brightness' : ''" title="Home" alt="logo">
     </router-link>
     <nav class="nav">
