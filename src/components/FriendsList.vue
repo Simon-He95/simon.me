@@ -186,6 +186,13 @@ const friends = [
     description: 'Write Less, Think More.',
     position: 'Full-stack Developer',
   },
+  {
+    name: 'auula',
+    avatar: 'https://github.com/auula.png',
+    blog: 'https://t.co/3fyqesKYVd',
+    description: 'The best way to predict the future is to invent it！',
+    position: 'Full-stack Developer',
+  },
 ]
 
 const friends1 = ref<any>([])
