@@ -44,7 +44,7 @@ const json: JSON = {
       '这一切让我坚信，当初放弃稳定的工作，勇敢地迈出舒适区是我做出的最正确的决定。',
       '<span font-mono>......</span>',
       '我的经历就先写到这里，但故事仍在继续。在未来，我希望能用自己的技术帮助到更多的开发者，就像当年我第一次看到 Anthony Fu 被引领一样。',
-      '如果你好奇我正在做的事，或者想关注我未来的发展，可以来找我～如果你遇到困难需要咨询，或者效率不高，遇到困惑，可以来找我～欢迎来和我做朋友，我是 Simon He，一个热爱编码的前端程序员～',
+      '如果你好奇我正在做的事，或者想关注我未来的发展，可以来找我～如果你遇到困难需要<a href="/ama">AMA 咨询</a>，或者效率不高，遇到困惑，可以来找我～欢迎来和我做朋友，我是 Simon He，一个热爱编码的前端程序员～',
     ],
     findMe: [
       '<span i-ri:user-search-fill></span>可以在 <a href="https://github.com/Simon-He95" alt="GitHub" ><span i-carbon:logo-github></span> GitHub</a>, <a href="https://twitter.com/simon_he1995" alt="Twitter" ><span i-carbon:logo-twitter></span> Twitter</a>, <a href="https://www.zhihu.com/people/zka0cr" alt="Zhihu" ><span i-ri:zhihu-fill></span> Zhihu</a>, <a href="https://juejin.cn/user/4319334608151533" alt="掘金" ><svg xmlns="http://www.w3.org/2000/svg" inline-block width="1.2em" height="1.2em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m2 12l10 7.422L22 12"/><path d="m7 9l5 4l5-4m-6-3l1 .8l1-.8l-1-.8z"/></g></svg> 掘金</a> 找到我。',

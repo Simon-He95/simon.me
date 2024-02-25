@@ -63,6 +63,12 @@ const say = () => {
           >s</span></span>
           <div i-iwwa:power class="md:hidden iconMove" />
         </router-link>
+        <router-link to="/ama" title="AMA">
+          <span class="lt-md:hidden" :style="`--blog:'${Blog}'`"> AMA 咨询
+            <div class="white" />
+          </span>
+          <div i-clarity:book-solid md:hidden />
+        </router-link>
         <a href="https://twitter.com/simon_he1995" target="_blank" title="Twitter" class="lt-md:hidden">
           <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path

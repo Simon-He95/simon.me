@@ -17,6 +17,7 @@ import { useRouter } from 'vue-router'
 import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
+import cloth from '/images/24.png'
 // import antfu from '/images/af.png'
 // import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
@@ -35,13 +36,17 @@ const imageShow = computed(() => {
   return os === 'mac' || os === 'windows' || os === 'macOS'
 })
 
-const dotImage = new DotImageCanvas(kb, '', 3, 'transparent')
+const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent')
+console.log(cloth)
+const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent')
 const text = ref('')
 
 onMounted(() => {
   prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
-  if (imageShow.value)
-    dotImage.append('.dotImage')
+  if (imageShow.value){
+    dotImage1.append('.dotImage')
+    dotImage2.append('.cloth')
+  }
 })
 
 watch(isDark, update)
@@ -183,9 +188,10 @@ document.addEventListener('mousemove', (e) => {
 </script>
 
 <template>
-  <gitFork lt-md:hidden position="left" link="https://github.com/Simon-He95" />
+  <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" />
   <div id="snow" fixed w-full h-full z--1 />
-  <span v-if="imageShow" class="dotImage" fixed top-20 right-0 z--1 />
+  <span v-if="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
+  <span v-if="imageShow" class="cloth" fixed top-20 right--120 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>

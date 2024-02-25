@@ -193,6 +193,20 @@ const friends = [
     description: 'The best way to predict the future is to invent it！',
     position: 'Full-stack Developer',
   },
+  {
+    name: 'ikkkp',
+    avatar: 'https://github.com/ikkkp.png',
+    blog: 'http://hzlssb.com/',
+    description: 'Life is nothing but love and freedom.',
+    position: 'Front-end Developer',
+  },
+  {
+    name: 'CaptainOfPhB',
+    avatar: 'https://captainofphb.me/_astro/me.EUJ-2GLN_Z18kCYf.webp',
+    blog: 'https://captainofphb.me/',
+    description: 'Enjoy self-driving travel with friends.',
+    position: 'Front-end Developer',
+  },
 ]
 
 const friends1 = ref<any>([])
