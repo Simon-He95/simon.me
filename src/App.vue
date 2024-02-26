@@ -188,7 +188,7 @@ document.addEventListener('mousemove', (e) => {
 </script>
 
 <template>
-  <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" />
+  <!-- <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" /> -->
   <div id="snow" fixed w-full h-full z--1 />
   <span v-if="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
   <span v-if="imageShow" class="cloth" fixed top-20 right--120 z--1 />
