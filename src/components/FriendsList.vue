@@ -207,6 +207,13 @@ const friends = [
     description: 'Enjoy self-driving travel with friends.',
     position: 'Front-end Developer',
   },
+  {
+    name: 'Tabing Wang',
+    avatar: 'https://2.gravatar.com/avatar/e11ccb84abd9dd99a4f870836da25e193ce79e01edbf94bcc4bf2d4500439082?size=512',
+    blog: 'https://abinea.top/',
+    description: 'INTP，保持好奇心，持续前进。',
+    position: 'Front-end Developer',
+  },
 ]
 
 const friends1 = ref<any>([])
