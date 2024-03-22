@@ -63,7 +63,7 @@
     "feed": "^4.2.2",
     "fs-extra": "^10.0.1",
     "gray-matter": "^4.0.3",
-    "lazy-js-utils": "^0.0.83",
+    "lazy-js-utils": "^0.0.89",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.6.2",
     "markdown-it-link-attributes": "^4.0.0",

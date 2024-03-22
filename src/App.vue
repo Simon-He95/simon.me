@@ -36,9 +36,9 @@ const imageShow = computed(() => {
   return os === 'mac' || os === 'windows' || os === 'macOS'
 })
 
-const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent')
+const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent','vertical-reverse')
 console.log(cloth)
-const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent')
+const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent',)
 const text = ref('')
 
 onMounted(() => {
