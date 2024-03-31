@@ -202,9 +202,9 @@ const friends = [
   },
   {
     name: 'CaptainOfPhB',
-    avatar: 'https://captainofphb.me/_astro/me.EUJ-2GLN_Z18kCYf.webp',
+    avatar: 'https://captainofphb.me/_astro/avatar.ke_icKou_Z23JjR9.webp',
     blog: 'https://captainofphb.me/',
-    description: 'Enjoy self-driving travel with friends.',
+    description: '船长の部落格，记录有趣的事，分享技术经验',
     position: 'Front-end Developer',
   },
   {
