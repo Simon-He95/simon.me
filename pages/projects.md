@@ -123,7 +123,7 @@ projects:
     - name: 'pi'
       link: 'https://github.com/Simon-He95/pi'
       desc: 'A smart terminal tool'
-      descZh: '一个只能的终端工具'
+      descZh: '一个智能的终端工具'
       icon: 'i-ph:terminal-window-thin'
     - name: 'ccommand'
       link: 'https://github.com/Simon-He95/pi'
