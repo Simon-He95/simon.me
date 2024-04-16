@@ -36,14 +36,13 @@ const imageShow = computed(() => {
   return os === 'mac' || os === 'windows' || os === 'macOS'
 })
 
-const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent','vertical-reverse')
-console.log(cloth)
-const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent',)
+const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent', 'vertical-reverse')
+const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent')
 const text = ref('')
 
 onMounted(() => {
   prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
-  if (imageShow.value){
+  if (imageShow.value) {
     dotImage1.append('.dotImage')
     dotImage2.append('.cloth')
   }

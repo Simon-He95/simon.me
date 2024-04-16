@@ -268,10 +268,10 @@ onBeforeUnmount(() => {
   <div>
     <div class="grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
       <ul class="space-y-8">
-        <li v-for="friend in friends1" :key="friend.name" class="text-sm leading-6">
+        <li v-for="friend in friends1" :key="friend.name" class="text-sm leading-6 hover:scale-[103%]">
           <figure
             :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
-            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+            class="relative flex flex-col-reverse bg-slate-50 hover:rounded-2xl p-6  dark:highlight-white/5"
           >
             <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
               <p xt-marked="ok">
@@ -296,10 +296,10 @@ onBeforeUnmount(() => {
         </li>
       </ul>
       <ul class="space-y-8 hidden sm:block">
-        <li v-for="friend in friends2" :key="friend.name" class="text-sm leading-6">
+        <li v-for="friend in friends2" :key="friend.name" class="text-sm leading-6 hover:scale-[103%]">
           <figure
             :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
-            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+            class="relative flex flex-col-reverse bg-slate-50 hover:rounded-2xl p-6 duration-10 dark:highlight-white/5"
           >
             <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
               <p xt-marked="ok">
@@ -324,10 +324,10 @@ onBeforeUnmount(() => {
         </li>
       </ul>
       <ul class="space-y-8 hidden lg:block">
-        <li v-for="friend in friends3" :key="friend.name" class="text-sm leading-6">
+        <li v-for="friend in friends3" :key="friend.name" class="text-sm leading-6 hover:scale-[103%]">
           <figure
             :class="[isDark ? 'dark:bg-dark-800' : 'dark:bg-slate-800']"
-            class="relative flex flex-col-reverse bg-slate-50 rounded-lg p-6  dark:highlight-white/5"
+            class="relative flex flex-col-reverse bg-slate-50 hover:rounded-2xl p-6  dark:highlight-white/5"
           >
             <blockquote class="mt-6 text-slate-700 dark:text-slate-300">
               <p xt-marked="ok">
@@ -409,6 +409,7 @@ figure {
 
 figure:hover::before {
   animation: clippath 3s infinite linear;
+  border-radius: 1.1rem;
   border: 2px solid var(--border-color);
 }
 
@@ -419,7 +420,6 @@ figure::before {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 0.5rem;
   border: 2px solid transparent;
 }
 
