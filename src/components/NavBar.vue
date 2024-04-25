@@ -2,6 +2,8 @@
 import { type SpeechOptions, speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 import { isDark } from '~/logics'
+// import { TextExpansionAnimation } from 'text-expansion-animation'
+// import 'text-expansion-animation/style.css'
 const isZh = computed(() => lan.value === 'zh')
 const color = ref('black')
 function preload() {
@@ -15,7 +17,7 @@ const { speak, isSpeaking } = speech()
 const getSpeechOptions = computed(() =>
   isZh.value
     ? {
-        text: '大家好，我是Simon，一个狂热的程序员，兴趣爱好有追动漫、打篮球、看一些推理剧、狼人杀，居住在上海,中国',
+        text: '大家好,我是Simon,一个狂热的程序员,兴趣爱好有追动漫、打篮球、看一些推理剧、狼人杀,居住在上海,中国',
         lang: 'zh-CN',
       }
     : {
@@ -38,7 +40,10 @@ const say = () => {
 
 <template>
   <header class="header z-40">
-    <router-link w-30 absolute lg:fixed my6 mx15 lt-md:mx4 select-none outline-none to="/" focusable="false" class="signature">
+    <router-link
+      w-30 absolute lg:fixed my6 mx15 lt-md:mx4 select-none outline-none to="/" focusable="false"
+      class="signature"
+    >
       <img border-rd-full src="/signature.png" :class="isDark ? 'brightness' : ''" title="Home" alt="logo">
     </router-link>
     <nav class="nav">
@@ -56,19 +61,28 @@ const say = () => {
           >目</span></span>
           <span v-else class="lt-md:hidden projectMove"><span style="--delay: 0s">P</span><span
             style="--delay: 0.1s"
-          >r</span><span style="--delay: 0.2s">o</span><span style="--delay: 0.3s">j</span><span
-            style="--delay: 0.4s"
-          >e</span><span style="--delay: 0.5s">c</span><span style="--delay: 0.6s">t</span><span
+          >r</span><span style="--delay: 0.2s">o</span><span
+            style="--delay: 0.3s"
+          >j</span><span style="--delay: 0.4s">e</span><span
+            style="--delay: 0.5s"
+          >c</span><span style="--delay: 0.6s">t</span><span
             style="--delay: 0.7s"
           >s</span></span>
           <div i-iwwa:power class="md:hidden iconMove" />
         </router-link>
         <router-link to="/ama" title="AMA">
-          <span class="lt-md:hidden" :style="`--blog:'${Blog}'`"> AMA 咨询
+          <span class="lt-md:hidden animate-keyframes-zoom-in  animate-count-infinite animate-duration-10s"> AMA 咨询
             <div class="white" />
           </span>
-          <div i-clarity:book-solid md:hidden />
+          <!-- <TextExpansionAnimation lt-md:hidden :font-size="20" :color="isDark ? '#fff' : '#000'" text="AMA 咨询" background-color="red"></TextExpansionAnimation> -->
+          <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" md:hidden width="20" height="20" viewBox="0 0 24 24">
+            <path
+              fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+              d="m12 22l-.25-3h-.25q-3.55 0-6.025-2.475T3 10.5q0-3.55 2.475-6.025T11.5 2q1.775 0 3.313.662t2.7 1.825q1.162 1.163 1.824 2.7T20 10.5q0 3.8-2.275 6.813T12 22Zm-.525-6.025q.425 0 .725-.3t.3-.725q0-.425-.3-.725t-.725-.3q-.425 0-.725.3t-.3.725q0 .425.3.725t.725.3ZM11.5 12.8q.275 0 .5-.2t.3-.55q.05-.325.275-.588t.775-.812q.45-.45.75-.975t.3-1.125q0-1.275-.862-1.913T11.5 6q-.875 0-1.513.4t-1.037 1q-.175.275-.062.575t.462.425q.25.1.5 0t.45-.375q.2-.275.488-.45T11.5 7.4q.675 0 1.013.375t.337.825q0 .425-.25.763t-.6.687q-.7.6-.938.975t-.287 1.025q-.025.3.188.525t.537.225Z"
+            />
+          </svg>
         </router-link>
+
         <a href="https://twitter.com/simon_he1995" target="_blank" title="Twitter" class="lt-md:hidden">
           <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path
@@ -129,28 +143,40 @@ const say = () => {
                 d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20"
               />
               <path d="M31 7v17z" clip-rule="evenodd" />
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M31 7v17" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M31 7v17"
+              />
               <path d="m16.636 6.636l14.142 14.142z" clip-rule="evenodd" />
               <path
                 stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                 d="m16.636 6.636l14.142 14.142"
               />
               <path d="M7 17h17z" clip-rule="evenodd" />
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 17h17" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M7 17h17"
+              />
               <path d="M20.364 17.636L6.222 31.778z" clip-rule="evenodd" />
               <path
                 stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                 d="M20.364 17.636L6.222 31.778"
               />
               <path d="M17 25v17z" clip-rule="evenodd" />
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 25v17" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M17 25v17"
+              />
               <path d="m17.636 27.636l14.142 14.142z" clip-rule="evenodd" />
               <path
                 stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                 d="m17.636 27.636l14.142 14.142"
               />
               <path d="M24 31h18z" clip-rule="evenodd" />
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M24 31h18" />
+              <path
+                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                d="M24 31h18"
+              />
               <path d="M42.364 16.636L28.222 30.778z" clip-rule="evenodd" />
               <path
                 stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
@@ -359,5 +385,8 @@ const say = () => {
   to {
     transform: rotate3d(0, 0, 1, 45deg);
   }
+}
+.AMAMove{
+
 }
 </style>
