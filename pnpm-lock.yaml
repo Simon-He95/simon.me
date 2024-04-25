@@ -113,8 +113,8 @@ devDependencies:
     specifier: ^4.0.3
     version: 4.0.3
   lazy-js-utils:
-    specifier: ^0.0.89
-    version: 0.0.89(vue@3.4.21)
+    specifier: ^0.0.92
+    version: 0.0.92(vue@3.4.21)
   markdown-it:
     specifier: ^12.3.2
     version: 12.3.2
@@ -5328,8 +5328,8 @@ packages:
       vue: 3.4.21(typescript@4.9.5)
     dev: false
 
-  /lazy-js-utils@0.0.89(vue@3.4.21):
-    resolution: {integrity: sha512-WV1VTXBwLuB87TEEoBHVwnPM7D7TUgR6eZctl74V81zKzpvx01nOUguM98puRcSp0kUco1EPrA8M8RFxD80fAA==}
+  /lazy-js-utils@0.0.92(vue@3.4.21):
+    resolution: {integrity: sha512-7lo+PmYlPFNQkdBPrDPp5a1VbrWif9bWanBNefR4ePUINzWyeR2hCVXmGBI/zMgK+qTd1lk4oOMV+T1RojyupA==}
     peerDependencies:
       vue: ^3.2.41
     dependencies:
