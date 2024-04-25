@@ -2,8 +2,7 @@
 import { type SpeechOptions, speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 import { isDark } from '~/logics'
-// import { TextExpansionAnimation } from 'text-expansion-animation'
-// import 'text-expansion-animation/style.css'
+
 const isZh = computed(() => lan.value === 'zh')
 const color = ref('black')
 function preload() {
@@ -365,15 +364,15 @@ const say = () => {
 @keyframes draw {
   from {
     stroke-dasharray: 1000;
-    /* 设置初始的虚线样式，使图标不可见 */
+    /* 设置初始的虚线样式,使图标不可见 */
     stroke-dashoffset: 1000;
-    /* 设置初始的虚线偏移量，使图标不可见 */
+    /* 设置初始的虚线偏移量,使图标不可见 */
   }
 
   to {
     stroke-dasharray: 1000;
     stroke-dashoffset: 0;
-    /* 设置最终的虚线偏移量，完全描绘出图标 */
+    /* 设置最终的虚线偏移量,完全描绘出图标 */
   }
 }
 
