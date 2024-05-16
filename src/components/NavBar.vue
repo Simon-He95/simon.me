@@ -68,6 +68,7 @@ const say = () => {
             style="--delay: 0.7s"
           >s</span></span>
           <div i-iwwa:power class="md:hidden iconMove" />
+          <span icon="fa" />
         </router-link>
         <router-link to="/ama" title="AMA">
           <span class="lt-md:hidden animate-keyframes-zoom-in  animate-count-infinite animate-duration-10s"> AMA 咨询
@@ -81,7 +82,6 @@ const say = () => {
             />
           </svg>
         </router-link>
-
         <a href="https://twitter.com/simon_he1995" target="_blank" title="Twitter" class="lt-md:hidden">
           <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
             <path
@@ -385,7 +385,6 @@ const say = () => {
     transform: rotate3d(0, 0, 1, 45deg);
   }
 }
-.AMAMove{
 
-}
+.AMAMove {}
 </style>
