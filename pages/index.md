@@ -20,7 +20,6 @@ title: Simon He
     const title = document.querySelector('main>div:first-child>h1')
     title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
     const s = document.querySelector('.title-split:nth-child(1)')
-    console.log(window.anime)
     anime({
         targets: '.signature',
         translateY: 0,
@@ -41,7 +40,8 @@ title: Simon He
         translateX: 0,
         duration: 1000,
         delay: function(el, i) { 
-          el.style.transform = `translateX(${i%2===0?'-':''}100vw)`
+          if(el)
+           el.style.transform = `translateX(${i%2===0?'-':''}100vw)`
           return i * 500;
         },
     })

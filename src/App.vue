@@ -187,8 +187,9 @@ document.addEventListener('mousemove', (e) => {
 
 onMounted(() => {
   const stop = useRaf(() => {
-    if (dotImage1.status && window.gsap) {
+    if (dotImage1.status === 'success' && window.gsap && window.ScrollTrigger) {
       stop()
+      window.gsap.registerPlugin(window.ScrollTrigger)
       window.gsap.to('.dotImage', {
         rotationY: 360,
         scrollTrigger: {
