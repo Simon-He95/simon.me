@@ -71,10 +71,10 @@ const say = () => {
           <span icon="fa" />
         </router-link>
         <router-link to="/ama" title="AMA">
-          <span class="lt-md:hidden animate-keyframes-zoom-in  animate-count-infinite animate-duration-10s"> AMA 咨询
+          <span class="lt-md:hidden animate-keyframes-zoom-in  animate-count-infinite animate-duration-10s"> AMA
             <div class="white" />
           </span>
-          <!-- <TextExpansionAnimation lt-md:hidden :font-size="20" :color="isDark ? '#fff' : '#000'" text="AMA 咨询" background-color="red"></TextExpansionAnimation> -->
+          <!-- <TextExpansionAnimation lt-md:hidden :font-size="20" :color="isDark ? '#fff' : '#000'" text="AMA" background-color="red"></TextExpansionAnimation> -->
           <svg class="svg-dash" xmlns="http://www.w3.org/2000/svg" md:hidden width="20" height="20" viewBox="0 0 24 24">
             <path
               fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
