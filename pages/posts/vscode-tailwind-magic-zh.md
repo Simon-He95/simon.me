@@ -7,6 +7,9 @@ duration: now
 subtitle: 'Author: Simon'
 ---
 
+[[toc]]
+
+> [英文 English Version](/posts/vscode-tailwind-magic)
 
 ## 什么是 vscode-tailwind-magic
 

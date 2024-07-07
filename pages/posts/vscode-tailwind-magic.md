@@ -1,18 +1,15 @@
 ---
-
 title: vscode-tailwind-magic
-
 description: A plug-in that can provide magic for TailwindCss.
-
 date: 2024-07-07T21:00:00.000+00:00
-
 lang: en
-
 duration: now
-
 subtitle: 'Author: Simon'
-
 ---
+
+[[toc]]
+
+> [中文 Chinese Version](/posts/vscode-tailwind-magic-zh)
 
 ## What is vscode-tailwind-magic
 
