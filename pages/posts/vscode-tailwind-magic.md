@@ -29,6 +29,10 @@ subtitle: 'Author: Simon'
 
 4. By the way, some people don't like the `attributify` mode very much. Although its writing is simple, it is not limited to the freedom that I must write it in `class` or `className`, but the attribute mode of `UnoCSS` is not It is not strong enough to support all writing methods, so for special cases, you still have to write `class`, so there are a large number of mixed `class` and `attributify`, which will be more intuitive maintenance, because the attributes will be in the front. Later, the transfer attributes of other components may be mixed in the middle, such as `<my-comp w-10 comp-prop="xxx" h-10 class="bg-#eee" text-center />`, but `vscode-tailwind-magic` It is written in the form of attributes in any position, but it will eventually be converted to the corresponding `class` or `className`, and it will become `<my-comp comp-prop="xxx " class="w-10 h-10 text-center bg-#eee" />`
 
+## Demo Gif
+
+<img rounded-2 src="../../public/tailwind-magic.gif"/>
+
 You can see how it is written and what it can do through its [test file 📃](https://github.com/Simon-He95/vscode-tailwind-magic/blob/main/test/index.test.ts)~
 
 #### After reading the above information, if you think it really touches you, why don't you try it quickly? You can help me order a [star 🌟](https://github.com/Simon-He95/vscode-tailwind- Magic) and [Sponsor me a cup ☕️](https://github.com/Simon-He95/sponsor), I hope this plug-in can help you bring `10` times development efficiency and super development experience :)

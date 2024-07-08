@@ -29,6 +29,10 @@ subtitle: 'Author: Simon'
 
 4. 这里顺便说一下，有的人很不喜欢 `attributify` 模式, 虽然它的写法简单，不局限于我一定要写在 `class` 或 `className` 中，很自由，但是 `UnoCSS` 的属性模式并没有强大的到支持所有的写法，所以，对于特殊情况，你仍然要写 `class`, 所以就出现了大批 `class` 和 `attributify` 混用的情况，会更加不直观的维护，因为属性会有的在前面有的在后面，中间可能夹杂了其他组件的传递属性，就比如 `<my-comp w-10 comp-prop="xxx" h-10 class="bg-#eee" text-center />` ,但是 `vscode-tailwind-magic` 它满足了任意位置用属性的方式写，但是最终会转换成对应的 `class` 或 `className`, 它会变成`<my-comp comp-prop="xxx" class="w-10 h-10 text-center bg-#eee" />`
 
+## 演示 Gif
+
+<img rounded-2 src="../../public/tailwind-magic.gif"/>
+
 你可以通过它的[测试文件 📃](https://github.com/Simon-He95/vscode-tailwind-magic/blob/main/test/index.test.ts)，看到它的写法和能做到的事情～
 
 #### 看完了以上的信息，如果你觉得它真的有打动到你，还不快快体验一下，可以帮我点一个 [star 🌟](https://github.com/Simon-He95/vscode-tailwind-magic) 和 [赞助我一杯 ☕️](https://github.com/Simon-He95/sponsor)，我希望这个插件，能够帮助你带来 `10` 倍的开发效率，超级的开发体验 :)
