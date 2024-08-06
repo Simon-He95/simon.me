@@ -23,8 +23,11 @@ function finish() {
     />
   </div>
   <template v-for="key in Object.keys(projects)" :key="key">
-    <vivid-typing class="mt-10 font-bold" :content="key" />
-    <div class="project-grid py-2 -mx-3 gap-2">
+    <!-- <vivid-typing class="mt-10 font-bold" :content="key" /> -->
+    <div select-none relative h20 pointer-events-none slide-enter color-transparent style="--enter-stage: 11; --enter-step: 60ms;">
+      <span text-5em color-transparent absolute left--1rem top-0rem font-bold leading-1em text-stroke-hex-aaa op35 dark:op20 style="-webkit-text-stroke-width: 1.5px">{{ key }}</span>
+    </div>
+    <div class="project-grid py-2 max-w-500 w-max mx-auto" grid="~ cols-1 md:cols-2 gap-4 lg:cols-3">
       <a
         v-for="(item, idx) in projects[key]"
         :key="idx"
@@ -56,17 +59,6 @@ function finish() {
 </template>
 
 <style scoped>
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.project-grid a.item {
-  padding: 0.8em 1em;
-  background: transparent;
-  font-size: 1.1rem;
-}
-
 .project-grid a.item:hover {
   background: #88888808;
 }
@@ -138,5 +130,18 @@ function finish() {
   100% {
     transform: translateX(110%);
   }
+}
+
+.project-grid a.item {
+  background: transparent;
+  font-size: 1.1rem;
+  width: 350px;
+  max-width: 100%;
+  padding: 0.5rem 0.875rem 0.875rem;
+  border-radius: 6px;
+}
+
+.project-grid a.item:hover {
+  background: #88888811;
 }
 </style>

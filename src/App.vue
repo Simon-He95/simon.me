@@ -191,7 +191,7 @@ onMounted(() => {
       stop()
       window.gsap.registerPlugin(window.ScrollTrigger)
       window.gsap.to('.dotImage', {
-        rotationY: 360,
+        translateX: '-10%',
         scrollTrigger: {
           trigger: 'body',
           start: 'top center',
