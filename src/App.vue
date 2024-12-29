@@ -175,6 +175,8 @@ function getRandomColorPosition() {
 }
 const left = ref(0)
 const top = ref(0)
+// 初始化获取鼠标位置
+
 const maxWidth = document.documentElement.clientWidth
 const maxHeight = document.documentElement.clientHeight
 document.addEventListener('mousemove', (e) => {
@@ -226,6 +228,8 @@ onMounted(() => {
     }"
   >
     <div className="planet">
+      <img class="ball" src="ball.png" alt="">
+      <!--
       <svg class="ball" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
         <g fill="none" stroke="#cccccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path
@@ -236,6 +240,7 @@ onMounted(() => {
           />
         </g>
       </svg>
+      -->
       <!-- <svg width="100" height="100" class="ball" viewBox="0 0 24 24">
         <g fill="none" stroke-width="1.5">
           <g
