@@ -218,10 +218,10 @@ onMounted(() => {
     <Footer />
     <!-- <Levitation /> -->
   </main>
-  <a
-    v-if="isShow" i-icon-park-outline:rocket-one animate-bounce hover="animate-none dark:bg-light-300 bg-pink-300 "
-    fixed bottom-40 right-5 text-3xl title="Top" @click="scrollToTop()"
-  />
+  <img
+    v-if="isShow" animate-tada hover="animate-none"
+    fixed bottom-40 right-5 text-3xl src="../public/backTop.png" alt="backTop" @click="scrollToTop()"
+  >
   <div
     fixed w-100 z--5 left-1 top-80 :style="{
       transform: `translate(${left}px, ${top}px)`,
@@ -269,62 +269,62 @@ onMounted(() => {
 </template>
 
 <style>
-body {
-  cursor: url(https://cdn.custom-cursor.com/db/8130/32/manga-himouto-umaru-chan-umaru-and-cola-cursor.png),
-    default !important;
-}
-
-a,
-.link {
-  cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png),
-    pointer !important;
-}
-
-@keyframes planet-rotate {
-  0% {
-    transform: rotate(45deg) rotate(0);
+  body {
+    cursor: url(https://cdn.custom-cursor.com/db/8130/32/manga-himouto-umaru-chan-umaru-and-cola-cursor.png),
+      default !important;
   }
 
-  100% {
-    transform: rotate(45deg) rotate(360deg);
-  }
-}
-
-@keyframes self-rotate {
-  0% {
-    transform: rotate(0) rotate(-45deg);
+  a,
+  .link {
+    cursor: url(https://cdn.custom-cursor.com/db/8129/32/manga-himouto-umaru-chan-umaru-and-cola-pointer.png),
+      pointer !important;
   }
 
-  100% {
-    transform: rotate(-360deg) rotate(-45deg);
-  }
-}
+  @keyframes planet-rotate {
+    0% {
+      transform: rotate(45deg) rotate(0);
+    }
 
-.planet {
-  animation: planet-rotate 20s linear infinite;
-}
-
-.ball {
-  animation: self-rotate 20s linear infinite;
-}
-
-.planet svg {
-  filter: drop-shadow(2px 4px 6px black);
-  color: rgb(229, 232, 235);
-}
-
-.rotated-hand {
-  animation: rotate 1s 0.5s infinite linear alternate-reverse;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(-20deg);
+    100% {
+      transform: rotate(45deg) rotate(360deg);
+    }
   }
 
-  100% {
-    transform: rotate(30deg);
+  @keyframes self-rotate {
+    0% {
+      transform: rotate(0) rotate(-45deg);
+    }
+
+    100% {
+      transform: rotate(-360deg) rotate(-45deg);
+    }
   }
 
-}
+  .planet {
+    animation: planet-rotate 20s linear infinite;
+  }
+
+  .ball {
+    animation: self-rotate 20s linear infinite;
+  }
+
+  .planet svg {
+    filter: drop-shadow(2px 4px 6px black);
+    color: rgb(229, 232, 235);
+  }
+
+  .rotated-hand {
+    animation: rotate 1s 0.5s infinite linear alternate-reverse;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(-20deg);
+    }
+
+    100% {
+      transform: rotate(30deg);
+    }
+
+  }
 </style>
