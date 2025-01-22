@@ -34,7 +34,7 @@
     "dayjs": "^1.11.13",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.5",
-    "text-expansion-animation": "^0.0.6",
+    "text-expansion-animation": "^0.0.8",
     "vivid-typing": "^1.1.46",
     "vue": "^3.5.13",
     "vue-router": "4.0.14"
