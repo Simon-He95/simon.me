@@ -43,7 +43,8 @@ const say = () => {
       w-30 absolute lg:fixed my6 mx15 lt-md:mx4 select-none outline-none to="/" focusable="false"
       class="signature"
     >
-      <img border-rd-full src="/signature.png" :class="isDark ? 'brightness' : ''" title="Home" alt="logo">
+      <Logo />
+      <!-- <img border-rd-full src="/signature.png" :class="isDark ? 'brightness' : ''" title="Home" alt="logo"> -->
     </router-link>
     <nav class="nav">
       <div class="spacer" />
@@ -385,6 +386,4 @@ const say = () => {
     transform: rotate3d(0, 0, 1, 45deg);
   }
 }
-
-.AMAMove {}
 </style>

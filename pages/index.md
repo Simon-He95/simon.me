@@ -20,15 +20,15 @@ title: Simon He
     const title = document.querySelector('main>div:first-child>h1')
     title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
     const s = document.querySelector('.title-split:nth-child(1)')
-    anime({
-        targets: '.signature',
-        translateY: 0,
-        rotateZ: 1440,
-        duration:5000,
-        delay: function(el, i) { 
-          return i * 200;
-        },
-    })
+    // anime({
+    //     targets: '.signature',
+    //     translateY: 0,
+    //     rotateZ: 1440,
+    //     duration:5000,
+    //     delay: function(el, i) { 
+    //       return i * 200;
+    //     },
+    // })
     anime({
         targets: 'main>div:first-child>h1',
         translateY: 0,
