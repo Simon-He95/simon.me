@@ -36,12 +36,12 @@ const imageShow = computed(() => {
   return os === 'mac' || os === 'windows' || os === 'macOS'
 })
 
-const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent', 'vertical-reverse')
-const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent')
+const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent', 'out-center')
+const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
 const text = ref('')
 
 onMounted(() => {
-  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor@main/sponsors.svg'])
+  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
   if (imageShow.value) {
     dotImage1.append('.dotImage')
     dotImage2.append('.cloth')
@@ -121,7 +121,7 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     generateGalaxy()
   },
   createCamera() {
-    const camera = c('PC')
+    const camera = c('pc')
     camera.position.set(0, 0, 2)
     return camera
   },
@@ -192,17 +192,59 @@ onMounted(() => {
     if (dotImage1.status === 'success' && window.gsap && window.ScrollTrigger) {
       stop()
       window.gsap.registerPlugin(window.ScrollTrigger)
+
+      // First set initial opacity to 0
+      window.gsap.set('.dotImage', { opacity: 0 })
+
+      // Fade in first with a simple animation
       window.gsap.to('.dotImage', {
-        translateX: '-10%',
+        opacity: 1,
+        duration: 0.8,
+      })
+
+      // Create a simple timeline for horizontal movement
+      const tl = window.gsap.timeline({
         scrollTrigger: {
           trigger: 'body',
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true, // Smooth scrubbing effect
+          invalidateOnRefresh: true,
+          onRefresh: () => {
+            // Recalculate on window resize
+            tl.progress(window.scrollY / (document.body.scrollHeight - window.innerHeight))
+          },
         },
       })
+
+      // Add the horizontal movement animation
+      tl.fromTo('.dotImage',
+        { translateX: '-15%' },
+        { translateX: '5%', ease: 'none' },
+      )
+
+      // Do the same for the second image if needed
+      window.gsap.set('.cloth', { opacity: 0 })
+      window.gsap.to('.cloth', { opacity: 1, duration: 0.8 })
+
+      const tl2 = window.gsap.timeline({
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl2.fromTo('.cloth',
+        { translateX: '5%' },
+        { translateX: '-5%', ease: 'none' },
+      )
     }
-  }, 200)
+  }, {
+    delta: 200,
+  })
 })
 </script>
 
@@ -220,7 +262,7 @@ onMounted(() => {
   </main>
   <img
     v-if="isShow" animate-tada hover="animate-none"
-    fixed bottom-40 right-5 text-3xl src="../public/backTop.png" alt="backTop" @click="scrollToTop()"
+    fixed bottom-40 right-5 text-3xl src="/backTop.png" alt="backTop" @click="scrollToTop()"
   >
   <div
     fixed w-100 z--5 left-1 top-80 :style="{
@@ -228,15 +270,14 @@ onMounted(() => {
     }"
   >
     <div className="planet">
-      <img class="ball" src="../public/ball.png" alt="">
+      <img class="ball" src="/ball.png" alt="">
       <!--
       <svg class="ball" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
         <g fill="none" stroke="#cccccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
           <path
             d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7c.08.703 1.725 1.722 3.656 1c1.261-.472 1.96-1.45 2.344-2.5m5.767-3.328c0-1.39 1.577-2.493 3.5-2.172c2.823.47 4.113 6.006 4 7c-.08.703-1.725 1.722-3.656 1c-1.261-.472-1.855-1.45-2.239-2.5M8 14v.5m8-.5v.5m-4.75 1.75h1.5L12 17z"
           />
-          <path
-            d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"
+          <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"
           />
         </g>
       </svg>
