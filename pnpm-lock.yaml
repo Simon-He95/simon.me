@@ -33,8 +33,8 @@ importers:
         specifier: ^0.2.5
         version: 0.2.5
       text-expansion-animation:
-        specifier: ^0.0.8
-        version: 0.0.8(typescript@4.9.5)
+        specifier: ^0.0.9
+        version: 0.0.9(typescript@4.9.5)
       vivid-typing:
         specifier: ^1.1.46
         version: 1.1.46(vue@3.5.13(typescript@4.9.5))
@@ -3560,8 +3560,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  text-expansion-animation@0.0.8:
-    resolution: {integrity: sha512-ODJVxA4EaPXIXtqPytQAT5z/nveds1ThN82UMz3a0lohGqnH07wNHROQfr4aNffrCGca9dAaizYCiprNB26qng==}
+  text-expansion-animation@0.0.9:
+    resolution: {integrity: sha512-kl/rLR4fwHBFBI5P8rUvnuXFTtFfzGZbw1V2rj9iXVN4jYdh/ypSnXFoMEZybbBM5Qi01O9yWggjX4YAVMxERg==}
     engines: {node: '>=14.6'}
 
   text-table@0.2.0:
@@ -8012,7 +8012,7 @@ snapshots:
       commander: 2.20.3
       source-map-support: 0.5.21
 
-  text-expansion-animation@0.0.8(typescript@4.9.5):
+  text-expansion-animation@0.0.9(typescript@4.9.5):
     dependencies:
       vue: 3.5.13(typescript@4.9.5)
     transitivePeerDependencies:

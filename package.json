@@ -20,7 +20,7 @@
   "scripts": {
     "build": " cross-env NODE_ENV=production vite-ssg build",
     "dev": "vite --port 3000 --open --host",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "static": "rimraf temp && degit antfu/static temp --force && esno scripts/copy-sponsors",
     "redirects": "esno scripts/redirects.ts",
     "lint": "eslint .",
@@ -34,7 +34,7 @@
     "dayjs": "^1.11.13",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.5",
-    "text-expansion-animation": "^0.0.8",
+    "text-expansion-animation": "^0.0.9",
     "vivid-typing": "^1.1.46",
     "vue": "^3.5.13",
     "vue-router": "4.0.14"
