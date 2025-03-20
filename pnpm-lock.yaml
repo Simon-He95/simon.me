@@ -49,8 +49,8 @@ importers:
         specifier: ^0.26.3
         version: 0.26.3(eslint@8.57.1)(typescript@4.9.5)
       '@iconify/json':
-        specifier: ^2.2.315
-        version: 2.2.315
+        specifier: ^2.2.318
+        version: 2.2.318
       '@octokit/rest':
         specifier: ^18.12.0
         version: 18.12.0
@@ -115,8 +115,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       lazy-js-utils:
-        specifier: ^0.1.32
-        version: 0.1.32
+        specifier: ^0.1.33
+        version: 0.1.33
       markdown-it:
         specifier: ^12.3.2
         version: 12.3.2
@@ -127,8 +127,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       markdown-it-prism:
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^2.3.1
+        version: 2.3.1
       markdown-it-shiki:
         specifier: ^0.4.0
         version: 0.4.0
@@ -142,8 +142,8 @@ importers:
         specifier: ^6.35.1
         version: 6.35.1
       prismjs:
-        specifier: ^1.29.0
-        version: 1.29.0
+        specifier: ^1.30.0
+        version: 1.30.0
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -1000,8 +1000,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
 
-  '@iconify/json@2.2.315':
-    resolution: {integrity: sha512-ST+F6ZF+IpKm2eaABWftJ4stWbB8pcEd9Q5bshW8hcIW/kcvzwit3fI/5x3tFFscWUCxHGNU3JNVMtNlodHweQ==}
+  '@iconify/json@2.2.318':
+    resolution: {integrity: sha512-8hmJxD/l322LLyQzt9s6aPCE6O+p86H9GVFhoH3hEQ9PRrU5O3Ptf8tlzFKzkBrBoEqdSzkAG5j8bwGt47Ragw==}
 
   '@iconify/types@1.1.0':
     resolution: {integrity: sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==}
@@ -2811,8 +2811,8 @@ packages:
     peerDependencies:
       vue: ^3.2.41
 
-  lazy-js-utils@0.1.32:
-    resolution: {integrity: sha512-KeuHGgpE6Kwft9O9pZNzy+JMMC5Sn2wjzTCj4HBcUR+dVw6HifZYO4dU6rXOD2awbCh83Q2ohdcTf+3byj7V0w==}
+  lazy-js-utils@0.1.33:
+    resolution: {integrity: sha512-dwgJcmKNIfrTOv6imGFOMUlzQl8tZguv91AnDGe5HvZ6hCNUsuL06VHsFMqM38H69hE+CB+pBnVSv7s3qk3XbQ==}
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -2893,8 +2893,8 @@ packages:
   markdown-it-link-attributes@4.0.1:
     resolution: {integrity: sha512-pg5OK0jPLg62H4k7M9mRJLT61gUp9nvG0XveKYHMOOluASo9OEF13WlXrpAp2aj35LbedAy3QOCgQCw0tkLKAQ==}
 
-  markdown-it-prism@2.3.0:
-    resolution: {integrity: sha512-ePtHY80gZyeje4bn3R3SL0jpd1C9HFaYffJW2Ma0YD+tspqa2v9TuVwUyFwboFu4jnFNcO8oPQROgbcYJbmBvw==}
+  markdown-it-prism@2.3.1:
+    resolution: {integrity: sha512-oZl9fGKBeSd94GhqpCrA2MO2uAWxKVe0swyX/nBqly+/6d870zae9raMgxJg+OEjhyuOrxTn8p1vMP8RkawzHw==}
     engines: {node: '>=6.0.0'}
 
   markdown-it-shiki@0.4.0:
@@ -3200,8 +3200,8 @@ packages:
   prism-theme-vars@0.2.5:
     resolution: {integrity: sha512-/D8gBTScYzi9afwE6v3TC1U/1YFZ6k+ly17mtVRdLpGy7E79YjJJWkXFgUDHJ2gDksV/ZnXF7ydJ4TvoDm2z/Q==}
 
-  prismjs@1.29.0:
-    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
 
   prop-types@15.8.1:
@@ -5051,7 +5051,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/json@2.2.315':
+  '@iconify/json@2.2.318':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -7238,7 +7238,7 @@ snapshots:
       spark-md5: 3.0.2
       vue: 3.5.13(typescript@4.9.5)
 
-  lazy-js-utils@0.1.32:
+  lazy-js-utils@0.1.33:
     dependencies:
       htmlparser2: 8.0.2
       qrcode: 1.5.4
@@ -7317,9 +7317,9 @@ snapshots:
 
   markdown-it-link-attributes@4.0.1: {}
 
-  markdown-it-prism@2.3.0:
+  markdown-it-prism@2.3.1:
     dependencies:
-      prismjs: 1.29.0
+      prismjs: 1.30.0
 
   markdown-it-shiki@0.4.0:
     dependencies:
@@ -7626,7 +7626,7 @@ snapshots:
 
   prism-theme-vars@0.2.5: {}
 
-  prismjs@1.29.0: {}
+  prismjs@1.30.0: {}
 
   prop-types@15.8.1:
     dependencies:
@@ -8379,7 +8379,7 @@ snapshots:
   vivid-typing@1.1.46(vue@3.5.13(typescript@4.9.5)):
     dependencies:
       '@vueuse/core': 8.9.4(vue@3.5.13(typescript@4.9.5))
-      lazy-js-utils: 0.1.32
+      lazy-js-utils: 0.1.33
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue

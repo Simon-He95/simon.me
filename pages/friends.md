@@ -8,6 +8,7 @@ title: Friends
     background-color="rgba(0,0,0,0)"
     p4
     rounded-4
+    style="--contrast: 2"
     text="Friend's"></TextExpansionAnimation>
 <FriendsList></FriendsList>
 
@@ -16,6 +17,10 @@ title: Friends
   import { TextExpansionAnimation } from 'text-expansion-animation'
   import 'text-expansion-animation/style.css'
   import { ref } from 'vue'
-  import {isDark} from '~/logics'
+  import { isDark } from '~/logics'
 
 </script>
+
+<style scoped>
+
+</style>

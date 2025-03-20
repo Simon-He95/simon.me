@@ -27,7 +27,7 @@ const friends = [
   },
   {
     name: '小孙同学',
-    avatar: 'https://blog.sunguoqi.com/images/avatar.jpg',
+    avatar: 'https://blog.guoqi.dev/favicon.ico',
     blog: 'https://blog.sunguoqi.com',
     description: 'Peace & Love',
     tag: 'Front-end development',
@@ -69,15 +69,15 @@ const friends = [
   },
   {
     name: 'Cee cc',
-    avatar: 'https://zqqcee.github.io/images/avatar.jpeg',
+    avatar: 'https://zqqcee.github.io/_astro/avatar.DE2TqBIA.jpeg',
     blog: 'https://zqqcee.github.io/',
     description: 'Everything comes in a big package "📦"',
     tag: 'FE dev',
   },
   {
     name: '前端之虎陈随易',
-    avatar: 'https://chensuiyi.com/logo.jpg',
-    blog: 'https://chensuiyi.com/',
+    avatar: 'https://me.yicode.tech/logo.jpg',
+    blog: 'https://me.yicode.tech/',
     description: '前端顶级专家、农村程序员、车上码农、自由职业者、独立开发者、个人创业者、开源大师、前端之虎陈随易',
     tag: '独立开发者',
   },
