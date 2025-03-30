@@ -22,6 +22,5 @@ subtitle: 'Author: Simon'
   - 每一关金子的数量和迷宫的行列都会递增，并且可视区域也会变小，这样就可以让迷宫更加难以找到金子，增加游戏难度
   - 遮罩的canvas是一个迷宫的canvas的2倍，在canvas中挖走一块圆，并且通过移动canvas来控制可视区域
 
-  
   ## GitHub地址
   [欢迎PR](https://github.com/Simon-He95/find-gold)

@@ -11,7 +11,6 @@ subtitle: 'Author: Simon'
 
   [在线体验](https://verify-form.hejian.club/)
 
-
 ## API
 
 - initial-regular :Boolean // 首次加载就对初始化值进行rules的规则校验
@@ -36,7 +35,7 @@ const formData = reactive({
   rules: {
     age: [
       /* required */ val => !!val || 'Required',
-      /* number */ val => !isNaN(Number(val)) || 'Expected number',
+      /* number */ val => !Number.isNaN(Number(val)) || 'Expected number',
       /* length */ val =>
         val <= 18 ? 'You are too young' : val >= 100 ? 'You are too old' : '',
     ],
@@ -70,9 +69,8 @@ app.mount('#app')
 ![script](/images/script.jpg)
 ![template](/images/template.jpg)
 
-
 ## 依赖
 vue
-  
+
 ## GitHub地址
 [欢迎PR](https://github.com/Simon-He95/verify-form)

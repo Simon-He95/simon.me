@@ -26,6 +26,6 @@ subtitle: 'Author: Simon'
   - 打乱二维数组，并且把空白项提到第一个位置
   - 判断点击项上下左右是否存在空白项，如果存在才可进行交换
   - 如果交换完成后，判断数组是否和未打乱的数组每一项的pos相同来判断是否完成
-  
+
   ## GitHub地址
   [欢迎PR](https://github.com/Simon-He95/n-puzzle)

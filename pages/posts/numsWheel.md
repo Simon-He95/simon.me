@@ -31,7 +31,7 @@ const directoryList = {
 ```bash
 npm i @simon_he/s-charts # install
 
-import { 
+import {
   numsWheel,
   ...
  } from '@simon_he/nums-wheel' # Ingestion on demand
@@ -41,7 +41,6 @@ import {
 ## Directory structure
 <Directory type="zh" :lists="directoryList"></Directory>
 
-
 ## numsWheel
 - Digital wheel control
 - Based on the odometer package, it is simpler to use in the business
@@ -49,7 +48,7 @@ import {
   - container: string | HTMLElement /* Parent container */
   - options: {  format: '(,ddd)' | '(,ddd).dd' | '(.ddd),dd' | '( ddd),dd' | 'd' /* Number format */ startVal: number /* The starting number */ endVal: number /* Final number */  duration: number /* The duration of the animation */  animation: 'count' | 'countdown' /* Animation mode */ }
 ```javascript
-numWheel('#main', {  endVal: 9000.12 }) // Default format: '(,ddd).dd' startVal: 0 duration: 500 animation: 'countdown', Can be customized format, startVal, duration, animation
+numWheel('#main', { endVal: 9000.12 }) // Default format: '(,ddd).dd' startVal: 0 duration: 500 animation: 'countdown', Can be customized format, startVal, duration, animation
 ```
 
 ## GitHub

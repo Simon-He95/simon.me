@@ -54,7 +54,7 @@ projects:
     - name: 'RealizeSimpleVue'
       nameZh: '实现SimpleVue'
       link: 'https://github.com/Simon-He95/realizeVue'
-      desc: 'Learn from HcySunYang/code-for-vue-3-book to realize vue3 compiler render 
+      desc: 'Learn from HcySunYang/code-for-vue-3-book to realize vue3 compiler render
       reactivity.'
       descZh: '借鉴HcySunYang/code-for-vue-3-book实现vue3编译渲染
        反应性。'

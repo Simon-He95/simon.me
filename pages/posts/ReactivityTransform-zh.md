@@ -6,7 +6,6 @@ duration: 5min
 description: 语法糖.
 ---
 
-
 > [讨论详情](https://github.com/vuejs/rfcs/discussions/369)
 
 > 英文: [English Version](/posts/reactivitytransform)
@@ -110,4 +109,3 @@ function inc() {
     },
   }
   ```
-

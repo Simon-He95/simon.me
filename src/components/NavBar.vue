@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type SpeechOptions, speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
-import { isDark } from '~/logics'
 
 const isZh = computed(() => lan.value === 'zh')
 const color = ref('black')
@@ -25,7 +24,7 @@ const getSpeechOptions = computed(() =>
       },
 )
 const pending = ref(false)
-const say = () => {
+function say() {
   speak(getSpeechOptions.value as SpeechOptions)
   pending.value = true
   const stop = useRaf(() => {

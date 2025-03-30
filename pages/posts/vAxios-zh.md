@@ -32,7 +32,7 @@ const directoryList = {
 ```bash
 npm i @simon_he/v-axios # 安装
 
-import { 
+import {
   vAxios,
   ...
  } from '@simon_he/v-axios' # 按需引入
@@ -41,7 +41,6 @@ import {
 
 ## 目录结构
 <Directory type="zh" :lists="directoryList"></Directory>
-
 
 ## vAxios
 - 基于axios的封装

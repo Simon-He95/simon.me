@@ -56,7 +56,7 @@ const json: JSON = {
 
 export const $t = computed(() => json[lan.value])
 
-export const setLan = () => {
+export function setLan() {
   lan.value = lan.value === 'en' ? 'zh' : 'en'
 }
 

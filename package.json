@@ -1,7 +1,7 @@
 {
   "name": "about-simon",
   "private": true,
-  "packageManager": "pnpm@6.35.1",
+  "packageManager": "pnpm@10.6.2",
   "description": "A simple introduction to Simon.",
   "author": "Simon He",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "vue-router": "4.0.14"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.26.3",
+    "@antfu/eslint-config": "^2.27.3",
     "@iconify/json": "^2.2.318",
     "@octokit/rest": "^18.12.0",
     "@types/degit": "^2.8.6",
@@ -63,7 +63,7 @@
     "feed": "^4.2.2",
     "fs-extra": "^10.1.0",
     "gray-matter": "^4.0.3",
-    "lazy-js-utils": "^0.1.33",
+    "lazy-js-utils": "^0.1.39",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-link-attributes": "^4.0.1",
@@ -92,8 +92,5 @@
     "overrides": {
       "@vueuse/head": "0.7.0"
     }
-  },
-  "eslintConfig": {
-    "extends": "@antfu"
   }
 }

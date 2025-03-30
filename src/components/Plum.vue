@@ -23,11 +23,11 @@ function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?:
   // @ts-expect-error vendor
   const bsr
     = ctx.webkitBackingStorePixelRatio
-    || ctx.mozBackingStorePixelRatio
-    || ctx.msBackingStorePixelRatio
-    || ctx.oBackingStorePixelRatio
-    || ctx.backingStorePixelRatio
-    || 1
+      || ctx.mozBackingStorePixelRatio
+      || ctx.msBackingStorePixelRatio
+      || ctx.oBackingStorePixelRatio
+      || ctx.backingStorePixelRatio
+      || 1
 
   const dpi = _dpi || dpr / bsr
 

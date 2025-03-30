@@ -7,7 +7,6 @@ duration: 1day
 subtitle: 'Author: Simon'
 ---
 
-
 ## 介绍tiny-tinify-compress的实现
 - tiny-tinify-compress是一个自动监听文件变化的工具,并自动高效、高质量的压缩图片
 - 依赖tinify提供的api实现一个简单的压缩工具

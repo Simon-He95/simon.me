@@ -22,6 +22,5 @@ subtitle: 'Author: Simon'
   - 如果是我们的目标图片，通过一个BFS查找，并且每次查找规定了移动的方向，如果这个方向数组，前后2项方向不同count++，如果count>2说明到达目标元素曲折过多，不可达
   - 我们会再N x 2N外面包裹一层空白的item用来作为BFS可达的边界，这样就可以避免溢出
 
-  
   ## GitHub地址
   [欢迎PR](https://github.com/Simon-He95/matching-game)

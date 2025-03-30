@@ -139,12 +139,11 @@ Compiled <strong>100+</strong> commonly used functions, constantly updated<vivid
 - numsWheel component [s-nums-wheel](/posts/numsWheel)
 - vAxios Request encapsulation[v-axios](/posts/vAxios)
 
-
 ## Instructions for use
 ```bash
 npm i lazy-js-utils # Installation
 
-import { 
+import {
   deepCompare
  } from 'lazy-js-utils' # Ingestion on demand
 ```
@@ -333,8 +332,8 @@ console.log(arrayToTree(arr, { pid: 'parent_id' }))
 ## useShare
 - By calling the native sharing mechanism as part of the Web Share API. If the Web Share API is not supported, this method is undefined.
 - Parameters:
-  - url: The URL to share  
-  - text: The text to share  
+  - url: The URL to share
+  - text: The text to share
   - title: The title to share
   - files: Files to share
 ```js
@@ -404,8 +403,7 @@ const arr = [{
   props: {
     key: 'age'
   }
-}
-]
+}]
 const result = sortByOrder(arr, 'props.key', order)
 /*
  [
@@ -496,8 +494,8 @@ stop() // Stop the calculation
 - params:
   - callback: callback
 ```javascript
-const stop = useResizeObserver((width,height)=>{
-  console.log(width,height)
+const stop = useResizeObserver((width, height) => {
+  console.log(width, height)
 })
 stop() // Stop listening
 ```
@@ -507,8 +505,8 @@ stop() // Stop listening
 - params:
   - callback: callback
 ```javascript
-const stop = useWindowScroll((left,top)=>{
-  console.log(left,top)
+const stop = useWindowScroll((left, top) => {
+  console.log(left, top)
 })
 stop() // Stop listening
 ```
@@ -536,9 +534,9 @@ const rect = useElementBounding('#id')
     attributeFilter?: string[]
     }
 ```javascript
-const stop = useMutationObserver('#main', (mutations)=>{
+const stop = useMutationObserver('#main', (mutations) => {
   console.log(mutations)
-}, {attributes:true})
+}, { attributes: true })
 stop() // stop mutation observer
 ```
 
@@ -570,9 +568,9 @@ toggle() // Switch video-in-picture mode
   - container: A display container for screen sharing
   - callback: Callback when sharing is stopped
 ```javascript
-shareScreen('#main',() => {
-  console.log("Sharing has stopped");
-});
+shareScreen('#main', () => {
+  console.log('Sharing has stopped')
+})
 ```
 
 ## dbStorage
@@ -583,10 +581,10 @@ shareScreen('#main',() => {
 - Persistent storage
 - Supports binary storage
 ```javascript
-  const { add, read, remove } = await dbStorage()
-  set('key', { video:Blob }) // Add data or update data key: string | number, value: object
-  read('key') // Read the data key: string | number, 返回 { video:Blob }
-  remove('key') // Delete data key: string | number
+const { add, read, remove } = await dbStorage()
+set('key', { video: Blob }) // Add data or update data key: string | number, value: object
+read('key') // Read the data key: string | number, 返回 { video:Blob }
+remove('key') // Delete data key: string | number
 ```
 
 ## waterfall
@@ -599,30 +597,30 @@ shareScreen('#main',() => {
   - width: Picture width default 200
 ```javascript
 const append = waterfall([
-  "../public/kt.png",
-  "../public/favicon.svg",
-  "../public/wechat.jpg",
-  "../public/favicon.svg",
-  "../public/favicon.svg",
-  "../public/zfb.jpg",
-  "../public/favicon.svg",
-  "../public/favicon.svg",
-]);
+  '../public/kt.png',
+  '../public/favicon.svg',
+  '../public/wechat.jpg',
+  '../public/favicon.svg',
+  '../public/favicon.svg',
+  '../public/zfb.jpg',
+  '../public/favicon.svg',
+  '../public/favicon.svg',
+])
 
 useWindowScroll(() => {
   if (isBottom()) { // Touch the bottom to add a new image
     append([
-      "../public/kt.png",
-      "../public/favicon.svg",
-      "../public/wechat.jpg",
-      "../public/favicon.svg",
-      "../public/favicon.svg",
-      "../public/zfb.jpg",
-      "../public/favicon.svg",
-      "../public/favicon.svg",
-    ]);
+      '../public/kt.png',
+      '../public/favicon.svg',
+      '../public/wechat.jpg',
+      '../public/favicon.svg',
+      '../public/favicon.svg',
+      '../public/zfb.jpg',
+      '../public/favicon.svg',
+      '../public/favicon.svg',
+    ])
   }
-});
+})
 ```
 
 ## dragEvent
@@ -639,10 +637,10 @@ dragEvent('#main', {
     console.log('start', e.clientX, e.clientY)
   },
   dragMove(e) {
-    console.log('move',  e.clientX, e.clientY)
+    console.log('move', e.clientX, e.clientY)
   },
   dragEnd(e) {
-    console.log('end',  e.clientX, e.clientY)
+    console.log('end', e.clientX, e.clientY)
   },
 })
 ```
@@ -654,13 +652,13 @@ dragEvent('#main', {
  - source: Image path | Image base64 | Image blob
   - options: { quality: number /* Compression quality */  maxWidth: number /* Picture width */  maxHeight: number /* The height of the picture */  type: 'Blob' | 'base64' | 'blob' /* ReturnType */ }
 ```javascript
-  const file = fileEl.value.files[0];
-  const result = await compressImage(file, {
-    quality: 0.5,
-    maxWidth: 100,
-    maxHeight: 100,
-    type: "blob",
-  }); // Blob {size: 3095, type: 'image/jpeg'}
+const file = fileEl.value.files[0]
+const result = await compressImage(file, {
+  quality: 0.5,
+  maxWidth: 100,
+  maxHeight: 100,
+  type: 'blob',
+}) // Blob {size: 3095, type: 'image/jpeg'}
 ```
 
 ## addEventListener
@@ -673,13 +671,10 @@ dragEvent('#main', {
   - capture: boolean  /* Whether to capture */
   - autoRemove: boolean /* Whether to automatically remove the event */
 ```javascript
-const remove = addEventListener('#btn',
-  'click',
-  () => {
-    console.log('click')
-  }
-)
-addEventListener(document,'DOMContentLoaded', () => {
+const remove = addEventListener('#btn', 'click', () => {
+  console.log('click')
+})
+addEventListener(document, 'DOMContentLoaded', () => {
   console.log('I do it once, and then the event is automatically removed')
 }, false, true)
 ```
@@ -691,8 +686,7 @@ addEventListener(document,'DOMContentLoaded', () => {
 ```javascript
 const div = createElement('div', {
   class: 'className',
-  style: 'color: red;',
-  style: 'color: red;font-size: 20px;'',
+  style: 'color: red;font-size: 20px;',
 })
 ```
 ## sleep
@@ -701,10 +695,10 @@ const div = createElement('div', {
   - time: Sleep time (in milliseconds)
   - callback: Callback function after sleep ends
 ```javascript
-  sleep(1000, () => {
-    console.log('End of sleep')
-  })
-  // await sleep(1000)
+sleep(1000, () => {
+  console.log('End of sleep')
+})
+// await sleep(1000)
 ```
 
 ## htmlTransform
@@ -713,24 +707,24 @@ const div = createElement('div', {
 - It can be used for the conversion of different channels of the Mini Program, the replacement of some special placeholders, the replacement insertion and deletion of templates, and so on
 
 ```javascript
-  const code = await htmlTransform('<div class="_ee">hello</div><view bindtap="xx"></view>', {
-    div(node, { setAttribs,beforeInsert, afterInsert }) {
-      node.name = 'p'
-      setAttribs('age','19')
-      beforeInsert('<span>hi</span>')
-      afterInsert('<span>你好</span>')
-    },
-    '*'(node){
-      // All nodes will enter here
-    },
-    "$attr$_ee"(node){
-      // $attr$ matches nodes where _ee attribute exists
-    },
-    "$attr$bindtap"(node,{ renameAttribs }){
-      renameAttribs('bindtap','onTap')
-    }
-  })
-  console.log(code) // <span>hi</span><p age="19" class="_ee">hello</p><span>你好</span><view onTap="xx"></view>
+const code = await htmlTransform('<div class="_ee">hello</div><view bindtap="xx"></view>', {
+  div(node, { setAttribs, beforeInsert, afterInsert }) {
+    node.name = 'p'
+    setAttribs('age', '19')
+    beforeInsert('<span>hi</span>')
+    afterInsert('<span>你好</span>')
+  },
+  '*': function (node) {
+    // All nodes will enter here
+  },
+  '$attr$_ee': function (node) {
+    // $attr$ matches nodes where _ee attribute exists
+  },
+  '$attr$bindtap': function (node, { renameAttribs }) {
+    renameAttribs('bindtap', 'onTap')
+  }
+})
+console.log(code) // <span>hi</span><p age="19" class="_ee">hello</p><span>你好</span><view onTap="xx"></view>
 ```
 
 ## idleCallbackWrapper
@@ -744,37 +738,37 @@ const div = createElement('div', {
   - tasks: An array of tasks to be executed
   - timeout: Timeout (in milliseconds)
   - callback: Execute the callback function after completion
-```javascript
+```typescript
 // idleCallbackWrapper(tasks,()=>{console.log('end')}) // The default second parameter is shorthand for 2000
 const tasks: Function[] = [
   () => {
     for (let i = 0; i < 3000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("first task");
+    console.log('first task')
   },
   () => {
     for (let i = 0; i < 30000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("second task");
+    console.log('second task')
   },
   () => {
     for (let i = 0; i < 30000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("third task");
+    console.log('third task')
   },
-];
+]
 // Scene before encapsulation
-requestIdleCallback(fn, { timeout: 1000 });
+requestIdleCallback(fn, { timeout: 1000 })
 function fn(deadline: Deadline) {
-  console.log("deadline", deadline);
+  console.log('deadline', deadline)
   while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && tasks.length > 0) {
-    tasks.shift()();
+    tasks.shift()()
   }
   if (tasks.length > 0) {
-    requestIdleCallback(fn1);
+    requestIdleCallback(fn1)
   }
 }
 
@@ -817,7 +811,7 @@ const stop = animationFrameWrapper(() => {
   if (count.value > 10) {
     stop()
   }
-}，1000)
+}, 1000)
 ```
 
 ## DotImageCanvas
@@ -844,7 +838,7 @@ setTimeout(() => {
   - size: Slice size (in bytes) = 100kb // The maximum number of slices is set to 100 and the size is File.size / 100
 - Returns an array of slices
 ```javascript
-// fileSplice(file: File, chunkSize: number = 1024 * 100) 
+// fileSplice(file: File, chunkSize: number = 1024 * 100)
 const chunks = fileSplice(file, 1024 * 1024) // [ { file: Blob, filename: string } ]
 ```
 
@@ -868,15 +862,15 @@ console.log(levels[pwdLevel('q123456')]) // High
   - regular: Collation, regular number[], 1 ascending, -1 descending, default ascending; Complex types require custom collation ['name'], install array objects name property ascending, etc...
 - Supports ascending descending and multi-criteria sorting
 ```javascript
-const numbers =  [1, 5, 7, 3, 2, 4, 6, 8, 9, 10]
-console.log(sort(numbers,1)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-console.log(sort(numbers,-1)) // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-const array = [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+const numbers = [1, 5, 7, 3, 2, 4, 6, 8, 9, 10]
+console.log(sort(numbers, 1)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(sort(numbers, -1)) // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+const array = [{ name: 'simon', age: 18 }, { name: 'kitty', age: 20 }]
 console.log(sort(array, 'name')) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}]
 console.log(sort(array, '-name')) // [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
-const array2 = [{name: 'simon', age: 18}, {name: 'kitty', age: 20},{name: 'simon', age: 19}]
-console.log(sort(array2, ['age','name'])) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}, {name: 'simon', age: 19}]
-console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+const array2 = [{ name: 'simon', age: 18 }, { name: 'kitty', age: 20 }, { name: 'simon', age: 19 }]
+console.log(sort(array2, ['age', 'name'])) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}, {name: 'simon', age: 19}]
+console.log(sort(array2, ['-age', 'name'])) // [{name: 'simon', age: 19}, {name: 'simon', age: 18}, {name: 'kitty', age: 20}]
 ```
 
 ## CreateSignatureCanvas
@@ -941,9 +935,9 @@ console.log(unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;')) // "< a 
 - params:
   - fn: function
 ```javascript
-timeCost(()=>{
+timeCost(() => {
   let a = 1
-  for(let i=0;i<1000;i++){
+  for (let i = 0; i < 1000; i++) {
     a++
   }
 }) // 输出: timeCost: 0.046s
@@ -964,8 +958,8 @@ log('hello world') // hello world
 - params:
   - str: Copied content
 ```javascript
-btn.onclick = () =>  {
-  if(copy(textarea.value)){
+btn.onclick = () => {
+  if (copy(textarea.value)) {
     alert('Replication succeeded')
   }
 }
@@ -990,7 +984,7 @@ console.log(isType(1, 'Number')) // true
 console.log(isType('1', 'N')) // false
 console.log(isType({}, 'O | A')) // true (Object | Array)
 console.log(isType(new Promise(), 'P')) // true (Promise)
-console.log(isType(function(){}, 'P | F')) // true (Promise | Function)
+console.log(isType(() => {}, 'P | F')) // true (Promise | Function)
 ```
 
 ## randomDate
@@ -1029,7 +1023,7 @@ const array = [
     ]
 ```
 
-## deepCompare 
+## deepCompare
 - Compare two objects deeply
 - ignoreKeys Ignores that the specified keys can be arrays or regular expressions
 - params:
@@ -1040,13 +1034,13 @@ const array = [
 - If both objects are the same, {error:[], errorMsg:[]}, error is empty, errorMsg is empty
 ```javascript
 // params: { obj1: any, obj2: any, ignoreKeys: string[] | RegExp }
-const obj1 = {a:1,b:2,c:3}
-const obj2 = {a:1,b:2,c:3}
-const obj3 = {a:1,b:2,c:4}
-deepCompare(obj1,obj2) // {error:[],errorMsg:[]}
-deepCompare(obj1,obj3) // {error:['c'],errorMsg:['3','4']}
+const obj1 = { a: 1, b: 2, c: 3 }
+const obj2 = { a: 1, b: 2, c: 3 }
+const obj3 = { a: 1, b: 2, c: 4 }
+deepCompare(obj1, obj2) // {error:[],errorMsg:[]}
+deepCompare(obj1, obj3) // {error:['c'],errorMsg:['3','4']}
 ```
-## deepMerge 
+## deepMerge
 - A deep copy version of Object.assign
 - params:
   - a: The object to be returned
@@ -1061,7 +1055,7 @@ const source2 = { c: { e: 6 } }
 const result = deepMerge(target, source1, source2)
 console.log(result) // { a: 1, b: 4, c: { d: 5, e: 6 } }
 ```
-## asyncPool 
+## asyncPool
 - Controls the number of asynchronous concurrent executions
 - params:
   - max: Maximum number of concurrency
@@ -1073,7 +1067,7 @@ asyncPool(limit, tasks).then((results) => {
 })
 ```
 
-## quickFind 
+## quickFind
 - quickFind(array: any[], key: any) ,Returns a new instance
 - params:
   - array: The array to be found
@@ -1082,42 +1076,42 @@ asyncPool(limit, tasks).then((results) => {
 - set update or new item-O(1)
 - delete delete item-O(1)
 ```javascript
-const find = quickFind([{id:1,name:'simon'},{id:2,name:'simon'}],'id')
+const find = quickFind([{ id: 1, name: 'simon' }, { id: 2, name: 'simon' }], 'id')
 find.find(1) // find: id = 1 => {id:1,name:'simon'}
-find.set({id:1,name:'simon'})
+find.set({ id: 1, name: 'simon' })
 find.delete(1) // delete: id = 1 => {id:1,name:'simon'}
 ```
-## quickFilter 
+## quickFilter
 - Quickly fuzzily find items and values for key names such as: 'name=/h/'
 - params:
   - array: The array to be filtered
   - key: The key to be filtered, filtered according to the key, supports the regular matching of the key name of the key and the value of the item
 ```javascript
 // quickFilter(array: any[], key: string | Array<string>)
-    const arr = [
-      {
-        name: 'simon',
-        age: 18,
-        id: 0,
-      },
-      {
-        name: 'simon5',
-        age: 49,
-        id: 3,
-      },
-      {
-        name: "hi"
-      },
-      {
-        name: "hi",
-        age: "2",
-        en: "0"
-      }
-    ]
- quickFilter(arr,['id=22', 'name=simon5']) // [{"age": 39,"id": 22,"name": "simon3"},{"age": 9,"id": 3,"name": "simon5"}]
- quickFilter(arr,['name=/h/']) // [{"age": "2","en": "0","name": "hi"},{"name": "hi"}]
+const arr = [
+  {
+    name: 'simon',
+    age: 18,
+    id: 0,
+  },
+  {
+    name: 'simon5',
+    age: 49,
+    id: 3,
+  },
+  {
+    name: 'hi'
+  },
+  {
+    name: 'hi',
+    age: '2',
+    en: '0'
+  }
+]
+quickFilter(arr, ['id=22', 'name=simon5']) // [{"age": 39,"id": 22,"name": "simon3"},{"age": 9,"id": 3,"name": "simon5"}]
+quickFilter(arr, ['name=/h/']) // [{"age": "2","en": "0","name": "hi"},{"name": "hi"}]
 ```
-## deepClone 
+## deepClone
 - Deep copy of an object
 - Circular dependencies are supported
 - Complex types are supported
@@ -1137,7 +1131,7 @@ const obj = {
 obj.self = obj
 const obj2 = deepClone(obj) // Returns a new object
 ```
-## curry 
+## curry
 - Currification of functions
 - params:
   - fn: The function to be curried
@@ -1149,19 +1143,19 @@ const add3 = add2(2)
 add3(3) // 6
 ```
 
-## memorizeFn 
+## memorizeFn
 - Returns a function that caches the result based on the arguments
 - params:
   - fn: The function to be cached
 ```javascript
 let count = 0
-const fn = memorizeFn(()=> count++)
+const fn = memorizeFn(() => count++)
 fn()
 fn()
 console.log(count) // => 1
 ```
 
-## debounce 
+## debounce
 - Function stabilization
 - params:
   - fn: The function to be stabilized
@@ -1171,18 +1165,18 @@ const f = debounce(() => {
   console.log('debounce')
 }, 1000)
 ```
-## throttle 
+## throttle
 - Function throttling
 - params:
   - fn: The function to be throttled
   - delay: Delay time
 ``` javascript
-  const f = throttle(() => {
-    console.log('throttle')
-  }, 1000)
+const f = throttle(() => {
+  console.log('throttle')
+}, 1000)
 ```
 
-## traverse 
+## traverse
 - Iterate over objects or arrays to quickly get the value in the arr from the function name in options
 - The function receives target-currently traversed value, index-currently traversed index, item-currently traversed item
 - You can specify multiple properties
@@ -1208,7 +1202,7 @@ traverse(obj, {
 })
 ```
 
-## transformKey 
+## transformKey
 - Supports multi-level keys
 - Converts the object's key to the desired key
 - params:
@@ -1232,7 +1226,6 @@ console.log(newObj)
 // { familyName: 'simon', familyAge: 18, name: 'simon' }
 ```
 
-
 ## once
 - A function that executes only once
 - params:
@@ -1242,7 +1235,7 @@ document.addEventListener('click', once(() => {
   console.log('click')
 }))
 document.click() // click
-document.click() // 
+document.click() //
 ```
 
 ## VFetch
@@ -1321,7 +1314,6 @@ request.get({ // Cancels the previous request
 })
 ```
 
-
 ## stringify
 - Serializes an object to a string
 - Parameters:
@@ -1334,7 +1326,7 @@ request.get({ // Cancels the previous request
   }
 ```javascript
 console.log(stringify({ user: 'simon', age: '18' })) // 'user=simon&age=18'
-console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep:';', eq:':', hyp:true, px: true})) // 'width:100px;height:18px;background-color:red'
+console.log(stringify({ width: 100, height: '18px', backgroundColor: 'red' }, { sep: ';', eq: ':', hyp: true, px: true })) // 'width:100px;height:18px;background-color:red'
 ```
 ## parse
 - Deserializes a string to an object
@@ -1348,27 +1340,27 @@ console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep
 ```javascript
 console.log(parse('user=simon&age=18')) // { user: 'simon', age: '18' }
 console.log(parse('width:100px;height:18px;background-color:red', {
-  sep: ";",
-  eq: ":",
+  sep: ';',
+  eq: ':',
   camel: true,
 })) // {width: '100px', height: '18px', backgroundColor: 'red'}
 ```
 ## jsCookie
 ```javascript
-jsCookie.set('name', 'simon') 
-console.log(jsCookie.get('name')) // 'simon' 
-jsCookie.remove('name')  
+jsCookie.set('name', 'simon')
+console.log(jsCookie.get('name')) // 'simon'
+jsCookie.remove('name')
 console.log(jsCookie.get('name')) // ''
 ```
 ## uuid
-- Generate uuid 
+- Generate uuid
 - params:
   - len: Length Defaults to 8
   - radix: The default value for base is 16
-- Support limiting the length and type of generated uuid 
+- Support limiting the length and type of generated uuid
 ```javascript
 console.log(uuid()) // '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
-console.log(uuid(16, 'hex')) // 'a0b1c2d3e4f5' 
+console.log(uuid(16, 'hex')) // 'a0b1c2d3e4f5'
 console.log(uuid(8, 2)) // '11110011'
 ```
 ## formateDate
@@ -1381,9 +1373,9 @@ console.log(formateDate(new Date(), 'yyyy-MM-dd')) // '2019-01-01'
 ```
 ## monitorPef
 - Digitize browser performance metrics
-- Redirect time Redirect time Redirect time First screen time Previous page unload time Browser read cache time DNS resolution time TCP completion handshake time HTTP request response completion time Time DOM time before starting loading DOM load completion time Script load time onload event time Page full load time 
+- Redirect time Redirect time Redirect time First screen time Previous page unload time Browser read cache time DNS resolution time TCP completion handshake time HTTP request response completion time Time DOM time before starting loading DOM load completion time Script load time onload event time Page full load time
 ``` javascript
-monitorPef() 
+monitorPef()
 /*
 Redirect time 0
 Number of redirects 0
@@ -1402,9 +1394,9 @@ Page full load time 3.0144000000953675
 ```
 ## getLocation
 - Obtain geolocation information based on promise packaging
-- params: 
-  - enableHighAccuracy: boolean /* High precision */ 
-  - timeout: number /* Timeout period */ 
+- params:
+  - enableHighAccuracy: boolean /* High precision */
+  - timeout: number /* Timeout period */
   - maximumAge: number /* Cache time */
 ```javascript
 console.log(await getLocation()) //  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
@@ -1429,18 +1421,18 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 - Pictures load lazily
 - params:
   - element: Image element, if it is an attribute, will automatically get the element
-  - params-1: A collection of pictures element | Element[] | NodeList[] | class | id | tagName 
-  - params-2: Root specifies that the relative container defaults to body 
-  - params-3: rootMargin specifies margins relative to the container When loading at default distance of 200px from the bottom of the container (↑ → ↓ ←) '0px 0px 200px 0px' 
+  - params-1: A collection of pictures element | Element[] | NodeList[] | class | id | tagName
+  - params-2: Root specifies that the relative container defaults to body
+  - params-3: rootMargin specifies margins relative to the container When loading at default distance of 200px from the bottom of the container (↑ → ↓ ←) '0px 0px 200px 0px'
   - params-4: Threshold Specifies the threshold at which images are loaded
 ```javascript
 // usage
 // By default, the image that displays src is replaced by data-src when scrolling to the image
-  lazyLoad(document.querySelectorAll("img"));
-  lazyLoad("img[data-src]");
-  lazyLoad(".img-wrapper>img");
+lazyLoad(document.querySelectorAll('img'))
+lazyLoad('img[data-src]')
+lazyLoad('.img-wrapper>img')
 // template
-  <img src="temp" data-src="../public/favicon.svg" alt="" h-10 bg-red />
+<img src="temp" data-src="../public/favicon.svg" alt="" h-10 bg-red />
 ```
 
 ## addScript
@@ -1464,7 +1456,7 @@ addLink('https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css')
 - params:
   - str: Style content
 ```javascript
-/* 
+/*
 <style>
  .test {
   color: red;
@@ -1494,7 +1486,7 @@ download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
   - str: string
   - type: Removes the space type, and by default removes the front and back spaces
 ```javascript
-trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
+trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around')
 console.log(trim('  h e l l o  ')) // 'h e l l o'
 console.log(trim('  h e l l o  ', 'pre')) // 'h e l l o  '
 console.log(trim('  h e l l o  ', 'post')) // '  h e l l o'
@@ -1503,7 +1495,7 @@ console.log(trim('  h e l l o  ', 'all')) // 'hello'
 
 ## compressCss
 - Compress css
-- params: 
+- params:
   - str: CSS content
 ```typescript
 compressCss(css: string): string
@@ -1517,7 +1509,7 @@ scrollToTop()
 ```
 
 ## createEventBus
-- createEventBus() 
+- createEventBus()
 - emit Event sending
 - on Event listening
 - off Event cancellation
@@ -1570,7 +1562,7 @@ console.log(getScrollPosition()) // { x: number, y: number }
 - params:
   - str: string
 ```javascript
-console.log(camelize(hello-world)) // 'helloWorld'
+console.log(camelize(hello - world)) // 'helloWorld'
 ```
 
 ## hyphenate
@@ -1656,7 +1648,7 @@ console.log(formateNum(12253.123, 2)) // '12,253.12'
   - fn: Functions that may have exceptions
 ```javascript
 // interceptError(fn: Function) => Promise<any>
-interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
+interceptError(() => { throw new Error('error') }).catch((err) => { console.log(err) })
 ```
 ## isBottom
 - Tell if scrolling bottoms out

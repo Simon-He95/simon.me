@@ -30,7 +30,7 @@ const directoryList = {
 ```bash
 npm i @simon_he/nums-wheel # 安装
 
-import { 
+import {
   numsWheel,
   ...
  } from '@simon_he/nums-wheel' # 按需引入
@@ -40,7 +40,6 @@ import {
 ## 目录结构
 <Directory type="zh" :lists="directoryList"></Directory>
 
-
 ## numsWheel
 - 数字滚轮控件
 - 无需在onMounted中调用,可以在任意地方调用
@@ -49,7 +48,7 @@ import {
   - container: string | HTMLElement 父容器
   - options: {  format: '(,ddd)' | '(,ddd).dd' | '(.ddd),dd' | '( ddd),dd' | 'd' 数字格式 startVal: number 起始数字 endVal: number 最终数字  duration: number 动画时长  animation: 'count' | 'countdown' 动画方式 }
 ```javascript
-numWheel('#main', {  endVal: 9000.12 }) // 默认format: '(,ddd).dd' startVal: 0 duration: 500 animation: 'countdown', 可以自定义format, startVal, duration, animation
+numWheel('#main', { endVal: 9000.12 }) // 默认format: '(,ddd).dd' startVal: 0 duration: 500 animation: 'countdown', 可以自定义format, startVal, duration, animation
 ```
 
 ## GitHub

@@ -11,6 +11,7 @@ import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
 import { VividTyping } from 'vivid-typing'
 import App from './App.vue'
+
 const routes = autoRoutes.map((i) => {
   return {
     ...i,
@@ -20,7 +21,7 @@ const routes = autoRoutes.map((i) => {
   }
 })
 
-const scrollBehavior = (to: any, from: any, savedPosition: any) => {
+function scrollBehavior(to: any, from: any, savedPosition: any) {
   if (to.path === '/')
     return { top: 0 }
   return savedPosition || { top: 0 }
@@ -34,8 +35,12 @@ export const createApp = ViteSSG(
     dayjs.extend(LocalizedFormat)
 
     if (isClient) {
-      router.beforeEach(() => { NProgress.start() })
-      router.afterEach(() => { NProgress.done() })
+      router.beforeEach(() => {
+        NProgress.start()
+      })
+      router.afterEach(() => {
+        NProgress.done()
+      })
     }
   },
 )

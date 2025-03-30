@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { isZh } from '../../lang'
+
 defineProps<{ projects: Record<string, any[]> }>()
 
 const message = ref(isZh.value ? '我引以为豪的项目清单' : 'List of projects that I am proud of')
@@ -12,7 +13,7 @@ function finish() {
 
 <template>
   <div class="prose m-auto mb-8">
-    <h1 ref="projectEl" class="mb-0 animateTitle">
+    <h1 class="mb-0 animateTitle">
       {{ isZh ? '项目' : 'Projects' }}
     </h1>
     <vivid-typing

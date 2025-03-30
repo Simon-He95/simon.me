@@ -12,7 +12,6 @@ title: Friends
     text="Friend's"></TextExpansionAnimation>
 <FriendsList></FriendsList>
 
-
 <script setup>
   import { TextExpansionAnimation } from 'text-expansion-animation'
   import 'text-expansion-animation/style.css'

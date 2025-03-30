@@ -3,6 +3,7 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useResizeObserver } from 'lazy-js-utils'
 import Avatars from './avatar'
 import { isDark } from '~/logics'
+
 const friends = [
   {
     name: 'Simon He',

@@ -142,12 +142,11 @@ const directoryList = {
 - numsWheel 组件 [s-nums-wheel](/posts/numsWheel-zh)
 - vAxios 请求封装[v-axios](/posts/vAxios)
 
-
 ## 使用说明
 ```bash
 npm i lazy-js-utils # 安装
 
-import { 
+import {
   deepCompare,
   ...
  } from 'lazy-js-utils' # 按需引入
@@ -338,8 +337,8 @@ console.log(arrayToTree(arr, { pid: 'parent_id' }))
 ## useShare
 - 通过调用本机的共享机制作为 Web Share API 的一部分。如果不支持 Web Share API，则此方法为 undefined。
 - 参数:
-  - url: 要共享的 URL  
-  - text: 要共享的文本  
+  - url: 要共享的 URL
+  - text: 要共享的文本
   - title: 要共享的标题
   - files: 要共享的文件
 ```js
@@ -500,8 +499,8 @@ stop() // 停止计算
 - 参数:
   - callback: 回调函数
 ```javascript
-const stop = useResizeObserver((width,height)=>{
-  console.log(width,height)
+const stop = useResizeObserver((width, height) => {
+  console.log(width, height)
 })
 stop() // 停止监听
 ```
@@ -511,8 +510,8 @@ stop() // 停止监听
 - 参数:
   - callback: 回调函数
 ```javascript
-const stop = useWindowScroll((left,top)=>{
-  console.log(left,top)
+const stop = useWindowScroll((left, top) => {
+  console.log(left, top)
 })
 stop() // 停止监听
 ```
@@ -523,7 +522,7 @@ stop() // 停止监听
   - element: string | Element
   - callback: (rect: DOMRect) => void
 ```javascript
-const stop = useElementBounding('#id',(rect)=>{
+const stop = useElementBounding('#id', (rect) => {
   console.log(rect)
 })
 stop() // 停止监听
@@ -544,9 +543,9 @@ stop() // 停止监听
     attributeFilter?: string[]
     }
 ```javascript
-const stop = useMutationObserver('#main', (mutations)=>{
+const stop = useMutationObserver('#main', (mutations) => {
   console.log(mutations)
-}, {attributes:true})
+}, { attributes: true })
 stop() // 停止监听
 ```
 
@@ -578,9 +577,9 @@ toggle() // 开启关闭画中画模式
   - container: 屏幕分享的展示容器
   - callback: 停止分享时的回调
 ```javascript
-shareScreen('#main',() => {
-  console.log("已停止分享");
-});
+shareScreen('#main', () => {
+  console.log('已停止分享')
+})
 ```
 
 ## dbStorage
@@ -591,10 +590,10 @@ shareScreen('#main',() => {
 - 持久化存储
 - 支持二进制储存
 ```javascript
-  const { add, read, remove } = await dbStorage()
-  set('key', { video:Blob }) // 添加数据或更新数据 key: string | number, value: object
-  read('key') // 读取数据 key: string | number, 返回 { video:Blob }
-  remove('key') // 删除数据 key: string | number
+const { add, read, remove } = await dbStorage()
+set('key', { video: Blob }) // 添加数据或更新数据 key: string | number, value: object
+read('key') // 读取数据 key: string | number, 返回 { video:Blob }
+remove('key') // 删除数据 key: string | number
 ```
 
 ## waterfall
@@ -607,30 +606,30 @@ shareScreen('#main',() => {
   - width 图片宽度 默认为200
 ```javascript
 const append = waterfall([
-  "../public/kt.png",
-  "../public/favicon.svg",
-  "../public/wechat.jpg",
-  "../public/favicon.svg",
-  "../public/favicon.svg",
-  "../public/zfb.jpg",
-  "../public/favicon.svg",
-  "../public/favicon.svg",
-]);
+  '../public/kt.png',
+  '../public/favicon.svg',
+  '../public/wechat.jpg',
+  '../public/favicon.svg',
+  '../public/favicon.svg',
+  '../public/zfb.jpg',
+  '../public/favicon.svg',
+  '../public/favicon.svg',
+])
 
 useWindowScroll(() => {
   if (isBottom()) { // 触底追加新图片
     append([
-      "../public/kt.png",
-      "../public/favicon.svg",
-      "../public/wechat.jpg",
-      "../public/favicon.svg",
-      "../public/favicon.svg",
-      "../public/zfb.jpg",
-      "../public/favicon.svg",
-      "../public/favicon.svg",
-    ]);
+      '../public/kt.png',
+      '../public/favicon.svg',
+      '../public/wechat.jpg',
+      '../public/favicon.svg',
+      '../public/favicon.svg',
+      '../public/zfb.jpg',
+      '../public/favicon.svg',
+      '../public/favicon.svg',
+    ])
   }
-});
+})
 ```
 
 ## dragEvent
@@ -647,10 +646,10 @@ dragEvent('#main', {
     console.log('start', e.clientX, e.clientY)
   },
   dragMove(e) {
-    console.log('move',  e.clientX, e.clientY)
+    console.log('move', e.clientX, e.clientY)
   },
   dragEnd(e) {
-    console.log('end',  e.clientX, e.clientY)
+    console.log('end', e.clientX, e.clientY)
   },
 })
 ```
@@ -662,13 +661,13 @@ dragEvent('#main', {
  - source: 图片路径 | 图片base64 | 图片blob
   - options: { quality: number 压缩质量  maxWidth: number 图片宽度  maxHeight: number 图片的高度  type: 'Blob' | 'base64' | 'blob' 图片返回的类型 }
 ```javascript
-  const file = fileEl.value.files[0];
-  const result = await compressImage(file, {
-    quality: 0.5,
-    maxWidth: 100,
-    maxHeight: 100,
-    type: "blob",
-  }); // Blob {size: 3095, type: 'image/jpeg'}
+const file = fileEl.value.files[0]
+const result = await compressImage(file, {
+  quality: 0.5,
+  maxWidth: 100,
+  maxHeight: 100,
+  type: 'blob',
+}) // Blob {size: 3095, type: 'image/jpeg'}
 ```
 
 ## addEventListener
@@ -681,13 +680,10 @@ dragEvent('#main', {
   - capture: boolean, 是否捕获
   - autoRemove: boolean, 是否自动移除事件
 ```javascript
-const remove = addEventListener('#btn',
-  'click',
-  () => {
-    console.log('click')
-  }
-)
-addEventListener(document,'DOMContentLoaded', () => {
+const remove = addEventListener('#btn', 'click', () => {
+  console.log('click')
+})
+addEventListener(document, 'DOMContentLoaded', () => {
   console.log('我就执行一次,然后事件就被自动移除了')
 }, false, true)
 ```
@@ -699,8 +695,7 @@ addEventListener(document,'DOMContentLoaded', () => {
 ```javascript
 const div = createElement('div', {
   class: 'className',
-  style: 'color: red;',
-  style: 'color: red;font-size: 20px;'',
+  style: 'color: red;font-size: 20px;',
 })
 ```
 ## sleep
@@ -709,10 +704,10 @@ const div = createElement('div', {
   - time: 睡眠时间(单位:毫秒)
   - callback: 睡眠结束后的回调函数
 ```javascript
-  sleep(1000, () => {
-    console.log('睡眠结束')
-  })
-  // await sleep(1000)
+sleep(1000, () => {
+  console.log('睡眠结束')
+})
+// await sleep(1000)
 ```
 
 ## htmlTransform
@@ -721,24 +716,24 @@ const div = createElement('div', {
 - 可用于小程序不同渠道的转换、一些特殊占位符的替换、模板的替换插入删除操作等等
 
 ```javascript
-  const code = await htmlTransform('<div class="_ee">hello</div><view bindtap="xx"></view>', {
-    div(node, { setAttribs,beforeInsert, afterInsert }) {
-      node.name = 'p'
-      setAttribs('age','19')
-      beforeInsert('<span>hi</span>')
-      afterInsert('<span>你好</span>')
-    },
-    '*'(node){
-      // 所有的节点都会进入这里
-    },
-    "$attr$_ee"(node){
-      // $attr$开头会匹配存在_ee属性的节点
-    },
-    "$attr$bindtap"(node,{ renameAttribs }){
-      renameAttribs('bindtap','onTap')
-    }
-  })
-  console.log(code) // <span>hi</span><p age="19" class="_ee">hello</p><span>你好</span><view onTap="xx"></view>
+const code = await htmlTransform('<div class="_ee">hello</div><view bindtap="xx"></view>', {
+  div(node, { setAttribs, beforeInsert, afterInsert }) {
+    node.name = 'p'
+    setAttribs('age', '19')
+    beforeInsert('<span>hi</span>')
+    afterInsert('<span>你好</span>')
+  },
+  '*': function (node) {
+    // 所有的节点都会进入这里
+  },
+  '$attr$_ee': function (node) {
+    // $attr$开头会匹配存在_ee属性的节点
+  },
+  '$attr$bindtap': function (node, { renameAttribs }) {
+    renameAttribs('bindtap', 'onTap')
+  }
+})
+console.log(code) // <span>hi</span><p age="19" class="_ee">hello</p><span>你好</span><view onTap="xx"></view>
 ```
 
 ## idleCallbackWrapper
@@ -752,37 +747,37 @@ const div = createElement('div', {
   - tasks: 待执行的任务数组
   - timeout: 超时时间(单位:毫秒)
   - callback: 执行完成后的回调函数
-```javascript
+```typescript
 // idleCallbackWrapper(tasks,()=>{console.log('end')}) // 默认第二个参数为2000的简写
 const tasks: Function[] = [
   () => {
     for (let i = 0; i < 3000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("first task");
+    console.log('first task')
   },
   () => {
     for (let i = 0; i < 30000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("second task");
+    console.log('second task')
   },
   () => {
     for (let i = 0; i < 30000; i++) {
-      console.log(i);
+      console.log(i)
     }
-    console.log("third task");
+    console.log('third task')
   },
-];
+]
 // 封装前的场景
-requestIdleCallback(fn, { timeout: 1000 });
+requestIdleCallback(fn, { timeout: 1000 })
 function fn(deadline: Deadline) {
-  console.log("deadline", deadline);
+  console.log('deadline', deadline)
   while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && tasks.length > 0) {
-    tasks.shift()();
+    tasks.shift()()
   }
   if (tasks.length > 0) {
-    requestIdleCallback(fn1);
+    requestIdleCallback(fn1)
   }
 }
 
@@ -825,7 +820,7 @@ const stop = animationFrameWrapper(() => {
   if (count.value > 10) {
     stop()
   }
-}，1000)
+}, 1000)
 ```
 
 ## DotImageCanvas
@@ -837,11 +832,11 @@ const stop = animationFrameWrapper(() => {
   - bgColor?: 图片背景色 默认为白色
 - 可以await repaint中的dotImage.repaint(xxx)中的dotImage.status判断正确的src被加载完成的时机
 ```javascript
-const dotImage = new DotImageCanvas('./img/1.jpg','red', 1, '#000')
+const dotImage = new DotImageCanvas('./img/1.jpg', 'red', 1, '#000')
 dotImage.append('#main')
 // 如果有更新,可以调用dotImage.repaint('xxx','xxx',x)更新，url一致回会服用上次的图片，只更新颜色和粗细
 setTimeout(() => {
-  dotImage.repaint('./img/1.jpg','yellow' 1, '#000')
+  dotImage.repaint('./img/1.jpg', 'yellow', 1, '#000')
 }, 1000)
 ```
 
@@ -852,7 +847,7 @@ setTimeout(() => {
   - size: 切片大小(单位:字节) = 100kb // 切片的数量超过100就设定最大切片数量为100,大小为 File.size / 100
 - 返回切片数组
 ```javascript
-// fileSplice(file: File, chunkSize: number = 1024 * 100) 
+// fileSplice(file: File, chunkSize: number = 1024 * 100)
 const chunks = fileSplice(file, 1024 * 1024) // [ { file: Blob, filename: string } ]
 ```
 
@@ -876,15 +871,15 @@ console.log(levels[pwdLevel('q123456')]) // 高
   - regular: 排序规则,常规number[],1升序,-1降序,默认升序; 复杂类型需要自定义排序规则['name'],安装数组对象name属性升序等等...
 - 支持升序降序和多条件排序
 ```javascript
-const numbers =  [1, 5, 7, 3, 2, 4, 6, 8, 9, 10]
-console.log(sort(numbers,1)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-console.log(sort(numbers,-1)) // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-const array = [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+const numbers = [1, 5, 7, 3, 2, 4, 6, 8, 9, 10]
+console.log(sort(numbers, 1)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(sort(numbers, -1)) // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+const array = [{ name: 'simon', age: 18 }, { name: 'kitty', age: 20 }]
 console.log(sort(array, 'name')) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}]
 console.log(sort(array, '-name')) // [{name: 'simon', age: 18}, {name: 'kitty', age: 20}]
-const array2 = [{name: 'simon', age: 18}, {name: 'kitty', age: 20},{name: 'simon', age: 19}]
-console.log(sort(array2, ['age','name'])) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}, {name: 'simon', age: 19}]
-console.log(sort(array2, ['-age','name'])) // [{name: 'simon', age: 19}, {name: 'simon', age: 18}, {name: 'kitty', age: 20}]
+const array2 = [{ name: 'simon', age: 18 }, { name: 'kitty', age: 20 }, { name: 'simon', age: 19 }]
+console.log(sort(array2, ['age', 'name'])) // [{name: 'kitty', age: 20}, {name: 'simon', age: 18}, {name: 'simon', age: 19}]
+console.log(sort(array2, ['-age', 'name'])) // [{name: 'simon', age: 19}, {name: 'simon', age: 18}, {name: 'kitty', age: 20}]
 ```
 
 ## CreateSignatureCanvas
@@ -948,9 +943,9 @@ console.log(unescapeHtml('&lt; a href=&quot; &quot;&gt;xx&lt;/ a&gt;')) // "< a 
 - 参数:
   - fn: 函数
 ```javascript
-timeCost(()=>{
+timeCost(() => {
   let a = 1
-  for(let i=0;i<1000;i++){
+  for (let i = 0; i < 1000; i++) {
     a++
   }
 }) // 输出: timeCost: 0.046s
@@ -971,8 +966,8 @@ log('hello world') // hello world
 - 参数:
   - str: 待复制的内容
 ```javascript
-btn.onclick = () =>  {
-  if(copy(textarea.value)){
+btn.onclick = () => {
+  if (copy(textarea.value)) {
     alert('复制成功')
   }
 }
@@ -997,7 +992,7 @@ console.log(isType(1, 'Number')) // true
 console.log(isType('1', 'N')) // false
 console.log(isType({}, 'O | A')) // true (Object | Array)
 console.log(isType(new Promise(), 'P')) // true (Promise)
-console.log(isType(function(){}, 'P | F')) // true (Promise | Function)
+console.log(isType(() => {}, 'P | F')) // true (Promise | Function)
 ```
 
 ## randomDate
@@ -1036,7 +1031,7 @@ const array = [
     ]
 ```
 
-## deepCompare 
+## deepCompare
 - 深度比较两个对象是否相等
 - ignoreKeys忽略指定的keys可以为数组或者正则表达式
 - 参数:
@@ -1047,13 +1042,13 @@ const array = [
 - 如果两个对象相同，则返回{error:[],errorMsg:[]}，error为空，errorMsg为空
 ```javascript
 // params: { obj1: any, obj2: any, ignoreKeys: string[] | RegExp }
-const obj1 = {a:1,b:2,c:3}
-const obj2 = {a:1,b:2,c:3}
-const obj3 = {a:1,b:2,c:4}
-deepCompare(obj1,obj2) // {error:[],errorMsg:[]}
-deepCompare(obj1,obj3) // {error:['c'],errorMsg:['3','4']}
+const obj1 = { a: 1, b: 2, c: 3 }
+const obj2 = { a: 1, b: 2, c: 3 }
+const obj3 = { a: 1, b: 2, c: 4 }
+deepCompare(obj1, obj2) // {error:[],errorMsg:[]}
+deepCompare(obj1, obj3) // {error:['c'],errorMsg:['3','4']}
 ```
-## deepMerge 
+## deepMerge
 - Object.assign的深度拷贝版本
 - 参数:
   - a: 待返回的对象
@@ -1068,7 +1063,7 @@ const source2 = { c: { e: 6 } }
 const result = deepMerge(target, source1, source2)
 console.log(result) // { a: 1, b: 4, c: { d: 5, e: 6 } }
 ```
-## asyncPool 
+## asyncPool
 - 控制异步并发执行的数量
 - 参数:
   - max: 最大并发数量
@@ -1080,7 +1075,7 @@ asyncPool(limit, tasks).then((results) => {
 })
 ```
 
-## quickFind 
+## quickFind
 - quickFind(array: any[], key: any) ,返回一个新的实例
 - 参数:
   - array: 待查找的数组
@@ -1089,42 +1084,42 @@ asyncPool(limit, tasks).then((results) => {
 - set更新或新增项-O(1)
 - delete删除项-O(1)
 ```javascript
-const find = quickFind([{id:1,name:'simon'},{id:2,name:'simon'}],'id')
+const find = quickFind([{ id: 1, name: 'simon' }, { id: 2, name: 'simon' }], 'id')
 find.find(1) // find: id = 1 => {id:1,name:'simon'}
-find.set({id:1,name:'simon'})
+find.set({ id: 1, name: 'simon' })
 find.delete(1) // delete: id = 1 => {id:1,name:'simon'}
 ```
-## quickFilter 
+## quickFilter
 - 快速模糊查找key名字的项和值 如: 'name=/h/'
 - 参数:
   - array: 待过滤的数组
   - key: 待过滤的key,根据key来过滤,支持正则匹配key名字的项和值的项
 ```javascript
 // quickFilter(array: any[], key: string | Array<string>)
-    const arr = [
-      {
-        name: 'simon',
-        age: 18,
-        id: 0,
-      },
-      {
-        name: 'simon5',
-        age: 49,
-        id: 3,
-      },
-      {
-        name: "hi"
-      },
-      {
-        name: "hi",
-        age: "2",
-        en: "0"
-      }
-    ]
- quickFilter(arr,['id=22', 'name=simon5']) // [{"age": 39,"id": 22,"name": "simon3"},{"age": 9,"id": 3,"name": "simon5"}]
- quickFilter(arr,['name=/h/']) // [{"age": "2","en": "0","name": "hi"},{"name": "hi"}]
+const arr = [
+  {
+    name: 'simon',
+    age: 18,
+    id: 0,
+  },
+  {
+    name: 'simon5',
+    age: 49,
+    id: 3,
+  },
+  {
+    name: 'hi'
+  },
+  {
+    name: 'hi',
+    age: '2',
+    en: '0'
+  }
+]
+quickFilter(arr, ['id=22', 'name=simon5']) // [{"age": 39,"id": 22,"name": "simon3"},{"age": 9,"id": 3,"name": "simon5"}]
+quickFilter(arr, ['name=/h/']) // [{"age": "2","en": "0","name": "hi"},{"name": "hi"}]
 ```
-## deepClone 
+## deepClone
 - 深拷贝对象
 - 支持循环依赖
 - 支持复杂类型
@@ -1144,7 +1139,7 @@ const obj = {
 obj.self = obj
 const obj2 = deepClone(obj) // 返回一个新对象
 ```
-## curry 
+## curry
 - 函数柯里化
 - 参数:
   - fn: 待柯里化的函数
@@ -1156,19 +1151,19 @@ const add3 = add2(2)
 add3(3) // 6
 ```
 
-## memorizeFn 
+## memorizeFn
 - 根据参数返回一个能缓存结果的函数
 - 参数：
   - fn: 待缓存的函数
 ```javascript
 let count = 0
-const fn = memorizeFn(()=> count++)
+const fn = memorizeFn(() => count++)
 fn()
 fn()
 console.log(count) // => 1
 ```
 
-## debounce 
+## debounce
 -  函数防抖
 -  参数：
   - fn: 待防抖的函数
@@ -1178,18 +1173,18 @@ const f = debounce(() => {
   console.log('debounce')
 }, 1000)
 ```
-## throttle 
+## throttle
 - 函数节流
 - 参数：
   - fn: 待节流的函数
   - delay: 延迟时间
 ``` javascript
-  const f = throttle(() => {
-    console.log('throttle')
-  }, 1000)
+const f = throttle(() => {
+  console.log('throttle')
+}, 1000)
 ```
 
-## traverse 
+## traverse
 - 遍历对象或数组,快速从options中函数名获取arr中的值
 - 函数接收target-当前遍历的值，index-当前遍历的索引, item-当前遍历的那一项
 - 可以指定多个属性
@@ -1215,7 +1210,7 @@ traverse(obj, {
 })
 ```
 
-## transformKey 
+## transformKey
 - 支持多层级的key
 - 将对象的key转换成需要的key
 - 参数:
@@ -1239,7 +1234,6 @@ console.log(newObj)
 // { familyName: 'simon', familyAge: 18, name: 'simon' }
 ```
 
-
 ## once
 - 只执行一次的函数
 - 参数:
@@ -1249,7 +1243,7 @@ document.addEventListener('click', once(() => {
   console.log('click')
 }))
 document.click() // click
-document.click() // 
+document.click() //
 ```
 
 ## VFetch
@@ -1272,13 +1266,13 @@ interface IFetchInterceptors {
 interface IFetchConfig extends IFetchOptions {
   url: string // 请求地址
   keepalive?: boolean // 属性用于页面卸载时，告诉浏览器在后台保持连接，继续发送数据
-  body?: any  // body参数 {},GET请求会合并到url后面
-  integrity?: string  // 属性指定一个哈希值，用于检查 HTTP 回应传回的数据是否等于这个预先设定的哈希值。
-  referrer?: string  // 属性用于设定fetch()请求的referer标头。
+  body?: any // body参数 {},GET请求会合并到url后面
+  integrity?: string // 属性指定一个哈希值，用于检查 HTTP 回应传回的数据是否等于这个预先设定的哈希值。
+  referrer?: string // 属性用于设定fetch()请求的referer标头。
   referrerPolicy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'origin' | 'origin-when-cross-origin' | 'unsafe-url' | 'strict-origin' | 'strict-origin-when-cross-origin' | 'same-origin'
   method?: Method // 请求类型 默认GET 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' 支持vFetch.get | post | delete | put的形式
   credentials?: Credentials // 请求是否带上cookie 默认omit 'include' | 'same-origin' | 'omit'
-  params?: Record<string, string>  // 请求参数 根据bodyType决定是否会被序列化
+  params?: Record<string, string> // 请求参数 根据bodyType决定是否会被序列化
   responseType?: ResponseType // 返回类型 默认json 'formData' | 'text' | 'blob' | 'arrayBuffer' | 'json'
   bodyType?: BodyType // 请求类型 默认json 'json' | 'form' | 'file'
   cache?: Cache // 缓存类型 默认不缓存 'no-cache' | 'default' | 'force-cache' | 'only-if-cached'
@@ -1290,12 +1284,12 @@ interface IFetchConfig extends IFetchOptions {
 }
 
 interface IFetchOptions {
-  baseURL?: string  // 基础url
+  baseURL?: string // 基础url
   timeout?: number // 超时时间 ms 默认为20000
-  headers?: Record<string, any>  // 请求头 例如: {'Content-Type': 'application/json'}
+  headers?: Record<string, any> // 请求头 例如: {'Content-Type': 'application/json'}
   interceptors?: IFetchInterceptors // 请求拦截器
 }
-  // useage
+// useage
 const request = new VFetch({
   baseURL: 'http://localhost:3001/',
   interceptors: {
@@ -1340,7 +1334,7 @@ request.get({ // 取消上一个请求
   }
 ```javascript
 console.log(stringify({ user: 'simon', age: '18' })) // 'user=simon&age=18'
-console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep:';', eq:':', hyp:true, px: true})) // 'width:100px;height:18px;background-color:red'
+console.log(stringify({ width: 100, height: '18px', backgroundColor: 'red' }, { sep: ';', eq: ':', hyp: true, px: true })) // 'width:100px;height:18px;background-color:red'
 ```
 
 ## parse
@@ -1355,27 +1349,27 @@ console.log(stringify({ width: 100, height: '18px',backgroundColor:'red' },{ sep
 ```javascript
 console.log(parse('user=simon&age=18')) // { user: 'simon', age: '18' }
 console.log(parse('width:100px;height:18px;background-color:red', {
-  sep: ";",
-  eq: ":",
+  sep: ';',
+  eq: ':',
   camel: true,
 })) // {width: '100px', height: '18px', backgroundColor: 'red'}
 ```
 ## jsCookie
 ```javascript
-jsCookie.set('name', 'simon') 
-console.log(jsCookie.get('name')) // 'simon' 
-jsCookie.remove('name')  
+jsCookie.set('name', 'simon')
+console.log(jsCookie.get('name')) // 'simon'
+jsCookie.remove('name')
 console.log(jsCookie.get('name')) // ''
 ```
 ## uuid
-- 生成uuid 
+- 生成uuid
 - 参数:
   - len: 长度 默认为8
   - radix: 进制 默认为16
-- 支持限制生成的uuid长度和类型 
+- 支持限制生成的uuid长度和类型
 ```javascript
 console.log(uuid()) // '71A793A9-BBAE-49FC-B957-5BC71E5AD044'
-console.log(uuid(16, 'hex')) // 'a0b1c2d3e4f5' 
+console.log(uuid(16, 'hex')) // 'a0b1c2d3e4f5'
 console.log(uuid(8, 2)) // '11110011'
 ```
 ## formateDate
@@ -1388,30 +1382,30 @@ console.log(formateDate(new Date(), 'yyyy-MM-dd')) // '2019-01-01'
 ```
 ## monitorPef
 - 数字化浏览器性能指标
-- 重定向时间 重定向次数 首屏时间 上一页卸载时间 浏览器读取缓存时间 DNS解析时间 TCP完成握手时间 HTTP请求响应完成时间 DOM开始加载前所花费时间 DOM加载完成时间 脚本加载时间 onload事件时间 页面完全加载时间 
+- 重定向时间 重定向次数 首屏时间 上一页卸载时间 浏览器读取缓存时间 DNS解析时间 TCP完成握手时间 HTTP请求响应完成时间 DOM开始加载前所花费时间 DOM加载完成时间 脚本加载时间 onload事件时间 页面完全加载时间
 ``` javascript
-monitorPef() 
+monitorPef()
 /*
-重定向时间	0
-重定向次数	0
-首屏时间	414
-上一页卸载时间	0
-浏览器读取缓存时间	28.200000047683716
-DNS解析时间	0
-TCP完成握手时间	0.3097000000476837
-HTTP请求响应完成时间	0.026600000143051146
-DOM开始加载前所花费时间	0.36460000014305116
-DOM加载完成时间	2.600299999952316
-脚本加载时间	0.00040000009536743164
-onload事件时间	0
-页面完全加载时间	3.0144000000953675
+重定向时间 0
+重定向次数 0
+首屏时间 414
+上一页卸载时间 0
+浏览器读取缓存时间 28.200000047683716
+DNS解析时间 0
+TCP完成握手时间 0.3097000000476837
+HTTP请求响应完成时间 0.026600000143051146
+DOM开始加载前所花费时间 0.36460000014305116
+DOM加载完成时间 2.600299999952316
+脚本加载时间 0.00040000009536743164
+onload事件时间 0
+页面完全加载时间 3.0144000000953675
 */
 ```
 ## getLocation
 - 基于promise封装的获取地理位置信息
-- params: 
-  - enableHighAccuracy: boolean 高精度 
-  - timeout: number 超时时间 
+- params:
+  - enableHighAccuracy: boolean 高精度
+  - timeout: number 超时时间
   - maximumAge: number 缓存时间
 ```javascript
 console.log(await getLocation()) //  { enableHighAccuracy: boolean = false, timeout: number = 5000, maximumAge: number = 0 }
@@ -1436,18 +1430,18 @@ preload(['https://img.yzcdn.cn/vant/cat.jpeg', 'https://img.yzcdn.cn/vant/dog.jp
 - 图片懒加载
 - 参数:
   - element: 图片元素,如果是属性会自动获取element
-  - params-1: 图片的集合 Element | Element[] | NodeList[] | class | id | tagName 
-  - params-2: root 指定相对容器默认是body 
-  - params-3: rootMargin 指定相对容器的边距 默认距离容器底部200px时候加载(↑ → ↓ ←) '0px 0px 200px 0px' 
+  - params-1: 图片的集合 Element | Element[] | NodeList[] | class | id | tagName
+  - params-2: root 指定相对容器默认是body
+  - params-3: rootMargin 指定相对容器的边距 默认距离容器底部200px时候加载(↑ → ↓ ←) '0px 0px 200px 0px'
   - params-4: threshold 指定图片加载的阈值
 ```javascript
 // usage
 // 默认展示src的图片，当滚动到图片的时候data-src替换src
-  lazyLoad(document.querySelectorAll("img"));
-  lazyLoad("img[data-src]");
-  lazyLoad(".img-wrapper>img");
+lazyLoad(document.querySelectorAll('img'))
+lazyLoad('img[data-src]')
+lazyLoad('.img-wrapper>img')
 // template
-  <img src="temp" data-src="../public/favicon.svg" alt="" h-10 bg-red />
+<img src="temp" data-src="../public/favicon.svg" alt="" h-10 bg-red />
 ```
 
 ## addScript
@@ -1471,7 +1465,7 @@ addLink('https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css')
 - 参数:
   - str: style内容
 ```javascript
-/* 
+/*
 <style>
  .test {
   color: red;
@@ -1501,7 +1495,7 @@ download('https://www.baidu.com/img/bd_logo1.png', 'baidu.png')
   - str: 字符串
   - type: 去除空格类型,默认去除前后空格
 ```javascript
-trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around') 
+trim(str: string,type: 'pre' | 'post' | 'around' | 'all' = 'around')
 console.log(trim('  h e l l o  ')) // 'h e l l o'
 console.log(trim('  h e l l o  ', 'pre')) // 'h e l l o  '
 console.log(trim('  h e l l o  ', 'post')) // '  h e l l o'
@@ -1510,7 +1504,7 @@ console.log(trim('  h e l l o  ', 'all')) // 'hello'
 
 ## compressCss
 - 压缩css
-- 参数: 
+- 参数:
   - str: css内容
 ```typescript
 compressCss(css: string): string
@@ -1524,7 +1518,7 @@ scrollToTop()
 ```
 
 ## createEventBus
-- createEventBus() 
+- createEventBus()
 - emit 事件发送
 - on 事件监听
 - off 事件取消
@@ -1577,7 +1571,7 @@ console.log(getScrollPosition()) // { x: number, y: number }
 - 参数:
   - str: 字符串
 ```javascript
-console.log(camelize(hello-world)) // 'helloWorld'
+console.log(camelize(hello - world)) // 'helloWorld'
 ```
 
 ## hyphenate
@@ -1663,7 +1657,9 @@ console.log(formateNum(12253.123, 2)) // '12,253.12'
   - fn: 可能存在异常的函数
 ```javascript
 // interceptError(fn: Function) => Promise<any>
-interceptError(() => { throw new Error('error') }).catch(err=>{ console.log(err) })
+interceptError(() => {
+  throw new Error('error')
+}).catch((err) => { console.log(err) })
 ```
 ## isBottom
 - 判断滚动是否触底

@@ -32,7 +32,7 @@ const directoryList = {
 ```bash
 npm i @simon_he/s-charts # install
 
-import { 
+import {
   sCharts,
   ...
  } from '@simon_he/s-charts' # Ingestion on demand
@@ -41,7 +41,6 @@ import {
 
 ## Directory structure
 <Directory type="zh" :lists="directoryList"></Directory>
-
 
 ## sCharts
 - Simplify the use of echarts

@@ -32,7 +32,7 @@ const directoryList = {
 ```bash
 npm i exports-function # install
 
-import { 
+import {
   jsonExportZip,
   ...
  } from 'exports-function' # Ingestion on demand
@@ -41,7 +41,6 @@ import {
 
 ## Directory structure
 <Directory type="zh" :lists="directoryList"></Directory>
-
 
 ## jsonExportZip
 - jJson is exported as a zip file

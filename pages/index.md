@@ -25,7 +25,7 @@ title: Simon He
     //     translateY: 0,
     //     rotateZ: 1440,
     //     duration:5000,
-    //     delay: function(el, i) { 
+    //     delay: function(el, i) {
     //       return i * 200;
     //     },
     // })
@@ -39,7 +39,7 @@ title: Simon He
         targets: '.v-content',
         translateX: 0,
         duration: 1000,
-        delay: function(el, i) { 
+        delay: function(el, i) {
           if(el)
            el.style.transform = `translateX(${i%2===0?'-':''}100vw)`
           return i * 500;

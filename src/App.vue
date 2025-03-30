@@ -2,14 +2,14 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import {
   DotImageCanvas,
-  DotTextCanvas,
+  // DotTextCanvas,
   getDevice,
   prefetch,
   scrollToTop,
   useRaf,
 } from 'lazy-js-utils'
 
-import gitFork from '@simon_he/git-fork-vue'
+// import gitFork from '@simon_he/git-fork-vue'
 import { createMouseAnimation } from 'mouse-element'
 import { sThree } from '@simon_he/s-three'
 import { useEventListener } from '@vueuse/core'
@@ -18,6 +18,7 @@ import { isZh } from '../lang'
 import { isDark } from '~/logics'
 import kb from '/images/kb.png'
 import cloth from '/images/24.png'
+import backTop from '/backTop.png'
 // import antfu from '/images/af.png'
 // import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
@@ -38,6 +39,7 @@ const imageShow = computed(() => {
 
 const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent', 'out-center')
 const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
+
 const text = ref('')
 
 onMounted(() => {
@@ -82,8 +84,8 @@ watch(
     immediate: true,
   },
 )
-const fontSize = 18
-const fontWeight = 7
+// const fontSize = 18
+// const fontWeight = 7
 // const dotText = new DotTextCanvas(
 //   text.value,
 //   fontSize,
@@ -179,6 +181,27 @@ const top = ref(0)
 
 const maxWidth = document.documentElement.clientWidth
 const maxHeight = document.documentElement.clientHeight
+let dotImage3
+watch(() => isShow.value, (newV) => {
+  if (newV) {
+    if (!dotImage3) {
+      dotImage3 = new DotImageCanvas(backTop, '', 3, 'transparent', 'center-out')
+      dotImage3.isPreferred = true
+    }
+
+    if (!dotImage3.mounted) {
+      dotImage3.mounted = true
+      dotImage3.append('.backTop')
+      dotImage3.canvas.style.width = '100%'
+    }
+    else {
+      dotImage3.continue()
+    }
+  }
+  else {
+    dotImage3.revert()
+  }
+})
 document.addEventListener('mousemove', (e) => {
   left.value = 200 - (e.x / maxWidth) * 200
   top.value = 200 - (e.y / maxHeight) * 200
@@ -218,10 +241,7 @@ onMounted(() => {
       })
 
       // Add the horizontal movement animation
-      tl.fromTo('.dotImage',
-        { translateX: '-15%' },
-        { translateX: '5%', ease: 'none' },
-      )
+      tl.fromTo('.dotImage', { translateX: '-15%' }, { translateX: '5%', ease: 'none' })
 
       // Do the same for the second image if needed
       window.gsap.set('.cloth', { opacity: 0 })
@@ -237,10 +257,7 @@ onMounted(() => {
         },
       })
 
-      tl2.fromTo('.cloth',
-        { translateX: '5%' },
-        { translateX: '-5%', ease: 'none' },
-      )
+      tl2.fromTo('.cloth', { translateX: '5%' }, { translateX: '-5%', ease: 'none' })
     }
   }, {
     delta: 200,
@@ -260,10 +277,14 @@ onMounted(() => {
     <Footer />
     <!-- <Levitation /> -->
   </main>
-  <img
+  <a
+    class="backTop" animate-tada hover="animate-none" fixed bottom-40 right-5 text-3xl w30 src="/backTop.png"
+    alt="backTop" @click="scrollToTop()"
+  />
+  <!-- <img
     v-if="isShow" animate-tada hover="animate-none"
     fixed bottom-40 right-5 text-3xl src="/backTop.png" alt="backTop" @click="scrollToTop()"
-  >
+  > -->
   <div
     fixed w-100 z--5 left-1 top-80 :style="{
       transform: `translate(${left}px, ${top}px)`,

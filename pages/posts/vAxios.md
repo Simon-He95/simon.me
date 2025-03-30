@@ -32,7 +32,7 @@ const directoryList = {
 ```bash
 npm i @simon_he/v-axios # install
 
-import { 
+import {
   vAxios,
   ...
  } from '@simon_he/v-axios' # Ingestion on demand
@@ -41,7 +41,6 @@ import {
 
 ## Directory structure
 <Directory type="zh" :lists="directoryList"></Directory>
-
 
 ## vAxios
 - Axios-based packaging
@@ -102,7 +101,6 @@ axios.post('/api/get', {
   console.log('finally')
 })
 ```
-
 
 ## GitHub
 [Welcome to PR](https://github.com/Simon-He95/vAxios)

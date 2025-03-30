@@ -9,7 +9,7 @@ duration: 1day
  ## Issues[#254](https://github.com/antfu/vite-ssg/issues/254)
 
  在使用vite-ssg中，我引入了一个npm组件，组件中有依赖document等api，dev环境都是ok的，但是build环境会报错，报错信息如下：
- 
+
  ```document is not defined```
  我就搜了一下GitHub的issues发现不少类似的情况，但是他们是在当前项目中存在的，给出的解决办法是使用onBeforeMount或者onMount包裹一下，确保他是在client环境中执行，这样就不会报错了,但这并不是我想要的，我需要去修改npm包，如果我加上了onBeforeMount我同一个组件可能会实例化多次，那么我只走一遍的逻辑就需要额外的加条件控制来return，会很麻烦。
 

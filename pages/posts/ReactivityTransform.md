@@ -6,7 +6,6 @@ duration: 5min
 description: syntax sugar.
 ---
 
-
 > [Discussions Details](https://github.com/vuejs/rfcs/discussions/369)
 
 > 中文 [Chinese Version](/posts/reactivitytransform-zh)
@@ -110,4 +109,3 @@ function inc() {
     },
   }
   ```
-

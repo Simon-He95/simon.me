@@ -12,9 +12,9 @@ subtitle: 'Author: Simon'
   ## 这篇blog是来分享一下我的terminal,另外推荐一些好用的[vscode插件和配置](https://github.com/Simon-He95/directory-configuration)
 
   #### 个人觉得比较好用的alias:  <div inline-block m-l-2 text-xl><span i-carbon:star-filled v-for="i in 5" bg-yellow></span></div>
-  
+
   ``` bash
-  #1. run 
+  #1. run
   # 前提需要workspace中的package的name:"shared" => run shared d
   # 另一种方式是直接在script中使用npm -C workspace run d
     run package d --flag # pnpm中会filter到package.json中的script(d是dev的缩写), 支持命令行参数, 如果是yarn环境,则会使用yarn来执行
@@ -54,16 +54,16 @@ subtitle: 'Author: Simon'
 
   #12. commit
     commit # 配置常用的commit提交信息,比如chore: init ; chore: update denpendency; fix: typo 等等快速提交commit
- 
+
   #13. grant
     grant # 分配文件权限 对于某些.sh文件没办法直接执行,可以通过grant a.sh 分配权限后执行 source a.sh
-  
+
   #14. new
     new a/b/c/d.ts # 如果路径上的目录不存在,则会自动创建目录,并生成对应的文件
 
   #15. ccommand
-    ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand, 可调用子包script： ccommand ./playground 
-  
+    ccommand # 终端选择执行script命令, 需全局安装: npm i -g ccommand, 可调用子包script： ccommand ./playground
+
   #16. cn 选择node版本 - fnm和gum
     cn # 通过选项切换fnm下安装的node版本
 
