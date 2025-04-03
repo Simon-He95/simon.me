@@ -1,7 +1,7 @@
+import type { Ref } from 'vue'
+import { useLocalStorage } from '@vueuse/core'
 // @unocss-include
 import { computed, ref } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
-import type { Ref } from 'vue'
 
 const language = ref<'en' | 'zh'>('en')
 export const lan = useLocalStorage('simon.me.language', language) as Ref<'en' | 'zh'>

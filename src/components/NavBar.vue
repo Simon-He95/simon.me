@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type SpeechOptions, speech, useRaf } from 'lazy-js-utils'
+import type { SpeechOptions } from 'lazy-js-utils'
+import { speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 
 const isZh = computed(() => lan.value === 'zh')

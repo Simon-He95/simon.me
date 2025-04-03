@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useResizeObserver } from 'lazy-js-utils'
-import Avatars from './avatar'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { isDark } from '~/logics'
+import Avatars from './avatar'
 
 const friends = [
   {

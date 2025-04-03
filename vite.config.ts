@@ -1,23 +1,23 @@
-import { resolve } from 'node:path'
 import type { UserConfig } from 'vite'
-import fs from 'fs-extra'
-import Pages from 'vite-plugin-pages'
-import Inspect from 'vite-plugin-inspect'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import Components from 'unplugin-vue-components/vite'
-import Markdown from 'vite-plugin-md'
+import { resolve } from 'node:path'
 import Vue from '@vitejs/plugin-vue'
-import Prism from 'markdown-it-prism'
+import fs from 'fs-extra'
 import matter from 'gray-matter'
-import AutoImport from 'unplugin-auto-import/vite'
 import anchor from 'markdown-it-anchor'
 import LinkAttributes from 'markdown-it-link-attributes'
-import UnoCSS from 'unocss/vite'
-import SVG from 'vite-svg-loader'
-import { presetAttributify, presetIcons, presetUno } from 'unocss'
+import Prism from 'markdown-it-prism'
 // @ts-expect-error missing types
 import TOC from 'markdown-it-table-of-contents'
+import { presetAttributify, presetIcons, presetUno } from 'unocss'
+import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
+import Components from 'unplugin-vue-components/vite'
+import Inspect from 'vite-plugin-inspect'
+import Markdown from 'vite-plugin-md'
+import Pages from 'vite-plugin-pages'
+import SVG from 'vite-svg-loader'
 import { slugify } from './scripts/slugify'
 
 import 'prismjs/components/prism-regex'
@@ -50,8 +50,8 @@ const config: UserConfig = {
       'markdown-it-anchor',
     ],
     exclude: [
-      'text-expansion-animation'
-    ]
+      'text-expansion-animation',
+    ],
   },
   plugins: [
     UnoCSS({
@@ -179,7 +179,7 @@ const config: UserConfig = {
       output: {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
   },

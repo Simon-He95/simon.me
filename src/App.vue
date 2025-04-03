@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { sThree } from '@simon_he/s-three'
+import { useEventListener } from '@vueuse/core'
+
 import {
   DotImageCanvas,
   // DotTextCanvas,
@@ -8,17 +10,15 @@ import {
   scrollToTop,
   useRaf,
 } from 'lazy-js-utils'
-
 // import gitFork from '@simon_he/git-fork-vue'
 import { createMouseAnimation } from 'mouse-element'
-import { sThree } from '@simon_he/s-three'
-import { useEventListener } from '@vueuse/core'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { isZh } from '../lang'
 import { isDark } from '~/logics'
-import kb from '/images/kb.png'
-import cloth from '/images/24.png'
+import { isZh } from '../lang'
 import backTop from '/backTop.png'
+import cloth from '/images/24.png'
+import kb from '/images/kb.png'
 // import antfu from '/images/af.png'
 // import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
