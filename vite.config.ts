@@ -45,7 +45,13 @@ const config: UserConfig = {
       '@vueuse/core',
       'dayjs',
       'dayjs/plugin/localizedFormat',
+      // 添加常用的依赖项，避免运行时重新打包
+      'markdown-it',
+      'markdown-it-anchor',
     ],
+    exclude: [
+      'text-expansion-animation'
+    ]
   },
   plugins: [
     UnoCSS({
@@ -156,14 +162,27 @@ const config: UserConfig = {
   ],
 
   build: {
+    chunkSizeWarningLimit: 800,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       onwarn(warning, next) {
         if (warning.code !== 'UNUSED_EXTERNAL_IMPORT')
           next(warning)
       },
+      inlineDynamicImports: false,
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+      },
     },
   },
-
   ssgOptions: {
     formatting: 'minify',
     format: 'cjs',
