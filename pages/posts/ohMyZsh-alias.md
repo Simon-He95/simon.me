@@ -70,77 +70,143 @@ subtitle: 'Author: Simon'
  #### 完整的alias:
 
 ```bash
+
 # User configuration
 # -------------------------#
 #  Node Package Managerƒ
 # -------------------------#
-# alias - ni
 
-alias nio="ni --prefer-offline"
-alias d="nr dev"
-alias s="nr start"
-alias b="nr build"
-alias bw="nr build --watch"
-alias t="nr test"
-alias t="nr test -u"
-alias w="nr watch"
-alias lint="nr lint"
-alias lintf="nr lint:fix"
-alias s="nr start"
-alias p="nr play || d"
-alias pr="nr preview"
-alias pb="nr play:build || b"
-alias release="npm run release"
-alias publish="npm publish"
-alias clean="git add . && git commit -m 'chore: clean' && git push"
-alias v="npm view"
-alias lock="pnpm install --no-frozen-lockfile"
+# python
+alias python=python3
+# python3 -m venv py simon
+# source simon/bin/activate
+
+# taze
+alias taze="npx taze -w -r"
+
+# code
+alias Github="cd ~/GitHub" # 快速进入github文件夹
+alias Go="cd ~/go" # 快速进入github文件夹
+alias gopath="cd ~/go/src"
+alias goi="go get"
+alias gor="go run"
+alias gob="go build"
+alias draw="~/go/bin/draw"
+alias gom="gor main.go"
+alias goinit="go mod init"
+alias rustinit="cargo new"
+
+# pnpm-patch-i 
+alias patch="pnpm-patch-i"
+
+# alias - pi -> @simon_he/pi
+alias c=clone
+alias i="pi"
+alias il="pil"
+alias ui="pui"
+alias r="prun"
+alias f="pfind"
+alias cacheclean="npm cache clean --force"
+alias nio="pi --prefer-offline" # npm install offline 离线安装
+alias d="prun dev || prun start" # dev 启动dev环境
+alias D="prun dev || prun start" # dev 启动dev环境
+alias s="prun start || prun dev || prun serve" # start the server 启动项目
+alias S="prun start || prun dev || prun serve" # start the server 启动项目
+alias ck="prun check" # check type
+# alias b="prun build" # build 执行打包
+alias bw="prun build --watch" # watch mode 执行构建并监视文件更改
+alias t="prun test" # test 执行测试
+alias tu="prun test -u" # update snapshots 执行测试并更新快照
+alias w="prun watch" # watch mode 执行watch命令
+alias lint="prun lint" # eslint 检查eslint
+alias lintf="prun lint --fix" # fix linting errors 修复eslint错误
+alias fmt="prun fmt || lintf" # fix linting errors 修复eslint错误
+alias p="prun play || prun pack || d" # play or dev 启动项目
+alias pr="prun preview || open dist/index.html" # preview 预览
+alias pb="prun play:build || b" # build and play 执行playground打包
+alias publish="npm publish --access=public" # publish to npm 发布到npm
+alias clean="git add . && git commit -m 'chore: clean' && git push" # clean 提交清理
+alias v="npm view" # 查看包信息
+alias lock="pnpm install --no-frozen-lockfile" # 更新依赖
+alias port="lsof -i " #查看端口号下进程
 
 #--------------------------#
 # project simple
 # -------------------------#
 
-alias cls="clear"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
+alias cls="clear" # 清理终端
+alias ..="cd .." # 返回上一级
+alias 。。="cd .." # 返回上一级
+alias ...="cd ../.." # 返回上上级
+alias 。。。="cd ../.." # 返回上上级
+alias ....="cd ../../.." # 返回上上上级
+alias 。。。。="cd ../../.." # 返回上上上级
+alias link="npm link" # link 本地包
+alias unlink="npm unlink" # unlink 本地包
+alias rmmodule="remove !" # 删除node_modules
 
 #--------------------------#
 # Git
 # -------------------------#
-alias remote="git remote"
-alias gs="git status"
-alias fetch="git fetch --all"
-alias gcc="git checkout"
-alias gccb="git checkout -b"
-alias gl="git log"
-alias glo="git log --online --graph"
-alias gb="git branch"
-alias gbd="git branch -d"
-alias gba="git branch -a"
-alias gc="git add . && git commit -m"
-alias ga="git add ."
-alias gs="git status"
-alias gpl="git pull --rebase"
-alias gpf="git push --force"
-alias gpt="git push origin --tags"
-alias gptf="git push origin --tags -f"
-alias gp="git push"
-alias stash="git stash"
-alias pop="git stash pop"
-alias rebase="git rebase"
-alias main="git checkout main"
-alias master="git checkout master"
-alias use="nrm use"
-alias unproxy="git config --global --unset http.proxy && git config --global --unset https.proxy"
-alias proxy="git config --global http.proxy http://127.0.0.1:57932 && git config --global https.proxy https://127.0.0.1:57932"
-alias pullmaster="git pull origin master"
-alias pullmain="git pull origin main"
-alias flog="git reflog"
-alias see="ps -ef"
+
+alias remote="git remote" # 查看远程仓库
+alias gs="git status" # 查看状态
+alias fetch="git fetch --all && gpl" # 拉取远程仓库
+alias gcc="git checkout" # 切换分支
+alias gl="git log" # 查看提交日志
+alias glo="git log --online --graph" # 查看提交日志
+alias gb="git branch" # 查看分支
+alias gbd="git branch -D" # 删除分支
+alias gba="git branch -a" # 查看所有分支
+alias gbm="git branch -m" # 重命名分支
+alias gc="git add . && git commit -m" # 提交
+alias gcv="git add . && git commit --no-verify -m" # 提交
+alias gca="git commit --amend --message=" # 修改最后一次提交
+alias cmt="commit" #  git 提交
+alias ga="git add ." # 添加
+alias gp="git push" # 推送
+alias gpl="git pull --rebase" # 拉取
+alias gpf="git push --force" # 强制推送
+alias gpt="git push origin --tags" # 推送所有标签
+alias gptf="git push origin --tags -f" # 强制推送所有标签
+alias stash="git stash" # 暂存
+alias pop="git stash pop" # 恢复暂存
+alias abort="git rebase --abort" # 退出变基
+alias main="git checkout main" # 切换到主分支
+alias master="git checkout master" # 切换到主分支
+alias use="nrm use" # 切换npm源
+alias unproxy="git config --global --unset http.proxy && git config --global --unset https.proxy" # 取消代理
+alias proxy="git config --global http.proxy http://127.0.0.1:7890 && git config --global https.proxy https://127.0.0.1:7890" # 设置代理
+alias pullmaster="git pull origin master" # 拉取主分支
+alias pullmain="git pull origin main" # 拉取主分支
+alias flog="git reflog" # 查看提交日志
+alias see="ps -ef" # 查看进程
+alias typecheck="prun typecheck"
+alias ignorecase="git config core.ignorecase false" # git 提交 区分大小写
+alias checkout="git checkout ."
+alias chore="git add . && git commit --quiet --allow-empty-message -m \"chore: update\""
+#--------------------------#
+# vsce
+# -------------------------#
+
+alias package="vsce package" # vscode 插件 打包
+alias vpublish="vsce publish" # vscode 插件 发布
 
 #--------------------------#
-# Pnpm
+# ipinfo -> brew install ipinfo-cli
+# -------------------------#
+
+alias ip="ipinfo myip"
+
+#--------------------------#
+# ccommand
+# -------------------------#
+
+# alias c="ccommand" # 选择当前scripts命令
+# alias cf="ccommand find" # 查找workspace命令
+
+#--------------------------#
+# console color
 # -------------------------#
 
 RED='\e[1;31m'     # 红
@@ -151,30 +217,50 @@ PINK='\e[1;35m'    # 粉红
 SKYBLUE='\e[1;96m' # 紫
 RES='\e[0m'        # 清除颜色
 
-console.red() {
+color () {  # 设置颜色
+  gum style --foreground "$1" "$2"
+}
+
+#--------------------------#
+# Other
+# -------------------------#
+alias zshrc="source ~/.zshrc"
+#--------------------------#
+# Functions
+# -------------------------#
+
+logRed() {
   echo -e "${RED} $* ${RES}"
 }
 
-console.green() {
+logGreen() {
   echo -e "${GREEN} $* ${RES}"
 }
 
-console.yellow() {
+logYellow() {
   echo -e "${YELLOW} $* ${RES}"
 }
 
-console.blue() {
+logBlue() {
   echo -e "${BLUE} $* ${RES}"
 }
 
-console.skyblue() {
+logSkyblue() {
   echo -e "${SKYBLUE} $* ${RES}"
 }
-console.pink() {
+logPink() {
   echo -e "${PINK} $* ${RES}"
 }
 
+# run 正对pnpm、yarn workspace 根目录执行子命令
 run() {
+  if [ -f "go.mod" ];then
+    go run $1
+    return 0
+  elif [ -f "Cargo.toml" ];then
+    cargo run $1
+    return 0
+  fi
   command="$2"
   workspace=$1
   if [ ! -d "/yarn.lock" ]; then
@@ -239,16 +325,16 @@ run() {
   fi
 }
 
-# 创建git tag
+# tag 创建git tag
 tag() {
-  console.skyblue "请输入tagname:"
+  logSkyblue "请输入tagname:"
   read tagname
   if [ "$tagname" = "" ]; then
-    console.red "tagname不能为空"
+    logRed "tagname不能为空"
     exit 1
   fi
 
-  console.skyblue "请输入描述:"
+  logSkyblue "请输入描述:"
 
   read detail
   if [ -n "detail" ]; then
@@ -262,150 +348,282 @@ tag() {
 # 自动生成.gitignore
 ignore() {
   if [ -f ".gitignore" ]; then
-    console.red ".gitignore已存在"
+    logRed ".gitignore已存在"
     return
   fi
-  console.green "...正在生成.gitignore"
+  logGreen "...正在生成.gitignore"
   touch .gitignore                                                                                                                                # 创建文件
   echo "*.DS_Store  \nnode_modules \n*.log \nidea/ \n*.local \n.DS_Store \ndist \n.cache \n.idea \nlogs \n&-debug.log \n*-error.log" >>.gitignore # 添加内容
 }
 
-# clone
-clone() {
-  str=$1
-  str1=${str##*/}
-  result=${str1%.*}
-  console.skyblue "正在clone $result"
-  if [ ! $2 ]; then
-    git clone $str && console.pink "下载完成,正在打开 $result" && code $result && cd $result && console.green '正在下载依赖' && ni
-  else
-    git clone $str && console.pink "下载完成,正在打开 $result" && code $result && cd $result && console.green '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+endWith(){
+  if echo "$1" | grep -q -E "$2$"
+  then return 0
+  else return 1
   fi
 }
 
-# template
-template() {
-  console.skyblue "请选择一个模板: ts | vue-h | vue-template | vue-tsx | nuxt | vitesse | react | next | vitepress"
-  templateName=$(gum choose "ts" "vue-h" "vue-template" "vue-tsx" "nuxt" "react" "next" "vitepress")
-  if [ ! $1 ]; then
-    console.red "需要指定一个模板名称"
+# clone 项目clone
+clone() {
+  command=$2
+  hasWrong=0
+  
+  # Check if first argument is a directory in current location
+  if [ "$1" != "" ] && [ -d "$1" ]; then
+    logSkyblue "正在打开目录: $1"
+    code "$1"
     return 0
   fi
 
-  if [ ! $templateName ]; then
-    templateName=1
+  if [ $(uname) = "Darwin" ]; then
+    paste="pbpaste"
+  else
+    paste="powershell.exe -Command \"Get-Clipboard\""
+  fi
+  
+  paste_content=$($paste)
+  # If no arguments and we're not trying to clone, open current directory
+  if [ "$1" = "" ] && [ "$paste_content" = "" ]; then
+    logSkyblue "正在打开当前目录"
+    code .
+    return 0
   fi
 
-  if [ $templateName = "ts" ]; then
-    console.blue "正在创建$1目录,下载starter-ts模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/starter-ts $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/starter-ts $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+  # If no arguments and we're not trying to clone, open current directory
+  if [ "$1" = "" ] && [ "$paste_content" != "" ]; then
+    isGit "$paste_content"
+    if [ $? = 1 ]; then
+      logSkyblue "正在打开当前目录"
+      code .
+      return 0
     fi
-  elif [ $templateName = "vue-h" ]; then
-    console.blue "正在创建$1目录,下载vitesse-lite模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-h $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
+  fi
+
+  # 默认clone在我的Github文件夹下
+  Github
+
+  if [ "$1" = "" ]; then
+    str=$($paste)
+  else
+    isGit "$1"
+    if [ $? = 1 ];then
+      str=$($paste)
+      command=$1
     else
-      npx degit Simon-He95/vitesse-h $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
+      str=$1
     fi
-  elif [ $templateName = "vue-template" ]; then
-    console.blue "正在创建$1目录,下载vitesse-lite模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-template $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-template $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "vue-tsx" ]; then
-    console.blue "正在创建$1目录,下载vitesse-tsx模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-tsx $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-tsx $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "nuxt" ]; then
-    console.blue "正在创建$1目录,下载vitesse-nuxt3模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-nuxt3 $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-nuxt3 $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "vitesse" ]; then
-    console.blue "正在创建$1目录,下载vitesse模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "react" ]; then
-    console.blue "正在创建$1目录,下载vitesse-lite-react模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-lite-react $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-lite-react $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "next" ]; then
-    console.blue "正在创建$1目录,下载vitesse-next模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-next $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
-  elif [ $templateName = "vitepress" ]; then
-    console.blue "正在创建$1目录,下载vitesse-vitepress模板,请稍等..."
-    if [ ! $2 ]; then
-      npx degit Simon-He95/vitesse-vitepress $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni
-    else
-      npx degit Simon-He95/vitesse-vitepress $1 && console.green "正在打开$1" && code $1 && cd $1 && find ./ -type f -path "./package.json" | xargs sed -i "s:pkg-name:$1:g" && console.pink '正在下载依赖' && ni || ni || ni || console.red '安装依赖失败，请重新尝试' && console.blue "正在执行 nr $2" && nr $2 || eval ${2}
-    fi
+  fi
+  isGit "${str}"
+  if [ $? = 1 ]; then    
+    logRed "请输入正确的git地址"
+    return
+  fi
+  str1=${str##*/}
+  result=${str1%.*}
+  if [ -d $result ]; then
+    logSkyblue "已存在同名目录，正在为您直接打开..."
+    code $result
+    cd $result && fetch
+    return 0
+  fi
+  logSkyblue "正在clone $result"
+
+  git clone $str && logPink "下载完成,正在打开 $result" && code $result && cd $result || hasWrong=1
+  if [ -f "package.json" ]; then
+    logGreen '正在下载依赖' && pi || pi || pi || logRed '安装依赖失败，请重新尝试'
+  fi
+  if [ "$command" ]; then
+    logBlue "正在执行 prun $command" && prun $command || eval $command
+  fi
+
+  # 回到上一级目录
+  if [ "$hasWrong" = 0 ];then
+    cd ..
   fi
 }
 
-# remove
-remove() {
-  if [ $1 ]; then
-    if [ ! -f $1 ] && [ ! -d $1 ]; then
-      console.red '文件或目录不存在'
-      return 0
-    else
-      console.blue "正在删除$1"
-      rimraf $1 && console.green "删除成功" || console.red "删除失败,请重新尝试"
-      return 1
+# isGit 判断是否是一个.git URL
+isGit(){
+  # If no argument provided, return false
+  if [ -z "$1" ]; then
+    return 1
+  fi
+  
+  # Check if the string ends with .git
+  if echo "$1" | grep -q -E "\.git$"; then
+    # Additionally verify it looks like a URL (contains :// or user@host:)
+    if echo "$1" | grep -q -E "(://|@.*:)"; then
+      return 0  # It's a git URL
     fi
   fi
+  
+  # Check if it's an https URL to a git repository
+  if echo "$1" | grep -q -E "^https://.*/(.*)/(.*)$"; then
+    if echo "$1" | grep -q -E "github\.com|gitlab\.com|bitbucket\.org"; then
+      return 0  # It's likely a git repository URL even without .git
+    fi
+  fi
+  
+  # Not a git URL
+  return 1
+}
+
+# template 选择项目模板
+template() {
+  projectName=$1
+  hasWrong=0
+  if [ "$projectName" = "" ]; then
+    projectName=$(gum input --placeholder " 请输入项目名称")
+  fi
+  if [ "$projectName" = "" ]; then
+    echo "项目名称不能为空"
+    return 0
+  fi
+  logSkyblue "请选择一个模板: ts | unplugin-starter | vue-uno | vue-tailwind | vue-h | uniapp | vue-template | vue-js-template | vue-tsx | nuxt3 | vitesse | react-uno | react-tailwind | next | vitepress | vite-ssr | react-ssr | svelte | solid | vscode"
+  templateName=$(spaceToLine "starter-ts unplugin-starter vitesse-vue-uno vitesse-vue-tailwind vitesse-h vitesse-template vitesse-jsvue vitesse-tsx vitesse-nuxt3 vitesse vitesse-lite-react vitesse-next vitesse-vitepress vitesse-vitessr vitesse-reactssr vitesse-svelte vitesse-solid vitesse-vscode" | gum filter --placeholder=" 请选择一个模板 ts | vue-h | vue-template | vue-tsx | nuxt3 | vitesse | react | next | vitepress | vite-ssr | react-ssr | svelte | solid | vscode")
+  if [ ! $templateName ]; then
+    echo "已取消"
+    return 1
+  fi
+
+
+  logBlue "正在创建$projectName目录,下载 $templateName模板,请稍等..."
+  npx degit Simon-He95/$templateName $projectName && logGreen "正在打开$projectName" && code $projectName && cd $projectName || hasWrong=1
+  if [ -f "package.json" ]; then
+    echo ${"$(cat ./package.json)//vitesse/$projectName"}>package.json  && logPink '正在下载依赖' && pi || pi || pi || logRed '安装依赖失败，请重新尝试'
+  fi
+  if [ "$2" ]; then
+    logBlue "正在执行 prun $2" && prun $2 || eval ${2}
+  fi
+
+  # 回到上一级目录
+  if [ "$hasWrong" = 0 ];then
+    cd ..
+  fi
+}
+
+# remove 删除文件或目录
+remove() {
+  root=~
+  if [ "$1" = "$root" ];then
+    logRed "不允许删除根目录！"
+    return 1
+  fi
+  
+  # remove . -> 删除当前目录
+  if [ "$1" = "." ];then
+    _path=$(pwd)
+    current=$(basename $_path)
+    logBlue "正在删除当前目录"
+    _current="../${current}"
+    
+    # Fix the confirmation handling
+    gum confirm "确认要删除${current}目录吗?"
+    confirm_status=$?
+    
+    if [ $confirm_status -eq 0 ]; then
+      rimraf $_current
+      if [ $? -eq 0 ]; then
+        logGreen "删除成功👅"
+        cd ..
+      else
+        logRed "删除失败,请重新尝试:("
+      fi
+    else
+      echo "已取消"
+    fi
+    return 0
+  fi
+  
+  # remove ! -> 删除node_modules
+  if [ "$1" = "!" ];then
+    logBlue "正在删除node_modules"
+    rimraf "node_modules"
+    if [ $? -eq 0 ]; then
+      logGreen "删除成功👅"
+    else
+      logRed "删除失败,请重新尝试:("
+    fi
+    return 0
+  fi
+  
+  # Handle specific file/directory deletion
+  if [ "$1" ]; then
+    if [ ! -f "$1" ] && [ ! -d "$1" ]; then
+      logRed '文件或目录不存在:('
+      return 0
+    else
+      logBlue "正在删除$1"
+      
+      # Fix the confirmation handling
+      gum confirm "确认要删除$1吗?"
+      confirm_status=$?
+      
+      if [ $confirm_status -eq 0 ]; then
+        rimraf $1
+        if [ $? -eq 0 ]; then
+          logGreen "删除成功👅"
+        else
+          logRed "删除失败,请重新尝试:("
+        fi
+      else
+        echo "已取消"
+      fi
+      return 0
+    fi
+  fi
+  
+  # Handle selection from current directory
   for file in $(ls); do
     str="$str\"$file\" "
   done
-  content=$(echo $(ls) | sed 's/ /\n/g' | gum choose)
-  console.blue "正在删除$content"
-  rimraf $content && console.green "删除成功" || console.red "删除失败,请重新尝试"
-  return 1
+  content=$(echo $(ls) | sed 's/ /\n/g' | gum filter --placeholder=" 请选择要删除的文件或目录")
+  if [ ! "$content" ]; then
+    echo "已取消"
+    return 1
+  fi
+  logBlue "正在删除$content"
+  
+  # Fix the confirmation handling
+  gum confirm "确认要删除$content吗?"
+  confirm_status=$?
+  
+  if [ $confirm_status -eq 0 ]; then
+    rimraf $content
+    if [ $? -eq 0 ]; then
+      logGreen "删除成功👅"
+    else
+      logRed "删除失败,请重新尝试:("
+    fi
+  else
+    echo "已取消"
+  fi
+  return 0
 }
 
 # reni
 reni() {
   remove node_modules
   if [ $? = 1 ]; then
-    ni || ni || ni
+    pi || pi || pi
   fi
 }
 
 # 包裹ni
 nii() {
-  ni $* || nio $*
+  pi $* || nio $*
 }
 
-# pkginit
+# pkginit 生成package.json
 pkginit() {
-  console.blue "请输入包名:"
+  logBlue "请输入包名:"
   read pkgname
   if [ ! $pkgname ]; then
-    console.red "包名不能为空"
+    logRed "包名不能为空"
     return 0
   fi
   if [ -f package.json ]; then
-    console.red 'package.json已存在'
+    logRed 'package.json已存在'
     return 0
   fi
 
@@ -451,7 +669,7 @@ pkginit() {
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest -u",
     "test:e2e": "cypress open",
-    "prepublishOnly": "nr build",
+    "prepublishOnly": "pnpm run build",
     "release": "bumpp --commit --tag --push && pnpm publish"
   },
   "dependencies": {
@@ -473,47 +691,113 @@ pkginit() {
   }
 }' >>package.json
   if [ $? = 0 ]; then
-    console.green '创建成功'
+    logGreen '创建成功👅'
   else
-    console.red '创建失败'
+    logRed '创建失败:('
   fi
 }
 
 # grant 授予文件权限
 grant() {
   chmod +x $1
-  console.green '已授权成功'
+  logGreen '已授权成功👅'
 }
 
 # update 安装最新版本
 update() {
+  if [ -f "Cargo.toml" ];then
+    cargo update
+    return 0
+  fi
   all=$*
-  str=${all// /@latest }
-  console.green ni $str
-  ni $str
+    includes $all " -"
+    isParams=$?
+    logBlue "正在安装最新版本: ${all%% -*}"
+    str=${all// /@latest }
+  if [[ $isParams == 0 ]];then
+    logGreen pi $str && pi $str && logGreen "安装成功👅"
+  else
+    logGreen pi $str@latest && pi $str@latest && logGreen "安装成功👅"
+  fi
 }
 
-# commit
+# commit git 提交
 commit() {
-  commitMessage=$(gum choose "chore: update" "feat: add new funciton" "chore: update dependency" "fix: typo" "chore: init" "perf: optimize" "refactor: refactor code" "docs: update docs" "style: update style" "test: update test")
-  git add . && git commit -m $commitMessage
+  if [[ $1 != "" && $1 != "-p" ]]; then
+    git add . && git commit --quiet --allow-empty-message -m "$1"
+    if [ $2 = "-p" ];then
+      gp
+    fi
+  else
+    commitType="chore fix feat refactor docs style test revert perf build ci"
+    TYPE=$(spaceToLine $commitType | gum filter --placeholder=" 请选择提交类型")
+    if [ $? = 130 ];then
+      echo "已取消"
+      return 1
+    fi
+    SCOPE=$(gum input --placeholder "scope")
+      if [ $? = 130 ];then
+      echo "已取消"
+      return 1
+    fi
+    test -n "$SCOPE" && SCOPE="($SCOPE)"
+    SUMMARY=$(gum input --value "$TYPE$SCOPE: " --placeholder "Summary of this change")
+    if [ ! $SUMMARY ]; then
+      echo "已取消"
+      return 1
+    fi
+    title=$(getTitle $SUMMARY)
+    header=$(getHeader "Commit Message:")
+    gum join --vertical "$header" "$title"
+    git add . && git commit --quiet --allow-empty-message -m $SUMMARY
+    haveError=$?
+    if [ $haveError = 1 ];then
+      return 1
+    fi
+     if [[ $1 == "-p" ]];then
+      gp
+      else
+      gum confirm "Do you want to push this commit ?" && gp
+    fi
+  fi
+  print -s "git commit --quiet --allow-empty-message -m \"$SUMMARY\""
 }
 
-# new 创建新文件
+# new 创建新文件或目录
 new() {
   dir=$(echo $1 | grep '/')
   if [[ $dir = "" ]]; then
-    touch $1
-    console.green "$1, created successfully"
+    if [[ $(echo $1 | grep '\.') != "" ]]; then
+      if [[ -f $1 ]]; then
+        logRed '文件已存在'
+        return 1
+      fi
+      touch $1
+    else
+      if [ -d $1 ]; then
+        logRed '文件夹已存在'
+        return 1
+      fi
+      mkdir $1
+    fi
+    if [[ $? = 1 ]]; then
+      logRed "$1, created failed"
+      return 1
+    fi
+    logGreen "$1, created successfully"
     return 1
   fi
   currentDir=$(echo ${1%%/*})
   right=$1
-  if [ -f $1 ]; then
-    console.red '文件已存在'
+  if [[ $(echo $1 | grep '\.') != '' && -f $1 ]]; then
+    logRed '文件已存在'
+    return 1
+  elif [ -d $1 ]; then
+    logRed '文件夹已存在'
     return 1
   fi
   while [ true ]; do
+    echo $currentDir
     if [ ! -d $currentDir ]; then
       mkdir -p $currentDir
     fi
@@ -521,24 +805,46 @@ new() {
     currentDir="$currentDir/${right%%/*}"
     end=$(echo $right | grep "/")
     if [[ "$end" == "" ]]; then
-      touch $1
-      console.green "$1, created successfully"
-      return 1
+      if [[ $(echo $1 | grep '\.') != "" ]]; then
+        touch $1
+      else
+        mkdir $1
+      fi
+      if [[ $? = 1 ]]; then
+        logRed "$1, created failed"
+        return 1
+      fi
+      logGreen "$1, created successfully"
+      return 0
     fi
   done
 }
 
-# reset
+# reset 重置到某一次的commit
 reset() {
-  echo "选择回退版本到前几个版本"
-  head=$(gum choose {1..5})
-  git reset HEAD~$head && echo "回退成功,已回退到前$head个版本"
+  head=$(git log --oneline | gum filter --placeholder=" 请选择一个要重置的版本" | cut -d' ' -f1)
+  if [ ! $head ]; then
+    echo '已取消'
+    return 1
+  fi
+  git reset --hard $head && echo '已重置到' $head
+}
+
+# reset 撤销某一次的commit
+revert() {
+  head=$(git log --author="Simon He" --oneline | gum filter --placeholder=" 请选择一个要还原的提交" | cut -d' ' -f1)
+  if [ ! $head ]; then
+    echo '已取消'
+    return 1
+  fi
+  git revert $head -n && echo $head '提交已还原'
 }
 
 # cnrm 选择源
 co() {
-  registery=$(echo $(nrm ls) | sed 's/\/ /\n/g' | gum choose)
-  if [ $? = 130 ]; then
+  registery=$(echo $(nrm ls) | sed 's/\/ /\n/g' | gum filter --placeholder=" 请选择一个源"| cut -d'-' -f1)
+  registery=$(echo ${registery// /} | sed 's/\*//g')
+  if [ ! $registery ]; then
     echo "已取消"
     return 1
   fi
@@ -549,8 +855,8 @@ co() {
 
 # cnvm 选择node版本 - nvm
 cnvm() {
-  registery=$(echo $(nvm_ls) | sed 's/system//g' | sed 's/ /\n/g' | gum choose)
-  if [ $? = 130 ]; then
+  registery=$(echo $(nvm_ls) | sed 's/system//g' | sed 's/ /\n/g' | gum filter --placeholder=" 请选择一个node版本")
+  if [ ! $registery ]; then
     echo "已取消"
     return 1
   fi
@@ -560,31 +866,292 @@ cnvm() {
 # cfnm 选择node版本 - fnm
 cn() {
   current=$(echo $(fnm current))
-  registery=$(echo $(fnm ls) | sed 's/system//g' | sed 's/default//g' | sed 's/\* /\n/g' | sed "s/$current/* $current/g" | gum choose)
-  if [ $? = 130 ]; then
+  registery=$(echo $(fnm ls) | sed 's/system//g' | sed 's/default//g' | sed 's/\* /\n/g' | sed "s/$current/\* $current/g" | sed '/^$/d' | gum filter --placeholder=" 请选择一个node版本")
+  registery=$(echo ${registery// /} | sed 's/\*//g')
+  if [ ! $registery ]; then
     echo "已取消"
     return 1
   fi
   fnm use ${registery% -*}
 }
 
-# cb 选择分支
+# cb 选择分支切换
 cb() {
-  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum choose)
-  if [ $? = 130 ]; then
+  if [ $1 ]; then
+    gcc $1
+    return 0
+  fi
+  branch=$(git branch -a | cut -c 3-  | gum filter --placeholder=" 选择一个分支切换")
+  if [ $? = 130 ];then
     echo "已取消"
     return 1
   fi
-  gcc $(echo $branch | sed "s/*//g")
+  includes $branch "remotes/"
+  isRemote=$?
+  if [ $isRemote = 0 ]; then
+    origin=$(echo ${branch#remotes/}  | cut -d'/' -f1)
+    _branch=$(echo $branch | sed "s/remotes\/$origin\///g")
+      gcc $(echo $_branch | sed "s/*//g")
+  else
+      gcc $(echo $branch | sed "s/*//g")
+  fi
 }
 
-# merge
+#nb 创建新分支
+nb(){
+  if [[ $1 == "" ]];then
+    branch=$(gum input --placeholder " 请输入新分支名" | sed 's/ //g')
+  else
+    branch=$1
+  fi
+  if [[ $? == 130 ]]; then
+    echo "已取消"
+    return 1
+  fi
+  if [[  $branch == '' ]]; then
+    echo "分支名不能为空"
+    return 1
+  fi
+  gum confirm "是否基于当前分支创建?"
+  if [[ $? == 0 ]]; then
+    git checkout -b $branch
+    return 0
+  fi
+  base=$(git branch -a | cut -c 3-  | gum filter --placeholder=" 请选择基于哪个分支创建")
+   if [[ $? == 130 ]]; then
+    echo "已取消"
+    return 1
+  fi
+  includes $base "remotes/"
+  isRemote=$?
+  if [ $isRemote = 0 ]; then
+    _branch=$(echo $base | sed "s/remotes\///g")
+    git checkout -b $branch $_branch
+  else
+    git checkout -b $branch $base
+  fi
+}
+
+# db 删除分支
+db() {
+  branch=$(git branch -a | cut -c 3- | gum filter --no-limit --placeholder=" 请选择一个分支删除")
+  if [[ $? == 130 ]]; then
+    echo "已取消"
+    return 1
+  fi
+  
+  # Split multi-selection into an array
+  branches=($(echo "$branch" | tr ' ' '\n'))
+  
+  for br in "${branches[@]}"; do
+    br=$(trim "$br")
+    
+    includes "$br" "remotes/"
+    isRemote=$?
+    
+    if [ $isRemote = 0 ]; then
+      # Handle remote branch
+      origin=$(echo ${br#remotes/} | cut -d'/' -f1)
+      _branch=$(echo $br | sed "s/remotes\/$origin\///g")
+      echo "Deleting remote branch: $_branch from $origin"
+      git push $origin --delete $_branch
+    else
+      # Handle local branch
+      echo "Deleting local branch: $br"
+      git branch -D "$br"
+    fi
+  done
+}
+
+# checkout the chosen PR
+cpr() {
+  npx gh pr list | cut -f1,2 | gum choose | cut -f1 | xargs gh pr checkout
+}
+
+##字符串替换
+replace() {
+  echo $1 | sed "s/$2/$3/g"
+}
+
+# 空格替换换行
+spaceToLine() {
+  replace $1 " " "\n"
+}
+
+# 换行替换成空格
+lineToSpace() {
+  echo "$1" | tr '\n' ' '
+}
+
+# 删除换行
+remoteLine() {
+  echo "$1" | tr -d '\n'
+}
+
+# 删除内容前后空格
+trim() {
+  echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
+# includes 判断是否包含
+includes(){
+  result=$(echo $1 | grep "$2")
+  if [[ $result != "" ]];then
+    return 0
+  fi
+    return 1
+}
+
+# merge 选择分支合并到当前
 merge() {
-  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum choose)
-  if [ $? = 130 ]; then
+  if [ $1 ]; then
+    git merge $1
+    return 0
+  fi
+  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum filter --placeholder=" 请选择一个分支合并")
+  branch=$(echo ${branch// /} | sed 's/\*//g')
+  if [ ! $branch ]; then
     echo "已取消"
     return 1
   fi
   git merge $(echo $branch | sed "s/*//g")
+}
+
+# rebase 选择分支合并到当前
+rebase() {
+  if [ $1 ]; then
+    git rebase $1
+    return 0
+  fi
+  branch=$(echo $(git branch) | sed "s/* /*/g" | sed 's/ /\n/g' | sed "s/*/* /g" | gum filter --placeholder=" 请选择一个分支合并")
+  branch=$(echo ${branch// /} | sed 's/\*//g')
+  if [ ! $branch ]; then
+    echo "已取消"
+    return 1
+  fi
+  git rebase $(echo $branch | sed "s/*//g")
+}
+
+# before 查找前20条使用过的命令
+before() {
+  command=$(history | tail -20 | cut -c 8- | gum filter --placeholder=" 请选择一个命令")
+  if [ ! $command ]; then
+    echo "已取消"
+    return 1
+  fi
+  $command
+}
+
+# style
+getTitle(){
+  gum style \
+        --foreground 212 \
+        --align left --width 50  --padding "0 2" \
+        "$1"
+}
+
+# style
+getHeader(){
+  gum style \
+        --foreground 62   --bold --italic  \
+        --align left --width 50  --padding "1 1" \
+        "$1"
+}
+
+# write file
+wf(){
+  if [[ $1 == "" ]];then
+    logRed "请输入要写入的文件"
+    return 1
+  fi
+  getTitle "以esc 或 ctrl + D 确认写入内容 ✍️"
+  gum write > $1
+}
+
+# copy directory
+cpd(){
+  if [[ $1 == "" ]];then
+    logRed "请输入要复制的目录"
+    return 1
+  fi
+  if [[ $2 == "" ]];then
+    logRed "请输入要复制到的目录"
+    return 1
+  fi
+  cp -r $1 $2
+}
+
+# build
+b(){
+  if [ -f "Cargo.toml" ];then
+    cargo build
+    return 0
+  elif [ -f "go.mod" ];then
+    go build
+    return 0
+  fi
+  prun build
+}
+
+# release a new version 发布新版本
+release(){
+  if [ -f "Cargo.toml" ];then
+    cargo build --release
+    return 0
+  elif [ -f "go.mod" ];then
+    go build -tags="release"
+    return 0
+  fi
+  npm run release
+}
+
+# check
+check(){
+  if [ -f "Cargo.toml" ];then
+    cargo check
+  return 0
+  fi
+  prun check
+}
+
+
+# web-search
+search(){
+  web_search $*
+}
+
+# rename 修改目录或者文件名
+rename(){
+  if [ "$1" = "." ];then 
+    url=$(pwd)
+    dir=$(basename $url)
+    cd ..
+    mv "$dir" "$2"
+    if [ $? = 0 ];then
+      logGreen "文件名$1已成功修改为$2"
+    fi
+    cd "$2"
+    return
+  fi
+  mv "$1" "$2"
+  if [ $? = 0 ];then
+    logGreen "文件名$1已成功修改为$2"
+  fi
+}
+
+# killer
+killer(){
+  data=$(ps > .ps.temp)
+  content=$(tail -n +2 .ps.temp > ._ps.temp)
+  result=$(cat ._ps.temp | gum filter | cut -d ' ' -f 1) 
+   if [ $? -eq 130 ] || [ -z "$result" ];then
+      echo "已取消"
+      rimraf .ps.temp
+      rimraf ._ps.temp
+      return 1
+    fi
+  rimraf .ps.temp
+  rimraf ._ps.temp
+  gum confirm "确认要杀死${result}端口进程吗?" && echo "kill -9 ${result}" || echo "已取消"
 }
 ```
