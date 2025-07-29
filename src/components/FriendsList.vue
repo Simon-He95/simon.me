@@ -218,7 +218,7 @@ const friends = [
   {
     name: 'QER',
     avatar: 'https://www.qer.im/assets/xiaoxiang.jpeg',
-    blog: 'qer.im',
+    blog: 'https://www.qer.im/',
     description: '前端开发，并且会一些图像处理和音视频算法；全栈也能做，总要实现自己的天马行空',
     tag: 'Web Developer | Oler',
   },
