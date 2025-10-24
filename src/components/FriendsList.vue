@@ -20,6 +20,13 @@ const friends = [
     tag: 'Front-end development, nuxt, unocss, vueuse, slidev, vitest, shikiji',
   },
   {
+    name: 'Doctor Wu',
+    avatar: 'https://github.com/Doctor-wu.png',
+    blog: 'https://doctorwu.me/',
+    description: 'An open source enthusiast',
+    tag: 'Core team member of Vue Vapor and Vue Core',
+  },
+  {
     name: 'Innei',
     avatar: 'https://github.com/innei.png',
     blog: 'https://innei.in/friends',
@@ -246,7 +253,7 @@ onMounted(() => {
   })
 })
 
-function updateFriends(width) {
+function updateFriends(width: number) {
   if (width >= 1024) {
     // 变成 3 列
     const i = Math.ceil(friends.length / 3)
