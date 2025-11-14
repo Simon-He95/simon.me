@@ -35,19 +35,25 @@ title: Simon He
         rotateZ: 360,
         delay: 10000,
     })
-     anime({
-        targets: '.v-content',
-        translateX: 0,
-        duration: 1000,
-        delay: function(el, i) {
-          if(el)
-           el.style.transform = `translateX(${i%2===0?'-':''}100vw)`
-          return i * 500;
-        },
+    // 为每个 .v-content 设置动画延迟
+    document.querySelectorAll('.v-content').forEach((el, i) => {
+      el.style.setProperty('--delay', `${i * 0.3}s`)
     })
   })
 </script>
 <style >
+  .v-content {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 1s forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   .title-split:nth-child(1) {
     display:inline-block;
     animation: title-split 8s 20s ease-in-out infinite;
