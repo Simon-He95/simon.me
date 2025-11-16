@@ -20,39 +20,35 @@ title: Simon He
     const title = document.querySelector('main>div:first-child>h1')
     title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
     const s = document.querySelector('.title-split:nth-child(1)')
-    // anime({
-    //     targets: '.signature',
-    //     translateY: 0,
-    //     rotateZ: 1440,
-    //     duration:5000,
-    //     delay: function(el, i) {
-    //       return i * 200;
-    //     },
-    // })
     anime({
         targets: 'main>div:first-child>h1',
         translateY: 0,
         rotateZ: 360,
         delay: 10000,
     })
-    // 为每个 .v-content 设置动画延迟
-    document.querySelectorAll('.v-content').forEach((el, i) => {
-      el.style.setProperty('--delay', `${i * 0.3}s`)
-    })
+    // Intersection Observer 触发动画
+    const contents = document.querySelectorAll('.v-content')
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.2 })
+    contents.forEach(el => observer.observe(el))
   })
 </script>
 <style >
   .v-content {
     opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 1s forwards;
-    animation-delay: var(--delay, 0s);
+    transition: opacity 0.8s, transform 0.8s;
   }
-  @keyframes fadeUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .v-content.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s, transform 0.8s;
   }
   .title-split:nth-child(1) {
     display:inline-block;
