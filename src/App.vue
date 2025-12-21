@@ -13,7 +13,7 @@ import {
 } from 'lazy-js-utils'
 // import gitFork from '@simon_he/git-fork-vue'
 import { createMouseAnimation } from 'mouse-element'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import MusicPlayer from 'vue3-music-player'
 import { useRouter } from 'vue-router'
 import { isDark } from '~/logics'
@@ -124,9 +124,49 @@ watch(
 //   fontWeight,
 // )
 // dotText.append('.dotText')
+type SeasonTheme = 'spring' | 'summer' | 'autumn' | 'winter'
+
+const seasonTheme = ref<SeasonTheme>('winter')
+
+function getSeasonThemeByDate(date: Date): SeasonTheme {
+  const m = date.getMonth() + 1
+  if (m >= 3 && m <= 5)
+    return 'spring'
+  if (m >= 6 && m <= 8)
+    return 'summer'
+  if (m >= 9 && m <= 11)
+    return 'autumn'
+  return 'winter'
+}
+
+function resolveSeasonTheme() {
+  if (typeof window === 'undefined')
+    return getSeasonThemeByDate(new Date())
+
+  const q = new URLSearchParams(window.location.search).get('season')?.toLowerCase()
+  if (q === 'spring' || q === 'summer' || q === 'autumn' || q === 'winter')
+    return q
+
+  return getSeasonThemeByDate(new Date())
+}
+
+onMounted(() => {
+  seasonTheme.value = resolveSeasonTheme()
+})
+
+function getParticleTint(theme: SeasonTheme) {
+  if (theme === 'winter')
+    return isDark.value ? '#ffffff' : '#8fbbe8'
+  if (theme === 'summer')
+    return isDark.value ? '#ffffff' : '#64748b'
+  return '#ffffff'
+}
+
+let material: any
 function update() {
   try {
     // dotText.repaint(text.value, fontSize, isDark.value ? 'white' : 'black', fontWeight)
+    material?.color?.set(getParticleTint(seasonTheme.value))
   }
   catch (error) {
   }
@@ -140,72 +180,455 @@ useEventListener(
 
 let points: any
 let unmount: any
-let geometry
-let material
-const params = {
-  count: 200,
-  size: 0.008,
-  radius: 4.5,
-  insideColor: '#552fc4',
-  outsideColor: isDark.value ? '#000' : '#fff',
+let geometry: any
+const textures: Partial<Record<SeasonTheme, any>> = {}
+let speeds: Float32Array | undefined
+let drift: Float32Array | undefined
+let particleCount = 0
+let lastTimestamp = 0
+interface ThemeConfig {
+  count: number
+  size: number
+  depth: number
+  speedMin: number
+  speedMax: number
+  driftStrength: number
+  swaySpeed: number
+  opacity: number
+  direction: 1 | -1
+}
+const themeConfigs: Record<SeasonTheme, ThemeConfig> = {
+  spring: {
+    count: 500,
+    size: 0.05,
+    depth: 2.2,
+    speedMin: 0.12,
+    speedMax: 0.35,
+    driftStrength: 0.22,
+    swaySpeed: 0.7,
+    opacity: 0.95,
+    direction: 1,
+  },
+  summer: {
+    count: 380,
+    size: 0.05,
+    depth: 2.2,
+    speedMin: 0.08,
+    speedMax: 0.22,
+    driftStrength: 0.12,
+    swaySpeed: 0.55,
+    opacity: 0.95,
+    direction: 1,
+  },
+  autumn: {
+    count: 460,
+    size: 0.055,
+    depth: 2.4,
+    speedMin: 0.18,
+    speedMax: 0.5,
+    driftStrength: 0.18,
+    swaySpeed: 0.65,
+    opacity: 0.95,
+    direction: 1,
+  },
+  winter: {
+    count: 650,
+    size: 0.04,
+    depth: 2.5,
+    speedMin: 0.25,
+    speedMax: 0.9,
+    driftStrength: 0.12,
+    swaySpeed: 0.6,
+    opacity: 0.95,
+    direction: 1,
+  },
 }
 const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
   createMesh() {
-    generateGalaxy()
+    generateSeason()
   },
   createCamera() {
     const camera = c('pc')
-    camera.position.set(0, 0, 2)
+    camera.position.set(0, 0, 2.5)
     return camera
   },
   animate({ camera, elapsedTime, timestamp }) {
-    animationArray[0].rotation.y = Math.sin(elapsedTime * 0.01) * 10
-    animationArray[0].rotation.x = elapsedTime * 0.05
+    if (!geometry || !speeds || !drift || particleCount <= 0)
+      return
+
+    const config = themeConfigs[seasonTheme.value]
+    const positions = geometry.attributes.position.array as Float32Array
+    const dt = Math.min(0.05, Math.max(0.001, (timestamp - (lastTimestamp || timestamp)) / 1000))
+    lastTimestamp = timestamp
+
+    const { width, height } = getViewSize(camera, 0)
+    const halfWidth = width / 2
+    const halfHeight = height / 2
+
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3
+
+      positions[i3 + 1] -= speeds[i] * dt * config.direction
+      positions[i3 + 0] += Math.sin(elapsedTime * config.swaySpeed + drift[i]) * config.driftStrength * dt
+
+      const outY = config.direction === 1 ? positions[i3 + 1] < -halfHeight : positions[i3 + 1] > halfHeight
+      if (outY) {
+        positions[i3 + 0] = (Math.random() - 0.5) * width
+        positions[i3 + 1] = config.direction === 1
+          ? halfHeight + Math.random() * height * 0.2
+          : -halfHeight - Math.random() * height * 0.2
+        positions[i3 + 2] = (Math.random() - 0.5) * config.depth
+        speeds[i] = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+        drift[i] = Math.random() * Math.PI * 2
+      }
+      else if (positions[i3 + 0] > halfWidth) {
+        positions[i3 + 0] -= width
+      }
+      else if (positions[i3 + 0] < -halfWidth) {
+        positions[i3 + 0] += width
+      }
+    }
+
+    geometry.attributes.position.needsUpdate = true
   },
 })
-function generateGalaxy() {
+function getViewSize(camera: any, z = 0) {
+  const distance = Math.abs((camera?.position?.z ?? 0) - z)
+  const vFov = ((camera?.fov ?? 50) * Math.PI) / 180
+  const height = 2 * Math.tan(vFov / 2) * Math.max(0.0001, distance)
+  return { width: height * (camera?.aspect ?? 1), height }
+}
+
+function setupTexture(tex: any) {
+  tex.generateMipmaps = false
+  tex.minFilter = THREE.LinearFilter
+  tex.magFilter = THREE.LinearFilter
+  tex.needsUpdate = true
+  return tex
+}
+
+function createSnowTexture() {
+  const canvas = document.createElement('canvas')
+  const size = 128
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+
+  ctx.clearRect(0, 0, size, size)
+
+  const center = size / 2
+  const radius = size * 0.42
+  const branchLen = radius * 0.18
+
+  ctx.save()
+  ctx.translate(center, center)
+
+  ctx.strokeStyle = 'rgba(255,255,255,1)'
+  ctx.lineWidth = Math.max(2, size * 0.035)
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
+
+  for (let i = 0; i < 6; i++) {
+    ctx.save()
+    ctx.rotate((Math.PI / 3) * i)
+
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, -radius)
+
+    const b1 = radius * 0.35
+    const b2 = radius * 0.6
+
+    ctx.moveTo(0, -b1)
+    ctx.lineTo(branchLen, -b1 - branchLen * 0.2)
+    ctx.moveTo(0, -b1)
+    ctx.lineTo(-branchLen, -b1 - branchLen * 0.2)
+
+    ctx.moveTo(0, -b2)
+    ctx.lineTo(branchLen * 0.9, -b2 - branchLen * 0.15)
+    ctx.moveTo(0, -b2)
+    ctx.lineTo(-branchLen * 0.9, -b2 - branchLen * 0.15)
+
+    ctx.stroke()
+    ctx.restore()
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,1)'
+  ctx.beginPath()
+  ctx.arc(0, 0, radius * 0.07, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.restore()
+
+  return setupTexture(new THREE.CanvasTexture(canvas))
+}
+
+function createSakuraTexture() {
+  const canvas = document.createElement('canvas')
+  const size = 128
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+
+  ctx.clearRect(0, 0, size, size)
+  const center = size / 2
+  const radius = size * 0.42
+
+  ctx.save()
+  ctx.translate(center, center)
+  ctx.rotate(-0.25)
+
+  const grad = ctx.createLinearGradient(-radius, -radius, radius, radius)
+  grad.addColorStop(0, 'rgba(255, 226, 236, 1)')
+  grad.addColorStop(0.6, 'rgba(255, 168, 198, 1)')
+  grad.addColorStop(1, 'rgba(255, 120, 170, 1)')
+
+  ctx.fillStyle = grad
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)'
+  ctx.lineWidth = 2
+
+  ctx.beginPath()
+  ctx.moveTo(0, -radius * 0.95)
+  ctx.bezierCurveTo(radius * 0.65, -radius * 0.85, radius * 0.95, -radius * 0.1, 0, radius * 0.95)
+  ctx.bezierCurveTo(-radius * 0.95, -radius * 0.1, -radius * 0.65, -radius * 0.85, 0, -radius * 0.95)
+  ctx.closePath()
+  ctx.fill()
+  ctx.stroke()
+
+  ctx.globalAlpha = 0.35
+  ctx.fillStyle = 'rgba(255,255,255,1)'
+  ctx.beginPath()
+  ctx.ellipse(-radius * 0.12, -radius * 0.25, radius * 0.18, radius * 0.35, -0.35, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.restore()
+
+  return setupTexture(new THREE.CanvasTexture(canvas))
+}
+
+function createDandelionTexture() {
+  const canvas = document.createElement('canvas')
+  const size = 160
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+
+  ctx.clearRect(0, 0, size, size)
+  const center = size / 2
+  const tuftY = -26
+
+  ctx.save()
+  ctx.translate(center, center)
+  ctx.rotate(-0.35)
+
+  const halo = ctx.createRadialGradient(0, tuftY, 0, 0, tuftY, size * 0.55)
+  halo.addColorStop(0, 'rgba(255,255,255,0.18)')
+  halo.addColorStop(0.35, 'rgba(255,255,255,0.12)')
+  halo.addColorStop(1, 'rgba(255,255,255,0)')
+  ctx.fillStyle = halo
+  ctx.beginPath()
+  ctx.arc(0, tuftY, size * 0.52, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.globalAlpha = 0.9
+  ctx.strokeStyle = 'rgba(255,255,255,0.72)'
+  ctx.lineWidth = Math.max(1.1, size * 0.01)
+  ctx.lineCap = 'round'
+
+  const stalkY0 = 46
+  const seedY = 30
+  ctx.beginPath()
+  ctx.moveTo(0, stalkY0)
+  ctx.quadraticCurveTo(-8, 8, 0, tuftY + 8)
+  ctx.stroke()
+
+  const seedGrad = ctx.createLinearGradient(-4, seedY - 8, 4, seedY + 8)
+  seedGrad.addColorStop(0, 'rgba(180, 83, 9, 0.7)')
+  seedGrad.addColorStop(1, 'rgba(120, 53, 15, 0.55)')
+  ctx.fillStyle = seedGrad
+  ctx.beginPath()
+  ctx.ellipse(0, seedY, 3.2, 6.8, -0.25, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.78)'
+  ctx.lineWidth = 1
+
+  const hairs = 18
+  for (let i = 0; i < hairs; i++) {
+    const angle = (Math.PI * 2 * i) / hairs
+    const len = size * 0.23
+    const x2 = Math.cos(angle) * len
+    const y2 = tuftY + Math.sin(angle) * len
+
+    ctx.globalAlpha = 0.75
+    ctx.beginPath()
+    ctx.moveTo(0, tuftY)
+    ctx.lineTo(x2, y2)
+    ctx.stroke()
+
+    const px = -Math.sin(angle)
+    const py = Math.cos(angle)
+    ctx.globalAlpha = 0.28
+    ctx.beginPath()
+    ctx.moveTo(x2 - px * 4, y2 - py * 4)
+    ctx.lineTo(x2 + px * 4, y2 + py * 4)
+    ctx.stroke()
+  }
+
+  ctx.globalAlpha = 0.55
+  ctx.fillStyle = 'rgba(255,255,255,0.85)'
+  ctx.beginPath()
+  ctx.arc(0, tuftY, 2.2, 0, Math.PI * 2)
+  ctx.fill()
+
+  ctx.restore()
+
+  return setupTexture(new THREE.CanvasTexture(canvas))
+}
+
+function createMapleTexture() {
+  const canvas = document.createElement('canvas')
+  const size = 140
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+
+  ctx.clearRect(0, 0, size, size)
+
+  const center = size / 2
+  const r = size * 0.42
+
+  ctx.save()
+  ctx.translate(center, center)
+  ctx.rotate(-0.35)
+
+  const grad = ctx.createLinearGradient(-r, -r, r, r)
+  grad.addColorStop(0, 'rgba(251, 113, 133, 1)')
+  grad.addColorStop(0.55, 'rgba(249, 115, 22, 1)')
+  grad.addColorStop(1, 'rgba(245, 158, 11, 1)')
+  ctx.fillStyle = grad
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)'
+  ctx.lineWidth = 2
+
+  ctx.beginPath()
+  ctx.moveTo(0, -r * 1.05)
+  ctx.lineTo(r * 0.18, -r * 0.58)
+  ctx.lineTo(r * 0.7, -r * 0.78)
+  ctx.lineTo(r * 0.42, -r * 0.3)
+  ctx.lineTo(r * 0.96, -r * 0.12)
+  ctx.lineTo(r * 0.38, r * 0.05)
+  ctx.lineTo(r * 0.6, r * 0.65)
+  ctx.lineTo(r * 0.18, r * 0.35)
+  ctx.lineTo(0, r * 0.98)
+  ctx.lineTo(-r * 0.18, r * 0.35)
+  ctx.lineTo(-r * 0.6, r * 0.65)
+  ctx.lineTo(-r * 0.38, r * 0.05)
+  ctx.lineTo(-r * 0.96, -r * 0.12)
+  ctx.lineTo(-r * 0.42, -r * 0.3)
+  ctx.lineTo(-r * 0.7, -r * 0.78)
+  ctx.lineTo(-r * 0.18, -r * 0.58)
+  ctx.closePath()
+  ctx.fill()
+  ctx.stroke()
+
+  ctx.strokeStyle = 'rgba(120, 53, 15, 0.35)'
+  ctx.lineWidth = 2
+  ctx.beginPath()
+  ctx.moveTo(0, r * 0.95)
+  ctx.lineTo(0, -r * 0.55)
+  ctx.stroke()
+
+  ctx.restore()
+
+  return setupTexture(new THREE.CanvasTexture(canvas))
+}
+
+function getThemeTexture(theme: SeasonTheme) {
+  if (textures[theme])
+    return textures[theme]
+
+  if (typeof document === 'undefined')
+    return undefined
+
+  const tex = theme === 'winter'
+    ? createSnowTexture()
+    : theme === 'spring'
+      ? createSakuraTexture()
+      : theme === 'summer'
+        ? createDandelionTexture()
+        : createMapleTexture()
+
+  textures[theme] = tex
+  return tex
+}
+
+function generateSeason() {
+  generateParticles(seasonTheme.value)
+}
+
+function generateParticles(theme: SeasonTheme) {
+  const config = themeConfigs[theme]
   if (points) {
     unmount?.()
-    animationArray.shift()
+    const idx = animationArray.indexOf(points)
+    if (idx >= 0)
+      animationArray.splice(idx, 1)
+    geometry?.dispose?.()
+    material?.dispose?.()
   }
+
   geometry = c('bufferg')
-  const { positions, colors } = getRandomColorPosition()
+
+  const aspect = typeof window !== 'undefined' ? window.innerWidth / window.innerHeight : 1
+  const initHeight = 4
+  const initWidth = initHeight * aspect
+
+  const positions = new Float32Array(config.count * 3)
+  speeds = new Float32Array(config.count)
+  drift = new Float32Array(config.count)
+
+  for (let i = 0; i < config.count; i++) {
+    const i3 = i * 3
+    positions[i3 + 0] = (Math.random() - 0.5) * initWidth
+    positions[i3 + 1] = (Math.random() - 0.5) * initHeight
+    positions[i3 + 2] = (Math.random() - 0.5) * config.depth
+    speeds[i] = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+    drift[i] = Math.random() * Math.PI * 2
+  }
+
   geometry.setAttribute('position', c('ba', positions, 3))
-  geometry.setAttribute('color', c('ba', colors, 3))
-  // Material
+
   material = c('pm', {
-    size: params.size,
+    size: config.size,
     sizeAttenuation: true,
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    vertexColors: true,
+    transparent: true,
+    opacity: config.opacity,
+    blending: THREE.NormalBlending,
+    map: getThemeTexture(theme),
+    alphaTest: 0.08,
+    color: getParticleTint(theme),
   })
+
   points = c('p', geometry, material)
   unmount = scene._add?.(points)
   renderer.setClearColor(c('c', 'transparent'), 0)
   animationArray.push(points)
+  particleCount = config.count
+  lastTimestamp = 0
 }
-function getRandomColorPosition() {
-  const positions = new Float32Array(params.count * 3)
-  const colors = new Float32Array(params.count * 3)
-  const colorInside = new THREE.Color(params.insideColor)
-  const colorOutside = new THREE.Color(params.outsideColor)
-  for (let i = 0; i < params.count; i++) {
-    const i3 = i * 3
-    // Position
-    const radius = Math.random() * params.radius
-    positions[i3 + 0] = (Math.random() - 0.5) * 3
-    positions[i3 + 1] = (Math.random() - 0.5) * 3
-    positions[i3 + 2] = (Math.random() - 0.5) * 3
-    // Color
-    const mixedColor = colorInside.clone()
-    mixedColor.lerp(colorOutside, radius / params.radius)
-    colors[i3 + 0] = mixedColor.r
-    colors[i3 + 1] = mixedColor.g
-    colors[i3 + 2] = mixedColor.b
-  }
-  return { colors, positions }
-}
+
+watch(seasonTheme, () => {
+  generateSeason()
+  update()
+})
+
+onBeforeUnmount(() => {
+  unmount?.()
+  geometry?.dispose?.()
+  material?.dispose?.()
+  Object.values(textures).forEach(t => t?.dispose?.())
+})
 const left = ref(0)
 const top = ref(0)
 // 初始化获取鼠标位置
@@ -299,6 +722,150 @@ onMounted(() => {
 <template>
   <!-- <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" /> -->
   <div id="snow" fixed w-full h-full z--1 />
+  <div v-if="seasonTheme === 'spring'" class="season-decor spring-decor lt-md:hidden" fixed bottom-6 left-6 z-0 pointer-events-none>
+    <svg width="190" height="210" viewBox="0 0 190 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="var(--season-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M92 206c0-36 6-54 9-76c3-22-6-44-18-62c-9-14-10-28-6-44c-16 17-20 38-12 62c-14 10-21 25-18 42c4 22 23 32 26 78" fill="var(--spring-trunk)" />
+        <path d="M95 108c-14-18-26-22-42-22" stroke="var(--spring-branch)" />
+        <path d="M101 90c18-16 30-18 46-12" stroke="var(--spring-branch)" />
+        <path d="M104 130c14-10 26-10 40-4" stroke="var(--spring-branch)" />
+      </g>
+
+      <g opacity="0.98">
+        <circle cx="66" cy="62" r="28" fill="var(--spring-blossom-1)" />
+        <circle cx="98" cy="48" r="30" fill="var(--spring-blossom-2)" />
+        <circle cx="132" cy="66" r="26" fill="var(--spring-blossom-1)" />
+        <circle cx="62" cy="98" r="24" fill="var(--spring-blossom-2)" />
+        <circle cx="104" cy="92" r="28" fill="var(--spring-blossom-1)" />
+        <circle cx="144" cy="102" r="22" fill="var(--spring-blossom-2)" />
+        <circle cx="86" cy="120" r="26" fill="var(--spring-blossom-1)" />
+        <circle cx="120" cy="118" r="24" fill="var(--spring-blossom-2)" />
+
+        <circle cx="84" cy="52" r="3.2" fill="var(--spring-petal)" />
+        <circle cx="116" cy="70" r="3.2" fill="var(--spring-petal)" />
+        <circle cx="76" cy="104" r="3.2" fill="var(--spring-petal)" />
+        <circle cx="138" cy="84" r="3.2" fill="var(--spring-petal)" />
+      </g>
+
+      <g opacity="0.55" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+        <path d="M58 54c10 8 22 10 34 6" />
+        <path d="M114 44c12 10 24 12 36 6" />
+        <path d="M72 112c10 8 22 10 34 6" />
+      </g>
+    </svg>
+  </div>
+  <div v-if="seasonTheme === 'autumn'" class="season-decor autumn-decor lt-md:hidden" fixed bottom-6 right-6 z-0 pointer-events-none>
+    <svg width="200" height="220" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="var(--season-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M98 214c0-42 8-60 12-92c4-32-10-58-30-78c-16-16-18-30-12-46c-20 14-30 36-24 60c-18 10-28 26-24 46c6 30 30 38 34 110" fill="var(--autumn-trunk)" />
+        <path d="M106 110c16-16 30-18 54-12" stroke="rgba(120,53,15,0.35)" />
+        <path d="M92 98c-14-18-28-22-52-18" stroke="rgba(120,53,15,0.35)" />
+      </g>
+
+      <g opacity="0.98">
+        <circle cx="62" cy="60" r="28" fill="var(--autumn-leaf-1)" />
+        <circle cx="98" cy="46" r="30" fill="var(--autumn-leaf-2)" />
+        <circle cx="140" cy="62" r="26" fill="var(--autumn-leaf-3)" />
+        <circle cx="56" cy="96" r="24" fill="var(--autumn-leaf-2)" />
+        <circle cx="104" cy="90" r="28" fill="var(--autumn-leaf-1)" />
+        <circle cx="154" cy="100" r="22" fill="var(--autumn-leaf-3)" />
+        <circle cx="84" cy="120" r="26" fill="var(--autumn-leaf-2)" />
+        <circle cx="124" cy="118" r="24" fill="var(--autumn-leaf-1)" />
+      </g>
+
+      <g opacity="0.85">
+        <path d="M146 150c8-14 22-16 34-8c-10 12-22 16-34 8Z" fill="var(--autumn-leaf-1)" />
+        <path d="M152 152c-4 10-10 16-18 18" stroke="rgba(120,53,15,0.35)" stroke-width="2" />
+      </g>
+    </svg>
+  </div>
+  <div v-if="seasonTheme === 'winter'" class="season-decor winter-decor winter-snowman lt-md:hidden" fixed bottom-6 left-6 z-0 pointer-events-none>
+    <svg width="150" height="190" viewBox="0 0 150 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="var(--winter-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="75" cy="132" r="42" fill="var(--winter-snow)" />
+        <circle cx="75" cy="80" r="30" fill="var(--winter-snow)" />
+        <circle cx="75" cy="45" r="20" fill="var(--winter-snow)" />
+
+        <circle cx="68" cy="41" r="2.5" fill="var(--winter-eye)" stroke="none" />
+        <circle cx="82" cy="41" r="2.5" fill="var(--winter-eye)" stroke="none" />
+        <path d="M72 50c4 3 8 3 12 0" stroke="var(--winter-mouth)" />
+        <path d="M75 45l18 6l-18 3z" fill="var(--winter-nose)" stroke="none" />
+
+        <circle cx="75" cy="76" r="2.5" fill="var(--winter-button)" stroke="none" />
+        <circle cx="75" cy="88" r="2.5" fill="var(--winter-button)" stroke="none" />
+        <circle cx="75" cy="100" r="2.5" fill="var(--winter-button)" stroke="none" />
+
+        <path d="M48 78c-10 8-16 14-20 22" />
+        <path d="M102 78c10 8 16 14 20 22" />
+
+        <path d="M55 62c8 10 32 10 40 0" stroke="var(--winter-scarf)" />
+        <path d="M78 66c0 12 6 18 16 22" stroke="var(--winter-scarf)" />
+
+        <path d="M60 16h30v10H60z" fill="var(--winter-hat)" />
+        <path d="M55 26h40v8H55z" fill="var(--winter-hat)" />
+      </g>
+    </svg>
+  </div>
+  <div v-if="seasonTheme === 'winter'" class="season-decor winter-decor winter-tree lt-md:hidden" fixed bottom-6 right-6 z-0 pointer-events-none>
+    <svg width="160" height="200" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <filter id="winter-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="winter-glow-strong" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="blur2" />
+          <feMerge>
+            <feMergeNode in="blur2" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <linearGradient id="winter-garland-gradient" x1="0" y1="0" x2="160" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#fb7185" />
+          <stop offset="25%" stop-color="#fbbf24" />
+          <stop offset="50%" stop-color="#22c55e" />
+          <stop offset="75%" stop-color="#60a5fa" />
+          <stop offset="100%" stop-color="#a78bfa" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="var(--winter-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path class="twinkle star-twinkle" d="M80 10l10 18h20l-16 12l6 20l-20-12l-20 12l6-20L50 28h20z" fill="var(--winter-star)" filter="url(#winter-glow-strong)" />
+        <path d="M80 30L35 90h22L25 130h28L18 175h124l-35-45h28L103 90h22z" fill="var(--winter-tree)" />
+        <path d="M70 175h20v22H70z" fill="var(--winter-trunk)" />
+
+        <circle cx="58" cy="98" r="5" fill="var(--winter-ornament-1)" stroke="none" />
+        <circle cx="96" cy="110" r="5" fill="var(--winter-ornament-2)" stroke="none" />
+        <circle cx="78" cy="136" r="5" fill="var(--winter-ornament-3)" stroke="none" />
+        <circle cx="110" cy="145" r="5" fill="var(--winter-ornament-1)" stroke="none" />
+        <circle cx="50" cy="150" r="5" fill="var(--winter-ornament-2)" stroke="none" />
+
+        <path d="M45 120c18 10 52 10 70 0" stroke="var(--winter-stroke)" stroke-width="2" opacity="0.55" />
+        <path class="winter-garland garland-move twinkle" d="M45 120c18 10 52 10 70 0" stroke="url(#winter-garland-gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 13" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
+        <path class="winter-garland garland-move twinkle d3" d="M45 120c18 10 52 10 70 0" stroke="url(#winter-garland-gradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 13" stroke-dashoffset="7" opacity="0.8" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
+
+        <path d="M38 148c22 12 62 12 84 0" stroke="var(--winter-stroke)" stroke-width="2" opacity="0.55" />
+        <path class="winter-garland garland-move twinkle d2" d="M38 148c22 12 62 12 84 0" stroke="url(#winter-garland-gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 14" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
+        <path class="winter-garland garland-move twinkle d5" d="M38 148c22 12 62 12 84 0" stroke="url(#winter-garland-gradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 14" stroke-dashoffset="8" opacity="0.8" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
+
+        <g filter="url(#winter-glow)">
+          <circle class="winter-light twinkle" cx="54" cy="124" r="3.3" fill="var(--winter-ornament-1)" />
+          <circle class="winter-light twinkle d2" cx="66" cy="128" r="3.3" fill="var(--winter-ornament-2)" />
+          <circle class="winter-light twinkle d3" cx="80" cy="129" r="3.3" fill="var(--winter-ornament-3)" />
+          <circle class="winter-light twinkle d4" cx="94" cy="128" r="3.3" fill="var(--winter-ornament-1)" />
+          <circle class="winter-light twinkle d5" cx="108" cy="124" r="3.3" fill="var(--winter-ornament-2)" />
+
+          <circle class="winter-light twinkle d3" cx="52" cy="154" r="3.3" fill="var(--winter-ornament-2)" />
+          <circle class="winter-light twinkle d4" cx="70" cy="158" r="3.3" fill="var(--winter-ornament-3)" />
+          <circle class="winter-light twinkle d5" cx="88" cy="159" r="3.3" fill="var(--winter-ornament-1)" />
+          <circle class="winter-light twinkle" cx="106" cy="158" r="3.3" fill="var(--winter-ornament-2)" />
+          <circle class="winter-light twinkle d2" cx="124" cy="154" r="3.3" fill="var(--winter-ornament-3)" />
+        </g>
+      </g>
+    </svg>
+  </div>
   <span v-if="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
   <span v-if="imageShow" class="cloth" fixed top-20 right--120 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
@@ -420,5 +987,139 @@ onMounted(() => {
       transform: rotate(30deg);
     }
 
+  }
+
+  .season-decor {
+    opacity: 0.95;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
+    transform-origin: bottom center;
+    animation: winter-float 6s ease-in-out infinite;
+
+    --season-stroke: rgba(55, 65, 81, 0.45);
+  }
+
+  .dark .season-decor {
+    filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
+    --season-stroke: rgba(255, 255, 255, 0.22);
+  }
+
+  .spring-decor {
+    --spring-trunk: rgba(120, 53, 15, 0.72);
+    --spring-branch: rgba(120, 53, 15, 0.45);
+    --spring-blossom-1: rgba(255, 192, 203, 0.98);
+    --spring-blossom-2: rgba(255, 153, 204, 0.95);
+    --spring-petal: rgba(255, 235, 243, 0.95);
+  }
+
+  .autumn-decor {
+    --autumn-trunk: rgba(120, 53, 15, 0.78);
+    --autumn-leaf-1: rgba(249, 115, 22, 0.96);
+    --autumn-leaf-2: rgba(245, 158, 11, 0.95);
+    --autumn-leaf-3: rgba(239, 68, 68, 0.92);
+  }
+
+  .winter-decor {
+    --season-stroke: rgba(55, 65, 81, 0.5);
+    --winter-stroke: rgba(55, 65, 81, 0.5);
+    --winter-snow: rgba(255, 255, 255, 0.95);
+    --winter-eye: rgba(31, 41, 55, 0.9);
+    --winter-mouth: rgba(55, 65, 81, 0.7);
+    --winter-button: rgba(31, 41, 55, 0.85);
+    --winter-nose: rgba(249, 115, 22, 0.95);
+    --winter-scarf: rgba(239, 68, 68, 0.9);
+    --winter-hat: rgba(31, 41, 55, 0.9);
+
+    --winter-star: rgba(250, 204, 21, 0.95);
+    --winter-tree: rgba(34, 197, 94, 0.88);
+    --winter-trunk: rgba(120, 53, 15, 0.85);
+    --winter-garland: rgba(59, 130, 246, 0.7);
+    --winter-ornament-1: rgba(239, 68, 68, 0.95);
+    --winter-ornament-2: rgba(59, 130, 246, 0.95);
+    --winter-ornament-3: rgba(168, 85, 247, 0.95);
+  }
+
+  .dark .winter-decor {
+    --season-stroke: rgba(255, 255, 255, 0.22);
+    --winter-stroke: rgba(255, 255, 255, 0.22);
+    --winter-snow: rgba(255, 255, 255, 0.98);
+    --winter-eye: rgba(17, 24, 39, 0.95);
+    --winter-mouth: rgba(17, 24, 39, 0.7);
+  }
+
+  .winter-tree {
+    animation-delay: -1.2s;
+  }
+
+  .winter-tree svg .twinkle {
+    transform-origin: center;
+    animation: winter-twinkle 1.8s ease-in-out infinite;
+    opacity: 0.9;
+  }
+
+  .winter-tree svg .twinkle.d2 {
+    animation-delay: -0.3s;
+  }
+
+  .winter-tree svg .twinkle.d3 {
+    animation-delay: -0.6s;
+  }
+
+  .winter-tree svg .twinkle.d4 {
+    animation-delay: -0.9s;
+  }
+
+  .winter-tree svg .twinkle.d5 {
+    animation-delay: -1.2s;
+  }
+
+  .winter-tree svg .garland-move {
+    animation: garland-move 3.2s linear infinite;
+  }
+
+  .winter-tree svg .star-twinkle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: winter-star-twinkle 2.4s ease-in-out infinite;
+  }
+
+  @keyframes winter-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-0.5deg);
+    }
+
+    50% {
+      transform: translateY(-6px) rotate(0.5deg);
+    }
+  }
+
+  @keyframes winter-twinkle {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes winter-star-twinkle {
+    0%,
+    100% {
+      opacity: 0.75;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes garland-move {
+    to {
+      stroke-dashoffset: -120;
+    }
   }
 </style>
