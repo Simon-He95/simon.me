@@ -184,12 +184,16 @@ let geometry: any
 const textures: Partial<Record<SeasonTheme, any>> = {}
 let speeds: Float32Array | undefined
 let drift: Float32Array | undefined
+let driftStrengths: Float32Array | undefined
+let particleScales: Float32Array | undefined
+let particleAlphas: Float32Array | undefined
 let particleCount = 0
 let lastTimestamp = 0
 interface ThemeConfig {
   count: number
   size: number
   depth: number
+  zNear?: number
   speedMin: number
   speedMax: number
   driftStrength: number
@@ -233,8 +237,9 @@ const themeConfigs: Record<SeasonTheme, ThemeConfig> = {
   },
   winter: {
     count: 650,
-    size: 0.04,
-    depth: 2.5,
+    size: 0.038,
+    depth: 6,
+    zNear: 1.3,
     speedMin: 0.25,
     speedMax: 0.9,
     driftStrength: 0.12,
@@ -243,6 +248,53 @@ const themeConfigs: Record<SeasonTheme, ThemeConfig> = {
     direction: 1,
   },
 }
+let snowPointerX = 0
+let snowPointerY = 0
+let snowParallaxX = 0
+let snowParallaxY = 0
+
+function clamp(n: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, n))
+}
+
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t
+}
+
+function resolveZRange(config: ThemeConfig, cameraZ: number) {
+  const zNear = Math.min(config.zNear ?? (cameraZ - 1.1), cameraZ - 0.2)
+  const zFar = zNear - Math.max(0.0001, config.depth)
+  const span = Math.max(0.0001, zNear - zFar)
+  return { zNear, zFar, span }
+}
+
+function zToDepthT(z: number, zRange: ReturnType<typeof resolveZRange>) {
+  return clamp((z - zRange.zFar) / zRange.span, 0, 1)
+}
+
+function applyDepthMaterialHooks(mat: any) {
+  mat.onBeforeCompile = (shader: any) => {
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        `#include <common>\nattribute float aScale;\nattribute float aAlpha;\nvarying float vAlpha;`,
+      )
+      .replace(
+        '#include <color_vertex>',
+        `#include <color_vertex>\n\tvAlpha = aAlpha;`,
+      )
+      .replace('gl_PointSize = size;', 'gl_PointSize = size * aScale;')
+
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', `#include <common>\nvarying float vAlpha;`)
+      .replace(
+        'vec4 diffuseColor = vec4( diffuse, opacity );',
+        'vec4 diffuseColor = vec4( diffuse, opacity * vAlpha );',
+      )
+  }
+  mat.customProgramCacheKey = () => 'depth-points-v1'
+}
+
 const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
   createMesh() {
     generateSeason()
@@ -253,7 +305,7 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     return camera
   },
   animate({ camera, elapsedTime, timestamp }) {
-    if (!geometry || !speeds || !drift || particleCount <= 0)
+    if (!geometry || !speeds || !drift || !driftStrengths || !particleScales || !particleAlphas || particleCount <= 0)
       return
 
     const config = themeConfigs[seasonTheme.value]
@@ -261,25 +313,65 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     const dt = Math.min(0.05, Math.max(0.001, (timestamp - (lastTimestamp || timestamp)) / 1000))
     lastTimestamp = timestamp
 
-    const { width, height } = getViewSize(camera, 0)
-    const halfWidth = width / 2
-    const halfHeight = height / 2
+    const parallaxStrength = seasonTheme.value === 'winter' ? 0.22 : 0.14
+    const smoothing = Math.min(1, dt * 4.5)
+    snowParallaxX += (snowPointerX * parallaxStrength - snowParallaxX) * smoothing
+    snowParallaxY += (-snowPointerY * parallaxStrength - snowParallaxY) * smoothing
+    camera.position.x = snowParallaxX
+    camera.position.y = snowParallaxY
+    camera.lookAt(0, 0, 0)
+
+    const baseView = getViewSize(camera, 0)
+    const baseDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - 0))
+    const zRange = resolveZRange(config, camera?.position?.z ?? 2.5)
+    let depthAttributesDirty = false
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3
 
       positions[i3 + 1] -= speeds[i] * dt * config.direction
-      positions[i3 + 0] += Math.sin(elapsedTime * config.swaySpeed + drift[i]) * config.driftStrength * dt
+      positions[i3 + 0] += Math.sin(elapsedTime * config.swaySpeed + drift[i]) * driftStrengths[i] * dt
+
+      const z = positions[i3 + 2]
+      const distance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - z))
+      const viewScale = distance / baseDistance
+      const width = baseView.width * viewScale
+      const height = baseView.height * viewScale
+      const halfWidth = width / 2
+      const halfHeight = height / 2
 
       const outY = config.direction === 1 ? positions[i3 + 1] < -halfHeight : positions[i3 + 1] > halfHeight
       if (outY) {
-        positions[i3 + 0] = (Math.random() - 0.5) * width
-        positions[i3 + 1] = config.direction === 1
-          ? halfHeight + Math.random() * height * 0.2
-          : -halfHeight - Math.random() * height * 0.2
-        positions[i3 + 2] = (Math.random() - 0.5) * config.depth
-        speeds[i] = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+        const nextZ = zRange.zFar + Math.random() * zRange.span
+        const depthT = zToDepthT(nextZ, zRange)
+        const depthCurve = depthT ** (seasonTheme.value === 'winter' ? 1.35 : 1.15)
+
+        const scaleRange = seasonTheme.value === 'winter'
+          ? { min: 0.45, max: 1.35 }
+          : { min: 0.6, max: 1.15 }
+        const alphaMin = seasonTheme.value === 'winter' ? 0.25 : 0.35
+
+        particleScales[i] = lerp(scaleRange.min, scaleRange.max, depthCurve) * lerp(0.85, 1.15, Math.random())
+        particleAlphas[i] = lerp(alphaMin, 1, depthT ** 1.15)
+        driftStrengths[i] = config.driftStrength * lerp(0.22, 1, depthT)
+
+        const baseSpeed = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+        speeds[i] = baseSpeed * lerp(0.25, 1, depthT) * lerp(0.85, 1.15, Math.random())
         drift[i] = Math.random() * Math.PI * 2
+        depthAttributesDirty = true
+
+        const nextDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - nextZ))
+        const nextViewScale = nextDistance / baseDistance
+        const nextWidth = baseView.width * nextViewScale
+        const nextHeight = baseView.height * nextViewScale
+        const nextHalfWidth = nextWidth / 2
+        const nextHalfHeight = nextHeight / 2
+
+        positions[i3 + 0] = (Math.random() - 0.5) * nextWidth
+        positions[i3 + 1] = config.direction === 1
+          ? nextHalfHeight + Math.random() * nextHeight * 0.2
+          : -nextHalfHeight - Math.random() * nextHeight * 0.2
+        positions[i3 + 2] = nextZ
       }
       else if (positions[i3 + 0] > halfWidth) {
         positions[i3 + 0] -= width
@@ -290,6 +382,10 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     }
 
     geometry.attributes.position.needsUpdate = true
+    if (depthAttributesDirty) {
+      geometry.attributes.aScale.needsUpdate = true
+      geometry.attributes.aAlpha.needsUpdate = true
+    }
   },
 })
 function getViewSize(camera: any, z = 0) {
@@ -580,23 +676,47 @@ function generateParticles(theme: SeasonTheme) {
   geometry = c('bufferg')
 
   const aspect = typeof window !== 'undefined' ? window.innerWidth / window.innerHeight : 1
-  const initHeight = 4
-  const initWidth = initHeight * aspect
+  const baseHeight = 4
+  const baseWidth = baseHeight * aspect
+  const cameraZ = 2.5
+  const zRange = resolveZRange(config, cameraZ)
 
   const positions = new Float32Array(config.count * 3)
   speeds = new Float32Array(config.count)
   drift = new Float32Array(config.count)
+  driftStrengths = new Float32Array(config.count)
+  particleScales = new Float32Array(config.count)
+  particleAlphas = new Float32Array(config.count)
 
   for (let i = 0; i < config.count; i++) {
     const i3 = i * 3
-    positions[i3 + 0] = (Math.random() - 0.5) * initWidth
-    positions[i3 + 1] = (Math.random() - 0.5) * initHeight
-    positions[i3 + 2] = (Math.random() - 0.5) * config.depth
-    speeds[i] = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+    const z = zRange.zFar + Math.random() * zRange.span
+    const depthT = zToDepthT(z, zRange)
+    const depthCurve = depthT ** (theme === 'winter' ? 1.35 : 1.15)
+
+    const scaleRange = theme === 'winter'
+      ? { min: 0.45, max: 1.35 }
+      : { min: 0.6, max: 1.15 }
+    const alphaMin = theme === 'winter' ? 0.25 : 0.35
+
+    particleScales[i] = lerp(scaleRange.min, scaleRange.max, depthCurve) * lerp(0.85, 1.15, Math.random())
+    particleAlphas[i] = lerp(alphaMin, 1, depthT ** 1.15)
+    driftStrengths[i] = config.driftStrength * lerp(0.22, 1, depthT)
+
+    const baseSpeed = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+    speeds[i] = baseSpeed * lerp(0.25, 1, depthT) * lerp(0.85, 1.15, Math.random())
     drift[i] = Math.random() * Math.PI * 2
+
+    const distance = Math.max(0.0001, cameraZ - z)
+    const viewScale = distance / cameraZ
+    positions[i3 + 0] = (Math.random() - 0.5) * baseWidth * viewScale
+    positions[i3 + 1] = (Math.random() - 0.5) * baseHeight * viewScale
+    positions[i3 + 2] = z
   }
 
   geometry.setAttribute('position', c('ba', positions, 3))
+  geometry.setAttribute('aScale', c('ba', particleScales, 1))
+  geometry.setAttribute('aAlpha', c('ba', particleAlphas, 1))
 
   material = c('pm', {
     size: config.size,
@@ -609,6 +729,7 @@ function generateParticles(theme: SeasonTheme) {
     alphaTest: 0.08,
     color: getParticleTint(theme),
   })
+  applyDepthMaterialHooks(material)
 
   points = c('p', geometry, material)
   unmount = scene._add?.(points)
@@ -657,6 +778,10 @@ watch(() => isShow.value, (newV) => {
   }
 })
 document.addEventListener('mousemove', (e) => {
+  const w = window.innerWidth || document.documentElement.clientWidth || 1
+  const h = window.innerHeight || document.documentElement.clientHeight || 1
+  snowPointerX = (e.clientX / w) * 2 - 1
+  snowPointerY = (e.clientY / h) * 2 - 1
   left.value = 200 - (e.x / maxWidth) * 200
   top.value = 200 - (e.y / maxHeight) * 200
   createMouseAnimation(e, {
