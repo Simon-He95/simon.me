@@ -8,7 +8,7 @@ const friends = [
   {
     name: 'Simon He',
     avatar: Avatars.simon,
-    blog: 'https://simonhe.me/',
+    blog: 'https://www.simonhe.me/',
     description: 'core member of unocss and vue vine, webview-use author',
     tag: 'Front-end development, Open source',
   },
