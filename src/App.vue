@@ -172,10 +172,17 @@ function update() {
   }
 }
 const isShow = ref(false)
+let lastInteractionTs = 0
+let isLowPowerDevice = false
+let prefersReducedMotion = false
 useEventListener(
   document,
   'scroll',
-  e => (isShow.value = document.documentElement.scrollTop > 500),
+  () => {
+    isShow.value = document.documentElement.scrollTop > 500
+    lastInteractionTs = performance.now()
+  },
+  { passive: true },
 )
 
 let points: any
@@ -189,6 +196,8 @@ let particleScales: Float32Array | undefined
 let particleAlphas: Float32Array | undefined
 let particleCount = 0
 let lastTimestamp = 0
+let lastSnowUpdateTs = 0
+const particleDensity = ref(1)
 interface ThemeConfig {
   count: number
   size: number
@@ -236,7 +245,7 @@ const themeConfigs: Record<SeasonTheme, ThemeConfig> = {
     direction: 1,
   },
   winter: {
-    count: 900,
+    count: 420,
     size: 0.075,
     depth: 3.4,
     zNear: 1.4,
@@ -305,13 +314,28 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     return camera
   },
   animate({ camera, elapsedTime, timestamp }) {
+    if (typeof document !== 'undefined' && document.hidden)
+      return
     if (!geometry || !speeds || !drift || !driftStrengths || !particleScales || !particleAlphas || particleCount <= 0)
       return
 
+    // Throttle the CPU-heavy particle simulation:
+    // - run slower when user is idle
+    // - respect prefers-reduced-motion / low-power hints
+    const now = timestamp || performance.now()
+    const idle = now - (lastInteractionTs || now) > 1500
+    const targetFps = prefersReducedMotion ? 0 : (idle || isLowPowerDevice ? 12 : 30)
+    if (targetFps > 0) {
+      const interval = 1000 / targetFps
+      if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
+        return
+      lastSnowUpdateTs = now
+    }
+
     const config = themeConfigs[seasonTheme.value]
     const positions = geometry.attributes.position.array as Float32Array
-    const dt = Math.min(0.05, Math.max(0.001, (timestamp - (lastTimestamp || timestamp)) / 1000))
-    lastTimestamp = timestamp
+    const dt = Math.min(0.12, Math.max(0.001, (now - (lastTimestamp || now)) / 1000))
+    lastTimestamp = now
 
     const parallaxStrength = seasonTheme.value === 'winter' ? 0.22 : 0.14
     const smoothing = Math.min(1, dt * 4.5)
@@ -674,6 +698,7 @@ function generateSeason() {
 
 function generateParticles(theme: SeasonTheme) {
   const config = themeConfigs[theme]
+  const count = Math.max(40, Math.round(config.count * particleDensity.value))
   if (points) {
     unmount?.()
     const idx = animationArray.indexOf(points)
@@ -691,14 +716,14 @@ function generateParticles(theme: SeasonTheme) {
   const cameraZ = 2.5
   const zRange = resolveZRange(config, cameraZ)
 
-  const positions = new Float32Array(config.count * 3)
-  speeds = new Float32Array(config.count)
-  drift = new Float32Array(config.count)
-  driftStrengths = new Float32Array(config.count)
-  particleScales = new Float32Array(config.count)
-  particleAlphas = new Float32Array(config.count)
+  const positions = new Float32Array(count * 3)
+  speeds = new Float32Array(count)
+  drift = new Float32Array(count)
+  driftStrengths = new Float32Array(count)
+  particleScales = new Float32Array(count)
+  particleAlphas = new Float32Array(count)
 
-  for (let i = 0; i < config.count; i++) {
+  for (let i = 0; i < count; i++) {
     const i3 = i * 3
     const z = zRange.zFar + Math.random() * zRange.span
     const depthT = zToDepthT(z, zRange)
@@ -719,8 +744,17 @@ function generateParticles(theme: SeasonTheme) {
 
     const distance = Math.max(0.0001, cameraZ - z)
     const viewScale = distance / cameraZ
-    positions[i3 + 0] = (Math.random() - 0.5) * baseWidth * viewScale
-    positions[i3 + 1] = (Math.random() - 0.5) * baseHeight * viewScale
+    const width = baseWidth * viewScale
+    const height = baseHeight * viewScale
+    const halfHeight = height / 2
+
+    positions[i3 + 0] = (Math.random() - 0.5) * width
+    // On initial load, let snow "enter" from the top instead of popping everywhere.
+    // Keep only a tiny portion inside the view, and spread spawn distance so it trickles in.
+    if (theme === 'winter' && Math.random() < 0.94)
+      positions[i3 + 1] = halfHeight + Math.random() * height * 4.5
+    else
+      positions[i3 + 1] = (Math.random() - 0.5) * height
     positions[i3 + 2] = z
   }
 
@@ -745,8 +779,9 @@ function generateParticles(theme: SeasonTheme) {
   unmount = scene._add?.(points)
   renderer.setClearColor(c('c', 'transparent'), 0)
   animationArray.push(points)
-  particleCount = config.count
+  particleCount = count
   lastTimestamp = 0
+  lastSnowUpdateTs = 0
 }
 
 watch(seasonTheme, () => {
@@ -787,19 +822,76 @@ watch(() => isShow.value, (newV) => {
     dotImage3.revert()
   }
 })
-document.addEventListener('mousemove', (e) => {
+let lastMouseFxTs = 0
+let mouseRaf = 0
+let pendingMouse: MouseEvent | null = null
+
+function flushMouse() {
+  mouseRaf = 0
+  const e = pendingMouse
+  pendingMouse = null
+  if (!e)
+    return
+  if (typeof document !== 'undefined' && document.hidden)
+    return
+
   const w = window.innerWidth || document.documentElement.clientWidth || 1
   const h = window.innerHeight || document.documentElement.clientHeight || 1
   snowPointerX = (e.clientX / w) * 2 - 1
   snowPointerY = (e.clientY / h) * 2 - 1
   left.value = 200 - (e.x / maxWidth) * 200
   top.value = 200 - (e.y / maxHeight) * 200
-  createMouseAnimation(e, {
-    background: 'url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxnIGZpbGw9IiNjY2NjY2MiPjxwYXRoIGQ9Ik0yMzIgMTA4YTIwIDIwIDAgMSAxLTIwLTIwYTIwIDIwIDAgMCAxIDIwIDIwbS0xNjggMGEyMCAyMCAwIDEgMC0yMCAyMGEyMCAyMCAwIDAgMCAyMC0yMG0yOC0yOGEyMCAyMCAwIDEgMC0yMC0yMGEyMCAyMCAwIDAgMCAyMCAyMG03MiAwYTIwIDIwIDAgMSAwLTIwLTIwYTIwIDIwIDAgMCAwIDIwIDIwbTE5LjI0IDc1Ljg1QTQzLjQ2IDQzLjQ2IDAgMCAxIDE2Mi41NyAxMzBhMzYgMzYgMCAwIDAtNjkuMTQgMGE0My40OSA0My40OSAwIDAgMS0yMC42NyAyNS45YTMyIDMyIDAgMCAwIDI3LjczIDU3LjYyYTcyLjQ5IDcyLjQ5IDAgMCAxIDU1IDBhMzIgMzIgMCAwIDAgMjcuNzMtNTcuNjJaIiBvcGFjaXR5PSIuMiIvPjxwYXRoIGQ9Ik0yMTIgODBhMjggMjggMCAxIDAgMjggMjhhMjggMjggMCAwIDAtMjgtMjhtMCA0MGExMiAxMiAwIDEgMSAxMi0xMmExMiAxMiAwIDAgMS0xMiAxMk03MiAxMDhhMjggMjggMCAxIDAtMjggMjhhMjggMjggMCAwIDAgMjgtMjhtLTI4IDEyYTEyIDEyIDAgMSAxIDEyLTEyYTEyIDEyIDAgMCAxLTEyIDEybTQ4LTMyYTI4IDI4IDAgMSAwLTI4LTI4YTI4IDI4IDAgMCAwIDI4IDI4bTAtNDBhMTIgMTIgMCAxIDEtMTIgMTJhMTIgMTIgMCAwIDEgMTItMTJtNzIgNDBhMjggMjggMCAxIDAtMjgtMjhhMjggMjggMCAwIDAgMjggMjhtMC00MGExMiAxMiAwIDEgMS0xMiAxMmExMiAxMiAwIDAgMSAxMi0xMm0yMy4xMiAxMDAuODZhMzUuMyAzNS4zIDAgMCAxLTE2Ljg3LTIxLjE0YTQ0IDQ0IDAgMCAwLTg0LjUgMEEzNS4yNSAzNS4yNSAwIDAgMSA2OSAxNDguODJBNDAgNDAgMCAwIDAgODggMjI0YTM5LjQ4IDM5LjQ4IDAgMCAwIDE1LjUyLTMuMTNhNjQuMDkgNjQuMDkgMCAwIDEgNDguODcgMGE0MCA0MCAwIDAgMCAzNC43My03MlpNMTY4IDIwOGEyNCAyNCAwIDAgMS05LjQ1LTEuOTNhODAuMTQgODAuMTQgMCAwIDAtNjEuMTkgMGEyNCAyNCAwIDAgMS0yMC43MS00My4yNmE1MS4yMiA1MS4yMiAwIDAgMCAyNC40Ni0zMC42N2EyOCAyOCAwIDAgMSA1My43OCAwYTUxLjI3IDUxLjI3IDAgMCAwIDI0LjUzIDMwLjcxQTI0IDI0IDAgMCAxIDE2OCAyMDgiLz48L2c+PC9zdmc+) center center no-repeat',
-  })
-})
+
+  const now = performance.now()
+  if (now - lastMouseFxTs > 140) {
+    lastMouseFxTs = now
+    createMouseAnimation(e, {
+      background: 'url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxnIGZpbGw9IiNjY2NjY2MiPjxwYXRoIGQ9Ik0yMzIgMTA4YTIwIDIwIDAgMSAxLTIwLTIwYTIwIDIwIDAgMCAxIDIwIDIwbS0xNjggMGEyMCAyMCAwIDEgMC0yMCAyMGEyMCAyMCAwIDAgMCAyMC0yMG0yOC0yOGEyMCAyMCAwIDEgMC0yMC0yMGEyMCAyMCAwIDAgMCAyMCAyMG03MiAwYTIwIDIwIDAgMSAwLTIwLTIwYTIwIDIwIDAgMCAwIDIwIDIwbTE5LjI0IDc1Ljg1QTQzLjQ2IDQzLjQ2IDAgMCAxIDE2Mi41NyAxMzBhMzYgMzYgMCAwIDAtNjkuMTQgMGE0My40OSA0My40OSAwIDAgMS0yMC42NyAyNS45YTMyIDMyIDAgMCAwIDI3LjczIDU3LjYyYTcyLjQ5IDcyLjQ5IDAgMCAxIDU1IDBhMzIgMzIgMCAwIDAgMjcuNzMtNTcuNjJaIiBvcGFjaXR5PSIuMiIvPjxwYXRoIGQ9Ik0yMTIgODBhMjggMjggMCAxIDAgMjggMjhhMjggMjggMCAwIDAtMjgtMjhtMCA0MGExMiAxMiAwIDEgMSAxMi0xMmExMiAxMiAwIDAgMS0xMiAxMk03MiAxMDhhMjggMjggMCAxIDAtMjggMjhhMjggMjggMCAwIDAgMjgtMjhtLTI4IDEyYTEyIDEyIDAgMSAxIDEyLTEyYTEyIDEyIDAgMCAxLTEyIDEybTQ4LTMyYTI4IDI4IDAgMSAwLTI4LTI4YTI4IDI4IDAgMCAwIDI4IDI4bTAtNDBhMTIgMTIgMCAxIDEtMTIgMTJhMTIgMTIgMCAwIDEgMTItMTJtNzIgNDBhMjggMjggMCAxIDAtMjgtMjhhMjggMjggMCAwIDAgMjggMjhtMC00MGExMiAxMiAwIDEgMS0xMiAxMmExMiAxMiAwIDAgMSAxMi0xMm0yMy4xMiAxMDAuODZhMzUuMyAzNS4zIDAgMCAxLTE2Ljg3LTIxLjE0YTQ0IDQ0IDAgMCAwLTg0LjUgMEEzNS4yNSAzNS4yNSAwIDAgMSA2OSAxNDguODJBNDAgNDAgMCAwIDAgODggMjI0YTM5LjQ4IDM5LjQ4IDAgMCAwIDE1LjUyLTMuMTNhNjQuMDkgNjQuMDkgMCAwIDEgNDguODcgMGE0MCA0MCAwIDAgMCAzNC43My03MlpNMTY4IDIwOGEyNCAyNCAwIDAgMS05LjQ1LTEuOTNhODAuMTQgODAuMTQgMCAwIDAtNjEuMTkgMGEyNCAyNCAwIDAgMS0yMC43MS00My4yNmE1MS4yMiA1MS4yMiAwIDAgMCAyNC40Ni0zMC42N2EyOCAyOCAwIDAgMSA1My43OCAwYTUxLjI3IDUxLjI3IDAgMCAwIDI0LjUzIDMwLjcxQTI0IDI0IDAgMCAxIDE2OCAyMDgiLz48L2c+PC9zdmc+) center center no-repeat',
+    })
+  }
+}
+
+useEventListener(
+  document,
+  'mousemove',
+  (e: MouseEvent) => {
+    if (typeof window === 'undefined')
+      return
+    lastInteractionTs = performance.now()
+    pendingMouse = e
+    if (!mouseRaf)
+      mouseRaf = window.requestAnimationFrame(flushMouse)
+  },
+  { passive: true },
+)
 
 onMounted(() => {
+  lastInteractionTs = performance.now()
+  try {
+    const saveData = (navigator as any)?.connection?.saveData
+    const cores = navigator.hardwareConcurrency ?? 8
+    isLowPowerDevice = !!saveData || cores <= 4
+    particleDensity.value = isLowPowerDevice ? 0.55 : (cores <= 6 ? 0.75 : 1)
+    const mql = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+    if (mql) {
+      prefersReducedMotion = mql.matches
+      mql.addEventListener?.('change', ev => (prefersReducedMotion = (ev as MediaQueryListEvent).matches))
+    }
+  }
+  catch {
+    isLowPowerDevice = true
+    particleDensity.value = 0.75
+  }
+
+  try {
+    const snowEl = document.querySelector('#snow') as HTMLElement | null
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isLowPowerDevice ? 1 : 1.25))
+    if (snowEl)
+      renderer.setSize(snowEl.offsetWidth, snowEl.offsetHeight, false)
+  }
+  catch {
+  }
+
   const stop = useRaf(() => {
     if (dotImage1.status === 'success' && window.gsap && window.ScrollTrigger) {
       stop()

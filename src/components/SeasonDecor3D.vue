@@ -53,16 +53,21 @@ const reduceMotion = computed(() => {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 })
 
+const lowPower = computed(() => {
+  if (typeof navigator === 'undefined')
+    return true
+  const saveData = (navigator as any).connection?.saveData ?? false
+  const cores = navigator.hardwareConcurrency ?? 8
+  return saveData || cores <= 4
+})
+
 const targetFps = computed(() => {
   if (reduceMotion.value)
     return 0
-  // Summer uses GPU-driven instancing; keep it smooth without wasting power.
-  if (props.theme === 'summer')
-    return 45
-  // Others can run a bit higher without big CPU cost.
-  if (props.theme === 'winter')
-    return 45
-  return 45
+  // Decorative only: keep it smooth, but prioritize low CPU/battery.
+  if (lowPower.value)
+    return 24
+  return 30
 })
 
 function cssVar(name: string, fallback: string) {
@@ -73,8 +78,25 @@ function cssVar(name: string, fallback: string) {
   return v || fallback
 }
 
+function normalizeThreeColorInput(value: string) {
+  const v = value.trim()
+  const rgba = v.match(/^rgba\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*[\d.]+\s*\)$/i)
+  if (rgba)
+    return `rgb(${rgba[1]}, ${rgba[2]}, ${rgba[3]})`
+
+  const hsla = v.match(/^hsla\(\s*([\d.]+)(deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*,\s*[\d.]+\s*\)$/i)
+  if (hsla)
+    return `hsl(${hsla[1]}${hsla[2] ?? ''}, ${hsla[3]}%, ${hsla[4]}%)`
+
+  const hex8 = v.match(/^#([0-9a-f]{8})$/i)
+  if (hex8)
+    return `#${hex8[1].slice(0, 6)}`
+
+  return v
+}
+
 function cssColor(name: string, fallback: string) {
-  return new THREE.Color(cssVar(name, fallback))
+  return new THREE.Color(normalizeThreeColorInput(cssVar(name, fallback)))
 }
 
 function makeCanvasTexture(draw: (ctx: CanvasRenderingContext2D, size: number) => void, size = 256) {
@@ -1983,10 +2005,10 @@ function ensureThree() {
 
   renderer = new THREE.WebGLRenderer({
     alpha: true,
-    antialias: true,
-    powerPreference: 'high-performance',
+    antialias: !lowPower.value,
+    powerPreference: lowPower.value ? 'low-power' : 'high-performance',
   })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower.value ? 1.25 : 2))
   renderer.setClearColor(0x000000, 0)
   renderer.setSize(props.width, props.height, false)
   ;(renderer as any).outputEncoding = (THREE as any).sRGBEncoding ?? undefined
