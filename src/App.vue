@@ -236,15 +236,15 @@ const themeConfigs: Record<SeasonTheme, ThemeConfig> = {
     direction: 1,
   },
   winter: {
-    count: 650,
-    size: 0.038,
-    depth: 6,
-    zNear: 1.3,
-    speedMin: 0.25,
-    speedMax: 0.9,
+    count: 900,
+    size: 0.075,
+    depth: 3.4,
+    zNear: 1.4,
+    speedMin: 0.22,
+    speedMax: 0.75,
     driftStrength: 0.12,
     swaySpeed: 0.6,
-    opacity: 0.95,
+    opacity: 0.98,
     direction: 1,
   },
 }
@@ -405,7 +405,7 @@ function setupTexture(tex: any) {
 
 function createSnowTexture() {
   const canvas = document.createElement('canvas')
-  const size = 128
+  const size = 256
   canvas.width = size
   canvas.height = size
   const ctx = canvas.getContext('2d')!
@@ -420,7 +420,7 @@ function createSnowTexture() {
   ctx.translate(center, center)
 
   ctx.strokeStyle = 'rgba(255,255,255,1)'
-  ctx.lineWidth = Math.max(2, size * 0.035)
+  ctx.lineWidth = Math.max(2, size * 0.028)
   ctx.lineCap = 'round'
   ctx.lineJoin = 'round'
 
@@ -453,6 +453,16 @@ function createSnowTexture() {
   ctx.beginPath()
   ctx.arc(0, 0, radius * 0.07, 0, Math.PI * 2)
   ctx.fill()
+
+  // tips (adds readability when downscaled + alpha-tested)
+  ctx.fillStyle = 'rgba(255,255,255,0.95)'
+  const tipR = radius * 0.04
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 3) * i
+    ctx.beginPath()
+    ctx.arc(Math.cos(a) * radius, Math.sin(a) * radius, tipR, 0, Math.PI * 2)
+    ctx.fill()
+  }
 
   ctx.restore()
 
@@ -695,9 +705,9 @@ function generateParticles(theme: SeasonTheme) {
     const depthCurve = depthT ** (theme === 'winter' ? 1.35 : 1.15)
 
     const scaleRange = theme === 'winter'
-      ? { min: 0.45, max: 1.35 }
+      ? { min: 0.8, max: 2.6 }
       : { min: 0.6, max: 1.15 }
-    const alphaMin = theme === 'winter' ? 0.25 : 0.35
+    const alphaMin = theme === 'winter' ? 0.3 : 0.35
 
     particleScales[i] = lerp(scaleRange.min, scaleRange.max, depthCurve) * lerp(0.85, 1.15, Math.random())
     particleAlphas[i] = lerp(alphaMin, 1, depthT ** 1.15)
@@ -726,7 +736,7 @@ function generateParticles(theme: SeasonTheme) {
     opacity: config.opacity,
     blending: THREE.NormalBlending,
     map: getThemeTexture(theme),
-    alphaTest: 0.08,
+    alphaTest: theme === 'winter' ? 0.02 : 0.08,
     color: getParticleTint(theme),
   })
   applyDepthMaterialHooks(material)
@@ -847,150 +857,73 @@ onMounted(() => {
 <template>
   <!-- <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" /> -->
   <div id="snow" fixed w-full h-full z--1 />
-  <div v-if="seasonTheme === 'spring'" class="season-decor spring-decor lt-md:hidden" fixed bottom-6 left-6 z-0 pointer-events-none>
-    <svg width="190" height="210" viewBox="0 0 190 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <g fill="none" stroke="var(--season-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M92 206c0-36 6-54 9-76c3-22-6-44-18-62c-9-14-10-28-6-44c-16 17-20 38-12 62c-14 10-21 25-18 42c4 22 23 32 26 78" fill="var(--spring-trunk)" />
-        <path d="M95 108c-14-18-26-22-42-22" stroke="var(--spring-branch)" />
-        <path d="M101 90c18-16 30-18 46-12" stroke="var(--spring-branch)" />
-        <path d="M104 130c14-10 26-10 40-4" stroke="var(--spring-branch)" />
-      </g>
-
-      <g opacity="0.98">
-        <circle cx="66" cy="62" r="28" fill="var(--spring-blossom-1)" />
-        <circle cx="98" cy="48" r="30" fill="var(--spring-blossom-2)" />
-        <circle cx="132" cy="66" r="26" fill="var(--spring-blossom-1)" />
-        <circle cx="62" cy="98" r="24" fill="var(--spring-blossom-2)" />
-        <circle cx="104" cy="92" r="28" fill="var(--spring-blossom-1)" />
-        <circle cx="144" cy="102" r="22" fill="var(--spring-blossom-2)" />
-        <circle cx="86" cy="120" r="26" fill="var(--spring-blossom-1)" />
-        <circle cx="120" cy="118" r="24" fill="var(--spring-blossom-2)" />
-
-        <circle cx="84" cy="52" r="3.2" fill="var(--spring-petal)" />
-        <circle cx="116" cy="70" r="3.2" fill="var(--spring-petal)" />
-        <circle cx="76" cy="104" r="3.2" fill="var(--spring-petal)" />
-        <circle cx="138" cy="84" r="3.2" fill="var(--spring-petal)" />
-      </g>
-
-      <g opacity="0.55" stroke="rgba(255,255,255,0.6)" stroke-width="2">
-        <path d="M58 54c10 8 22 10 34 6" />
-        <path d="M114 44c12 10 24 12 36 6" />
-        <path d="M72 112c10 8 22 10 34 6" />
-      </g>
-    </svg>
-  </div>
-  <div v-if="seasonTheme === 'autumn'" class="season-decor autumn-decor lt-md:hidden" fixed bottom-6 right-6 z-0 pointer-events-none>
-    <svg width="200" height="220" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <g fill="none" stroke="var(--season-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M98 214c0-42 8-60 12-92c4-32-10-58-30-78c-16-16-18-30-12-46c-20 14-30 36-24 60c-18 10-28 26-24 46c6 30 30 38 34 110" fill="var(--autumn-trunk)" />
-        <path d="M106 110c16-16 30-18 54-12" stroke="rgba(120,53,15,0.35)" />
-        <path d="M92 98c-14-18-28-22-52-18" stroke="rgba(120,53,15,0.35)" />
-      </g>
-
-      <g opacity="0.98">
-        <circle cx="62" cy="60" r="28" fill="var(--autumn-leaf-1)" />
-        <circle cx="98" cy="46" r="30" fill="var(--autumn-leaf-2)" />
-        <circle cx="140" cy="62" r="26" fill="var(--autumn-leaf-3)" />
-        <circle cx="56" cy="96" r="24" fill="var(--autumn-leaf-2)" />
-        <circle cx="104" cy="90" r="28" fill="var(--autumn-leaf-1)" />
-        <circle cx="154" cy="100" r="22" fill="var(--autumn-leaf-3)" />
-        <circle cx="84" cy="120" r="26" fill="var(--autumn-leaf-2)" />
-        <circle cx="124" cy="118" r="24" fill="var(--autumn-leaf-1)" />
-      </g>
-
-      <g opacity="0.85">
-        <path d="M146 150c8-14 22-16 34-8c-10 12-22 16-34 8Z" fill="var(--autumn-leaf-1)" />
-        <path d="M152 152c-4 10-10 16-18 18" stroke="rgba(120,53,15,0.35)" stroke-width="2" />
-      </g>
-    </svg>
-  </div>
-  <div v-if="seasonTheme === 'winter'" class="season-decor winter-decor winter-snowman lt-md:hidden" fixed bottom-6 left-6 z-0 pointer-events-none>
-    <svg width="150" height="190" viewBox="0 0 150 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <g fill="none" stroke="var(--winter-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="75" cy="132" r="42" fill="var(--winter-snow)" />
-        <circle cx="75" cy="80" r="30" fill="var(--winter-snow)" />
-        <circle cx="75" cy="45" r="20" fill="var(--winter-snow)" />
-
-        <circle cx="68" cy="41" r="2.5" fill="var(--winter-eye)" stroke="none" />
-        <circle cx="82" cy="41" r="2.5" fill="var(--winter-eye)" stroke="none" />
-        <path d="M72 50c4 3 8 3 12 0" stroke="var(--winter-mouth)" />
-        <path d="M75 45l18 6l-18 3z" fill="var(--winter-nose)" stroke="none" />
-
-        <circle cx="75" cy="76" r="2.5" fill="var(--winter-button)" stroke="none" />
-        <circle cx="75" cy="88" r="2.5" fill="var(--winter-button)" stroke="none" />
-        <circle cx="75" cy="100" r="2.5" fill="var(--winter-button)" stroke="none" />
-
-        <path d="M48 78c-10 8-16 14-20 22" />
-        <path d="M102 78c10 8 16 14 20 22" />
-
-        <path d="M55 62c8 10 32 10 40 0" stroke="var(--winter-scarf)" />
-        <path d="M78 66c0 12 6 18 16 22" stroke="var(--winter-scarf)" />
-
-        <path d="M60 16h30v10H60z" fill="var(--winter-hat)" />
-        <path d="M55 26h40v8H55z" fill="var(--winter-hat)" />
-      </g>
-    </svg>
-  </div>
-  <div v-if="seasonTheme === 'winter'" class="season-decor winter-decor winter-tree lt-md:hidden" fixed bottom-6 right-6 z-0 pointer-events-none>
-    <svg width="160" height="200" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="winter-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2.5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <filter id="winter-glow-strong" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="blur2" />
-          <feMerge>
-            <feMergeNode in="blur2" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <linearGradient id="winter-garland-gradient" x1="0" y1="0" x2="160" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#fb7185" />
-          <stop offset="25%" stop-color="#fbbf24" />
-          <stop offset="50%" stop-color="#22c55e" />
-          <stop offset="75%" stop-color="#60a5fa" />
-          <stop offset="100%" stop-color="#a78bfa" />
-        </linearGradient>
-      </defs>
-      <g fill="none" stroke="var(--winter-stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path class="twinkle star-twinkle" d="M80 10l10 18h20l-16 12l6 20l-20-12l-20 12l6-20L50 28h20z" fill="var(--winter-star)" filter="url(#winter-glow-strong)" />
-        <path d="M80 30L35 90h22L25 130h28L18 175h124l-35-45h28L103 90h22z" fill="var(--winter-tree)" />
-        <path d="M70 175h20v22H70z" fill="var(--winter-trunk)" />
-
-        <circle cx="58" cy="98" r="5" fill="var(--winter-ornament-1)" stroke="none" />
-        <circle cx="96" cy="110" r="5" fill="var(--winter-ornament-2)" stroke="none" />
-        <circle cx="78" cy="136" r="5" fill="var(--winter-ornament-3)" stroke="none" />
-        <circle cx="110" cy="145" r="5" fill="var(--winter-ornament-1)" stroke="none" />
-        <circle cx="50" cy="150" r="5" fill="var(--winter-ornament-2)" stroke="none" />
-
-        <path d="M45 120c18 10 52 10 70 0" stroke="var(--winter-stroke)" stroke-width="2" opacity="0.55" />
-        <path class="winter-garland garland-move twinkle" d="M45 120c18 10 52 10 70 0" stroke="url(#winter-garland-gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 13" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
-        <path class="winter-garland garland-move twinkle d3" d="M45 120c18 10 52 10 70 0" stroke="url(#winter-garland-gradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 13" stroke-dashoffset="7" opacity="0.8" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
-
-        <path d="M38 148c22 12 62 12 84 0" stroke="var(--winter-stroke)" stroke-width="2" opacity="0.55" />
-        <path class="winter-garland garland-move twinkle d2" d="M38 148c22 12 62 12 84 0" stroke="url(#winter-garland-gradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 14" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
-        <path class="winter-garland garland-move twinkle d5" d="M38 148c22 12 62 12 84 0" stroke="url(#winter-garland-gradient)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 14" stroke-dashoffset="8" opacity="0.8" filter="url(#winter-glow-strong)" style="mix-blend-mode: screen" />
-
-        <g filter="url(#winter-glow)">
-          <circle class="winter-light twinkle" cx="54" cy="124" r="3.3" fill="var(--winter-ornament-1)" />
-          <circle class="winter-light twinkle d2" cx="66" cy="128" r="3.3" fill="var(--winter-ornament-2)" />
-          <circle class="winter-light twinkle d3" cx="80" cy="129" r="3.3" fill="var(--winter-ornament-3)" />
-          <circle class="winter-light twinkle d4" cx="94" cy="128" r="3.3" fill="var(--winter-ornament-1)" />
-          <circle class="winter-light twinkle d5" cx="108" cy="124" r="3.3" fill="var(--winter-ornament-2)" />
-
-          <circle class="winter-light twinkle d3" cx="52" cy="154" r="3.3" fill="var(--winter-ornament-2)" />
-          <circle class="winter-light twinkle d4" cx="70" cy="158" r="3.3" fill="var(--winter-ornament-3)" />
-          <circle class="winter-light twinkle d5" cx="88" cy="159" r="3.3" fill="var(--winter-ornament-1)" />
-          <circle class="winter-light twinkle" cx="106" cy="158" r="3.3" fill="var(--winter-ornament-2)" />
-          <circle class="winter-light twinkle d2" cx="124" cy="154" r="3.3" fill="var(--winter-ornament-3)" />
-        </g>
-      </g>
-    </svg>
-  </div>
+  <SeasonDecor3D
+    v-if="seasonTheme === 'spring'"
+    theme="spring"
+    :dark="isDark"
+    :width="190"
+    :height="210"
+    class="season-decor spring-decor lt-md:hidden"
+    fixed
+    bottom-6
+    left-6
+    z-0
+    pointer-events-none
+  />
+  <SeasonDecor3D
+    v-if="seasonTheme === 'summer'"
+    theme="summer"
+    :dark="isDark"
+    :width="190"
+    :height="210"
+    class="season-decor summer-decor lt-md:hidden"
+    fixed
+    bottom-6
+    right-6
+    z-0
+    pointer-events-none
+  />
+  <SeasonDecor3D
+    v-if="seasonTheme === 'autumn'"
+    theme="autumn"
+    :dark="isDark"
+    :width="200"
+    :height="220"
+    class="season-decor autumn-decor lt-md:hidden"
+    fixed
+    bottom-6
+    right-6
+    z-0
+    pointer-events-none
+  />
+  <SeasonDecor3D
+    v-if="seasonTheme === 'winter'"
+    theme="winter"
+    variant="snowman"
+    :dark="isDark"
+    :width="150"
+    :height="190"
+    class="season-decor winter-decor winter-snowman lt-md:hidden"
+    fixed
+    bottom-6
+    left-6
+    z-0
+    pointer-events-none
+  />
+  <SeasonDecor3D
+    v-if="seasonTheme === 'winter'"
+    theme="winter"
+    variant="tree"
+    :dark="isDark"
+    :width="160"
+    :height="200"
+    class="season-decor winter-decor winter-tree lt-md:hidden"
+    fixed
+    bottom-6
+    right-6
+    z-0
+    pointer-events-none
+  />
   <span v-if="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
   <span v-if="imageShow" class="cloth" fixed top-20 right--120 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
@@ -1143,6 +1076,12 @@ onMounted(() => {
     --autumn-leaf-3: rgba(239, 68, 68, 0.92);
   }
 
+  .summer-decor {
+    --summer-stem: rgba(34, 197, 94, 0.82);
+    --summer-head: rgba(226, 232, 240, 0.95);
+    --summer-seed: rgba(255, 255, 255, 0.98);
+  }
+
   .winter-decor {
     --season-stroke: rgba(55, 65, 81, 0.5);
     --winter-stroke: rgba(55, 65, 81, 0.5);
@@ -1150,7 +1089,7 @@ onMounted(() => {
     --winter-eye: rgba(31, 41, 55, 0.9);
     --winter-mouth: rgba(55, 65, 81, 0.7);
     --winter-button: rgba(31, 41, 55, 0.85);
-    --winter-nose: rgba(249, 115, 22, 0.95);
+    --winter-nose: rgba(255, 94, 0, 0.98);
     --winter-scarf: rgba(239, 68, 68, 0.9);
     --winter-hat: rgba(31, 41, 55, 0.9);
 
@@ -1175,38 +1114,6 @@ onMounted(() => {
     animation-delay: -1.2s;
   }
 
-  .winter-tree svg .twinkle {
-    transform-origin: center;
-    animation: winter-twinkle 1.8s ease-in-out infinite;
-    opacity: 0.9;
-  }
-
-  .winter-tree svg .twinkle.d2 {
-    animation-delay: -0.3s;
-  }
-
-  .winter-tree svg .twinkle.d3 {
-    animation-delay: -0.6s;
-  }
-
-  .winter-tree svg .twinkle.d4 {
-    animation-delay: -0.9s;
-  }
-
-  .winter-tree svg .twinkle.d5 {
-    animation-delay: -1.2s;
-  }
-
-  .winter-tree svg .garland-move {
-    animation: garland-move 3.2s linear infinite;
-  }
-
-  .winter-tree svg .star-twinkle {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: winter-star-twinkle 2.4s ease-in-out infinite;
-  }
-
   @keyframes winter-float {
     0%,
     100% {
@@ -1215,36 +1122,6 @@ onMounted(() => {
 
     50% {
       transform: translateY(-6px) rotate(0.5deg);
-    }
-  }
-
-  @keyframes winter-twinkle {
-    0%,
-    100% {
-      opacity: 0.55;
-    }
-
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes winter-star-twinkle {
-    0%,
-    100% {
-      opacity: 0.75;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 1;
-      transform: scale(1.06);
-    }
-  }
-
-  @keyframes garland-move {
-    to {
-      stroke-dashoffset: -120;
     }
   }
 </style>
