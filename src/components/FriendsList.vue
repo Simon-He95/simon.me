@@ -578,6 +578,8 @@ onBeforeUnmount(() => {
 .friend-avatar__img {
   height: 100%;
   width: 100%;
+  margin-top:10px;
+  margin-left:10px;
   border-radius: 1.05rem;
   object-fit: cover;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
