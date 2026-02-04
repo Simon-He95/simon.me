@@ -324,7 +324,9 @@ const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     // - respect prefers-reduced-motion / low-power hints
     const now = timestamp || performance.now()
     const idle = now - (lastInteractionTs || now) > 1500
-    const targetFps = prefersReducedMotion ? 0 : (idle || isLowPowerDevice ? 12 : 30)
+    const baseFps = isLowPowerDevice ? 20 : 30
+    const idleFps = isLowPowerDevice ? 12 : baseFps
+    const targetFps = prefersReducedMotion ? 0 : (idle ? idleFps : baseFps)
     if (targetFps > 0) {
       const interval = 1000 / targetFps
       if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
