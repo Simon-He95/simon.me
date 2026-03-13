@@ -46,6 +46,7 @@ interface BuildResult {
 let build: BuildResult | undefined
 let lastT = 0
 let lastFrameTs = 0
+let ambientPhase = Math.random() * Math.PI * 2
 
 const reduceMotion = computed(() => {
   if (typeof window === 'undefined')
@@ -70,6 +71,10 @@ const targetFps = computed(() => {
   return 30
 })
 
+const rgbaColorRegex = /^rgba\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*[\d.]+\s*\)$/i
+const hslaColorRegex = /^hsla\(\s*([\d.]+)(deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*,\s*[\d.]+\s*\)$/i
+const hex8ColorRegex = /^#([0-9a-f]{8})$/i
+
 function cssVar(name: string, fallback: string) {
   const el = container.value
   if (!el || typeof window === 'undefined')
@@ -80,15 +85,15 @@ function cssVar(name: string, fallback: string) {
 
 function normalizeThreeColorInput(value: string) {
   const v = value.trim()
-  const rgba = v.match(/^rgba\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*[\d.]+\s*\)$/i)
+  const rgba = v.match(rgbaColorRegex)
   if (rgba)
     return `rgb(${rgba[1]}, ${rgba[2]}, ${rgba[3]})`
 
-  const hsla = v.match(/^hsla\(\s*([\d.]+)(deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*,\s*[\d.]+\s*\)$/i)
+  const hsla = v.match(hslaColorRegex)
   if (hsla)
     return `hsl(${hsla[1]}${hsla[2] ?? ''}, ${hsla[3]}%, ${hsla[4]}%)`
 
-  const hex8 = v.match(/^#([0-9a-f]{8})$/i)
+  const hex8 = v.match(hex8ColorRegex)
   if (hex8)
     return `#${hex8[1].slice(0, 6)}`
 
@@ -1993,6 +1998,27 @@ function buildForProps(): BuildResult {
   return winterSnowmanBuild()
 }
 
+function applyAmbientFloat(t: number) {
+  const root = build?.root
+  if (!root)
+    return
+
+  const state = root.userData as { basePosition?: THREE.Vector3 }
+  if (!state.basePosition)
+    state.basePosition = root.position.clone()
+
+  const base = state.basePosition
+  const yAmp = props.theme === 'summer' ? 0.065 : props.theme === 'winter' ? 0.05 : 0.055
+  const xAmp = props.theme === 'summer' ? 0.022 : 0.014
+  const zAmp = props.theme === 'winter' ? 0.008 : 0.012
+
+  root.position.set(
+    base.x + Math.sin(t * 0.45 + ambientPhase) * xAmp,
+    base.y + Math.sin(t * 0.95 + ambientPhase) * yAmp,
+    base.z + Math.cos(t * 0.55 + ambientPhase * 0.7) * zAmp,
+  )
+}
+
 function ensureThree() {
   if (!container.value || typeof window === 'undefined')
     return
@@ -2053,6 +2079,8 @@ function rebuild() {
     build.materials?.forEach(m => m.dispose())
   }
   build = buildForProps()
+  ambientPhase = Math.random() * Math.PI * 2
+  build.root.userData.basePosition = build.root.position.clone()
   scene.add(build.root)
   if (build.materials)
     applyMaterialColors(build.materials)
@@ -2061,6 +2089,7 @@ function rebuild() {
 function renderOnce() {
   if (!renderer || !scene || !camera)
     return
+  applyAmbientFloat(performance.now() / 1000)
   renderer.render(scene, camera)
   isReady.value = true
   renderer.domElement.style.opacity = '1'
@@ -2085,6 +2114,7 @@ function loop(ts: number) {
   const dt = Math.min(0.05, Math.max(0.001, (ts - (lastT || ts)) / 1000))
   lastT = ts
   build?.tick?.(dt, t)
+  applyAmbientFloat(t)
   renderer.render(scene, camera)
   if (!isReady.value)
     isReady.value = true

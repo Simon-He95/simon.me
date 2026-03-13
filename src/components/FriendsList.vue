@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { isDark } from '~/logics'
 import Avatars from './avatar'
 
@@ -249,8 +249,17 @@ const rootEl = ref<HTMLElement | null>(null)
 const proseEl = ref<HTMLElement | null>(null)
 
 const query = ref('')
+const eagerAvatarCount = ref(6)
 const loadedImages = reactive(new Set<string>())
+const failedImages = reactive(new Set<string>())
+const visibleAvatars = reactive(new Set<string>())
 const sponsorLoaded = ref(false)
+const wwwPrefixRegex = /^www\./
+const avatarElements = new Map<string, HTMLImageElement>()
+const avatarPlaceholder = '/avatar-placeholder.svg'
+
+let avatarObserver: IntersectionObserver | null = null
+let stopResize: (() => void) | undefined
 
 const filteredFriends = computed(() => {
   const q = query.value.trim().toLowerCase()
@@ -267,9 +276,80 @@ function markImageLoaded(src: string) {
   loadedImages.add(src)
 }
 
+function markImageError(src: string) {
+  failedImages.add(src)
+  loadedImages.add(src)
+}
+
+function syncEagerAvatarCount() {
+  if (typeof window === 'undefined')
+    return
+
+  const width = window.innerWidth || 0
+  eagerAvatarCount.value = width >= 1024 ? 9 : width >= 640 ? 6 : 4
+}
+
+function shouldLoadAvatar(src: string, index: number) {
+  return index < eagerAvatarCount.value || visibleAvatars.has(src)
+}
+
+function avatarSource(src: string, index: number) {
+  if (failedImages.has(src))
+    return avatarPlaceholder
+
+  return shouldLoadAvatar(src, index) ? src : avatarPlaceholder
+}
+
+function ensureAvatarObserver() {
+  if (typeof window === 'undefined' || avatarObserver)
+    return
+
+  avatarObserver = new window.IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting)
+        continue
+
+      const src = (entry.target as HTMLImageElement).dataset.avatarSrc
+      if (src)
+        visibleAvatars.add(src)
+
+      avatarObserver?.unobserve(entry.target)
+    }
+  }, {
+    rootMargin: '320px 0px',
+    threshold: 0.01,
+  })
+}
+
+function setAvatarRef(el: HTMLImageElement | null, src: string) {
+  const prev = avatarElements.get(src)
+  if (prev && prev !== el)
+    avatarObserver?.unobserve(prev)
+
+  if (!el) {
+    if (prev)
+      avatarObserver?.unobserve(prev)
+    avatarElements.delete(src)
+    return
+  }
+
+  avatarElements.set(src, el)
+  if (!visibleAvatars.has(src))
+    avatarObserver?.observe(el)
+}
+
+async function observeAvatars() {
+  await nextTick()
+  ensureAvatarObserver()
+  for (const [src, el] of avatarElements) {
+    if (!visibleAvatars.has(src))
+      avatarObserver?.observe(el)
+  }
+}
+
 function hostOf(url: string) {
   try {
-    return new URL(url).hostname.replace(/^www\./, '')
+    return new URL(url).hostname.replace(wwwPrefixRegex, '')
   }
   catch {
     return url
@@ -279,9 +359,23 @@ function hostOf(url: string) {
 onMounted(() => {
   proseEl.value = rootEl.value?.closest('.prose') as HTMLElement | null
   proseEl.value?.classList.add('friends-prose-wide')
+
+  syncEagerAvatarCount()
+  const handleResize = () => syncEagerAvatarCount()
+  window.addEventListener('resize', handleResize, { passive: true })
+  stopResize = () => window.removeEventListener('resize', handleResize)
+
+  void observeAvatars()
+})
+
+watch(filteredFriends, () => {
+  void observeAvatars()
 })
 
 onBeforeUnmount(() => {
+  avatarObserver?.disconnect()
+  avatarObserver = null
+  stopResize?.()
   proseEl.value?.classList.remove('friends-prose-wide')
 })
 </script>
@@ -335,7 +429,7 @@ onBeforeUnmount(() => {
 
     <div class="friends-masonry mt-6">
       <a
-        v-for="friend in filteredFriends"
+        v-for="(friend, idx) in filteredFriends"
         :key="friend.name"
         class="friend-card group"
         :href="friend.blog"
@@ -345,15 +439,21 @@ onBeforeUnmount(() => {
         <div class="flex items-start gap-4">
           <div class="friend-avatar">
             <img
-              :src="friend.avatar"
+              :ref="(el) => setAvatarRef(el as HTMLImageElement | null, friend.avatar)"
+              :src="avatarSource(friend.avatar, idx)"
               :alt="friend.name"
               class="friend-avatar__img"
-              :class="{ 'is-loaded': loadedImages.has(friend.avatar) }"
+              :class="{
+                'is-loaded': loadedImages.has(friend.avatar),
+                'is-loading': shouldLoadAvatar(friend.avatar, idx) && !loadedImages.has(friend.avatar),
+              }"
+              :data-avatar-src="friend.avatar"
               loading="lazy"
               decoding="async"
+              :fetchpriority="idx < eagerAvatarCount ? 'high' : 'low'"
               referrerpolicy="no-referrer"
               @load="markImageLoaded(friend.avatar)"
-              @error="markImageLoaded(friend.avatar)"
+              @error="markImageError(friend.avatar)"
             >
           </div>
 
@@ -537,6 +637,8 @@ onBeforeUnmount(() => {
   width: 100%;
   margin: 0 0 1.25rem;
   contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
   font-weight: 400;
   color: inherit;
   border-radius: 1.25rem;
@@ -620,12 +722,16 @@ onBeforeUnmount(() => {
 .sponsor-img {
   background: linear-gradient(90deg, rgba(148, 163, 184, 0.12), rgba(148, 163, 184, 0.22), rgba(148, 163, 184, 0.12));
   background-size: 240% 100%;
-  animation: shimmer 1.1s linear infinite;
 }
 
 .sponsor-img {
   will-change: transform;
   transform: translateZ(0);
+}
+
+.friend-avatar__img.is-loading,
+.sponsor-img:not(.is-loaded) {
+  animation: shimmer 1.8s linear infinite;
 }
 
 .friend-avatar__img.is-loaded,

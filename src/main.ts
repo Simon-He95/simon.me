@@ -4,8 +4,8 @@ import NProgress from 'nprogress'
 import autoRoutes from 'pages-generated'
 import { ViteSSG } from 'vite-ssg'
 
-import { VividTyping } from 'vivid-typing'
 import App from './App.vue'
+import SafeVividTyping from './components/SafeVividTyping.vue'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import './styles/prose.css'
@@ -31,7 +31,7 @@ export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
   async ({ app, router, isClient }) => {
-    app.component('VividTyping', VividTyping)
+    app.component('VividTyping', SafeVividTyping)
     dayjs.extend(LocalizedFormat)
 
     if (isClient) {

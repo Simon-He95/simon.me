@@ -1,34 +1,21 @@
 <script setup lang="ts">
 import type { Song } from 'vue3-music-player'
-import { sThree } from '@simon_he/s-three'
-
 import { useEventListener } from '@vueuse/core'
-import {
-  DotImageCanvas,
-  // DotTextCanvas,
-  getDevice,
-  prefetch,
-  scrollToTop,
-  useRaf,
-} from 'lazy-js-utils'
+import { DotImageCanvas } from 'lazy-js-utils'
 // import gitFork from '@simon_he/git-fork-vue'
-import { createMouseAnimation } from 'mouse-element'
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import MusicPlayer from 'vue3-music-player'
-import { useRouter } from 'vue-router'
+import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { isDark } from '~/logics'
-import { isZh } from '../lang'
 // import antfu from '/images/af.png'
 // import fs from '/images/fs.jpeg'
 // import flag from '/images/flag.jpg'
 import daoxiangLrc from '../public/audio/daoxiang.lrc'
 import kaibuliaokouLrc from '../public/audio/kaibuliaokou.lrc'
-import 'vue3-music-player/index.css'
-import 'vue3-music-player/tailwind.css'
 
 import backTop from '/backTop.png'
 import cloth from '/images/24.png'
 import kb from '/images/kb.png'
+
+const isClient = typeof window !== 'undefined' && typeof document !== 'undefined'
 
 useHead({
   meta: [
@@ -39,11 +26,171 @@ useHead({
     { name: 'twitter:creator', content: '@simon_he1995' },
   ],
 })
-const imageShow = computed(() => {
-  const { os } = getDevice()
-  return os === 'mac' || os === 'windows' || os === 'macOS'
+
+const LazyMusicPlayer = defineAsyncComponent({
+  loader: () => import('./components/LazyMusicPlayer.vue'),
+  suspensible: false,
 })
+
+const LazySeasonDecor3D = defineAsyncComponent({
+  loader: () => import('./components/SeasonDecor3D.vue'),
+  suspensible: false,
+})
+
+function prefetchAsset(urls: string[]) {
+  if (!isClient)
+    return
+
+  for (const href of urls) {
+    if (document.head.querySelector(`link[rel="prefetch"][href="${href}"]`))
+      continue
+
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.as = 'image'
+    link.href = href
+    document.head.appendChild(link)
+  }
+}
+
+function runWhenIdle(task: () => void | Promise<void>, timeout = 1200) {
+  if (!isClient)
+    return () => {}
+
+  if ('requestIdleCallback' in window) {
+    const id = window.requestIdleCallback(() => {
+      void task()
+    }, { timeout })
+    return () => window.cancelIdleCallback(id)
+  }
+
+  const id = window.setTimeout(() => {
+    void task()
+  }, Math.min(timeout, 600))
+  return () => window.clearTimeout(id)
+}
+
+function useRafInterval(task: () => void, interval = 200) {
+  if (!isClient)
+    return () => {}
+
+  let rafId = 0
+  let last = 0
+  let active = true
+
+  const loop = (ts: number) => {
+    if (!active)
+      return
+
+    if (!last || ts - last >= interval) {
+      last = ts
+      task()
+    }
+    rafId = window.requestAnimationFrame(loop)
+  }
+
+  rafId = window.requestAnimationFrame(loop)
+  return () => {
+    active = false
+    window.cancelAnimationFrame(rafId)
+  }
+}
+
+function scrollToTop() {
+  if (!isClient)
+    return
+
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+let createMouseAnimationFn: any
+let sThreeFactory: any
+
+async function loadMouseAnimation() {
+  if (!createMouseAnimationFn) {
+    const mod = await import('mouse-element')
+    createMouseAnimationFn = mod.createMouseAnimation
+  }
+  return createMouseAnimationFn
+}
+
+async function loadSThree() {
+  if (!sThreeFactory) {
+    const mod = await import('@simon_he/s-three')
+    sThreeFactory = mod.sThree
+  }
+  return sThreeFactory
+}
+
+const reduceMotion = ref(true)
+const lowPowerMode = ref(true)
+const desktopViewport = ref(false)
+const showSeasonDecor = ref(false)
+const showPlanet = ref(false)
+const showMusicPlayer = ref(false)
+const particleDensity = ref(1)
+let cancelHeroIdle: (() => void) | undefined
+let cancelSeasonIdle: (() => void) | undefined
+
+const macWindowsPlatformRegex = /mac|win/i
+const macWindowsUserAgentRegex = /mac|windows/i
+
+function detectDesktopOs() {
+  if (!isClient)
+    return false
+
+  return macWindowsPlatformRegex.test(navigator.platform) || macWindowsUserAgentRegex.test(navigator.userAgent)
+}
+
+const imageShow = computed(() =>
+  isClient
+  && desktopViewport.value
+  && !lowPowerMode.value
+  && !reduceMotion.value
+  && detectDesktopOs(),
+)
+
 const musicPlayer = ref<any>(null)
+let shouldAutoplayMusic = false
+
+function syncClientCapabilities() {
+  if (!isClient)
+    return
+
+  const width = window.innerWidth || document.documentElement.clientWidth || 0
+  const saveData = (navigator as any)?.connection?.saveData ?? false
+  const cores = navigator.hardwareConcurrency ?? 8
+
+  desktopViewport.value = width >= 640
+  lowPowerMode.value = !!saveData || cores <= 4
+  reduceMotion.value = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+  showPlanet.value = width >= 1280 && !lowPowerMode.value && !reduceMotion.value
+  if (!desktopViewport.value || lowPowerMode.value || reduceMotion.value)
+    showSeasonDecor.value = false
+  particleDensity.value = lowPowerMode.value ? 0.42 : (cores <= 6 ? 0.66 : 0.85)
+}
+
+function maybeAutoplayMusic() {
+  if (!shouldAutoplayMusic || !musicPlayer.value?.play)
+    return
+
+  shouldAutoplayMusic = false
+  nextTick(() => {
+    musicPlayer.value?.play?.()
+  })
+}
+
+function ensureMusicPlayerVisible(autoplay = false) {
+  if (!showMusicPlayer.value)
+    showMusicPlayer.value = true
+
+  if (autoplay)
+    shouldAutoplayMusic = true
+
+  maybeAutoplayMusic()
+}
+
+watch(musicPlayer, maybeAutoplayMusic)
 // 示例播放列表 - 包含本地和在线备用音频及歌词
 const playlist = ref<Song[]>([
   {
@@ -64,57 +211,52 @@ const playlist = ref<Song[]>([
   },
 ])
 
-const dotImage1 = new DotImageCanvas(kb, '', 3, 'transparent', 'out-center')
-const dotImage2 = new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
+let dotImage1: any
+let dotImage2: any
 
-const text = ref('')
+async function ensureHeroImages() {
+  if (!isClient)
+    return
+
+  dotImage1 ||= new DotImageCanvas(kb, '', 3, 'transparent', 'out-center')
+  dotImage2 ||= new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
+}
 
 onMounted(() => {
-  prefetch(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
-  if (imageShow.value) {
-    dotImage1.append('.dotImage')
-    dotImage2.append('.cloth')
-  }
-  const stop = useEventListener('click', () => {
-    musicPlayer.value.play()
+  prefetchAsset(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
+  cancelHeroIdle = runWhenIdle(async () => {
+    if (!imageShow.value)
+      return
+
+    await ensureHeroImages()
+    if (dotImage1 && !dotImage1.mounted) {
+      dotImage1.mounted = true
+      dotImage1.append('.dotImage')
+    }
+    if (dotImage2 && !dotImage2.mounted) {
+      dotImage2.mounted = true
+      dotImage2.append('.cloth')
+    }
+  }, 1500)
+  const stop = useEventListener(window, 'click', () => {
+    ensureMusicPlayerVisible(true)
     stop()
   })
+  const stopTouch = useEventListener(window, 'touchstart', () => {
+    ensureMusicPlayerVisible(true)
+    stopTouch()
+  }, { passive: true })
+  const stopKeydown = useEventListener(window, 'keydown', () => {
+    ensureMusicPlayerVisible(true)
+    stopKeydown()
+  })
+
+  runWhenIdle(() => {
+    ensureMusicPlayerVisible(false)
+  }, 2400)
 })
 
 watch(isDark, update)
-const router = useRouter()
-const routerMap: any = {
-  en: {
-    '/': 'Simon',
-    '/projects': 'Projects',
-    '/posts': 'Blog',
-  },
-  zh: {
-    '/': 'Simon',
-    '/projects': '项目',
-    '/posts': '博客',
-  },
-}
-watch(
-  router.currentRoute,
-  (val) => {
-    text.value = routerMap[isZh.value ? 'zh' : 'en'][val.path] || 'Docs'
-    // useRaf(update, 200, true)
-    // if (val.path === '/friends') {
-    //   setTimeout(() => {
-    //     dotImage.repaint(antfu, '', 3, 'transparent')
-    //   })
-    // } else if (val.path === '/') {
-    //   setTimeout(() => {
-    //     dotImage.clearCanvas()
-    //     dotImage.repaint(kb, '', 3, 'transparent')
-    //   })
-    // }
-  },
-  {
-    immediate: true,
-  },
-)
 // const fontSize = 18
 // const fontWeight = 7
 // const dotText = new DotTextCanvas(
@@ -152,6 +294,20 @@ function resolveSeasonTheme() {
 
 onMounted(() => {
   seasonTheme.value = resolveSeasonTheme()
+  syncClientCapabilities()
+
+  const motionMql = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+  if (motionMql)
+    useEventListener(motionMql, 'change', syncClientCapabilities)
+  useEventListener(window, 'resize', syncClientCapabilities, { passive: true })
+
+  cancelSeasonIdle = runWhenIdle(async () => {
+    if (desktopViewport.value && !lowPowerMode.value && !reduceMotion.value)
+      showSeasonDecor.value = true
+
+    if (!reduceMotion.value && (window.innerWidth || 0) >= 768)
+      await initSnowScene()
+  }, 900)
 })
 
 function getParticleTint(theme: SeasonTheme) {
@@ -173,17 +329,14 @@ function update() {
 }
 const isShow = ref(false)
 let lastInteractionTs = 0
-let isLowPowerDevice = false
-let prefersReducedMotion = false
-useEventListener(
-  document,
-  'scroll',
-  () => {
-    isShow.value = document.documentElement.scrollTop > 500
-    lastInteractionTs = performance.now()
-  },
-  { passive: true },
-)
+
+function handleScroll() {
+  if (!isClient)
+    return
+
+  isShow.value = document.documentElement.scrollTop > 500
+  lastInteractionTs = performance.now()
+}
 
 let points: any
 let unmount: any
@@ -197,7 +350,26 @@ let particleAlphas: Float32Array | undefined
 let particleCount = 0
 let lastTimestamp = 0
 let lastSnowUpdateTs = 0
-const particleDensity = ref(1)
+let c: any
+let animationArray: any[] = []
+let THREE: any
+let scene: any
+let renderer: any
+
+function syncSnowRendererSize() {
+  if (!isClient || !renderer)
+    return
+
+  try {
+    const snowEl = document.querySelector('#snow') as HTMLElement | null
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPowerMode.value ? 1 : 1.15))
+    if (snowEl)
+      renderer.setSize(snowEl.offsetWidth, snowEl.offsetHeight, false)
+  }
+  catch {
+  }
+}
+
 interface ThemeConfig {
   count: number
   size: number
@@ -304,116 +476,122 @@ function applyDepthMaterialHooks(mat: any) {
   mat.customProgramCacheKey = () => 'depth-points-v1'
 }
 
-const { c, animationArray, THREE, scene, renderer } = sThree('#snow', {
-  createMesh() {
-    generateSeason()
-  },
-  createCamera() {
-    const camera = c('pc')
-    camera.position.set(0, 0, 2.5)
-    return camera
-  },
-  animate({ camera, elapsedTime, timestamp }) {
-    if (typeof document !== 'undefined' && document.hidden)
-      return
-    if (!geometry || !speeds || !drift || !driftStrengths || !particleScales || !particleAlphas || particleCount <= 0)
-      return
+async function initSnowScene() {
+  if (!isClient || renderer)
+    return
 
-    // Throttle the CPU-heavy particle simulation:
-    // - run slower when user is idle
-    // - respect prefers-reduced-motion / low-power hints
-    const now = timestamp || performance.now()
-    const idle = now - (lastInteractionTs || now) > 1500
-    const baseFps = isLowPowerDevice ? 20 : 30
-    const idleFps = isLowPowerDevice ? 12 : baseFps
-    const targetFps = prefersReducedMotion ? 0 : (idle ? idleFps : baseFps)
-    if (targetFps > 0) {
-      const interval = 1000 / targetFps
-      if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
+  const sThree = await loadSThree()
+  ;({ c, animationArray, THREE, scene, renderer } = sThree('#snow', {
+    createMesh() {
+      generateSeason()
+    },
+    createCamera() {
+      const camera = c('pc')
+      camera.position.set(0, 0, 2.5)
+      return camera
+    },
+    animate({ camera, elapsedTime, timestamp }) {
+      if (document.hidden)
         return
-      lastSnowUpdateTs = now
-    }
+      if (!geometry || !speeds || !drift || !driftStrengths || !particleScales || !particleAlphas || particleCount <= 0)
+        return
 
-    const config = themeConfigs[seasonTheme.value]
-    const positions = geometry.attributes.position.array as Float32Array
-    const dt = Math.min(0.12, Math.max(0.001, (now - (lastTimestamp || now)) / 1000))
-    lastTimestamp = now
-
-    const parallaxStrength = seasonTheme.value === 'winter' ? 0.22 : 0.14
-    const smoothing = Math.min(1, dt * 4.5)
-    snowParallaxX += (snowPointerX * parallaxStrength - snowParallaxX) * smoothing
-    snowParallaxY += (-snowPointerY * parallaxStrength - snowParallaxY) * smoothing
-    camera.position.x = snowParallaxX
-    camera.position.y = snowParallaxY
-    camera.lookAt(0, 0, 0)
-
-    const baseView = getViewSize(camera, 0)
-    const baseDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - 0))
-    const zRange = resolveZRange(config, camera?.position?.z ?? 2.5)
-    let depthAttributesDirty = false
-
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3
-
-      positions[i3 + 1] -= speeds[i] * dt * config.direction
-      positions[i3 + 0] += Math.sin(elapsedTime * config.swaySpeed + drift[i]) * driftStrengths[i] * dt
-
-      const z = positions[i3 + 2]
-      const distance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - z))
-      const viewScale = distance / baseDistance
-      const width = baseView.width * viewScale
-      const height = baseView.height * viewScale
-      const halfWidth = width / 2
-      const halfHeight = height / 2
-
-      const outY = config.direction === 1 ? positions[i3 + 1] < -halfHeight : positions[i3 + 1] > halfHeight
-      if (outY) {
-        const nextZ = zRange.zFar + Math.random() * zRange.span
-        const depthT = zToDepthT(nextZ, zRange)
-        const depthCurve = depthT ** (seasonTheme.value === 'winter' ? 1.35 : 1.15)
-
-        const scaleRange = seasonTheme.value === 'winter'
-          ? { min: 0.45, max: 1.35 }
-          : { min: 0.6, max: 1.15 }
-        const alphaMin = seasonTheme.value === 'winter' ? 0.25 : 0.35
-
-        particleScales[i] = lerp(scaleRange.min, scaleRange.max, depthCurve) * lerp(0.85, 1.15, Math.random())
-        particleAlphas[i] = lerp(alphaMin, 1, depthT ** 1.15)
-        driftStrengths[i] = config.driftStrength * lerp(0.22, 1, depthT)
-
-        const baseSpeed = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
-        speeds[i] = baseSpeed * lerp(0.25, 1, depthT) * lerp(0.85, 1.15, Math.random())
-        drift[i] = Math.random() * Math.PI * 2
-        depthAttributesDirty = true
-
-        const nextDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - nextZ))
-        const nextViewScale = nextDistance / baseDistance
-        const nextWidth = baseView.width * nextViewScale
-        const nextHeight = baseView.height * nextViewScale
-        const nextHalfWidth = nextWidth / 2
-        const nextHalfHeight = nextHeight / 2
-
-        positions[i3 + 0] = (Math.random() - 0.5) * nextWidth
-        positions[i3 + 1] = config.direction === 1
-          ? nextHalfHeight + Math.random() * nextHeight * 0.2
-          : -nextHalfHeight - Math.random() * nextHeight * 0.2
-        positions[i3 + 2] = nextZ
+      // Throttle the CPU-heavy particle simulation:
+      // - run slower when user is idle
+      // - respect prefers-reduced-motion / low-power hints
+      const now = timestamp || performance.now()
+      const idle = now - (lastInteractionTs || now) > 1500
+      const baseFps = lowPowerMode.value ? 20 : 30
+      const idleFps = lowPowerMode.value ? 12 : baseFps
+      const targetFps = reduceMotion.value ? 0 : (idle ? idleFps : baseFps)
+      if (targetFps > 0) {
+        const interval = 1000 / targetFps
+        if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
+          return
+        lastSnowUpdateTs = now
       }
-      else if (positions[i3 + 0] > halfWidth) {
-        positions[i3 + 0] -= width
-      }
-      else if (positions[i3 + 0] < -halfWidth) {
-        positions[i3 + 0] += width
-      }
-    }
 
-    geometry.attributes.position.needsUpdate = true
-    if (depthAttributesDirty) {
-      geometry.attributes.aScale.needsUpdate = true
-      geometry.attributes.aAlpha.needsUpdate = true
-    }
-  },
-})
+      const config = themeConfigs[seasonTheme.value]
+      const positions = geometry.attributes.position.array as Float32Array
+      const dt = Math.min(0.12, Math.max(0.001, (now - (lastTimestamp || now)) / 1000))
+      lastTimestamp = now
+
+      const parallaxStrength = seasonTheme.value === 'winter' ? 0.22 : 0.14
+      const smoothing = Math.min(1, dt * 4.5)
+      snowParallaxX += (snowPointerX * parallaxStrength - snowParallaxX) * smoothing
+      snowParallaxY += (-snowPointerY * parallaxStrength - snowParallaxY) * smoothing
+      camera.position.x = snowParallaxX
+      camera.position.y = snowParallaxY
+      camera.lookAt(0, 0, 0)
+
+      const baseView = getViewSize(camera, 0)
+      const baseDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - 0))
+      const zRange = resolveZRange(config, camera?.position?.z ?? 2.5)
+      let depthAttributesDirty = false
+
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3
+
+        positions[i3 + 1] -= speeds[i] * dt * config.direction
+        positions[i3 + 0] += Math.sin(elapsedTime * config.swaySpeed + drift[i]) * driftStrengths[i] * dt
+
+        const z = positions[i3 + 2]
+        const distance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - z))
+        const viewScale = distance / baseDistance
+        const width = baseView.width * viewScale
+        const height = baseView.height * viewScale
+        const halfWidth = width / 2
+        const halfHeight = height / 2
+
+        const outY = config.direction === 1 ? positions[i3 + 1] < -halfHeight : positions[i3 + 1] > halfHeight
+        if (outY) {
+          const nextZ = zRange.zFar + Math.random() * zRange.span
+          const depthT = zToDepthT(nextZ, zRange)
+          const depthCurve = depthT ** (seasonTheme.value === 'winter' ? 1.35 : 1.15)
+
+          const scaleRange = seasonTheme.value === 'winter'
+            ? { min: 0.45, max: 1.35 }
+            : { min: 0.6, max: 1.15 }
+          const alphaMin = seasonTheme.value === 'winter' ? 0.25 : 0.35
+
+          particleScales[i] = lerp(scaleRange.min, scaleRange.max, depthCurve) * lerp(0.85, 1.15, Math.random())
+          particleAlphas[i] = lerp(alphaMin, 1, depthT ** 1.15)
+          driftStrengths[i] = config.driftStrength * lerp(0.22, 1, depthT)
+
+          const baseSpeed = config.speedMin + Math.random() * (config.speedMax - config.speedMin)
+          speeds[i] = baseSpeed * lerp(0.25, 1, depthT) * lerp(0.85, 1.15, Math.random())
+          drift[i] = Math.random() * Math.PI * 2
+          depthAttributesDirty = true
+
+          const nextDistance = Math.max(0.0001, Math.abs((camera?.position?.z ?? 0) - nextZ))
+          const nextViewScale = nextDistance / baseDistance
+          const nextWidth = baseView.width * nextViewScale
+          const nextHeight = baseView.height * nextViewScale
+          const nextHalfHeight = nextHeight / 2
+
+          positions[i3 + 0] = (Math.random() - 0.5) * nextWidth
+          positions[i3 + 1] = config.direction === 1
+            ? nextHalfHeight + Math.random() * nextHeight * 0.2
+            : -nextHalfHeight - Math.random() * nextHeight * 0.2
+          positions[i3 + 2] = nextZ
+        }
+        else if (positions[i3 + 0] > halfWidth) {
+          positions[i3 + 0] -= width
+        }
+        else if (positions[i3 + 0] < -halfWidth) {
+          positions[i3 + 0] += width
+        }
+      }
+
+      geometry.attributes.position.needsUpdate = true
+      if (depthAttributesDirty) {
+        geometry.attributes.aScale.needsUpdate = true
+        geometry.attributes.aAlpha.needsUpdate = true
+      }
+    },
+  }))
+  syncSnowRendererSize()
+}
 function getViewSize(camera: any, z = 0) {
   const distance = Math.abs((camera?.position?.z ?? 0) - z)
   const vFov = ((camera?.fov ?? 50) * Math.PI) / 180
@@ -699,6 +877,9 @@ function generateSeason() {
 }
 
 function generateParticles(theme: SeasonTheme) {
+  if (!c || !THREE || !scene || !renderer)
+    return
+
   const config = themeConfigs[theme]
   const count = Math.max(40, Math.round(config.count * particleDensity.value))
   if (points) {
@@ -787,24 +968,35 @@ function generateParticles(theme: SeasonTheme) {
 }
 
 watch(seasonTheme, () => {
+  if (!renderer)
+    return
   generateSeason()
   update()
 })
 
+let lastMouseFxTs = 0
+let mouseRaf = 0
+let pendingMouse: MouseEvent | null = null
+
 onBeforeUnmount(() => {
+  cancelHeroIdle?.()
+  cancelSeasonIdle?.()
   unmount?.()
   geometry?.dispose?.()
   material?.dispose?.()
   Object.values(textures).forEach(t => t?.dispose?.())
+  if (isClient && mouseRaf)
+    window.cancelAnimationFrame(mouseRaf)
 })
 const left = ref(0)
 const top = ref(0)
 // 初始化获取鼠标位置
 
-const maxWidth = document.documentElement.clientWidth
-const maxHeight = document.documentElement.clientHeight
-let dotImage3
+let dotImage3: any
 watch(() => isShow.value, (newV) => {
+  if (!isClient)
+    return
+
   if (newV) {
     if (!dotImage3) {
       dotImage3 = new DotImageCanvas(backTop, '', 3, 'transparent', 'center-out')
@@ -821,81 +1013,67 @@ watch(() => isShow.value, (newV) => {
     }
   }
   else {
-    dotImage3.revert()
+    dotImage3?.revert()
   }
 })
-let lastMouseFxTs = 0
-let mouseRaf = 0
-let pendingMouse: MouseEvent | null = null
 
 function flushMouse() {
+  if (!isClient)
+    return
+
   mouseRaf = 0
   const e = pendingMouse
   pendingMouse = null
   if (!e)
     return
-  if (typeof document !== 'undefined' && document.hidden)
+  if (document.hidden)
     return
 
-  const w = window.innerWidth || document.documentElement.clientWidth || 1
-  const h = window.innerHeight || document.documentElement.clientHeight || 1
+  const docEl = document.documentElement
+  const w = window.innerWidth || docEl.clientWidth || 1
+  const h = window.innerHeight || docEl.clientHeight || 1
   snowPointerX = (e.clientX / w) * 2 - 1
   snowPointerY = (e.clientY / h) * 2 - 1
-  left.value = 200 - (e.x / maxWidth) * 200
-  top.value = 200 - (e.y / maxHeight) * 200
+  if (showPlanet.value) {
+    left.value = 200 - (e.clientX / w) * 200
+    top.value = 200 - (e.clientY / h) * 200
+  }
 
   const now = performance.now()
-  if (now - lastMouseFxTs > 140) {
-    lastMouseFxTs = now
+  if (!showPlanet.value || now - lastMouseFxTs <= 180)
+    return
+
+  lastMouseFxTs = now
+  void loadMouseAnimation().then((createMouseAnimation) => {
     createMouseAnimation(e, {
       background: 'url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxnIGZpbGw9IiNjY2NjY2MiPjxwYXRoIGQ9Ik0yMzIgMTA4YTIwIDIwIDAgMSAxLTIwLTIwYTIwIDIwIDAgMCAxIDIwIDIwbS0xNjggMGEyMCAyMCAwIDEgMC0yMCAyMGEyMCAyMCAwIDAgMCAyMC0yMG0yOC0yOGEyMCAyMCAwIDEgMC0yMC0yMGEyMCAyMCAwIDAgMCAyMCAyMG03MiAwYTIwIDIwIDAgMSAwLTIwLTIwYTIwIDIwIDAgMCAwIDIwIDIwbTE5LjI0IDc1Ljg1QTQzLjQ2IDQzLjQ2IDAgMCAxIDE2Mi41NyAxMzBhMzYgMzYgMCAwIDAtNjkuMTQgMGE0My40OSA0My40OSAwIDAgMS0yMC42NyAyNS45YTMyIDMyIDAgMCAwIDI3LjczIDU3LjYyYTcyLjQ5IDcyLjQ5IDAgMCAxIDU1IDBhMzIgMzIgMCAwIDAgMjcuNzMtNTcuNjJaIiBvcGFjaXR5PSIuMiIvPjxwYXRoIGQ9Ik0yMTIgODBhMjggMjggMCAxIDAgMjggMjhhMjggMjggMCAwIDAtMjgtMjhtMCA0MGExMiAxMiAwIDEgMSAxMi0xMmExMiAxMiAwIDAgMS0xMiAxMk03MiAxMDhhMjggMjggMCAxIDAtMjggMjhhMjggMjggMCAwIDAgMjgtMjhtLTI4IDEyYTEyIDEyIDAgMSAxIDEyLTEyYTEyIDEyIDAgMCAxLTEyIDEybTQ4LTMyYTI4IDI4IDAgMSAwLTI4LTI4YTI4IDI4IDAgMCAwIDI4IDI4bTAtNDBhMTIgMTIgMCAxIDEtMTIgMTJhMTIgMTIgMCAwIDEgMTItMTJtNzIgNDBhMjggMjggMCAxIDAtMjgtMjhhMjggMjggMCAwIDAgMjggMjhtMC00MGExMiAxMiAwIDEgMS0xMiAxMmExMiAxMiAwIDAgMSAxMi0xMm0yMy4xMiAxMDAuODZhMzUuMyAzNS4zIDAgMCAxLTE2Ljg3LTIxLjE0YTQ0IDQ0IDAgMCAwLTg0LjUgMEEzNS4yNSAzNS4yNSAwIDAgMSA2OSAxNDguODJBNDAgNDAgMCAwIDAgODggMjI0YTM5LjQ4IDM5LjQ4IDAgMCAwIDE1LjUyLTMuMTNhNjQuMDkgNjQuMDkgMCAwIDEgNDguODcgMGE0MCA0MCAwIDAgMCAzNC43My03MlpNMTY4IDIwOGEyNCAyNCAwIDAgMS05LjQ1LTEuOTNhODAuMTQgODAuMTQgMCAwIDAtNjEuMTkgMGEyNCAyNCAwIDAgMS0yMC43MS00My4yNmE1MS4yMiA1MS4yMiAwIDAgMCAyNC40Ni0zMC42N2EyOCAyOCAwIDAgMSA1My43OCAwYTUxLjI3IDUxLjI3IDAgMCAwIDI0LjUzIDMwLjcxQTI0IDI0IDAgMCAxIDE2OCAyMDgiLz48L2c+PC9zdmc+) center center no-repeat',
     })
-  }
+  })
 }
 
-useEventListener(
-  document,
-  'mousemove',
-  (e: MouseEvent) => {
-    if (typeof window === 'undefined')
-      return
-    lastInteractionTs = performance.now()
-    pendingMouse = e
-    if (!mouseRaf)
-      mouseRaf = window.requestAnimationFrame(flushMouse)
-  },
-  { passive: true },
-)
-
 onMounted(() => {
+  useEventListener(window, 'scroll', handleScroll, { passive: true })
+  useEventListener(
+    window,
+    'mousemove',
+    (e: MouseEvent) => {
+      lastInteractionTs = performance.now()
+      pendingMouse = e
+      if (!mouseRaf)
+        mouseRaf = window.requestAnimationFrame(flushMouse)
+    },
+    { passive: true },
+  )
+
+  handleScroll()
   lastInteractionTs = performance.now()
-  try {
-    const saveData = (navigator as any)?.connection?.saveData
-    const cores = navigator.hardwareConcurrency ?? 8
-    isLowPowerDevice = !!saveData || cores <= 4
-    particleDensity.value = isLowPowerDevice ? 0.55 : (cores <= 6 ? 0.75 : 1)
-    const mql = window.matchMedia?.('(prefers-reduced-motion: reduce)')
-    if (mql) {
-      prefersReducedMotion = mql.matches
-      mql.addEventListener?.('change', ev => (prefersReducedMotion = (ev as MediaQueryListEvent).matches))
-    }
-  }
-  catch {
-    isLowPowerDevice = true
-    particleDensity.value = 0.75
-  }
+  useEventListener(window, 'resize', syncSnowRendererSize, { passive: true })
 
-  try {
-    const snowEl = document.querySelector('#snow') as HTMLElement | null
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isLowPowerDevice ? 1 : 1.25))
-    if (snowEl)
-      renderer.setSize(snowEl.offsetWidth, snowEl.offsetHeight, false)
-  }
-  catch {
-  }
+  const stop = useRafInterval(() => {
+    if (!imageShow.value)
+      return
 
-  const stop = useRaf(() => {
-    if (dotImage1.status === 'success' && window.gsap && window.ScrollTrigger) {
+    if (dotImage1?.status === 'success' && window.gsap && window.ScrollTrigger) {
       stop()
       window.gsap.registerPlugin(window.ScrollTrigger)
 
@@ -942,76 +1120,74 @@ onMounted(() => {
 
       tl2.fromTo('.cloth', { translateX: '5%' }, { translateX: '-5%', ease: 'none' })
     }
-  }, {
-    delta: 200,
-  })
+  }, 220)
 })
 </script>
 
 <template>
   <!-- <gitFork lt-md:hidden position="left" z--1 link="https://github.com/Simon-He95" /> -->
   <div id="snow" fixed w-full h-full z--1 />
-  <SeasonDecor3D
-    v-if="seasonTheme === 'spring'"
+  <LazySeasonDecor3D
+    v-if="showSeasonDecor && seasonTheme === 'spring'"
     theme="spring"
     :dark="isDark"
     :width="190"
     :height="210"
-    class="season-decor spring-decor lt-md:hidden"
+    class="season-decor spring-decor lt-sm:hidden"
     fixed
     bottom-6
     left-6
     z-0
     pointer-events-none
   />
-  <SeasonDecor3D
-    v-if="seasonTheme === 'summer'"
+  <LazySeasonDecor3D
+    v-if="showSeasonDecor && seasonTheme === 'summer'"
     theme="summer"
     :dark="isDark"
     :width="190"
     :height="210"
-    class="season-decor summer-decor lt-md:hidden"
+    class="season-decor summer-decor lt-sm:hidden"
     fixed
     bottom-6
     right-6
     z-0
     pointer-events-none
   />
-  <SeasonDecor3D
-    v-if="seasonTheme === 'autumn'"
+  <LazySeasonDecor3D
+    v-if="showSeasonDecor && seasonTheme === 'autumn'"
     theme="autumn"
     :dark="isDark"
     :width="200"
     :height="220"
-    class="season-decor autumn-decor lt-md:hidden"
+    class="season-decor autumn-decor lt-sm:hidden"
     fixed
     bottom-6
     right-6
     z-0
     pointer-events-none
   />
-  <SeasonDecor3D
-    v-if="seasonTheme === 'winter'"
+  <LazySeasonDecor3D
+    v-if="showSeasonDecor && seasonTheme === 'winter'"
     theme="winter"
     variant="snowman"
     :dark="isDark"
     :width="150"
     :height="190"
-    class="season-decor winter-decor winter-snowman lt-md:hidden"
+    class="season-decor winter-decor winter-snowman lt-sm:hidden"
     fixed
     bottom-6
     left-6
     z-0
     pointer-events-none
   />
-  <SeasonDecor3D
-    v-if="seasonTheme === 'winter'"
+  <LazySeasonDecor3D
+    v-if="showSeasonDecor && seasonTheme === 'winter'"
     theme="winter"
     variant="tree"
     :dark="isDark"
     :width="160"
     :height="200"
-    class="season-decor winter-decor winter-tree lt-md:hidden"
+    class="season-decor winter-decor winter-tree lt-sm:hidden"
     fixed
     bottom-6
     right-6
@@ -1036,6 +1212,7 @@ onMounted(() => {
     fixed bottom-40 right-5 text-3xl src="/backTop.png" alt="backTop" @click="scrollToTop()"
   > -->
   <div
+    v-if="showPlanet"
     fixed w-100 z--5 left-1 top-80 :style="{
       transform: `translate(${left}px, ${top}px)`,
     }"
@@ -1078,7 +1255,7 @@ onMounted(() => {
       </svg> -->
     </div>
   </div>
-  <MusicPlayer ref="musicPlayer" :playlist="playlist" />
+  <LazyMusicPlayer v-if="showMusicPlayer" ref="musicPlayer" :playlist="playlist" />
 </template>
 
 <style>
@@ -1145,7 +1322,7 @@ onMounted(() => {
     opacity: 0.95;
     filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
     transform-origin: bottom center;
-    animation: winter-float 6s ease-in-out infinite;
+    animation: season-float 4.8s ease-in-out infinite;
 
     --season-stroke: rgba(55, 65, 81, 0.45);
   }
@@ -1208,14 +1385,43 @@ onMounted(() => {
     animation-delay: -1.2s;
   }
 
-  @keyframes winter-float {
+  .spring-decor {
+    animation-duration: 5.8s;
+  }
+
+  .summer-decor {
+    animation-duration: 4.6s;
+    animation-delay: -0.8s;
+  }
+
+  .autumn-decor {
+    animation-duration: 5.2s;
+    animation-delay: -1.5s;
+  }
+
+  .winter-snowman {
+    animation-duration: 4.9s;
+  }
+
+  .winter-tree {
+    animation-duration: 5.4s;
+  }
+
+  @media (max-width: 900px) {
+    .season-decor {
+      opacity: 0.98;
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.2));
+    }
+  }
+
+  @keyframes season-float {
     0%,
     100% {
-      transform: translateY(0) rotate(-0.5deg);
+      transform: translate3d(0, 0, 0) rotate(-1deg);
     }
 
     50% {
-      transform: translateY(-6px) rotate(0.5deg);
+      transform: translate3d(0, -14px, 0) rotate(1deg);
     }
   }
 </style>

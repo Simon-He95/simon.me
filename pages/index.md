@@ -15,64 +15,84 @@ title: Simon He
 <p v-for="content in $t.findMe" v-html="content"></p>
 <script setup>
   import { $t, lan } from '../lang'
-  import { onMounted } from 'vue'
+  import { onBeforeUnmount, onMounted } from 'vue'
+
+  let observer = null
   onMounted(() => {
     const title = document.querySelector('main>div:first-child>h1')
-    title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
-    const s = document.querySelector('.title-split:nth-child(1)')
-    anime({
-        targets: 'main>div:first-child>h1',
-        translateY: 0,
-        rotateZ: 360,
-        delay: 10000,
-    })
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+    if (title && !title.dataset.splitReady) {
+      title.dataset.splitReady = 'true'
+      title.innerHTML = title.textContent.replace(/\S/g, "<span class='title-split'>$&</span>")
+    }
+
     // Intersection Observer 触发动画
-    const contents = document.querySelectorAll('.v-content')
-    const observer = new window.IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show')
-          observer.unobserve(entry.target)
-        }
+    const contents = Array.from(document.querySelectorAll('.v-content'))
+    if (reduceMotion) {
+      contents.forEach(el => el.classList.add('show'))
+      return
+    }
+
+    observer = new window.IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting)
+          return
+
+        entry.target.classList.add('show')
+        observer?.unobserve(entry.target)
       })
-    }, { threshold: 0.2 })
-    contents.forEach(el => observer.observe(el))
+    }, { threshold: 0.12, rootMargin: '0px 0px -12% 0px' })
+
+    window.requestAnimationFrame(() => {
+      contents.forEach(el => observer?.observe(el))
+    })
+  })
+
+  onBeforeUnmount(() => {
+    observer?.disconnect()
+    observer = null
   })
 </script>
 <style >
   .v-content {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s, transform 0.8s;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    content-visibility: auto;
+    contain-intrinsic-size: 72px;
   }
   .v-content.show {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.8s, transform 0.8s;
   }
   .title-split:nth-child(1) {
     display:inline-block;
-    animation: title-split 8s 20s ease-in-out infinite;
-    animation-delay: 3s;
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .title-split:nth-child(1) {
+      animation: title-split 1.4s 0.35s ease-out both;
+      will-change: transform;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v-content {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   @keyframes title-split{
     0%{
-      transform: translate3d(0,0,0) ;
+      transform: rotateY(0deg) scale(1);
     }
-    20%{
-      transform: translate3d(0,0,0) rotateY(720deg);
-      animation-play-state: paused;
-    }
-    50%{
-      transform: translate3d(0,0,0) rotateY(720deg);
-      animation-play-state: paused;
-    }
-    80%{
-      transform: translate3d(0,0,0) rotateY(0deg);
-      animation-play-state: paused;
+    45%{
+      transform: rotateY(360deg) scale(1.04);
     }
     100%{
-      transform: translate3d(0,0,0) rotateY(0deg);
+      transform: rotateY(0deg) scale(1);
     }
   }
 </style>

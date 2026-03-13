@@ -4,6 +4,9 @@ import { remove } from 'diacritics'
 // eslint-disable-next-line no-control-regex
 const rControl = /[\u0000-\u001F]/g
 const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'<>,.?/]+/g
+const rContinuousSeparator = /-{2,}/g
+const rEdgeSeparator = /^-+|-+$/g
+const rLeadingDigit = /^(\d)/
 
 export function slugify(str: string): string {
   return (
@@ -13,11 +16,11 @@ export function slugify(str: string): string {
       // Replace special characters
       .replace(rSpecial, '-')
       // Remove continuos separators
-      .replace(/-{2,}/g, '-')
+      .replace(rContinuousSeparator, '-')
       // Remove prefixing and trailing separtors
-      .replace(/^-+|-+$/g, '')
+      .replace(rEdgeSeparator, '')
       // ensure it doesn't start with a number (#121)
-      .replace(/^(\d)/, '_$1')
+      .replace(rLeadingDigit, '_$1')
       // lowercase
       .toLowerCase()
   )

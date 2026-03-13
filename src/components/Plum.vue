@@ -15,6 +15,19 @@ const start = ref<Fn>(() => {})
 const init = ref(4)
 const len = ref(6)
 const stopped = ref(false)
+const shouldRender = ref(false)
+
+let controls: ReturnType<typeof useRafFn> | undefined
+
+function shouldEnablePlum() {
+  if (typeof window === 'undefined')
+    return false
+
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+  const saveData = (navigator as any)?.connection?.saveData ?? false
+  const cores = navigator.hardwareConcurrency ?? 8
+  return size.width >= 768 && !reduceMotion && !saveData && cores > 4
+}
 
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
   const ctx = canvas.getContext('2d')!
@@ -47,6 +60,11 @@ function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
 }
 
 onMounted(async () => {
+  if (!shouldEnablePlum())
+    return
+
+  shouldRender.value = true
+  await nextTick()
   const canvas = el.value!
   const { ctx } = initCanvas(canvas, size.width, size.height)
   const { width, height } = canvas
@@ -89,12 +107,10 @@ onMounted(async () => {
   }
 
   let lastTime = performance.now()
-  const interval = 1000 / 40
-
-  let controls: ReturnType<typeof useRafFn>
+  const interval = 1000 / 24
 
   const frame = () => {
-    if (performance.now() - lastTime < interval)
+    if (document.hidden || performance.now() - lastTime < interval)
       return
 
     iterations += 1
@@ -132,10 +148,15 @@ onMounted(async () => {
 
   start.value()
 })
+
+onBeforeUnmount(() => {
+  controls?.pause()
+})
 </script>
 
 <template>
   <div
+    v-if="shouldRender"
     class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none"
     style="z-index: -1"
   >

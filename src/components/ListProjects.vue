@@ -43,16 +43,12 @@ function finish() {
           <div class="text-3xl opacity-50" :class="item.icon || 'i-carbon-unknown'" />
         </div>
         <div class="flex-auto">
-          <template v-if="isZh">
-            <vivid-typing min-h-6 lh-6 :content="item.nameZh || item.name" :delay="idx * 200 " class="text-normal" />
-            <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content=" item.descZh || item.desc " :delay="idx * 200" />
-          </template>
-
-          <template v-else>
-            <vivid-typing min-h-6 lh-6 :content="item.name" :delay="idx * 200 " class="text-normal" />
-            <vivid-typing spilt-tag="span" class="desc text-sm opacity-50 font-normal" min-h-6 lh-6 :content="item.desc" :delay="idx * 200" />
-          </template>
-          <!-- <div class="desc text-sm opacity-50 font-normal" v-html="isZh ? item.descZh || item.desc : item.desc" /> -->
+          <div class="project-title min-h-6 lh-6 text-normal">
+            {{ isZh ? item.nameZh || item.name : item.name }}
+          </div>
+          <div class="desc min-h-6 lh-6 text-sm opacity-50 font-normal">
+            {{ isZh ? item.descZh || item.desc : item.desc }}
+          </div>
         </div>
       </a>
     </div>
@@ -138,11 +134,21 @@ function finish() {
   font-size: 1.1rem;
   width: 350px;
   max-width: 100%;
+  content-visibility: auto;
+  contain-intrinsic-size: 110px;
   padding: 0.5rem 0.875rem 0.875rem;
   border-radius: 6px;
 }
 
 .project-grid a.item:hover {
   background: #88888811;
+}
+
+.project-title {
+  font-weight: 500;
+}
+
+.desc {
+  text-wrap: pretty;
 }
 </style>

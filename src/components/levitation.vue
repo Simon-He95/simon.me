@@ -30,7 +30,7 @@ function urlToBase64(url: string) {
       const ctx = canvas.getContext('2d')
       const img = new Image()
       img.crossOrigin = 'Anonymous'
-      img.src = `${url}?timeStamp=${new Date().getTime()}`
+      img.src = `${url}?timeStamp=${Date.now()}`
       img.onload = function () {
         ctx?.drawImage(
           img,

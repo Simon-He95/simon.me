@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { SpeechOptions } from 'lazy-js-utils'
-import { speech, useRaf } from 'lazy-js-utils'
 import { lan, setLan } from '../../lang'
 
 const isZh = computed(() => lan.value === 'zh')
@@ -12,29 +10,6 @@ function preload() {
 
 const Blog = computed(() => isZh.value ? '博客' : 'Blog')
 onMounted(preload)
-const { speak, isSpeaking } = speech()
-const getSpeechOptions = computed(() =>
-  isZh.value
-    ? {
-        text: '大家好,我是Simon,一个狂热的程序员,兴趣爱好有追动漫、打篮球、看一些推理剧、狼人杀,居住在上海,中国',
-        lang: 'zh-CN',
-      }
-    : {
-        text: 'Hey, I am Simon, a fanatical programmers. My hobbies include watching animation, playing basketball, watching some mystery dramas, and werewolf, lived in Shanghai, China',
-        lang: 'en-US',
-      },
-)
-const pending = ref(false)
-function say() {
-  speak(getSpeechOptions.value as SpeechOptions)
-  pending.value = true
-  const stop = useRaf(() => {
-    if (!isSpeaking()) {
-      pending.value = false
-      stop()
-    }
-  }, 500)
-}
 </script>
 
 <template>

@@ -63,3 +63,10 @@ const posts = computed(() =>
     </app-link>
   </ul>
 </template>
+
+<style scoped>
+.item {
+  content-visibility: auto;
+  contain-intrinsic-size: 88px;
+}
+</style>
