@@ -180,7 +180,9 @@ async function ensureMusicPlayerVisible() {
     ])
     showMusicPlayer.value = true
   }
-  catch {
+  catch (error) {
+    if (import.meta.env.DEV)
+      console.warn('[music] failed to load music player', error)
   }
   finally {
     musicLoading.value = false
@@ -194,6 +196,7 @@ let dotImage1: any
 let dotImage2: any
 const loadedScripts = new Map<string, Promise<void>>()
 let cleanupDotImageScroll: (() => void) | undefined
+let cleanupDotImageScrollStart: (() => void) | undefined
 let dotImageScrollTimer: number | undefined
 let dotImageScrollAttempts = 0
 
@@ -203,6 +206,11 @@ function clearDotImageScrollTimer() {
 
   window.clearTimeout(dotImageScrollTimer)
   dotImageScrollTimer = undefined
+}
+
+function clearDotImageScrollStart() {
+  cleanupDotImageScrollStart?.()
+  cleanupDotImageScrollStart = undefined
 }
 
 async function loadDotImageCanvas() {
@@ -223,6 +231,23 @@ function scheduleDotImageScrollAnimation(delay = 0) {
     dotImageScrollTimer = undefined
     void setupDotImageScrollAnimation()
   }, delay)
+}
+
+function waitForDotImageScrollAnimation() {
+  if (!isClient || cleanupDotImageScroll || cleanupDotImageScrollStart)
+    return
+
+  const start = () => {
+    clearDotImageScrollStart()
+    scheduleDotImageScrollAnimation()
+  }
+
+  if (window.scrollY > 0) {
+    start()
+    return
+  }
+
+  cleanupDotImageScrollStart = useEventListener(window, 'scroll', start, { passive: true, once: true })
 }
 
 function loadScriptOnce(src: string, isReady: () => boolean) {
@@ -278,7 +303,9 @@ async function setupDotImageScrollAnimation() {
   try {
     gsap = await loadGsap()
   }
-  catch {
+  catch (error) {
+    if (import.meta.env.DEV)
+      console.warn('[hero] failed to load GSAP animation', error)
     return
   }
 
@@ -347,6 +374,7 @@ watch(imageShow, (visible) => {
     return
 
   clearDotImageScrollTimer()
+  clearDotImageScrollStart()
   dotImageScrollAttempts = 0
   cancelHeroIdle?.()
   cancelHeroIdle = undefined
@@ -391,7 +419,7 @@ async function mountHeroImages() {
   }
 
   dotImageScrollAttempts = 0
-  scheduleDotImageScrollAnimation(250)
+  waitForDotImageScrollAnimation()
 }
 
 onMounted(() => {
@@ -1209,6 +1237,7 @@ onBeforeUnmount(() => {
   cancelSeasonIdle?.()
   cancelSnowIdle?.()
   clearDotImageScrollTimer()
+  clearDotImageScrollStart()
   cleanupDotImageScroll?.()
   disposeSnowScene()
   if (isClient && mouseRaf)
@@ -1615,6 +1644,8 @@ onMounted(() => {
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .animate-tada,
+    .backTop,
     .planet,
     .ball,
     .season-decor {

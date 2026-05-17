@@ -338,6 +338,7 @@ onMounted(preload)
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .animate-keyframes-zoom-in,
   .projectMove>span,
   .iconMove,
   .BlogMove::before,
@@ -345,6 +346,7 @@ onMounted(preload)
   :deep(.svg-dash),
   :deep(.svg-dash):active {
     animation: none !important;
+    transform: none !important;
   }
 }
 
