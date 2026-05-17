@@ -102,6 +102,7 @@ const showMusicPlayer = ref(false)
 const particleDensity = ref(1)
 let cancelHeroIdle: (() => void) | undefined
 let cancelSeasonIdle: (() => void) | undefined
+let cancelSnowIdle: (() => void) | undefined
 
 const macWindowsPlatformRegex = /mac|win/i
 const macWindowsUserAgentRegex = /mac|windows/i
@@ -223,9 +224,13 @@ function loadScriptOnce(src: string, isReady: () => boolean) {
   const promise = new Promise<void>((resolve, reject) => {
     const script = document.createElement('script')
     script.src = src
-    script.defer = true
+    script.async = false
     script.onload = () => resolve()
-    script.onerror = () => reject(new Error(`Failed to load ${src}`))
+    script.onerror = () => {
+      loadedScripts.delete(src)
+      script.remove()
+      reject(new Error(`Failed to load ${src}`))
+    }
     document.head.appendChild(script)
   })
 
@@ -301,9 +306,10 @@ async function setupDotImageScrollAnimation() {
   tl2.fromTo('.cloth', { translateX: '5%' }, { translateX: '-5%', ease: 'none' })
 
   cleanupDotImageScroll = () => {
+    tl.scrollTrigger?.kill()
+    tl2.scrollTrigger?.kill()
     tl.kill()
     tl2.kill()
-    window.ScrollTrigger?.getAll?.().forEach((trigger: any) => trigger.kill())
     gsap.killTweensOf(['.dotImage', '.cloth'])
   }
 }
@@ -312,17 +318,19 @@ watch(imageShow, (visible) => {
   if (!isClient)
     return
 
+  clearDotImageScrollTimer()
+  dotImageScrollAttempts = 0
+  cancelHeroIdle?.()
+  cancelHeroIdle = undefined
+
   if (!visible) {
-    clearDotImageScrollTimer()
-    dotImageScrollAttempts = 0
     cleanupDotImageScroll?.()
     cleanupDotImageScroll = undefined
     return
   }
 
-  dotImageScrollAttempts = 0
-  scheduleDotImageScrollAnimation(250)
-}, { immediate: true })
+  cancelHeroIdle = runWhenIdle(mountHeroImages, 500)
+}, { flush: 'post' })
 
 async function ensureHeroImages() {
   if (!isClient)
@@ -332,25 +340,27 @@ async function ensureHeroImages() {
   dotImage2 ||= new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
 }
 
+async function mountHeroImages() {
+  if (!isClient || !imageShow.value)
+    return
+
+  await ensureHeroImages()
+
+  if (dotImage1 && !dotImage1.mounted) {
+    dotImage1.mounted = true
+    dotImage1.append('.dotImage')
+  }
+  if (dotImage2 && !dotImage2.mounted) {
+    dotImage2.mounted = true
+    dotImage2.append('.cloth')
+  }
+
+  dotImageScrollAttempts = 0
+  scheduleDotImageScrollAnimation(250)
+}
+
 onMounted(() => {
   prefetchAsset(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
-  cancelHeroIdle = runWhenIdle(async () => {
-    if (!imageShow.value)
-      return
-
-    await ensureHeroImages()
-    if (dotImage1 && !dotImage1.mounted) {
-      dotImage1.mounted = true
-      dotImage1.append('.dotImage')
-    }
-    if (dotImage2 && !dotImage2.mounted) {
-      dotImage2.mounted = true
-      dotImage2.append('.cloth')
-    }
-
-    dotImageScrollAttempts = 0
-    scheduleDotImageScrollAnimation(250)
-  }, 1500)
   const stop = useEventListener(window, 'click', () => {
     void ensureMusicPlayerVisible(true)
     stop()
@@ -413,10 +423,9 @@ onMounted(() => {
   cancelSeasonIdle = runWhenIdle(async () => {
     if (desktopViewport.value && !lowPowerMode.value && !reduceMotion.value)
       showSeasonDecor.value = true
-
-    if (enableAtmosphere.value)
-      await initSnowScene()
   }, 900)
+
+  scheduleSnowScene()
 })
 
 function getParticleTint(theme: SeasonTheme) {
@@ -478,6 +487,42 @@ function syncSnowRendererSize() {
   catch {
   }
 }
+
+function scheduleSnowScene() {
+  if (!isClient)
+    return
+
+  cancelSnowIdle?.()
+  cancelSnowIdle = undefined
+
+  if (!enableAtmosphere.value)
+    return
+
+  cancelSnowIdle = runWhenIdle(async () => {
+    await nextTick()
+
+    if (!enableAtmosphere.value)
+      return
+
+    await initSnowScene()
+    syncSnowRendererSize()
+  }, 900)
+}
+
+watch(enableAtmosphere, (enabled) => {
+  if (!isClient)
+    return
+
+  if (!enabled) {
+    cancelSnowIdle?.()
+    cancelSnowIdle = undefined
+    lastSnowUpdateTs = 0
+    lastTimestamp = 0
+    return
+  }
+
+  scheduleSnowScene()
+}, { flush: 'post' })
 
 interface ThemeConfig {
   count: number
@@ -586,7 +631,7 @@ function applyDepthMaterialHooks(mat: any) {
 }
 
 async function initSnowScene() {
-  if (!isClient || renderer)
+  if (!isClient || renderer || !enableAtmosphere.value)
     return
 
   const sThree = await loadSThree()
@@ -600,7 +645,7 @@ async function initSnowScene() {
       return camera
     },
     animate({ camera, elapsedTime, timestamp }) {
-      if (document.hidden)
+      if (document.hidden || !enableAtmosphere.value)
         return
       if (!geometry || !speeds || !drift || !driftStrengths || !particleScales || !particleAlphas || particleCount <= 0)
         return
@@ -613,12 +658,14 @@ async function initSnowScene() {
       const baseFps = lowPowerMode.value ? 20 : 30
       const idleFps = lowPowerMode.value ? 12 : baseFps
       const targetFps = reduceMotion.value ? 0 : (idle ? idleFps : baseFps)
-      if (targetFps > 0) {
-        const interval = 1000 / targetFps
-        if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
-          return
-        lastSnowUpdateTs = now
-      }
+      if (targetFps <= 0)
+        return
+
+      const interval = 1000 / targetFps
+      if (lastSnowUpdateTs && now - lastSnowUpdateTs < interval)
+        return
+
+      lastSnowUpdateTs = now
 
       const config = themeConfigs[seasonTheme.value]
       const positions = geometry.attributes.position.array as Float32Array
@@ -1090,6 +1137,7 @@ let pendingMouse: MouseEvent | null = null
 onBeforeUnmount(() => {
   cancelHeroIdle?.()
   cancelSeasonIdle?.()
+  cancelSnowIdle?.()
   clearDotImageScrollTimer()
   cleanupDotImageScroll?.()
   unmount?.()
@@ -1183,7 +1231,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="enableAtmosphere" id="snow" fixed w-full h-full z--1 />
+  <div v-show="enableAtmosphere" id="snow" fixed w-full h-full z--1 />
   <LazySeasonDecor3D
     v-if="showSeasonDecor && seasonTheme === 'spring'"
     theme="spring"
@@ -1251,8 +1299,8 @@ onMounted(() => {
     z-0
     pointer-events-none
   />
-  <span v-if="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
-  <span v-if="imageShow" class="cloth" fixed top-20 right--120 z--1 />
+  <span v-show="imageShow" class="dotImage" fixed top-20 left--80 z--1 />
+  <span v-show="imageShow" class="cloth" fixed top-20 right--120 z--1 />
   <span class="dotText" fixed bottom-5 right-0 />
   <NavBar />
   <main class="px-7 py-10" overflow-x-hidden>
