@@ -18,7 +18,6 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
 import { createLogger } from 'vite'
-import Inspect from 'vite-plugin-inspect'
 import Pages from 'vite-plugin-pages'
 import SVG from 'vite-svg-loader'
 import { slugify } from './scripts/slugify'
@@ -37,6 +36,8 @@ import 'prismjs/components/prism-jsdoc'
 
 const externalLinkRegex = /^https?:\/\//
 const markdownFileRegex = /\.md$/
+const vueFileRegex = /\.vue$/
+const vueQueryRegex = /\.vue\?vue/
 const codeTagRegex = /<code(.*?)>/g
 const fenceStartRegex = /^(```+|~~~+)/
 const lineBreakRegex = /\r?\n/
@@ -337,7 +338,9 @@ viteLogger.warnOnce = (msg, options) => {
   baseWarnOnce(msg, options)
 }
 
-const enableInspect = process.env.VITE_INSPECT === 'true'
+const inspectPlugin = process.env.VITE_INSPECT === 'true'
+  ? (await import('vite-plugin-inspect')).default()
+  : undefined
 
 const config: UserConfig = {
   customLogger: viteLogger,
@@ -390,7 +393,7 @@ const config: UserConfig = {
     markdownToVuePlugin(),
 
     Vue({
-      include: [/\.vue$/, /\.md$/],
+      include: [vueFileRegex, markdownFileRegex],
     }),
 
     Pages({
@@ -425,7 +428,7 @@ const config: UserConfig = {
     Components({
       extensions: ['vue', 'md'],
       dts: true,
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      include: [vueFileRegex, vueQueryRegex, markdownFileRegex],
       resolvers: [
         IconsResolver({
           componentPrefix: '',
@@ -433,7 +436,7 @@ const config: UserConfig = {
       ],
     }),
 
-    ...(enableInspect ? [Inspect()] : []),
+    ...(inspectPlugin ? [inspectPlugin] : []),
 
     Icons({
       defaultClass: 'inline',

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Song } from 'vue3-music-player'
 import { useEventListener } from '@vueuse/core'
-import { DotImageCanvas } from 'lazy-js-utils'
 import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { isDark } from '~/logics'
 // import antfu from '/images/af.png'
@@ -24,8 +23,10 @@ useHead({
   ],
 })
 
+const loadMusicPlayer = () => import('./components/LazyMusicPlayer.vue')
+
 const LazyMusicPlayer = defineAsyncComponent({
-  loader: () => import('./components/LazyMusicPlayer.vue'),
+  loader: loadMusicPlayer,
   suspensible: false,
 })
 
@@ -99,6 +100,7 @@ const desktopViewport = ref(false)
 const showSeasonDecor = ref(false)
 const showPlanet = ref(false)
 const showMusicPlayer = ref(false)
+const musicLoading = ref(false)
 const particleDensity = ref(1)
 let cancelHeroIdle: (() => void) | undefined
 let cancelSeasonIdle: (() => void) | undefined
@@ -166,17 +168,28 @@ function ensurePlaylistLoaded() {
 }
 
 async function ensureMusicPlayerVisible() {
+  if (showMusicPlayer.value || musicLoading.value)
+    return
+
+  musicLoading.value = true
+
   try {
-    await ensurePlaylistLoaded()
+    await Promise.all([
+      loadMusicPlayer(),
+      ensurePlaylistLoaded(),
+    ])
+    showMusicPlayer.value = true
   }
   catch {
-    return
   }
-
-  if (!showMusicPlayer.value)
-    showMusicPlayer.value = true
+  finally {
+    musicLoading.value = false
+  }
 }
 
+type DotImageCanvasCtor = typeof import('lazy-js-utils')['DotImageCanvas']
+
+let dotImageCanvasCtor: DotImageCanvasCtor | undefined
 let dotImage1: any
 let dotImage2: any
 const loadedScripts = new Map<string, Promise<void>>()
@@ -190,6 +203,15 @@ function clearDotImageScrollTimer() {
 
   window.clearTimeout(dotImageScrollTimer)
   dotImageScrollTimer = undefined
+}
+
+async function loadDotImageCanvas() {
+  if (!dotImageCanvasCtor) {
+    const mod = await import('lazy-js-utils')
+    dotImageCanvasCtor = mod.DotImageCanvas
+  }
+
+  return dotImageCanvasCtor
 }
 
 function scheduleDotImageScrollAnimation(delay = 0) {
@@ -344,6 +366,8 @@ async function ensureHeroImages() {
   if (!isClient)
     return
 
+  const DotImageCanvas = await loadDotImageCanvas()
+
   dotImage1 ||= new DotImageCanvas(kb, '', 3, 'transparent', 'out-center')
   dotImage2 ||= new DotImageCanvas(cloth, '', 3, 'transparent', 'center-out')
 }
@@ -353,6 +377,9 @@ async function mountHeroImages() {
     return
 
   await ensureHeroImages()
+
+  if (!imageShow.value)
+    return
 
   if (dotImage1 && !dotImage1.mounted) {
     dotImage1.mounted = true
@@ -505,6 +532,37 @@ function scheduleSnowScene() {
   }, 900)
 }
 
+function disposeSnowScene() {
+  unmount?.()
+  geometry?.dispose?.()
+  material?.dispose?.()
+  Object.values(textures).forEach(t => t?.dispose?.())
+  renderer?.dispose?.()
+  renderer?.domElement?.remove?.()
+
+  points = undefined
+  unmount = undefined
+  geometry = undefined
+  material = undefined
+  particleCount = 0
+  speeds = undefined
+  drift = undefined
+  driftStrengths = undefined
+  particleScales = undefined
+  particleAlphas = undefined
+
+  c = undefined
+  THREE = undefined
+  scene = undefined
+  renderer = undefined
+  animationArray = []
+  lastTimestamp = 0
+  lastSnowUpdateTs = 0
+
+  for (const key of Object.keys(textures) as SeasonTheme[])
+    delete textures[key]
+}
+
 watch(enableAtmosphere, (enabled) => {
   if (!isClient)
     return
@@ -512,8 +570,7 @@ watch(enableAtmosphere, (enabled) => {
   if (!enabled) {
     cancelSnowIdle?.()
     cancelSnowIdle = undefined
-    lastSnowUpdateTs = 0
-    lastTimestamp = 0
+    disposeSnowScene()
     return
   }
 
@@ -1136,10 +1193,7 @@ onBeforeUnmount(() => {
   cancelSnowIdle?.()
   clearDotImageScrollTimer()
   cleanupDotImageScroll?.()
-  unmount?.()
-  geometry?.dispose?.()
-  material?.dispose?.()
-  Object.values(textures).forEach(t => t?.dispose?.())
+  disposeSnowScene()
   if (isClient && mouseRaf)
     window.cancelAnimationFrame(mouseRaf)
 })
@@ -1148,11 +1202,16 @@ const top = ref(0)
 // 初始化获取鼠标位置
 
 let dotImage3: any
-watch(() => isShow.value, (newV) => {
+watch(() => isShow.value, async (newV) => {
   if (!isClient)
     return
 
   if (newV) {
+    const DotImageCanvas = await loadDotImageCanvas()
+
+    if (!isShow.value)
+      return
+
     if (!dotImage3) {
       dotImage3 = new DotImageCanvas(backTop, '', 3, 'transparent', 'center-out')
       dotImage3.isPreferred = true
@@ -1311,12 +1370,14 @@ onMounted(() => {
   <button
     v-if="!showMusicPlayer"
     type="button"
-    class="music-toggle fixed bottom-28 right-5 z-10 h-10 w-10 flex items-center justify-center rounded-full border border-gray-300 bg-white/80 text-xl text-gray-800 shadow-sm backdrop-blur transition-colors hover:bg-white dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100 dark:hover:bg-gray-900"
+    :disabled="musicLoading"
+    class="music-toggle fixed bottom-28 right-5 z-10 h-10 w-10 flex items-center justify-center rounded-full border border-gray-300 bg-white/80 text-xl text-gray-800 shadow-sm backdrop-blur transition-colors hover:bg-white disabled:opacity-60 dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100 dark:hover:bg-gray-900"
     aria-label="Music"
     title="Music"
     @click="ensureMusicPlayerVisible()"
   >
-    <span class="i-carbon:music" aria-hidden="true" />
+    <span v-if="!musicLoading" class="i-carbon:music" aria-hidden="true" />
+    <span v-else class="i-carbon:circle-dash" aria-hidden="true" />
   </button>
   <!-- <img
     v-if="isShow" animate-tada hover="animate-none"
