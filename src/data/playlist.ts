@@ -1,17 +1,22 @@
 import type { Song } from 'vue3-music-player'
 
-async function loadText(url: string) {
-  const res = await fetch(url)
-  if (!res.ok)
-    throw new Error(`Failed to load ${url}`)
+async function loadOptionalText(url: string) {
+  try {
+    const res = await fetch(url)
+    if (!res.ok)
+      return ''
 
-  return res.text()
+    return await res.text()
+  }
+  catch {
+    return ''
+  }
 }
 
 export async function loadPlaylist(): Promise<Song[]> {
   const [daoxiangLrc, kaibuliaokouLrc] = await Promise.all([
-    loadText('/audio/daoxiang.lrc'),
-    loadText('/audio/kaibuliaokou.lrc'),
+    loadOptionalText('/audio/daoxiang.lrc'),
+    loadOptionalText('/audio/kaibuliaokou.lrc'),
   ])
 
   return [

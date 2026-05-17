@@ -129,11 +129,9 @@ const enableAtmosphere = computed(() =>
   && !reduceMotion.value,
 )
 
-const musicPlayer = ref<any>(null)
 const playlist = shallowRef<Song[]>([])
 const playlistLoaded = ref(false)
 let playlistPromise: Promise<void> | undefined
-let shouldAutoplayMusic = false
 
 function syncClientCapabilities() {
   if (!isClient)
@@ -152,16 +150,6 @@ function syncClientCapabilities() {
   particleDensity.value = lowPowerMode.value ? 0.42 : (cores <= 6 ? 0.66 : 0.85)
 }
 
-function maybeAutoplayMusic() {
-  if (!shouldAutoplayMusic || !musicPlayer.value?.play)
-    return
-
-  shouldAutoplayMusic = false
-  nextTick(() => {
-    musicPlayer.value?.play?.()
-  })
-}
-
 function ensurePlaylistLoaded() {
   if (playlistLoaded.value)
     return Promise.resolve()
@@ -169,24 +157,26 @@ function ensurePlaylistLoaded() {
   playlistPromise ||= import('./data/playlist').then(async (mod) => {
     playlist.value = await mod.loadPlaylist()
     playlistLoaded.value = true
+  }).catch((error) => {
+    playlistPromise = undefined
+    throw error
   })
 
   return playlistPromise
 }
 
-async function ensureMusicPlayerVisible(autoplay = false) {
+async function ensureMusicPlayerVisible() {
+  try {
+    await ensurePlaylistLoaded()
+  }
+  catch {
+    return
+  }
+
   if (!showMusicPlayer.value)
     showMusicPlayer.value = true
-
-  await ensurePlaylistLoaded()
-
-  if (autoplay)
-    shouldAutoplayMusic = true
-
-  maybeAutoplayMusic()
 }
 
-watch(musicPlayer, maybeAutoplayMusic)
 let dotImage1: any
 let dotImage2: any
 const loadedScripts = new Map<string, Promise<void>>()
@@ -262,7 +252,13 @@ async function setupDotImageScrollAnimation() {
   }
 
   dotImageScrollAttempts = 0
-  const gsap = await loadGsap()
+  let gsap: any
+  try {
+    gsap = await loadGsap()
+  }
+  catch {
+    return
+  }
 
   if (!imageShow.value || dotImage1?.status !== 'success')
     return
@@ -314,6 +310,16 @@ async function setupDotImageScrollAnimation() {
   }
 }
 
+function pauseHeroImages() {
+  dotImage1?.revert?.()
+  dotImage2?.revert?.()
+}
+
+function resumeHeroImages() {
+  dotImage1?.continue?.()
+  dotImage2?.continue?.()
+}
+
 watch(imageShow, (visible) => {
   if (!isClient)
     return
@@ -326,9 +332,11 @@ watch(imageShow, (visible) => {
   if (!visible) {
     cleanupDotImageScroll?.()
     cleanupDotImageScroll = undefined
+    pauseHeroImages()
     return
   }
 
+  resumeHeroImages()
   cancelHeroIdle = runWhenIdle(mountHeroImages, 500)
 }, { flush: 'post' })
 
@@ -361,18 +369,6 @@ async function mountHeroImages() {
 
 onMounted(() => {
   prefetchAsset(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
-  const stop = useEventListener(window, 'click', () => {
-    void ensureMusicPlayerVisible(true)
-    stop()
-  })
-  const stopTouch = useEventListener(window, 'touchstart', () => {
-    void ensureMusicPlayerVisible(true)
-    stopTouch()
-  }, { passive: true })
-  const stopKeydown = useEventListener(window, 'keydown', () => {
-    void ensureMusicPlayerVisible(true)
-    stopKeydown()
-  })
 })
 
 watch(isDark, update)
@@ -1312,6 +1308,16 @@ onMounted(() => {
     class="backTop" animate-tada hover="animate-none" fixed bottom-40 right-5 text-3xl w30 src="/backTop.png"
     alt="backTop" @click="scrollToTop()"
   />
+  <button
+    v-if="!showMusicPlayer"
+    type="button"
+    class="music-toggle fixed bottom-28 right-5 z-10 h-10 w-10 flex items-center justify-center rounded-full border border-gray-300 bg-white/80 text-xl text-gray-800 shadow-sm backdrop-blur transition-colors hover:bg-white dark:border-gray-700 dark:bg-gray-900/80 dark:text-gray-100 dark:hover:bg-gray-900"
+    aria-label="Music"
+    title="Music"
+    @click="ensureMusicPlayerVisible()"
+  >
+    <span class="i-carbon:music" aria-hidden="true" />
+  </button>
   <!-- <img
     v-if="isShow" animate-tada hover="animate-none"
     fixed bottom-40 right-5 text-3xl src="/backTop.png" alt="backTop" @click="scrollToTop()"
@@ -1360,7 +1366,7 @@ onMounted(() => {
       </svg> -->
     </div>
   </div>
-  <LazyMusicPlayer v-if="showMusicPlayer && playlistLoaded" ref="musicPlayer" :playlist="playlist" />
+  <LazyMusicPlayer v-if="showMusicPlayer && playlistLoaded" :playlist="playlist" />
 </template>
 
 <style>

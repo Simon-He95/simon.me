@@ -1,9 +1,9 @@
 [build]
 publish = "dist"
-command = "pnpm run build"
+command = "corepack enable && pnpm run build"
 
 [build.environment]
-NODE_VERSION = "22.12.0"
+NODE_VERSION = "22.13.0"
 COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"
 
 [[redirects]]

@@ -19,7 +19,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=20.19.0"
   },
   "scripts": {
     "build": "vite-ssg build",
