@@ -1,11 +1,12 @@
 [build]
 publish = "dist"
-command = "npx pnpm@10.12.4 install --frozen-lockfile && npx pnpm@10.12.4 run build"
+command = "pnpm run build"
 
 [build.environment]
-NPM_FLAGS = "--version"
 NODE_VERSION = "22.13.0"
 COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"
+COREPACK_INTEGRITY_KEYS = "0"
+PNPM_FLAGS = "--frozen-lockfile"
 
 [[redirects]]
 from = "/*"
