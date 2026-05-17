@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { isDark } from '~/logics'
+import { isZh } from '../../lang'
 import Avatars from './avatar'
 
 interface Friend {
@@ -390,7 +391,7 @@ onBeforeUnmount(() => {
           </div>
           <div class="min-w-0">
             <div class="text-xl font-semibold text-slate-900 dark:text-slate-50">
-              Friends
+              {{ isZh ? '朋友' : 'Friends' }}
             </div>
             <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
               {{ filteredFriends.length }} / {{ friends.length }}
@@ -398,7 +399,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <p class="mt-3 max-w-160 text-sm text-slate-600 dark:text-slate-300">
-          Some great people and their corners on the internet.
+          {{ isZh ? '一些很棒的人，以及他们在互联网上的小角落。' : 'Some great people and their corners on the internet.' }}
         </p>
       </div>
 
@@ -410,7 +411,7 @@ onBeforeUnmount(() => {
             class="friends-search__input"
             :class="isDark ? 'friends-search__input--dark' : ''"
             type="search"
-            placeholder="Search name / tag / description"
+            :placeholder="isZh ? '搜索名称 / 标签 / 描述' : 'Search name / tag / description'"
             autocomplete="off"
           >
           <button
@@ -418,7 +419,7 @@ onBeforeUnmount(() => {
             type="button"
             class="friends-search__clear"
             :class="isDark ? 'friends-search__clear--dark' : ''"
-            aria-label="Clear search"
+            :aria-label="isZh ? '清空搜索' : 'Clear search'"
             @click="query = ''"
           >
             <span class="i-carbon:close" aria-hidden="true" />
@@ -488,10 +489,10 @@ onBeforeUnmount(() => {
       <div class="flex items-center justify-between gap-4">
         <div>
           <div class="text-lg font-semibold text-slate-900 dark:text-slate-50">
-            Sponsors
+            {{ isZh ? '赞助者' : 'Sponsors' }}
           </div>
           <div class="mt-1 text-sm text-slate-600 dark:text-slate-300">
-            Thank you for keeping this site running.
+            {{ isZh ? '感谢你们让这个站点持续运行。' : 'Thank you for keeping this site running.' }}
           </div>
         </div>
         <span class="i-carbon:favorite-filled text-2xl text-rose-500/80" aria-hidden="true" />
@@ -574,6 +575,10 @@ onBeforeUnmount(() => {
   outline: none;
   font-size: 0.95rem;
   color: rgba(15, 23, 42, 0.92);
+}
+
+.friends-search__input::-webkit-search-cancel-button {
+  display: none;
 }
 
 .friends-search__input::placeholder {

@@ -5,6 +5,7 @@ command = "pnpm run build"
 [build.environment]
 NODE_VERSION = "22.13.0"
 COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"
+COREPACK_INTEGRITY_KEYS = "0"
 PNPM_FLAGS = "--frozen-lockfile"
 
 [[redirects]]

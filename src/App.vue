@@ -133,7 +133,7 @@ const enableAtmosphere = computed(() =>
 
 const playlist = shallowRef<Song[]>([])
 const playlistLoaded = ref(false)
-let playlistPromise: Promise<void> | undefined
+let playlistHydrationPromise: Promise<void> | undefined
 
 function syncClientCapabilities() {
   if (!isClient)
@@ -152,21 +152,6 @@ function syncClientCapabilities() {
   particleDensity.value = lowPowerMode.value ? 0.42 : (cores <= 6 ? 0.66 : 0.85)
 }
 
-function ensurePlaylistLoaded() {
-  if (playlistLoaded.value)
-    return Promise.resolve()
-
-  playlistPromise ||= import('./data/playlist').then(async (mod) => {
-    playlist.value = await mod.loadPlaylist()
-    playlistLoaded.value = true
-  }).catch((error) => {
-    playlistPromise = undefined
-    throw error
-  })
-
-  return playlistPromise
-}
-
 async function ensureMusicPlayerVisible() {
   if (showMusicPlayer.value || musicLoading.value)
     return
@@ -174,11 +159,27 @@ async function ensureMusicPlayerVisible() {
   musicLoading.value = true
 
   try {
-    await Promise.all([
+    const [, playlistMod] = await Promise.all([
       loadMusicPlayer(),
-      ensurePlaylistLoaded(),
+      import('./data/playlist'),
     ])
+
+    if (!playlistLoaded.value) {
+      playlist.value = playlistMod.createBasePlaylist()
+      playlistLoaded.value = true
+    }
+
     showMusicPlayer.value = true
+
+    playlistHydrationPromise ||= playlistMod.hydrateLyrics(playlist.value)
+      .then((next) => {
+        playlist.value = [...next]
+      })
+      .catch((error) => {
+        playlistHydrationPromise = undefined
+        if (import.meta.env.DEV)
+          console.warn('[music] failed to load lyrics', error)
+      })
   }
   catch (error) {
     if (import.meta.env.DEV)
@@ -1332,7 +1333,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-show="enableAtmosphere" id="snow" fixed w-full h-full z--1 />
+  <div v-if="enableAtmosphere" id="snow" fixed w-full h-full z--1 />
   <LazySeasonDecor3D
     v-if="showSeasonDecor && seasonTheme === 'spring'"
     theme="spring"
