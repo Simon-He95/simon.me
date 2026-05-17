@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
+import { isZh } from '../../lang'
 import { englishOnly } from '../logics'
 
 const inactiveStyle = 'opacity-20 hover:opacity-50'
@@ -19,7 +20,7 @@ const route = useRoute()
       @click="englishOnly = !englishOnly"
     >
       <div :i="englishOnly ? 'carbon-checkbox-checked' : 'carbon-checkbox'" />
-      English Only
+      {{ isZh ? '只看英文' : 'English Only' }}
     </button>
 
     <div mb-0 flex="~ gap-3" text-3xl>
@@ -28,28 +29,28 @@ const route = useRoute()
         class="!border-none !font-400"
         :class="route.path === '/posts' ? '' : inactiveStyle"
       >
-        Blog
+        {{ isZh ? '博客' : 'Blog' }}
       </router-link>
       <router-link
         to="/talks"
         class="!border-none !font-400"
         :class="route.path === '/talks' ? '' : inactiveStyle"
       >
-        Talks
+        {{ isZh ? '分享' : 'Talks' }}
       </router-link>
       <router-link
         to="/projects"
         class="!border-none !font-400"
         :class="route.path === '/projects' ? '' : inactiveStyle"
       >
-        Projects
+        {{ isZh ? '项目' : 'Projects' }}
       </router-link>
       <router-link
         to="/friends"
         class="!border-none !font-400"
         :class="route.path === '/friends' ? '' : inactiveStyle"
       >
-        Friends
+        {{ isZh ? '朋友' : 'Friends' }}
       </router-link>
     </div>
   </div>

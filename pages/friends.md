@@ -4,7 +4,7 @@ title: Friends
 
 <div class="prose m-auto mb-8">
   <h1 class="mb-0">
-    Friends
+    {{ isZh ? '朋友' : 'Friends' }}
   </h1>
 </div>
 
@@ -16,7 +16,7 @@ title: Friends
     p4
     rounded-4
     style="--contrast: 2"
-    text="Friend's"
+    :text="isZh ? '朋友' : 'Friends'"
   />
 </ClientOnly>
 
@@ -25,7 +25,7 @@ title: Friends
 <script setup>
   import { TextExpansionAnimation } from 'text-expansion-animation'
   import 'text-expansion-animation/style.css'
-  import { ref } from 'vue'
+  import { isZh } from '../lang'
   import { isDark } from '~/logics'
 
 </script>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { VividTyping as BaseVividTyping } from 'vivid-typing'
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import type { Component } from 'vue'
+import { computed, onMounted, shallowRef, useAttrs } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
 const attrs = useAttrs()
-const mounted = ref(false)
+const BaseVividTyping = shallowRef<Component | null>(null)
 
 const fallbackAttrs = computed(() => ({
   class: attrs.class,
@@ -25,13 +25,13 @@ const fallbackHtml = computed(() => {
     .replaceAll('\n', '<br>')
 })
 
-onMounted(() => {
-  mounted.value = true
+onMounted(async () => {
+  BaseVividTyping.value = await import('vivid-typing').then(mod => mod.VividTyping)
 })
 </script>
 
 <template>
-  <component :is="BaseVividTyping" v-if="mounted" v-bind="attrs" />
+  <component :is="BaseVividTyping" v-if="BaseVividTyping" v-bind="attrs" />
   <span
     v-else
     v-bind="fallbackAttrs"

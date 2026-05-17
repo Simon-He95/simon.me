@@ -1,5 +1,6 @@
 import type { Plugin, UserConfig } from 'vite'
 import { resolve } from 'node:path'
+import process from 'node:process'
 import Vue from '@vitejs/plugin-vue'
 import { compileScript, parse as parseSfc } from '@vue/compiler-sfc'
 import fs from 'fs-extra'
@@ -17,7 +18,6 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
 import { createLogger } from 'vite'
-import Inspect from 'vite-plugin-inspect'
 import Pages from 'vite-plugin-pages'
 import SVG from 'vite-svg-loader'
 import { slugify } from './scripts/slugify'
@@ -36,6 +36,8 @@ import 'prismjs/components/prism-jsdoc'
 
 const externalLinkRegex = /^https?:\/\//
 const markdownFileRegex = /\.md$/
+const vueFileRegex = /\.vue$/
+const vueQueryRegex = /\.vue\?vue/
 const codeTagRegex = /<code(.*?)>/g
 const fenceStartRegex = /^(```+|~~~+)/
 const lineBreakRegex = /\r?\n/
@@ -171,6 +173,7 @@ function markdownToVuePlugin(): Plugin {
     quotes: '""\'\'',
   })
   const sfcCache = new Map<string, string>()
+  const descriptorCache = new Map<string, ReturnType<typeof parseSfc>['descriptor']>()
 
   md.use(Prism)
   md.use(anchor, {
@@ -191,6 +194,11 @@ function markdownToVuePlugin(): Plugin {
     includeLevel: [1, 2, 3],
     slugify,
   })
+
+  function invalidate(cleanId: string) {
+    sfcCache.delete(cleanId)
+    descriptorCache.delete(cleanId)
+  }
 
   function renderMarkdownSfc(code: string, cleanId: string) {
     const { content, data } = matter(code)
@@ -230,19 +238,49 @@ function markdownToVuePlugin(): Plugin {
     ].filter(Boolean).join('\n')
 
     sfcCache.set(cleanId, sfc)
+    descriptorCache.delete(cleanId)
     return sfc
+  }
+
+  function getDescriptor(cleanId: string) {
+    const sfc = sfcCache.get(cleanId)
+      ?? renderMarkdownSfc(fs.readFileSync(cleanId, 'utf-8'), cleanId)
+
+    let descriptor = descriptorCache.get(cleanId)
+    if (!descriptor) {
+      descriptor = parseSfc(sfc, { filename: cleanId }).descriptor
+      descriptorCache.set(cleanId, descriptor)
+    }
+
+    return descriptor
   }
 
   return {
     name: 'project-markdown-to-vue',
     enforce: 'pre',
+
+    buildStart() {
+      sfcCache.clear()
+      descriptorCache.clear()
+    },
+
+    watchChange(id) {
+      const cleanId = id.split('?', 1)[0]
+      if (markdownFileRegex.test(cleanId))
+        invalidate(cleanId)
+    },
+
+    handleHotUpdate(ctx) {
+      if (markdownFileRegex.test(ctx.file))
+        invalidate(ctx.file)
+    },
+
     load(id) {
       const [cleanId, rawQuery] = id.split('?', 2)
       if (!markdownFileRegex.test(cleanId) || !rawQuery?.includes('vue&type='))
         return null
 
-      const sfc = sfcCache.get(cleanId) ?? renderMarkdownSfc(fs.readFileSync(cleanId, 'utf-8'), cleanId)
-      const { descriptor } = parseSfc(sfc, { filename: cleanId })
+      const descriptor = getDescriptor(cleanId)
       const query = new URLSearchParams(rawQuery)
       const type = query.get('type')
 
@@ -300,6 +338,10 @@ viteLogger.warnOnce = (msg, options) => {
   baseWarnOnce(msg, options)
 }
 
+const inspectPlugin = process.env.VITE_INSPECT === 'true'
+  ? (await import('vite-plugin-inspect')).default()
+  : undefined
+
 const config: UserConfig = {
   customLogger: viteLogger,
   define: {
@@ -319,9 +361,6 @@ const config: UserConfig = {
       '@vueuse/core',
       'dayjs',
       'dayjs/plugin/localizedFormat',
-      // 添加常用的依赖项，避免运行时重新打包
-      'markdown-it',
-      'markdown-it-anchor',
     ],
     exclude: [
       'text-expansion-animation',
@@ -354,7 +393,7 @@ const config: UserConfig = {
     markdownToVuePlugin(),
 
     Vue({
-      include: [/\.vue$/, /\.md$/],
+      include: [vueFileRegex, markdownFileRegex],
     }),
 
     Pages({
@@ -363,7 +402,7 @@ const config: UserConfig = {
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))
 
-        if (!path.includes('projects.md')) {
+        if (markdownFileRegex.test(path) && !path.endsWith('projects.md')) {
           const md = fs.readFileSync(path, 'utf-8')
           const { data } = matter(md)
           route.meta = Object.assign(route.meta || {}, { frontmatter: data })
@@ -389,7 +428,7 @@ const config: UserConfig = {
     Components({
       extensions: ['vue', 'md'],
       dts: true,
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      include: [vueFileRegex, vueQueryRegex, markdownFileRegex],
       resolvers: [
         IconsResolver({
           componentPrefix: '',
@@ -397,7 +436,7 @@ const config: UserConfig = {
       ],
     }),
 
-    Inspect(),
+    ...(inspectPlugin ? [inspectPlugin] : []),
 
     Icons({
       defaultClass: 'inline',
@@ -410,15 +449,12 @@ const config: UserConfig = {
   ],
 
   build: {
-    chunkSizeWarningLimit: 1200,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-    rollupOptions: {
+    target: 'baseline-widely-available',
+    cssCodeSplit: true,
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 900,
+    minify: 'oxc',
+    rolldownOptions: {
       onwarn(warning, next) {
         if (
           warning.code === 'PLUGIN_WARNING'
@@ -434,6 +470,14 @@ const config: UserConfig = {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+        minify: {
+          compress: {
+            dropConsole: true,
+            dropDebugger: true,
+          },
+          mangle: true,
+          codegen: true,
+        },
       },
     },
   },

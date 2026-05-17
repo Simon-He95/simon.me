@@ -1,10 +1,11 @@
 [build]
 publish = "dist"
-command = "npx pnpm run build"
+command = "pnpm run build"
 
 [build.environment]
-NPM_FLAGS = "--version"
-NODE_VERSION = "20"
+NODE_VERSION = "22.13.0"
+COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"
+PNPM_FLAGS = "--frozen-lockfile"
 
 [[redirects]]
 from = "/*"
