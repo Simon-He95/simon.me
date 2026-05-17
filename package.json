@@ -19,8 +19,9 @@
     "dist"
   ],
   "scripts": {
-    "build": " cross-env NODE_ENV=production vite-ssg build",
-    "dev": "vite --port 3000 --open --host",
+    "build": "vite-ssg build",
+    "dev": "vite --port 3000 --host",
+    "dev:open": "vite --port 3000 --open --host",
     "preview": "vite preview --host",
     "static": "rimraf temp && degit antfu/static temp --force && esno scripts/copy-sponsors",
     "redirects": "esno scripts/redirects.ts",
@@ -28,7 +29,6 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@simon_he/git-fork-vue": "^0.0.18",
     "@simon_he/s-three": "0.0.17",
     "@unhead/vue": "^2.1.2",
     "@vueuse/core": "^14.2.1",
@@ -39,8 +39,7 @@
     "text-expansion-animation": "^0.0.10",
     "vivid-typing": "^1.1.48",
     "vue": "^3.5.30",
-    "vue-music-vue-tailwind4": "^0.0.4",
-    "vue-router": "^4",
+    "vue-router": "^4.6.4",
     "vue3-music-player": "^0.0.5"
   },
   "devDependencies": {
@@ -55,7 +54,6 @@
     "@types/nprogress": "^0.2.3",
     "@unocss/reset": "^66.6.6",
     "@vitejs/plugin-vue": "^6.0.5",
-    "cross-env": "^10.1.0",
     "degit": "^2.8.4",
     "diacritics": "^1.3.0",
     "eslint": "^9.39.4",
@@ -72,15 +70,13 @@
     "mouse-element": "^0.0.7",
     "prismjs": "^1.30.0",
     "rimraf": "^6.1.3",
-    "terser": "^5.29.2",
     "typescript": "^5.9.3",
     "unocss": "^66.6.6",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^31.0.0",
-    "unplugin-vue-markdown": "^30.0.0",
-    "vite": "^7.0.0",
-    "vite-plugin-inspect": "^11.3.3",
+    "vite": "^8.0.0",
+    "vite-plugin-inspect": "12.0.0-beta.2",
     "vite-plugin-pages": "^0.33.3",
     "vite-ssg": "^28.3.0",
     "vite-svg-loader": "^5.1.1"

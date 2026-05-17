@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { VividTyping as BaseVividTyping } from 'vivid-typing'
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref, useAttrs } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -8,6 +7,11 @@ defineOptions({
 
 const attrs = useAttrs()
 const mounted = ref(false)
+
+const BaseVividTyping = defineAsyncComponent({
+  loader: () => import('vivid-typing').then(mod => mod.VividTyping),
+  suspensible: false,
+})
 
 const fallbackAttrs = computed(() => ({
   class: attrs.class,

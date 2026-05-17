@@ -337,6 +337,17 @@ onMounted(preload)
   animation: rotate 1s linear forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .projectMove>span,
+  .iconMove,
+  .BlogMove::before,
+  .white,
+  :deep(.svg-dash),
+  :deep(.svg-dash):active {
+    animation: none !important;
+  }
+}
+
 @keyframes draw {
   from {
     stroke-dasharray: 1000;
