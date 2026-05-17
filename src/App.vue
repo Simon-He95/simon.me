@@ -496,6 +496,7 @@ let animationArray: any[] = []
 let THREE: any
 let scene: any
 let renderer: any
+let snowInitToken = 0
 
 function syncSnowRendererSize() {
   if (!isClient || !renderer)
@@ -533,7 +534,16 @@ function scheduleSnowScene() {
 }
 
 function disposeSnowScene() {
+  snowInitToken += 1
+
   unmount?.()
+
+  if (points) {
+    const idx = animationArray.indexOf(points)
+    if (idx >= 0)
+      animationArray.splice(idx, 1)
+  }
+
   geometry?.dispose?.()
   material?.dispose?.()
   Object.values(textures).forEach(t => t?.dispose?.())
@@ -684,10 +694,17 @@ function applyDepthMaterialHooks(mat: any) {
 }
 
 async function initSnowScene() {
+  const token = ++snowInitToken
+
   if (!isClient || renderer || !enableAtmosphere.value)
     return
 
   const sThree = await loadSThree()
+
+  if (token !== snowInitToken || renderer || !enableAtmosphere.value) {
+    return
+  }
+
   ;({ c, animationArray, THREE, scene, renderer } = sThree('#snow', {
     createMesh() {
       generateSeason()
