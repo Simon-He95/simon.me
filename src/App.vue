@@ -35,22 +35,6 @@ const LazySeasonDecor3D = defineAsyncComponent({
   suspensible: false,
 })
 
-function prefetchAsset(urls: string[]) {
-  if (!isClient)
-    return
-
-  for (const href of urls) {
-    if (document.head.querySelector(`link[rel="prefetch"][href="${href}"]`))
-      continue
-
-    const link = document.createElement('link')
-    link.rel = 'prefetch'
-    link.as = 'image'
-    link.href = href
-    document.head.appendChild(link)
-  }
-}
-
 function runWhenIdle(task: () => void | Promise<void>, timeout = 1200) {
   if (!isClient)
     return () => {}
@@ -422,10 +406,6 @@ async function mountHeroImages() {
   dotImageScrollAttempts = 0
   waitForDotImageScrollAnimation()
 }
-
-onMounted(() => {
-  prefetchAsset(['https://cdn.jsdelivr.net/gh/Simon-He95/sponsor/sponsors_circle.svg'])
-})
 
 watch(isDark, update)
 // const fontSize = 18

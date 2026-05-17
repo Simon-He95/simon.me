@@ -470,6 +470,14 @@ const config: UserConfig = {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+        minify: {
+          compress: {
+            dropConsole: true,
+            dropDebugger: true,
+          },
+          mangle: true,
+          codegen: true,
+        },
       },
     },
   },
