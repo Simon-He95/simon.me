@@ -20,8 +20,8 @@ const fallbackHtml = computed(() => {
     return ''
 
   return raw
-    .replaceAll('<%', '')
-    .replaceAll('%>', '')
+    .replaceAll('<%>', '')
+    .replaceAll('</%>', '')
     .replaceAll('\n', '<br>')
 })
 
