@@ -2,7 +2,7 @@ import type { Plugin, UserConfig } from 'vite'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import Vue from '@vitejs/plugin-vue'
-import { compileScript, parse as parseSfc } from '@vue/compiler-sfc'
+import { parse as parseSfc } from '@vue/compiler-sfc'
 import fs from 'fs-extra'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
@@ -38,6 +38,7 @@ const externalLinkRegex = /^https?:\/\//
 const markdownFileRegex = /\.md$/
 const vueFileRegex = /\.vue$/
 const vueQueryRegex = /\.vue\?vue/
+const markdownVueQueryRegex = /\.md\?vue/
 const codeTagRegex = /<code(.*?)>/g
 const fenceStartRegex = /^(```+|~~~+)/
 const lineBreakRegex = /\r?\n/
@@ -287,12 +288,6 @@ function markdownToVuePlugin(): Plugin {
       if (type === 'template')
         return descriptor.template?.content ?? ''
 
-      if (type === 'script') {
-        return compileScript(descriptor, {
-          id: cleanId,
-        }).content
-      }
-
       if (type === 'style') {
         const index = Number(query.get('index') || 0)
         return descriptor.styles[index]?.content ?? ''
@@ -428,7 +423,7 @@ const config: UserConfig = {
     Components({
       extensions: ['vue', 'md'],
       dts: true,
-      include: [vueFileRegex, vueQueryRegex, markdownFileRegex],
+      include: [vueFileRegex, vueQueryRegex, markdownFileRegex, markdownVueQueryRegex],
       resolvers: [
         IconsResolver({
           componentPrefix: '',

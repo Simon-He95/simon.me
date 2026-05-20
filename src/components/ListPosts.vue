@@ -15,19 +15,34 @@ export interface Post {
   duration?: string
 }
 
+interface RouteFrontmatter {
+  title?: string
+  date?: string
+  lang?: string
+  duration?: string
+  type?: string
+}
+
 const router = useRouter()
 const routes: Post[] = router
   .getRoutes()
-  .filter(i => i.path.startsWith('/posts') && i.meta.frontmatter.date)
-  .sort((a, b) => +new Date(b.meta.frontmatter.date) - +new Date(a.meta.frontmatter.date))
-  .filter(i => !i.path.endsWith('.html') && i.meta.frontmatter.type === props.type)
-  .map(i => ({
-    path: i.path,
-    title: i.meta.frontmatter.title,
-    date: i.meta.frontmatter.date,
-    lang: i.meta.frontmatter.lang,
-    duration: i.meta.frontmatter.duration,
-  }))
+  .filter(i => i.path.startsWith('/posts') && !i.path.endsWith('.html'))
+  .map((i) => {
+    const frontmatter = i.meta.frontmatter as RouteFrontmatter | undefined
+
+    if (!frontmatter?.date || frontmatter.type !== props.type)
+      return null
+
+    return {
+      path: i.path,
+      title: frontmatter.title || i.path,
+      date: frontmatter.date,
+      lang: frontmatter.lang,
+      duration: frontmatter.duration,
+    }
+  })
+  .filter((i): i is Post => !!i)
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date))
 const posts = computed(() =>
   (props.posts || routes).filter(i => !englishOnly.value || i.lang !== 'zh'),
 )
