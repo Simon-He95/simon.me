@@ -1,7 +1,19 @@
 :root {
-    --c-bg: #fff;
-    --c-scrollbar: #eee;
-    --c-scrollbar-hover: #bbb;
+    --c-bg: #f3f5f0;
+    --c-surface: #fafbf7;
+    --c-raised: #fff;
+    --c-text: #182019;
+    --c-muted: #707970;
+    --c-quiet: #929a92;
+    --c-line: #dce2da;
+    --c-line-strong: #c7d0c5;
+    --c-accent: #4d7c57;
+    --c-accent-soft: #e3ece1;
+    --c-shadow: rgba(38, 66, 42, 0.09);
+    --c-scrollbar: #dce2da;
+    --c-scrollbar-hover: #b9c3b7;
+    --font-sans: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
+    --font-mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
   }
   
   html {
@@ -9,11 +21,48 @@
     overflow-x: hidden;
     overflow-y: scroll;
   }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+    background:
+      linear-gradient(rgba(38, 66, 42, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(38, 66, 42, 0.025) 1px, transparent 1px),
+      radial-gradient(circle at 50% -10%, rgba(113, 153, 116, 0.12), transparent 35rem),
+      var(--c-bg);
+    background-size: 48px 48px, 48px 48px, auto, auto;
+    color: var(--c-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #app {
+    min-height: 100dvh;
+  }
   
   html.dark {
-    --c-bg: #050505;
-    --c-scrollbar: #111;
-    --c-scrollbar-hover: #222;
+    --c-bg: #0d100e;
+    --c-surface: #121713;
+    --c-raised: #171c18;
+    --c-text: #edf1eb;
+    --c-muted: #9da79e;
+    --c-quiet: #737d74;
+    --c-line: #283029;
+    --c-line-strong: #3b463d;
+    --c-accent: #8fbd92;
+    --c-accent-soft: #1e2c20;
+    --c-shadow: rgba(0, 0, 0, 0.25);
+    --c-scrollbar: #283029;
+    --c-scrollbar-hover: #3b463d;
+  }
+
+  html.dark body {
+    background:
+      linear-gradient(rgba(180, 211, 181, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(180, 211, 181, 0.025) 1px, transparent 1px),
+      radial-gradient(circle at 50% -10%, rgba(75, 112, 79, 0.15), transparent 35rem),
+      var(--c-bg);
+    background-size: 48px 48px, 48px 48px, auto, auto;
   }
   
   ::selection {
@@ -184,6 +233,9 @@
   }
   ::view-transition-new(root) {
     z-index: 9999;
+  }
+  html:not(.dark)::view-transition-new(root) {
+    clip-path: circle(0 at var(--theme-transition-x) var(--theme-transition-y));
   }
   .dark::view-transition-old(root) {
     z-index: 9999;

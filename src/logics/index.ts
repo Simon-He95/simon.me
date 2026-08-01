@@ -19,18 +19,22 @@ export function toggleDark(event: MouseEvent) {
     Math.max(x, innerWidth - x),
     Math.max(y, innerHeight - y),
   )
+  const root = document.documentElement
+  root.style.setProperty('--theme-transition-x', `${x}px`)
+  root.style.setProperty('--theme-transition-y', `${y}px`)
   // @ts-expect-error: Transition API
   const transition = document.startViewTransition(async () => {
     isDark.value = !isDark.value
     await nextTick()
   })
+  let appearanceAnimation: Animation | undefined
   transition.ready
     .then(() => {
       const clipPath = [
         `circle(0px at ${x}px ${y}px)`,
         `circle(${endRadius}px at ${x}px ${y}px)`,
       ]
-      document.documentElement.animate(
+      appearanceAnimation = document.documentElement.animate(
         {
           clipPath: isDark.value
             ? clipPath.toReversed()
@@ -39,12 +43,18 @@ export function toggleDark(event: MouseEvent) {
         {
           duration: 400,
           easing: 'ease-out',
+          fill: 'both',
           pseudoElement: isDark.value
             ? '::view-transition-old(root)'
             : '::view-transition-new(root)',
         },
       )
     })
+  transition.finished.finally(() => {
+    appearanceAnimation?.cancel()
+    root.style.removeProperty('--theme-transition-x')
+    root.style.removeProperty('--theme-transition-y')
+  })
 }
 
 export function formatDate(d: string | Date, onlyDate = true) {

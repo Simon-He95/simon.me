@@ -131,7 +131,9 @@ function finish() {
 
 .project-grid a.item {
   background: transparent;
+  color: var(--c-text);
   font-size: 1.1rem;
+  opacity: 0.82;
   width: 350px;
   max-width: 100%;
   content-visibility: auto;
@@ -142,6 +144,7 @@ function finish() {
 
 .project-grid a.item:hover {
   background: #88888811;
+  opacity: 1;
 }
 
 .project-title {
@@ -149,6 +152,8 @@ function finish() {
 }
 
 .desc {
+  color: var(--c-muted);
+  opacity: 1 !important;
   text-wrap: pretty;
 }
 </style>

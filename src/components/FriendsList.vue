@@ -662,15 +662,15 @@ onBeforeUnmount(() => {
   box-shadow: 0 22px 40px -22px rgba(13, 148, 136, 0.45);
 }
 
-:global(.dark) .friend-card {
-  border-color: rgba(51, 65, 85, 0.6);
-  background: linear-gradient(180deg, rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.6));
+:global(.dark .friend-card) {
+  border-color: var(--c-line-strong);
+  background: linear-gradient(180deg, rgba(23, 28, 24, 0.94), rgba(18, 23, 19, 0.9));
   box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.65);
 }
 
-:global(.dark) .friend-card:hover {
-  border-color: rgba(45, 212, 191, 0.35);
-  box-shadow: 0 24px 48px -24px rgba(45, 212, 191, 0.28);
+:global(.dark .friend-card:hover) {
+  border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-line));
+  box-shadow: 0 24px 48px -24px rgba(77, 124, 87, 0.35);
 }
 
 .friend-avatar {
@@ -692,7 +692,7 @@ onBeforeUnmount(() => {
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
 }
 
-:global(.dark) .friend-avatar__img {
+:global(.dark .friend-avatar__img) {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
@@ -711,7 +711,7 @@ onBeforeUnmount(() => {
   color: rgba(71, 85, 105, 0.95);
 }
 
-:global(.dark) .friend-pill {
+:global(.dark .friend-pill) {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(226, 232, 240, 0.9);
 }
@@ -745,8 +745,8 @@ onBeforeUnmount(() => {
   background: rgba(148, 163, 184, 0.12);
 }
 
-:global(.dark) .friend-avatar__img,
-:global(.dark) .sponsor-img {
+:global(.dark .friend-avatar__img),
+:global(.dark .sponsor-img) {
   background: linear-gradient(90deg, rgba(148, 163, 184, 0.08), rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.08));
 }
 
@@ -783,8 +783,8 @@ onBeforeUnmount(() => {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.6));
     }
 
-    :global(.dark) .friend-card {
-      background: linear-gradient(180deg, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.28));
+    :global(.dark .friend-card) {
+      background: linear-gradient(180deg, rgba(23, 28, 24, 0.82), rgba(18, 23, 19, 0.72));
     }
   }
 }

@@ -59,14 +59,15 @@ html.dark {
 }
 
 .prose {
-  --fg: #555;
-  --fg-deep: #222;
-  --fg-deeper: #000;
+  --fg: var(--c-muted);
+  --fg-deep: var(--c-text);
+  --fg-deeper: var(--c-text);
 
   color: var(--fg);
 }
 
 .prose a {
+  color: var(--c-accent);
   font-weight: inherit;
   text-decoration: none;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
@@ -87,9 +88,9 @@ html.dark {
 }
 
 html.dark .prose {
-  --fg: #bbb;
-  --fg-deep: #ddd;
-  --fg-deeper: #fff;
+  --fg: var(--c-muted);
+  --fg-deep: var(--c-text);
+  --fg-deeper: var(--c-text);
 }
 
 a.item {
