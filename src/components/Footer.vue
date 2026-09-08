@@ -19,7 +19,8 @@
 
 <style scoped>
 .site-footer {
-  border-top: 1px solid var(--c-line);
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--c-line) 20%, var(--c-line) 80%, transparent) 1;
   color: var(--c-quiet);
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -47,11 +48,17 @@
 }
 
 .site-footer a:hover {
-  color: var(--c-text);
+  color: var(--c-accent-strong);
 }
 
 .registration {
   justify-self: end;
+}
+
+@media (min-width: 641px) {
+  .footer-inner {
+    padding-right: 4.5rem;
+  }
 }
 
 @media (max-width: 640px) {

@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { isZh } from '../../lang'
 import { englishOnly } from '../logics'
 
-const inactiveStyle = 'opacity-20 hover:opacity-50'
+const inactiveStyle = 'opacity-60 hover:opacity-90'
 
 const route = useRoute()
 </script>

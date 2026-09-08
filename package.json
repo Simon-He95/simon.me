@@ -36,7 +36,7 @@
     "@vueuse/core": "^14.2.1",
     "dayjs": "^1.11.20",
     "lazy-js-utils": "^0.1.51",
-    "markstream-vue": "^1.0.8",
+    "markstream-vue": "^2.0.9",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.5",
     "text-expansion-animation": "^0.0.10",

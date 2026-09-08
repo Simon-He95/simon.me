@@ -144,7 +144,8 @@ if (isClient) {
 
 .back-to-top:hover,
 .music-toggle:hover {
-  border-color: rgba(125, 125, 125, 0.5);
+  border-color: color-mix(in srgb, var(--c-accent-warm) 50%, var(--c-line-strong));
+  box-shadow: 0 6px 16px var(--c-glow-warm);
   transform: translateY(-2px);
 }
 

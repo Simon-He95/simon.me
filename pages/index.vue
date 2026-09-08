@@ -11,7 +11,7 @@ const COPY = {
     eyebrow: 'LOCAL PROFILE RUN',
     you: 'You',
     prompt: 'Who is Simon He? Check his GitHub, the work he cares about, and how he got here.',
-    assistant: 'simon-agent',
+    assistant: 'Simon Bot',
     ready: 'local simulation',
     thinking: 'Thinking',
     thinkingRunning: 'building context',
@@ -38,7 +38,7 @@ const COPY = {
     eyebrow: '本地人物档案',
     you: 'You',
     prompt: 'Who is Simon He? Check his GitHub, the work he cares about, and how he got here.',
-    assistant: 'simon-agent',
+    assistant: 'Simon Bot',
     ready: '本地模拟',
     thinking: 'Thinking',
     thinkingRunning: '正在整理上下文',
@@ -383,7 +383,7 @@ onBeforeUnmount(() => {
               <div class="step-content thinking-content">
                 <header>
                   <span>{{ copy.thinking }}</span>
-                  <span>{{ stage > 1 ? copy.thinkingDone : copy.thinkingRunning }}</span>
+                  <span :class="{ running: stage === 1 }">{{ stage > 1 ? copy.thinkingDone : copy.thinkingRunning }}</span>
                 </header>
                 <p>{{ copy.thinkingText }}</p>
               </div>
@@ -543,7 +543,7 @@ onBeforeUnmount(() => {
 .profile-run {
   width: min(100% - 2.5rem, 60rem);
   margin: 0 auto;
-  padding: clamp(3rem, 7vw, 5.5rem) 0 7rem;
+  padding: clamp(2.5rem, 5vw, 4rem) 0 7rem;
 }
 
 .run-label {
@@ -567,13 +567,13 @@ onBeforeUnmount(() => {
 }
 
 .user-turn {
-  width: min(100%, 42rem);
+  width: min(100%, 34rem);
   margin-left: auto;
 }
 
 .turn-label {
   margin: 0 0 0.65rem;
-  color: var(--c-quiet);
+  color: var(--c-accent-warm);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 650;
@@ -585,6 +585,7 @@ onBeforeUnmount(() => {
 .user-turn p {
   margin: 0;
   padding: 1.15rem 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--c-accent-warm) 55%, var(--c-bg));
   border-radius: 1.2rem 1.2rem 0.35rem 1.2rem;
   background: var(--c-text);
   color: var(--c-bg);
@@ -594,10 +595,12 @@ onBeforeUnmount(() => {
 }
 
 .dark .user-turn p {
-  border: 1px solid var(--c-line-strong);
-  background: color-mix(in srgb, var(--c-raised) 82%, var(--c-accent-soft));
+  border: 1px solid color-mix(in srgb, var(--c-accent-warm) 32%, var(--c-line-strong));
+  background:
+    radial-gradient(circle at 90% 0%, rgba(232, 169, 79, 0.22), transparent 9rem),
+    color-mix(in srgb, var(--c-raised) 84%, var(--c-accent-warm-soft));
   color: var(--c-text);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .assistant-turn {
@@ -634,7 +637,7 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.4rem;
   margin-left: auto;
-  color: var(--c-muted);
+  color: var(--warm-tint);
   font-size: 0.66rem;
   font-weight: 500;
 }
@@ -740,12 +743,17 @@ onBeforeUnmount(() => {
 }
 
 .step-content > header > span:last-child {
-  color: var(--c-quiet);
+  color: var(--warm-tint);
   font-size: 0.66rem;
 }
 
 .step-content > header .success {
   color: var(--c-accent);
+}
+
+.step-content > header .running {
+  color: var(--c-accent-warm);
+  animation: thinking-pulse 1.4s ease-in-out infinite;
 }
 
 .thinking-content p {
@@ -770,14 +778,25 @@ onBeforeUnmount(() => {
   color: var(--c-muted);
   font-family: var(--font-mono);
   font-size: 0.66rem;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.skill-list span:hover {
+  border-color: color-mix(in srgb, var(--c-accent-warm) 45%, var(--c-line));
+  background: color-mix(in srgb, var(--c-surface) 55%, var(--c-accent-warm-soft));
+  color: var(--c-accent-warm-strong);
 }
 
 .tool-card {
   overflow: hidden;
   border: 1px solid var(--c-line);
   border-radius: 0.8rem;
-  background: var(--c-raised);
-  box-shadow: 0 14px 38px var(--c-shadow);
+  background:
+    radial-gradient(circle at 97% -2%, rgba(232, 169, 79, 0.3), transparent 10rem),
+    radial-gradient(circle at 88% 0%, var(--c-glow-warm), transparent 60%),
+    radial-gradient(circle at 4% 100%, var(--c-glow), transparent 50%),
+    var(--c-raised);
+  box-shadow: 0 14px 38px var(--c-shadow), inset 0 1px 0 color-mix(in srgb, var(--c-text) 5%, transparent);
 }
 
 .tool-request,
@@ -814,6 +833,10 @@ onBeforeUnmount(() => {
   border-top: 1px solid var(--c-line);
 }
 
+.tool-foot span:last-child {
+  color: color-mix(in srgb, var(--c-accent-warm) 65%, var(--c-quiet));
+}
+
 .github-result,
 .profile-skeleton {
   display: grid;
@@ -827,9 +850,16 @@ onBeforeUnmount(() => {
 .github-result img {
   width: 3.5rem;
   height: 3.5rem;
-  border: 1px solid var(--c-line);
+  border: 1px solid color-mix(in srgb, var(--c-accent) 35%, var(--c-line));
   border-radius: 0.85rem;
   object-fit: cover;
+  box-shadow: 0 0 0 3px var(--c-accent-soft), 0 6px 18px var(--c-glow-warm);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.github-result img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 3px var(--c-accent-soft), 0 10px 26px var(--c-glow-warm);
 }
 
 .github-identity {
@@ -933,6 +963,7 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  color: var(--warm-tint);
 }
 
 .response-status i {
@@ -959,11 +990,15 @@ onBeforeUnmount(() => {
 }
 
 .profile-render h1 {
-  margin: 0.3rem 0 1rem;
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  margin: 0.3rem 0 0.85rem;
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 1;
+  background: linear-gradient(110deg, var(--c-text) 30%, color-mix(in srgb, var(--c-text) 55%, var(--c-accent)) 65%, color-mix(in srgb, var(--c-text) 62%, var(--c-accent-warm)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .profile-render h2 {
@@ -982,9 +1017,14 @@ onBeforeUnmount(() => {
 .profile-render blockquote {
   margin: 1.35rem 0;
   padding: 0.85rem 1rem;
-  border-left: 2px solid var(--c-accent);
-  background: var(--c-accent-soft);
+  border-left: 2px solid var(--c-accent-warm);
+  border-radius: 0 0.6rem 0.6rem 0;
+  background: linear-gradient(100deg, var(--c-accent-soft), color-mix(in srgb, var(--c-accent-warm-soft) 75%, var(--c-accent-soft)) 60%, color-mix(in srgb, var(--c-accent-soft) 40%, transparent));
   color: var(--c-text);
+}
+
+.profile-render blockquote strong {
+  color: var(--c-accent-warm-strong);
 }
 
 .profile-render code {
@@ -1019,6 +1059,31 @@ onBeforeUnmount(() => {
   font-size: 0.68rem;
   font-weight: 600;
   text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.response-actions a:hover,
+.response-actions button:hover {
+  border-color: color-mix(in srgb, var(--c-accent) 55%, var(--c-line-strong));
+  background: var(--c-accent-soft);
+  color: var(--c-accent-strong);
+}
+
+/* GitHub 主操作按钮用暖色强调，形成视觉落点 */
+.response-actions a:first-child {
+  border-color: color-mix(in srgb, var(--c-accent-warm) 40%, var(--c-line-strong));
+  color: var(--c-accent-warm-strong);
+}
+
+.response-actions a:first-child:hover {
+  border-color: var(--c-accent-warm);
+  background: var(--c-accent-warm-soft);
+  color: var(--c-accent-warm-strong);
+}
+
+.response-actions a:active,
+.response-actions button:active {
+  transform: scale(0.98);
 }
 
 .response-actions button {

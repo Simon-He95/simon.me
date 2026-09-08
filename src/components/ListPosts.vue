@@ -62,7 +62,7 @@ const posts = computed(() =>
       :to="route.path"
       :title="route.title"
     >
-      <li class="no-underline">
+      <li class="no-underline post-item">
         <div class="title text-lg">
           {{ route.title }}
           <sup
@@ -83,5 +83,39 @@ const posts = computed(() =>
 .item {
   content-visibility: auto;
   contain-intrinsic-size: 88px;
+}
+
+.post-item {
+  position: relative;
+  padding: 0.65rem 0.9rem;
+  margin: 0 -0.9rem;
+  border-radius: 0.7rem;
+  border: 1px solid transparent;
+  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+
+.post-item .title {
+  transition: color 200ms ease;
+}
+
+.post-item .time {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+.post-item:hover {
+  border-color: color-mix(in srgb, var(--c-accent) 35%, var(--c-line));
+  background: color-mix(in srgb, var(--c-raised) 80%, transparent);
+  transform: translateX(3px);
+}
+
+.post-item:hover .title {
+  color: var(--c-accent-strong);
+}
+
+.post-item:hover .time {
+  color: var(--c-accent-warm);
 }
 </style>

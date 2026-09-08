@@ -39,3 +39,42 @@ plum: true
 <script setup>
   import { isZh } from '../lang'
 </script>
+
+<style scoped>
+  table {
+    position: relative;
+    left: 50%;
+    width: min(calc(100vw - 3rem), 48rem);
+    margin-inline: auto;
+    transform: translateX(-50%);
+  }
+
+  table td:first-child {
+    white-space: nowrap;
+  }
+
+  table td:nth-child(2) {
+    white-space: nowrap;
+  }
+
+  table td:last-child {
+    min-width: 12rem;
+  }
+
+  table td {
+    padding-top: 0.9rem !important;
+    padding-bottom: 0.9rem !important;
+  }
+
+  @media (max-width: 640px) {
+    table {
+      left: auto;
+      width: 100%;
+      transform: none;
+    }
+
+    table td:nth-child(2) {
+      white-space: normal;
+    }
+  }
+</style>

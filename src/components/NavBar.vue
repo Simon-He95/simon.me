@@ -90,6 +90,14 @@ const labels = computed(() => lan.value === 'zh'
   font-family: var(--font-mono);
   font-size: 0.72rem;
   box-shadow: 0 5px 18px var(--c-shadow);
+  transition: background 200ms ease, transform 200ms ease, border-color 200ms ease;
+}
+
+.site-brand:hover > span {
+  background: linear-gradient(135deg, var(--c-accent-soft), var(--c-accent-warm-soft));
+  border-color: color-mix(in srgb, var(--c-accent-warm) 45%, var(--c-line-strong));
+  color: var(--c-accent-warm-strong);
+  transform: rotate(-6deg) scale(1.06);
 }
 
 .site-links {
@@ -100,6 +108,7 @@ const labels = computed(() => lan.value === 'zh'
 
 .site-links a,
 .site-github {
+  position: relative;
   color: var(--c-muted);
   font-size: 0.82rem;
   font-weight: 500;
@@ -107,9 +116,34 @@ const labels = computed(() => lan.value === 'zh'
   transition: color 180ms ease;
 }
 
+.site-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.6rem;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--c-accent);
+  transition: width 200ms ease, left 200ms ease;
+}
+
+.site-links a:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.site-links a.router-link-active {
+  color: var(--c-accent-strong);
+}
+
+.site-links a.router-link-active::after {
+  left: 0;
+  width: 100%;
+}
+
 .site-links a:hover,
 .site-links a:focus-visible,
-.site-links a.router-link-active,
 .site-github:hover,
 .site-github:focus-visible {
   color: var(--c-text);

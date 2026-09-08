@@ -70,16 +70,78 @@ html.dark {
   color: var(--c-accent);
   font-weight: inherit;
   text-decoration: none;
-  border-bottom: 1px solid rgba(125, 125, 125, 0.3);
-  transition: border 0.3s ease-in-out;
+  border-bottom: 1px solid color-mix(in srgb, var(--c-accent) 35%, transparent);
+  transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .prose a:hover {
-  border-bottom: 1px solid var(--fg);
+  border-bottom: 1px solid var(--c-accent);
+  color: var(--c-accent-strong);
 }
 
 .prose a code {
   color: inherit;
+}
+
+.prose blockquote {
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.5em;
+  padding: 0.6em 1.2em;
+  opacity: 0.85;
+  border-color: var(--c-accent);
+}
+
+.prose ul > li::before {
+  background-color: color-mix(in srgb, var(--c-accent) 60%, var(--c-line-strong));
+}
+
+.prose table {
+  border: 1px solid var(--c-line);
+  border-radius: 0.7rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background: var(--c-raised);
+}
+
+.prose thead th {
+  background: var(--c-surface);
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* 卡片化表格的统一内边距，覆盖模板里首尾列 padding: 0 的规则 */
+.prose thead th,
+.prose tbody td {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.prose thead th:first-child,
+.prose tbody td:first-child {
+  padding-left: 1.1rem;
+}
+
+.prose thead th:last-child,
+.prose tbody td:last-child {
+  padding-right: 1.1rem;
+}
+
+.prose tbody tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--c-line) 70%, transparent);
+}
+
+.prose tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+.prose pre {
+  border: 1px solid var(--c-line);
+  background: var(--prism-background);
+  box-shadow: 0 8px 28px var(--c-shadow);
 }
 
 .prose hr {
@@ -133,14 +195,6 @@ h5:focus .header-anchor,
 h6:hover .header-anchor,
 h6:focus .header-anchor {
   opacity: 0.5;
-}
-
-.prose blockquote {
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1.5em;
-  padding: 0.6em 1.2em;
-  opacity: 0.8;
 }
 
 .prose blockquote > :first-child {

@@ -1,19 +1,26 @@
 :root {
-    --c-bg: #f3f5f0;
-    --c-surface: #fafbf7;
-    --c-raised: #fff;
-    --c-text: #182019;
-    --c-muted: #707970;
-    --c-quiet: #929a92;
-    --c-line: #dce2da;
-    --c-line-strong: #c7d0c5;
+    --c-bg: #f3f4ed;
+    --c-surface: #f9faf4;
+    --c-raised: #ffffff;
+    --c-text: #1a2118;
+    --c-muted: #5d675e;
+    --c-quiet: #879087;
+    --c-line: #dde3d8;
+    --c-line-strong: #c9d2c5;
     --c-accent: #4d7c57;
-    --c-accent-soft: #e3ece1;
-    --c-shadow: rgba(38, 66, 42, 0.09);
+    --c-accent-strong: #3c6745;
+    --c-accent-soft: #e1ebe0;
+    --c-accent-warm: #c07a1d;
+    --c-accent-warm-strong: #9c6114;
+    --c-accent-warm-soft: #f7ecd9;
+    --c-glow: rgba(113, 153, 116, 0.14);
+    --c-glow-warm: rgba(232, 169, 79, 0.18);
+    --c-shadow: rgba(38, 66, 42, 0.1);
     --c-scrollbar: #dce2da;
     --c-scrollbar-hover: #b9c3b7;
-    --font-sans: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
-    --font-mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+    --warm-tint: color-mix(in srgb, var(--c-accent-warm) 72%, var(--c-muted));
+    --font-sans: "Geist", "Avenir Next", "Segoe UI", system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-mono: "SFMono-Regular", "SF Mono", "Fira Code", Menlo, Consolas, monospace;
   }
   
   html {
@@ -26,11 +33,15 @@
     min-width: 320px;
     margin: 0;
     background:
-      linear-gradient(rgba(38, 66, 42, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(38, 66, 42, 0.025) 1px, transparent 1px),
-      radial-gradient(circle at 50% -10%, rgba(113, 153, 116, 0.12), transparent 35rem),
+      linear-gradient(rgba(122, 104, 72, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(122, 104, 72, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 12% -8%, rgba(113, 153, 116, 0.2), transparent 34rem),
+      radial-gradient(circle at 88% -2%, rgba(211, 151, 61, 0.17), transparent 30rem),
+      radial-gradient(circle at 55% 62%, rgba(232, 169, 79, 0.09), transparent 36rem),
+      radial-gradient(circle at 8% 92%, rgba(232, 169, 79, 0.07), transparent 30rem),
+      radial-gradient(circle at 80% 95%, rgba(113, 153, 116, 0.1), transparent 26rem),
       var(--c-bg);
-    background-size: 48px 48px, 48px 48px, auto, auto;
+    background-size: 48px 48px, 48px 48px, auto, auto, auto, auto, auto, auto;
     color: var(--c-text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -41,32 +52,52 @@
   }
   
   html.dark {
-    --c-bg: #0d100e;
-    --c-surface: #121713;
-    --c-raised: #171c18;
-    --c-text: #edf1eb;
-    --c-muted: #9da79e;
-    --c-quiet: #737d74;
-    --c-line: #283029;
-    --c-line-strong: #3b463d;
+    --c-bg: #0d100c;
+    --c-surface: #121612;
+    --c-raised: #171c17;
+    --c-text: #eef2ec;
+    --c-muted: #9aa49b;
+    --c-quiet: #828c83;
+    --c-line: #282f28;
+    --c-line-strong: #3b463c;
     --c-accent: #8fbd92;
-    --c-accent-soft: #1e2c20;
-    --c-shadow: rgba(0, 0, 0, 0.25);
+    --c-accent-strong: #a8d1aa;
+    --c-accent-soft: #1d2b1f;
+    --c-accent-warm: #e8a94f;
+    --c-accent-warm-strong: #f2bd6d;
+    --c-accent-warm-soft: #2c2113;
+    --c-glow: rgba(75, 112, 79, 0.2);
+    --c-glow-warm: rgba(232, 169, 79, 0.2);
+    --c-shadow: rgba(0, 0, 0, 0.28);
     --c-scrollbar: #283029;
     --c-scrollbar-hover: #3b463d;
+    --warm-tint: color-mix(in srgb, var(--c-accent-warm) 78%, var(--c-quiet));
   }
 
   html.dark body {
     background:
-      linear-gradient(rgba(180, 211, 181, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(180, 211, 181, 0.025) 1px, transparent 1px),
-      radial-gradient(circle at 50% -10%, rgba(75, 112, 79, 0.15), transparent 35rem),
+      linear-gradient(rgba(190, 170, 130, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(190, 170, 130, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 12% -8%, rgba(75, 112, 79, 0.22), transparent 34rem),
+      radial-gradient(circle at 88% -2%, rgba(232, 169, 79, 0.17), transparent 30rem),
+      radial-gradient(circle at 55% 62%, rgba(232, 169, 79, 0.1), transparent 36rem),
+      radial-gradient(circle at 8% 92%, rgba(232, 169, 79, 0.08), transparent 30rem),
+      radial-gradient(circle at 80% 95%, rgba(75, 112, 79, 0.12), transparent 26rem),
       var(--c-bg);
-    background-size: 48px 48px, 48px 48px, auto, auto;
+    background-size: 48px 48px, 48px 48px, auto, auto, auto, auto, auto, auto;
   }
   
   ::selection {
-    background: #8884;
+    background: color-mix(in srgb, var(--c-accent) 20%, color-mix(in srgb, var(--c-accent-warm) 18%, transparent));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
   }
   
   #nprogress {
